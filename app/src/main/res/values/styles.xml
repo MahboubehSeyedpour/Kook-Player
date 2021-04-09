@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Toolbar" parent="Theme.AppCompat.Light.NoActionBar" >
-        <item name="backgroundTint">@color/white</item>
+    <style name="Toolbar" parent="Theme.MusicPlayer" >
+<!--        <item name="android:background">@color/white</item>-->
     </style>
 </resources>
+
+<!--<item name="backgroundTint">@color/blue_dark</item>-->
