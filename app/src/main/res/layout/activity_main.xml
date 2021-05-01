@@ -5,11 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".views.MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".views.MainActivity">
 
     <include layout="@layout/component_toolbar" />
 
     <include layout="@layout/component_tab" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </LinearLayout>
