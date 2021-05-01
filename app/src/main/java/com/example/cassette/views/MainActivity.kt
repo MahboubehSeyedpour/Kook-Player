@@ -3,6 +3,7 @@
 import android.content.res.Resources
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.example.cassette.R
@@ -42,5 +43,19 @@ import kotlinx.android.synthetic.main.component_tab.*
             tab, position -> tab.text = tabList[position]
         }.attach()
 
+        homePageTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+                Toast.makeText(applicationContext, "tab reselected: ${tab?.text}", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+                Toast.makeText(applicationContext, "tab unselected: ${tab?.text}", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                Toast.makeText(applicationContext, "tab selected: ${tab?.text}", Toast.LENGTH_SHORT).show()
+            }
+
+        })
     }
 }
