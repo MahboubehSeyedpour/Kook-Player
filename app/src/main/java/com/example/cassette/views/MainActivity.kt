@@ -1,11 +1,13 @@
  package com.example.cassette.views
 
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.example.cassette.R
 import com.example.cassette.adapter.HomePageAdapter
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.component_tab.*
@@ -29,12 +31,15 @@ import kotlinx.android.synthetic.main.component_tab.*
             "playlists"
         )
 
-        val adapter = HomePageAdapter(tabs)
+        val res: Resources = resources
+        val tabList = res.getStringArray(R.array.tabNames)
+
+        val adapter = HomePageAdapter(tabList.asList())
         fragment_container.adapter = adapter
 
         TabLayoutMediator(homePageTabLayout, fragment_container)
         {
-            tab, position -> tab.text = tabs[position]
+            tab, position -> tab.text = tabList[position]
         }.attach()
 
     }
