@@ -26,12 +26,6 @@ import kotlinx.android.synthetic.main.component_tab.*
 //        TODO( "implement hideStatusBar() function");
 
 
-        val tabs = listOf(
-            "library",
-            "recently added",
-            "playlists"
-        )
-
         val res: Resources = resources
         val tabList = res.getStringArray(R.array.tabNames)
 
