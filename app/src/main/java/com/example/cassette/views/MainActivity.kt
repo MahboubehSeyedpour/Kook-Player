@@ -36,14 +36,14 @@ import kotlinx.android.synthetic.main.component_tab.*
         val tabList = res.getStringArray(R.array.tabNames)
 
         val adapter = HomePageAdapter(tabList.asList())
-        fragment_container.adapter = adapter
+        viewpager_home.adapter = adapter
 
-        TabLayoutMediator(homePageTabLayout, fragment_container)
+        TabLayoutMediator(tablayout_home, viewpager_home)
         {
             tab, position -> tab.text = tabList[position]
         }.attach()
 
-        homePageTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+        tablayout_home.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
             override fun onTabReselected(tab: TabLayout.Tab?) {
                 Toast.makeText(applicationContext, "tab reselected: ${tab?.text}", Toast.LENGTH_SHORT).show()
             }
