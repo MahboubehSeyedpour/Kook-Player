@@ -1,4 +1,4 @@
- package com.example.cassette.views
+package com.example.cassette.views
 
 import android.content.res.Resources
 import android.os.Bundle
@@ -8,12 +8,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.example.cassette.R
 import com.example.cassette.adapter.HomePageAdapter
+import com.example.cassette.utlis.FilePathUtlis
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.component_tab.*
 
- class MainActivity : AppCompatActivity() {
+
+class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -33,23 +35,37 @@ import kotlinx.android.synthetic.main.component_tab.*
         viewpager_home.adapter = adapter
 
         TabLayoutMediator(tablayout_home, viewpager_home)
-        {
-            tab, position -> tab.text = tabList[position]
+        { tab, position ->
+            tab.text = tabList[position]
         }.attach()
 
-        tablayout_home.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+        tablayout_home.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab?) {
-                Toast.makeText(applicationContext, "tab reselected: ${tab?.text}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    applicationContext,
+                    "tab reselected: ${tab?.text}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
-                Toast.makeText(applicationContext, "tab unselected: ${tab?.text}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    applicationContext,
+                    "tab unselected: ${tab?.text}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                Toast.makeText(applicationContext, "tab selected: ${tab?.text}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "tab selected: ${tab?.text}", Toast.LENGTH_SHORT)
+                    .show()
             }
-
         })
+
+
+        //temp: a button to check if the absolute path is correct
+        button.setOnClickListener {
+            Toast.makeText(applicationContext, FilePathUtlis.MUSIC_ABSOLUTE_PATH.toString(), Toast.LENGTH_LONG).show()
+        }
     }
 }
