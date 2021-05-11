@@ -1,17 +1,18 @@
 package com.example.cassette.adapter
 
-import android.content.Context
+import android.icu.text.CaseMap
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.ViewPager
 import com.example.cassette.R
 import kotlinx.android.synthetic.main.page_tablayout.view.*
 
-class HomePageAdapter(val texts: List<String>) :
-    RecyclerView.Adapter<HomePageAdapter.ViewPagerViewHolder>() {
+class ViewPagerAdapter(val texts: List<String>):
+    RecyclerView.Adapter<ViewPagerAdapter.ViewPagerViewHolder>() {
 
     inner class ViewPagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -29,6 +30,6 @@ class HomePageAdapter(val texts: List<String>) :
 
     override fun onBindViewHolder(holder: ViewPagerViewHolder, position: Int) {
         holder.itemView.text.setText(texts[position])
+//        holder.itemView.recyclerview.adapter
     }
-
 }

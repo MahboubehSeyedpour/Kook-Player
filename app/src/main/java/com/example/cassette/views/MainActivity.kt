@@ -6,33 +6,35 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.LifecycleOwner
 import com.example.cassette.R
-import com.example.cassette.adapter.HomePageAdapter
-import com.example.cassette.utlis.FilePathUtlis
+import com.example.cassette.adapter.ViewPagerAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.component_tab.*
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), LifecycleOwner {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+//
         val toolbar: Toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         // Make sure the toolbar exists in the activity and is not null
-        setSupportActionBar(toolbar)
+//        setSupportActionBar(toolbar)
+
 
 //        TODO( "implement hideStatusBar() function");
-
 
         val res: Resources = resources
         val tabList = res.getStringArray(R.array.tabNames)
 
-        val adapter = HomePageAdapter(tabList.asList())
+        val adapter = ViewPagerAdapter(tabList.asList())
         viewpager_home.adapter = adapter
+
 
         TabLayoutMediator(tablayout_home, viewpager_home)
         { tab, position ->
@@ -62,10 +64,34 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+//        val viewModel =
+//            ViewModelProvider(this).get(com.example.cassette.datamodels.Songs::class.java)
+//        viewModel.getMutableLiveData().observe(this, songListUpdateObserver)
+
 
         //temp: a button to check if the absolute path is correct
-        button.setOnClickListener {
-            Toast.makeText(applicationContext, FilePathUtlis.MUSIC_ABSOLUTE_PATH.toString(), Toast.LENGTH_LONG).show()
-        }
+//        button.setOnClickListener {
+//
+//            File(FilePathUtlis.MUSIC_CANONICAL_PATH).walk().forEach {
+//                if (it.isDirectory) {
+//                    Toast.makeText(applicationContext, FileUtils.listfiles(it).toString(), Toast.LENGTH_SHORT).show()
+//                }
+//                if (it.isFile) {
+//                    Toast.makeText(applicationContext, it.toString(), Toast.LENGTH_SHORT).show()
+//                }
+////                Toast.makeText(applicationContext, FileUtils.listfiles(System.getProperty(FilePathUtlis.MUSIC_CANONICAL_PATH)), Toast.LENGTH_SHORT).show()
+//            }
+//        }
+
     }
+
+//    val songListUpdateObserver: Observer<ArrayList<Song>> =
+//        object : Observer<ArrayList<Song>> {
+//            override fun onChanged(songArrayList: ArrayList<Song>?) {
+//                val recyclerViewAdapter =
+//                    RecyclerViewAdapter(this@MainActivity, songArrayList!!, R.layout.song_rv_item)
+//                recyclerview.setLayoutManager(LinearLayoutManager(applicationContext))
+//                recyclerview.setAdapter(recyclerViewAdapter)
+//            }
+//        }
 }

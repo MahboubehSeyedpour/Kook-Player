@@ -13,5 +13,5 @@ object FilePathUtlis {
         Environment.getExternalStoragePublicDirectory(DIRECTORY_MUSIC)
 
     //TODO("findpath for external storage")
-    val MUSIC_ABSOLUTE_PATH: String = MUSICS_INTERNAL_STORAGE.absolutePath
+    val MUSIC_CANONICAL_PATH: String = MUSICS_INTERNAL_STORAGE.canonicalPath
 }
