@@ -6,9 +6,16 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
+import androidx.viewpager2.widget.ViewPager2
 import com.example.cassette.R
 import com.example.cassette.adapter.ViewPagerAdapter
+import com.example.cassette.adapter.ViewPagerFragmentAdapter
+import com.example.cassette.views.Fragments.Favorite
+import com.example.cassette.views.Fragments.Library
+import com.example.cassette.views.Fragments.Playlist
+import com.example.cassette.views.Fragments.RecentlyAdded
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
@@ -32,8 +39,16 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         val res: Resources = resources
         val tabList = res.getStringArray(R.array.tabNames)
 
-        val adapter = ViewPagerAdapter(tabList.asList())
-        viewpager_home.adapter = adapter
+//        val adapter = ViewPagerAdapter(tabList.asList())
+//        viewpager_home.adapter = adapter
+
+        val adapter = ViewPagerFragmentAdapter(supportFragmentManager, lifecycle)
+        adapter.addFragment(Library())
+        adapter.addFragment(Playlist())
+        adapter.addFragment(RecentlyAdded())
+        adapter.addFragment(Favorite())
+        viewpager_home.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        viewpager_home.adapter= adapter
 
 
         TabLayoutMediator(tablayout_home, viewpager_home)
