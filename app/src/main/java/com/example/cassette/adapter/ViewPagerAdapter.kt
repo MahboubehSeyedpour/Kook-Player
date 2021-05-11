@@ -11,7 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.cassette.R
 import kotlinx.android.synthetic.main.page_tablayout.view.*
 
-class ViewPagerAdapter(val texts: List<String>):
+
+class ViewPagerAdapter(val texts: List<String>) :
     RecyclerView.Adapter<ViewPagerAdapter.ViewPagerViewHolder>() {
 
     inner class ViewPagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -30,6 +31,6 @@ class ViewPagerAdapter(val texts: List<String>):
 
     override fun onBindViewHolder(holder: ViewPagerViewHolder, position: Int) {
         holder.itemView.text.setText(texts[position])
-//        holder.itemView.recyclerview.adapter
+        //        holder.itemView.recyclerview.adapter
     }
 }
