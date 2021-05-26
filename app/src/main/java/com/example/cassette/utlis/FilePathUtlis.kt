@@ -1,5 +1,6 @@
 package com.example.cassette.utlis
 
+import android.net.Uri
 import android.os.Environment
 import android.os.Environment.DIRECTORY_MUSIC
 import android.provider.MediaStore
@@ -14,4 +15,8 @@ object FilePathUtlis {
 
     //TODO("findpath for external storage")
     val MUSIC_CANONICAL_PATH: String = MUSICS_INTERNAL_STORAGE.canonicalPath
+
+    fun getMusicsUri(): Uri {
+        return MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+    }
 }

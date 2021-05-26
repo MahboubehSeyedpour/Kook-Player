@@ -1,28 +1,32 @@
-package com.example.cassette.views
+ package com.example.cassette.views
 
+import android.Manifest
+import android.app.Activity
+import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.Lifecycle
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.viewpager2.widget.ViewPager2
 import com.example.cassette.R
-import com.example.cassette.adapter.ViewPagerAdapter
 import com.example.cassette.adapter.ViewPagerFragmentAdapter
 import com.example.cassette.views.Fragments.Favorite
 import com.example.cassette.views.Fragments.Library
 import com.example.cassette.views.Fragments.Playlist
 import com.example.cassette.views.Fragments.RecentlyAdded
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.component_tab.*
 
 
 class MainActivity : AppCompatActivity(), LifecycleOwner {
+
+    val PERMISSION_REQUEST = 111
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,13 +46,14 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 //        val adapter = ViewPagerAdapter(tabList.asList())
 //        viewpager_home.adapter = adapter
 
+
         val adapter = ViewPagerFragmentAdapter(supportFragmentManager, lifecycle)
         adapter.addFragment(Library())
-        adapter.addFragment(Playlist())
         adapter.addFragment(RecentlyAdded())
+        adapter.addFragment(Playlist())
         adapter.addFragment(Favorite())
         viewpager_home.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-        viewpager_home.adapter= adapter
+        viewpager_home.adapter = adapter
 
 
         TabLayoutMediator(tablayout_home, viewpager_home)
@@ -56,33 +61,65 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
             tab.text = tabList[position]
         }.attach()
 
-        tablayout_home.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-                Toast.makeText(
-                    applicationContext,
-                    "tab reselected: ${tab?.text}",
-                    Toast.LENGTH_SHORT
-                ).show()
+        if (ContextCompat.checkSelfPermission(
+                applicationContext,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                )
+            ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    PERMISSION_REQUEST
+                )
             }
+            else{
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    PERMISSION_REQUEST
+                )
+            }
+        }
+        else{
+            doStuff()
+        }
 
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-                Toast.makeText(
-                    applicationContext,
-                    "tab unselected: ${tab?.text}",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
 
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                Toast.makeText(applicationContext, "tab selected: ${tab?.text}", Toast.LENGTH_SHORT)
-                    .show()
-            }
-        })
+
+
+        ///////////////////////////////////////////////////////
+//        tablayout_home.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+//            override fun onTabReselected(tab: TabLayout.Tab?) {
+//                Toast.makeText(
+//                    applicationContext,
+//                    "tab reselected: ${tab?.text}",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//            }
+//
+//            override fun onTabUnselected(tab: TabLayout.Tab?) {
+//                Toast.makeText(
+//                    applicationContext,
+//                    "tab unselected: ${tab?.text}",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//            }
+//
+//            override fun onTabSelected(tab: TabLayout.Tab?) {
+//                Toast.makeText(applicationContext, "tab selected: ${tab?.text}", Toast.LENGTH_SHORT)
+//                    .show()
+//            }
+//        })
 
 //        val viewModel =
 //            ViewModelProvider(this).get(com.example.cassette.datamodels.Songs::class.java)
 //        viewModel.getMutableLiveData().observe(this, songListUpdateObserver)
-
+//////////////////////////////////////
 
         //temp: a button to check if the absolute path is correct
 //        button.setOnClickListener {
@@ -98,6 +135,32 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 //            }
 //        }
 
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when(requestCode){
+            PERMISSION_REQUEST -> if(grantResults.size>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+                    Toast.makeText(this, "permission granted", Toast.LENGTH_SHORT).show()
+                    doStuff()
+                }
+                else{
+                    Toast.makeText(this, "no permission granted", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+                return
+            }
+        }
+
+    }
+
+    fun doStuff()
+    {
+        
     }
 
 //    val songListUpdateObserver: Observer<ArrayList<Song>> =

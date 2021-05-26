@@ -1,12 +1,12 @@
 package com.example.cassette.models
 
 
-class Song(
+class Song_Model(
 //    val id: Long,
-    val title: String,
+
 //    val trackNumber: Int,
 //    val year: Int,
-    val duration: Long
+
 //    val data: String,
 //    val dateModified: Long,
 //    val albumId: Long,
@@ -16,4 +16,6 @@ class Song(
 //    val composer: String?,
 //    val albumArtist: String?
 ) {
+    var title: String = "title"
+    var duration: String = "duration"
 }

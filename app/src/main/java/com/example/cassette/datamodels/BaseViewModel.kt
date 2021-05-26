@@ -2,40 +2,16 @@ package com.example.cassette.datamodels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.cassette.models.Song
-import java.util.*
 import kotlin.collections.ArrayList
 
-open class BaseViewModel() : ViewModel() {
+abstract class BaseViewModel : ViewModel() {
 
-    var liveData = MutableLiveData<ArrayList<Song>>();
-    var arrayList = ArrayList<Song>();
+     open lateinit var liveData : MutableLiveData<ArrayList<Any>>
+     open lateinit var arrayList : ArrayList<Any>
 
-    init {
-        liveData = MutableLiveData()
-        fillRecyclerView()
-    }
+    abstract fun getMutableLiveData():  MutableLiveData<ArrayList<Any>>
 
-    open fun getMutableLiveData():  MutableLiveData<ArrayList<Song>>{
-        return liveData
-    }
+    abstract fun fillRecyclerView()
 
-
-    final fun fillRecyclerView() {
-//        REST API can be called here
-        populateList();
-        liveData.setValue(arrayList);
-    }
-
-    open fun populateList() {
-
-        val song = Song("title", 3200)
-
-        arrayList.add(song);
-        arrayList.add(song);
-        arrayList.add(song);
-        arrayList.add(song);
-        arrayList.add(song);
-        arrayList.add(song);
-    }
+    abstract fun populateList()
 }

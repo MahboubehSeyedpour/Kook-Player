@@ -1,12 +1,12 @@
 package com.example.cassette.utlis.services
 
-import android.widget.Toast
+import android.content.Context
+import android.database.Cursor
+import android.os.Environment
+import android.provider.MediaStore
+import com.example.cassette.models.Song_Model
 import com.example.cassette.utlis.FilePathUtlis
 import java.io.File
-import java.nio.file.Files
-import java.nio.file.Path
-import java.nio.file.Paths
-import java.util.stream.Collectors
 
 object FileUtils {
 
@@ -22,8 +22,5 @@ object FileUtils {
         }
     }
 
-    fun getFiles(file: File): Array<String> {
-        val files: Array<String> = file.list()
-        return files
-    }
+
 }
