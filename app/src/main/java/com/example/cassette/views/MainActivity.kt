@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -19,8 +20,11 @@ import com.example.cassette.views.Fragments.Favorite
 import com.example.cassette.views.Fragments.Library
 import com.example.cassette.views.Fragments.Playlist
 import com.example.cassette.views.Fragments.RecentlyAdded
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.bottom_sheet.*
 import kotlinx.android.synthetic.main.component_tab.*
 
 
@@ -32,7 +36,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 //
-        val toolbar: Toolbar = findViewById<View>(R.id.toolbar) as Toolbar
+//        val toolbar: Toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         // Make sure the toolbar exists in the activity and is not null
 //        setSupportActionBar(toolbar)
@@ -56,7 +60,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         viewpager_home.adapter = adapter
 
 
-        TabLayoutMediator(tablayout_home, viewpager_home)
+        TabLayoutMediator(tabLayout_home, viewpager_home)
         { tab, position ->
             tab.text = tabList[position]
         }.attach()
@@ -88,6 +92,22 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         else{
             doStuff()
         }
+
+
+
+//        val bottomSheetDialog = BottomSheetDialog(this, R.style.Theme_Design_BottomSheetDialog)
+//        val bottomSheetView = LayoutInflater.from(applicationContext).inflate(R.layout.bottom_sheet, bottomSheetContainer)
+//        bottomSheetDialog.setContentView(bottomSheetView)
+//        bottomSheetDialog.show()
+
+//        val bottomSheetBehaviour = BottomSheetBehavior.from(bottomSheet)
+//        bottomSheetBehaviour.setPeekHeight(55)
+//        bottomSheetBehaviour.isHideable = true
+//        bottomSheetContainer.setOnClickListener {
+//            bottomSheetBehaviour.state=BottomSheetBehavior.STATE_EXPANDED
+//        }
+
+
 
 
 

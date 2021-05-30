@@ -5,16 +5,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    tools:context=".views.MainActivity">
+    tools:context=".views.MainActivity"
+    android:orientation="vertical">
 
-    <include layout="@layout/component_toolbar" />
+    <include
+        android:id="@+id/include"
+        layout="@layout/component_toolbar" />
 
-    <include layout="@layout/component_tab" />
+<!--    <include-->
+<!--        android:id="@+id/include2"-->
+<!--        layout="@layout/component_tab" />-->
+    <com.google.android.material.tabs.TabLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/tabLayout_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewpager_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="31dp"></androidx.viewpager2.widget.ViewPager2>
+
+<!--        <androidx.core.widget.NestedScrollView-->
+<!--            android:id="@+id/bottomSheet"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="350dp"-->
+<!--            android:background="@color/blue_light"-->
+<!--            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent">-->
+
+<!--            <include-->
+<!--                android:id="@+id/include3"-->
+<!--                layout="@layout/bottom_sheet" />-->
+
+<!--        </androidx.core.widget.NestedScrollView>-->
+
+
 </LinearLayout>
