@@ -1,34 +1,30 @@
  package com.example.cassette.views
 
 import android.Manifest
-import android.app.Activity
 import android.content.pm.PackageManager
 import android.content.res.Resources
+import android.media.MediaPlayer
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.viewpager2.widget.ViewPager2
 import com.example.cassette.R
 import com.example.cassette.adapter.ViewPagerFragmentAdapter
+import com.example.cassette.utlis.MusicPlayer
 import com.example.cassette.views.Fragments.Favorite
 import com.example.cassette.views.Fragments.Library
 import com.example.cassette.views.Fragments.Playlist
 import com.example.cassette.views.Fragments.RecentlyAdded
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.bottom_sheet.*
-import kotlinx.android.synthetic.main.component_tab.*
 
 
-class MainActivity : AppCompatActivity(), LifecycleOwner {
+ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
     val PERMISSION_REQUEST = 111
 
@@ -80,19 +76,16 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
                     arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
                     PERMISSION_REQUEST
                 )
-            }
-            else{
+            } else {
                 ActivityCompat.requestPermissions(
                     this,
                     arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
                     PERMISSION_REQUEST
                 )
             }
-        }
-        else{
+        } else {
             doStuff()
         }
-
 
 
 //        val bottomSheetDialog = BottomSheetDialog(this, R.style.Theme_Design_BottomSheetDialog)
@@ -107,13 +100,26 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 //            bottomSheetBehaviour.state=BottomSheetBehavior.STATE_EXPANDED
 //        }
 
-        imageView3.setOnClickListener {
-            Toast.makeText(this,"play" , Toast.LENGTH_SHORT).show()
+
+//        MusicPlayer.init(this)
+
+        val mediaPlayer = MediaPlayer.create(this, R.raw.nafas)
+
+
+        play_btn.setOnClickListener {
+//            Toast.makeText(this,"play" , Toast.LENGTH_SHORT).show()
+            if(!mediaPlayer.isPlaying){
+                mediaPlayer.start()
+                play_btn.setImageResource(R.mipmap.ic_pause_track_pic_foreground)
+            }
+            else{
+                mediaPlayer.pause()
+                play_btn.setImageResource(R.mipmap.ic_play_track_pic_foreground)
+            }
+
+//            MusicPlayer.playMusic()
+//            updatePlayBtn()
         }
-
-
-
-
 
 
         ///////////////////////////////////////////////////////
@@ -160,6 +166,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 //        }
 
     }
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
