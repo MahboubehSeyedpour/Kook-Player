@@ -100,12 +100,16 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 //        bottomSheetDialog.setContentView(bottomSheetView)
 //        bottomSheetDialog.show()
 
-//        val bottomSheetBehaviour = BottomSheetBehavior.from(bottomSheet)
-//        bottomSheetBehaviour.setPeekHeight(55)
-//        bottomSheetBehaviour.isHideable = true
+        val bottomSheetBehaviour = BottomSheetBehavior.from(bottomSheet)
+        bottomSheetBehaviour.setPeekHeight(170)
+        bottomSheetBehaviour.isHideable = true
 //        bottomSheetContainer.setOnClickListener {
 //            bottomSheetBehaviour.state=BottomSheetBehavior.STATE_EXPANDED
 //        }
+
+        imageView3.setOnClickListener {
+            Toast.makeText(this,"play" , Toast.LENGTH_SHORT).show()
+        }
 
 
 

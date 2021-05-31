@@ -1,47 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".views.MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".views.MainActivity">
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/component_toolbar" />
-
-<!--    <include-->
-<!--        android:id="@+id/include2"-->
-<!--        layout="@layout/component_tab" />-->
-    <com.google.android.material.tabs.TabLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/tabLayout_home"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewpager_home"
+        <include
+            android:id="@+id/include"
+            layout="@layout/component_toolbar" />
+
+        <com.google.android.material.tabs.TabLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/tabLayout_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewpager_home"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/bottomSheet"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="31dp"></androidx.viewpager2.widget.ViewPager2>
+        android:background="@color/blue_light"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-<!--        <androidx.core.widget.NestedScrollView-->
-<!--            android:id="@+id/bottomSheet"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="350dp"-->
-<!--            android:background="@color/blue_light"-->
-<!--            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent">-->
+        <include
+            android:id="@+id/include3"
+            layout="@layout/bottom_sheet" />
 
-<!--            <include-->
-<!--                android:id="@+id/include3"-->
-<!--                layout="@layout/bottom_sheet" />-->
-
-<!--        </androidx.core.widget.NestedScrollView>-->
+    </androidx.core.widget.NestedScrollView>
 
 
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
