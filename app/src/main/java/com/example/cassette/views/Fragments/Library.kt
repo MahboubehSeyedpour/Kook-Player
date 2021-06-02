@@ -45,7 +45,7 @@ class Library : Fragment() {
 
 //        TODO(check if the manifest permissions had been granted)
 
-        arraylist = MusicUtils.getListOfMusics(context)
+        arraylist = context?.let { MusicUtils.getListOfMusics(it) }
 
         return view
     }

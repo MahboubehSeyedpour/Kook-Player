@@ -1,5 +1,7 @@
 package com.example.cassette.models
 
+import android.net.Uri
+
 
 class Song_Model(
 //    val id: Long,
@@ -16,6 +18,7 @@ class Song_Model(
 //    val composer: String?,
 //    val albumArtist: String?
 ) {
-    var title: String = "title"
-    var duration: String = "duration"
+    var title: String = ""
+    var duration: String = ""
+    var data: String = ""
 }

@@ -1,6 +1,7 @@
 package com.example.cassette.adapter
 
 import android.app.Activity
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,8 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cassette.R
 import com.example.cassette.models.Song_Model
+import com.example.cassette.utlis.MusicUtils
+import com.example.cassette.views.MainActivity
 import kotlinx.android.synthetic.main.song_rv_item.view.*
 
 class Songs_Adapter(
@@ -37,12 +40,8 @@ class Songs_Adapter(
         val viewHolder = holder as RecyclerViewViewHolder
         viewHolder.title.text = song.title
         viewHolder.duration.text = song.duration
-        viewHolder.itemView.setOnClickListener{
-            Toast.makeText(
-                context,
-                song.title,
-                Toast.LENGTH_SHORT
-            ).show()
+        viewHolder.itemView.setOnClickListener {
+            MusicUtils.playMusic(song.data)
         }
     }
 

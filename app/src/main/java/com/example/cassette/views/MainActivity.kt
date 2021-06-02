@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +15,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.cassette.R
 import com.example.cassette.adapter.ViewPagerFragmentAdapter
 import com.example.cassette.utlis.MusicPlayer
+import com.example.cassette.utlis.MusicUtils
 import com.example.cassette.views.Fragments.Favorite
 import com.example.cassette.views.Fragments.Library
 import com.example.cassette.views.Fragments.Playlist
@@ -27,11 +29,12 @@ import kotlinx.android.synthetic.main.bottom_sheet.*
  class MainActivity : AppCompatActivity(), LifecycleOwner {
 
     val PERMISSION_REQUEST = 111
+     lateinit var mediaPlayer : MediaPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-//
+        mediaPlayer = MediaPlayer.create(this, R.raw.nafas)
 //        val toolbar: Toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         // Make sure the toolbar exists in the activity and is not null
@@ -103,22 +106,10 @@ import kotlinx.android.synthetic.main.bottom_sheet.*
 
 //        MusicPlayer.init(this)
 
-        val mediaPlayer = MediaPlayer.create(this, R.raw.nafas)
+
 
 
         play_btn.setOnClickListener {
-//            Toast.makeText(this,"play" , Toast.LENGTH_SHORT).show()
-            if(!mediaPlayer.isPlaying){
-                mediaPlayer.start()
-                play_btn.setImageResource(R.mipmap.ic_pause_track_pic_foreground)
-            }
-            else{
-                mediaPlayer.pause()
-                play_btn.setImageResource(R.mipmap.ic_play_track_pic_foreground)
-            }
-
-//            MusicPlayer.playMusic()
-//            updatePlayBtn()
         }
 
 
@@ -167,7 +158,6 @@ import kotlinx.android.synthetic.main.bottom_sheet.*
 
     }
 
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -203,4 +193,4 @@ import kotlinx.android.synthetic.main.bottom_sheet.*
 //                recyclerview.setAdapter(recyclerViewAdapter)
 //            }
 //        }
-}
+ }
