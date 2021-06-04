@@ -18,7 +18,7 @@ class PlayerPanel {
     fun setup(bottomsheet: View, bottomSheetnew: View, context: Context) {
         bottomSheetBehaviour = BottomSheetBehavior.from(bottomsheet)
         bottomSheetBehaviour.setPeekHeight(140)
-        bottomSheetBehaviour.isHideable = true
+        bottomSheetBehaviour.isHideable = false
         bottomSheetBehaviour.addBottomSheetCallback(bottomsheetCallback)
 
         this.context = context
