@@ -1,11 +1,12 @@
  package com.example.cassette.views
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.media.MediaPlayer
-import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -14,19 +15,19 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.viewpager2.widget.ViewPager2
 import com.example.cassette.R
 import com.example.cassette.adapter.ViewPagerFragmentAdapter
-import com.example.cassette.utlis.MusicPlayer
 import com.example.cassette.utlis.MusicUtils
 import com.example.cassette.views.Fragments.Favorite
 import com.example.cassette.views.Fragments.Library
 import com.example.cassette.views.Fragments.Playlist
 import com.example.cassette.views.Fragments.RecentlyAdded
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.bottom_sheet.*
 
 
- class MainActivity : AppCompatActivity(), LifecycleOwner {
+ class MainActivity : AppCompatActivity(), LifecycleOwner{
 
     val PERMISSION_REQUEST = 111
      lateinit var mediaPlayer : MediaPlayer
@@ -91,25 +92,49 @@ import kotlinx.android.synthetic.main.bottom_sheet.*
         }
 
 
-//        val bottomSheetDialog = BottomSheetDialog(this, R.style.Theme_Design_BottomSheetDialog)
-//        val bottomSheetView = LayoutInflater.from(applicationContext).inflate(R.layout.bottom_sheet, bottomSheetContainer)
-//        bottomSheetDialog.setContentView(bottomSheetView)
-//        bottomSheetDialog.show()
-
         val bottomSheetBehaviour = BottomSheetBehavior.from(bottomSheet)
-        bottomSheetBehaviour.setPeekHeight(170)
+        bottomSheetBehaviour.setPeekHeight(140)
         bottomSheetBehaviour.isHideable = true
-//        bottomSheetContainer.setOnClickListener {
-//            bottomSheetBehaviour.state=BottomSheetBehavior.STATE_EXPANDED
-//        }
 
 
-//        MusicPlayer.init(this)
+        bottomSheetBehaviour.setBottomSheetCallback(object : BottomSheetCallback() {
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+            }
 
+            @SuppressLint("ResourceAsColor")
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if(bottomSheetBehaviour.state == BottomSheetBehavior.STATE_EXPANDED){
+                    Toast.makeText(
+                        applicationContext,
+                        "state is EXPANDED",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
 
+                if(bottomSheetBehaviour.state == BottomSheetBehavior.STATE_COLLAPSED){
+                    Toast.makeText(
+                        applicationContext,
+                        "state is COLLAPSED",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        })
 
 
         play_btn.setOnClickListener {
+
+            if(!MusicUtils.mediaPlayer.isPlaying)
+            {
+                MusicUtils.mediaPlayer.start()
+                play_btn.setImageResource(R.mipmap.ic_play_track_pic_foreground)
+            }
+            else
+            {
+                MusicUtils.mediaPlayer.pause()
+                play_btn.setImageResource(R.mipmap.ic_pause_track_pic_foreground)
+            }
+
         }
 
 
@@ -183,14 +208,4 @@ import kotlinx.android.synthetic.main.bottom_sheet.*
     {
         
     }
-
-//    val songListUpdateObserver: Observer<ArrayList<Song>> =
-//        object : Observer<ArrayList<Song>> {
-//            override fun onChanged(songArrayList: ArrayList<Song>?) {
-//                val recyclerViewAdapter =
-//                    RecyclerViewAdapter(this@MainActivity, songArrayList!!, R.layout.song_rv_item)
-//                recyclerview.setLayoutManager(LinearLayoutManager(applicationContext))
-//                recyclerview.setAdapter(recyclerViewAdapter)
-//            }
-//        }
  }
