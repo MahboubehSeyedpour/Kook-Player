@@ -36,6 +36,8 @@ import kotlinx.android.synthetic.main.bottom_sheet.*
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         mediaPlayer = MediaPlayer.create(this, R.raw.nafas)
+
+        bottomSheetnew.visibility = View.GONE
 //        val toolbar: Toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         // Make sure the toolbar exists in the activity and is not null
@@ -92,35 +94,9 @@ import kotlinx.android.synthetic.main.bottom_sheet.*
         }
 
 
-        val bottomSheetBehaviour = BottomSheetBehavior.from(bottomSheet)
-        bottomSheetBehaviour.setPeekHeight(140)
-        bottomSheetBehaviour.isHideable = true
-
-
-        bottomSheetBehaviour.setBottomSheetCallback(object : BottomSheetCallback() {
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-            }
-
-            @SuppressLint("ResourceAsColor")
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-                if(bottomSheetBehaviour.state == BottomSheetBehavior.STATE_EXPANDED){
-                    Toast.makeText(
-                        applicationContext,
-                        "state is EXPANDED",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-
-                if(bottomSheetBehaviour.state == BottomSheetBehavior.STATE_COLLAPSED){
-                    Toast.makeText(
-                        applicationContext,
-                        "state is COLLAPSED",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-        })
-
+        // bottomsheet manager
+        val playerPanel = PlayerPanel ()
+        playerPanel.setup(bottomSheet, bottomSheetnew, baseContext)
 
         play_btn.setOnClickListener {
 
