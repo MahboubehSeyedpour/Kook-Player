@@ -11,6 +11,10 @@ import com.example.cassette.R
 import com.example.cassette.models.Song_Model
 import com.example.cassette.views.MainActivity
 import kotlinx.android.synthetic.main.player_expanded_state.*
+import java.sql.Time
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 object MusicUtils {
 
@@ -35,12 +39,13 @@ object MusicUtils {
                 try {
                     song.title =
                         cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME))
-                    song.duration =
-                        cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION))
+                    song.duration = milliSecToDuration(cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)))
+
+//                        cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION))
                     song.data =
                         cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA))
                 } catch (e: Exception) {
-                    song.duration = "Not Defined"
+                    song.duration = ""
                 }
 
                 musicList.add(song)
@@ -69,7 +74,17 @@ object MusicUtils {
     fun PlayMusic() {
         mediaPlayer.start()
 
-
     }
+
+    fun milliSecToDuration(duration: Long): String{
+        val millisec_temp = duration/1000
+        val seconds_final = millisec_temp%60
+        val minutes_temp = millisec_temp/60
+        val minutes_final = minutes_temp % 60
+        val hour_final = minutes_temp / 60
+        return "$hour_final : $minutes_final : $seconds_final"
+    }
+
+
 
 }
