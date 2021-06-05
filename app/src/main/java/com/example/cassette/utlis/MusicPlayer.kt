@@ -4,7 +4,6 @@ import android.content.Context
 import android.media.MediaPlayer
 import androidx.core.content.contentValuesOf
 import com.example.cassette.R
-import kotlinx.android.synthetic.main.bottom_sheet.*
 
 object MusicPlayer : MediaPlayer() {
     lateinit var musicplayer : MediaPlayer

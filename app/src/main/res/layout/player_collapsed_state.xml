@@ -21,7 +21,7 @@
         app:layout_constraintVertical_bias="0.022" />
 
     <ImageView
-        android:id="@+id/play_btn"
+        android:id="@+id/play_btn1"
         android:layout_width="50dp"
         android:layout_height="50dp"
         app:layout_constraintBottom_toBottomOf="parent"

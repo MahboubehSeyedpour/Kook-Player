@@ -9,12 +9,15 @@ import android.widget.Toast
 import androidx.core.content.contentValuesOf
 import com.example.cassette.R
 import com.example.cassette.models.Song_Model
-import kotlinx.android.synthetic.main.bottom_sheet.*
-import java.net.URI
+import com.example.cassette.views.MainActivity
+import kotlinx.android.synthetic.main.player_expanded_state.*
 
 object MusicUtils {
-    lateinit var mediaPlayer : MediaPlayer
+
+    lateinit var mediaPlayer: MediaPlayer
     lateinit var context: Context
+
+
     fun getListOfMusics(context: Context): ArrayList<Song_Model> {
 
         this.context = context
@@ -34,7 +37,8 @@ object MusicUtils {
                         cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME))
                     song.duration =
                         cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION))
-                    song.data = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA))
+                    song.data =
+                        cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA))
                 } catch (e: Exception) {
                     song.duration = "Not Defined"
                 }
@@ -55,11 +59,17 @@ object MusicUtils {
         )
     }
 
-    fun playMusic(content: String){
-        val uri :Uri = Uri.parse(content)
+    fun changePlayingMusic(content: String) {
+        val uri: Uri = Uri.parse(content)
         mediaPlayer.release()
         mediaPlayer = MediaPlayer.create(context, uri)
+        PlayMusic()
+    }
+
+    fun PlayMusic() {
         mediaPlayer.start()
+
+
     }
 
 }

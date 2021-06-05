@@ -8,80 +8,80 @@
     android:orientation="vertical"
     android:layout_gravity="center">
 
-    <LinearLayout
-        android:id="@+id/music_coverImage_layout"
-        android:layout_width="353dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_margin="20dp">
+<!--    <LinearLayout-->
+<!--        android:id="@+id/music_coverImage_layout"-->
+<!--        android:layout_width="353dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center"-->
+<!--        android:layout_margin="20dp">-->
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="match_parent"
-            android:layout_height="353dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.125"
-            app:srcCompat="@drawable/ic_app"
-            tools:ignore="VectorDrawableCompat" />
+<!--        <ImageView-->
+<!--            android:id="@+id/imageView2"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="353dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintVertical_bias="0.125"-->
+<!--            app:srcCompat="@drawable/ic_app"-->
+<!--            tools:ignore="VectorDrawableCompat" />-->
 
-    </LinearLayout>
+<!--    </LinearLayout>-->
 
-    <LinearLayout
-        android:id="@+id/music_control_btn_layout"
-        android:layout_width="353dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_margin="20dp">
+<!--    <LinearLayout-->
+<!--        android:id="@+id/music_control_btn_layout"-->
+<!--        android:layout_width="353dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center"-->
+<!--        android:layout_margin="20dp">-->
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content">-->
 
-            <ImageView
-                android:id="@+id/next_track_iv"
-                android:layout_width="40dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="80dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@mipmap/ic_next_track_pic_foreground" />
+<!--            <ImageView-->
+<!--                android:id="@+id/next_track_iv"-->
+<!--                android:layout_width="40dp"-->
+<!--                android:layout_height="36dp"-->
+<!--                android:layout_marginEnd="80dp"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:srcCompat="@mipmap/ic_next_track_pic_foreground" />-->
 
-            <ImageView
-                android:id="@+id/play_track_iv"
-                android:layout_width="40dp"
-                android:layout_height="36dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/next_track_iv"
-                app:layout_constraintHorizontal_bias="0.641"
-                app:layout_constraintStart_toEndOf="@+id/prev_track_iv"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@mipmap/ic_play_track_pic_foreground" />
+<!--            <ImageView-->
+<!--                android:id="@+id/play_track_iv"-->
+<!--                android:layout_width="40dp"-->
+<!--                android:layout_height="36dp"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toStartOf="@+id/next_track_iv"-->
+<!--                app:layout_constraintHorizontal_bias="0.641"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/prev_track_iv"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:srcCompat="@mipmap/ic_play_track_pic_foreground" />-->
 
-            <ImageView
-                android:id="@+id/prev_track_iv"
-                android:layout_width="40dp"
-                android:layout_height="36dp"
-                android:layout_marginStart="80dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@mipmap/ic_previous_track_pic_foreground" />
+<!--            <ImageView-->
+<!--                android:id="@+id/prev_track_iv"-->
+<!--                android:layout_width="40dp"-->
+<!--                android:layout_height="36dp"-->
+<!--                android:layout_marginStart="80dp"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:srcCompat="@mipmap/ic_previous_track_pic_foreground" />-->
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    </LinearLayout>
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
 
 
-    <SeekBar
-        android:id="@+id/seekBar"
-        android:layout_width="353dp"
-        android:layout_height="18dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_gravity="center"/>
+<!--    </LinearLayout>-->
+
+
+<!--    <SeekBar-->
+<!--        android:id="@+id/seekBar"-->
+<!--        android:layout_width="353dp"-->
+<!--        android:layout_height="18dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        android:layout_gravity="center"/>-->
 </LinearLayout>

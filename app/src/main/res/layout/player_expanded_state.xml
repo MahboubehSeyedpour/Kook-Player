@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottomSheetContainer1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+    <!--    android:background="#0cccce"-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp">
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="?attr/homeAsUpIndicator" />
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="302dp"
+        android:layout_height="302dp"
+        android:elevation="4dp"
+        android:translationZ="40dp"
+        app:cardCornerRadius="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.27"
+        android:layout_margin="20dp">
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@mipmap/ic_song_pic_foreground" />
+
+
+    </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_margin="30dp">
+
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="302dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="TextView"
+            android:textColor="@color/black"
+            android:textSize="28dp"
+            app:layout_constraintBottom_toTopOf="@+id/seekBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView"
+            app:layout_constraintVertical_bias="0.523" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_margin="30dp">
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="302dp"
+            android:layout_height="25dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.422"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.797" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seekBar"
+        app:layout_constraintVertical_bias="0.636"
+        tools:layout_editor_absoluteX="9dp"
+        android:layout_margin="30dp">
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="49dp"
+            android:layout_height="43dp"
+            android:layout_weight="1"
+            app:srcCompat="@mipmap/ic_previous_track_pic_foreground"
+            tools:layout_editor_absoluteX="113dp"
+            tools:layout_editor_absoluteY="577dp" />
+
+        <ImageView
+            android:id="@+id/play_btn"
+            android:layout_width="49dp"
+            android:layout_height="43dp"
+            android:layout_weight="1"
+            app:srcCompat="@mipmap/ic_play_track_pic_foreground" />
+
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="49dp"
+            android:layout_height="43dp"
+            android:layout_weight="1"
+            app:srcCompat="@mipmap/ic_next_track_pic_foreground" />
+
+    </LinearLayout>
+
+</LinearLayout>

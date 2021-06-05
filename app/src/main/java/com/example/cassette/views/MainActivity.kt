@@ -20,11 +20,11 @@ import com.example.cassette.views.Fragments.Favorite
 import com.example.cassette.views.Fragments.Library
 import com.example.cassette.views.Fragments.Playlist
 import com.example.cassette.views.Fragments.RecentlyAdded
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.bottom_sheet.*
+import kotlinx.android.synthetic.main.main.*
+import kotlinx.android.synthetic.main.player_collapsed_state.*
+import kotlinx.android.synthetic.main.player_expanded_state.*
 
 
  class MainActivity : AppCompatActivity(), LifecycleOwner{
@@ -37,7 +37,7 @@ import kotlinx.android.synthetic.main.bottom_sheet.*
         setContentView(R.layout.activity_main)
         mediaPlayer = MediaPlayer.create(this, R.raw.nafas)
 
-        bottomSheetnew.visibility = View.GONE
+
 //        val toolbar: Toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         // Make sure the toolbar exists in the activity and is not null
@@ -93,10 +93,10 @@ import kotlinx.android.synthetic.main.bottom_sheet.*
             doStuff()
         }
 
-
         // bottomsheet manager
         val playerPanel = PlayerPanel ()
-        playerPanel.setup(bottomSheet, bottomSheetnew, baseContext)
+        playerPanel.setup(bottomSheet, baseContext)
+
 
         play_btn.setOnClickListener {
 
@@ -112,6 +112,8 @@ import kotlinx.android.synthetic.main.bottom_sheet.*
             }
 
         }
+
+
 
 
         ///////////////////////////////////////////////////////
