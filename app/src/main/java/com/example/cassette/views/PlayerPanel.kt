@@ -1,16 +1,10 @@
 package com.example.cassette.views
 
-import android.R
 import android.annotation.SuppressLint
-import android.app.StatusBarManager
 import android.content.Context
-import android.media.MediaPlayer
 import android.view.View
-import android.widget.FrameLayout
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlinx.android.synthetic.main.activity_main.*
 
 class PlayerPanel {
 
@@ -26,7 +20,6 @@ class PlayerPanel {
         bottomSheetBehaviour.addBottomSheetCallback(bottomsheetCallback)
 
         this.context = context
-//        this.bottomSheetnew = bottomSheetnew
 
     }
 

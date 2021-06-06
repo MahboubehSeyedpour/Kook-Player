@@ -29,7 +29,7 @@ class Playlist : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val view = inflater.inflate(R.layout.playlist_fragment, container, false)
+        val view = inflater.inflate(R.layout.fragment_playlist, container, false)
 
         return view
     }

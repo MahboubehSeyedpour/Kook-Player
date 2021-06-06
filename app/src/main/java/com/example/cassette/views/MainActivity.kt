@@ -1,12 +1,10 @@
  package com.example.cassette.views
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -22,9 +20,8 @@ import com.example.cassette.views.Fragments.Playlist
 import com.example.cassette.views.Fragments.RecentlyAdded
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.main.*
-import kotlinx.android.synthetic.main.player_collapsed_state.*
-import kotlinx.android.synthetic.main.player_expanded_state.*
+import kotlinx.android.synthetic.main.base.*
+import kotlinx.android.synthetic.main.player_panel.*
 
 
  class MainActivity : AppCompatActivity(), LifecycleOwner{

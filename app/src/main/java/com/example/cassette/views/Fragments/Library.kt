@@ -1,15 +1,9 @@
 package com.example.cassette.views.Fragments
 
-import android.Manifest
-import android.app.Activity
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.renderscript.Element
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -19,7 +13,6 @@ import com.example.cassette.adapter.Songs_Adapter
 import com.example.cassette.datamodels.Songs_ViewModel
 import com.example.cassette.models.Song_Model
 import com.example.cassette.utlis.MusicUtils
-import com.example.cassette.utlis.services.FileUtils
 import kotlinx.android.synthetic.main.library_fragment.*
 
 class Library : Fragment() {
@@ -41,7 +34,7 @@ class Library : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val view = inflater.inflate(R.layout.library_fragment, container, false)
+        val view = inflater.inflate(R.layout.fragment_library, container, false)
 
 //        TODO(check if the manifest permissions had been granted)
 
