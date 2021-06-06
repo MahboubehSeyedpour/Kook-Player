@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical">
-    <!--    android:background="#0cccce"-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -37,7 +36,7 @@
         android:layout_margin="20dp">
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/music_"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:srcCompat="@mipmap/ic_song_pic_foreground" />
@@ -69,60 +68,8 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_margin="30dp">
-
-        <SeekBar
-            android:id="@+id/seekBar"
-            android:layout_width="302dp"
-            android:layout_height="25dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.422"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.797" />
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/seekBar"
-        app:layout_constraintVertical_bias="0.636"
-        tools:layout_editor_absoluteX="9dp"
-        android:layout_margin="30dp">
-
-        <ImageView
-            android:id="@+id/imageView6"
-            android:layout_width="49dp"
-            android:layout_height="43dp"
-            android:layout_weight="1"
-            app:srcCompat="@mipmap/ic_previous_track_pic_foreground"
-            tools:layout_editor_absoluteX="113dp"
-            tools:layout_editor_absoluteY="577dp" />
-
-        <ImageView
-            android:id="@+id/play_btn"
-            android:layout_width="49dp"
-            android:layout_height="43dp"
-            android:layout_weight="1"
-            app:srcCompat="@mipmap/ic_play_track_pic_foreground" />
-
-        <ImageView
-            android:id="@+id/imageView9"
-            android:layout_width="49dp"
-            android:layout_height="43dp"
-            android:layout_weight="1"
-            app:srcCompat="@mipmap/ic_next_track_pic_foreground" />
-
-    </LinearLayout>
+    <include
+        android:id="@+id/player_remote"
+        layout="@layout/player_remote"/>
 
 </LinearLayout>

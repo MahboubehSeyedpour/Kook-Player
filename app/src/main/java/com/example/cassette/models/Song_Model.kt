@@ -21,4 +21,5 @@ class Song_Model(
     var title: String = ""
     var duration: String = ""
     var data: String = ""
+    var image : String = ""
 }

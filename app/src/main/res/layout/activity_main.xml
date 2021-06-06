@@ -10,7 +10,7 @@
     tools:context=".views.MainActivity">
 
     <include
-        android:id="@+id/main"
+        android:id="@+id/include_base"
         layout="@layout/base" />
 
     <androidx.core.widget.NestedScrollView
@@ -21,26 +21,11 @@
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
         <include
-            android:id="@+id/include3"
+            android:id="@+id/include_player_panel"
             layout="@layout/player_panel"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
     </androidx.core.widget.NestedScrollView>
-
-    <!--    <androidx.core.widget.NestedScrollView-->
-    <!--        android:id="@+id/bottomSheet"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        android:background="@color/blue_light"-->
-    <!--        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent">-->
-
-    <!--        <include-->
-    <!--            android:id="@+id/include3"-->
-    <!--            layout="@layout/player_collapsed_state" />-->
-
-    <!--    </androidx.core.widget.NestedScrollView>-->
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

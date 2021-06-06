@@ -13,7 +13,7 @@ import com.example.cassette.adapter.Songs_Adapter
 import com.example.cassette.datamodels.Songs_ViewModel
 import com.example.cassette.models.Song_Model
 import com.example.cassette.utlis.MusicUtils
-import kotlinx.android.synthetic.main.library_fragment.*
+import kotlinx.android.synthetic.main.fragment_library.*
 
 class Library : Fragment() {
 

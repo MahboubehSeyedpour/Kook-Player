@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.cassette.R
-import kotlinx.android.synthetic.main.playlist_fragment.*
+import kotlinx.android.synthetic.main.fragment_playlist.*
 
 
 class Playlist : Fragment() {

@@ -1,4 +1,4 @@
- package com.example.cassette.views
+package com.example.cassette.views
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -22,18 +22,19 @@ import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.base.*
 import kotlinx.android.synthetic.main.player_panel.*
+import kotlinx.android.synthetic.main.player_remote.*
 
 
- class MainActivity : AppCompatActivity(), LifecycleOwner{
+class MainActivity : AppCompatActivity(), LifecycleOwner {
 
     val PERMISSION_REQUEST = 111
-     lateinit var mediaPlayer : MediaPlayer
+    lateinit var mediaPlayer: MediaPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        mediaPlayer = MediaPlayer.create(this, R.raw.nafas)
-
+        MusicUtils.setupMediaPlayer(applicationContext)
+        this.mediaPlayer = MusicUtils.mediaPlayer
 
 //        val toolbar: Toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         // Sets the Toolbar to act as the ActionBar for this Activity window.
@@ -91,26 +92,24 @@ import kotlinx.android.synthetic.main.player_panel.*
         }
 
         // bottomsheet manager
-        val playerPanel = PlayerPanel ()
+        val playerPanel = PlayerPanel()
         playerPanel.setup(bottomSheet, baseContext)
+
+
+        seekBar.setProgress(mediaPlayer.currentPosition/1000)
 
 
         play_btn.setOnClickListener {
 
-            if(!MusicUtils.mediaPlayer.isPlaying)
-            {
+            if (!MusicUtils.mediaPlayer.isPlaying) {
                 MusicUtils.mediaPlayer.start()
                 play_btn.setImageResource(R.mipmap.ic_play_track_pic_foreground)
-            }
-            else
-            {
+            } else {
                 MusicUtils.mediaPlayer.pause()
                 play_btn.setImageResource(R.mipmap.ic_pause_track_pic_foreground)
             }
 
         }
-
-
 
 
         ///////////////////////////////////////////////////////
@@ -163,13 +162,16 @@ import kotlinx.android.synthetic.main.player_panel.*
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        when(requestCode){
-            PERMISSION_REQUEST -> if(grantResults.size>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+        when (requestCode) {
+            PERMISSION_REQUEST -> if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    ) == PackageManager.PERMISSION_GRANTED
+                ) {
                     Toast.makeText(this, "permission granted", Toast.LENGTH_SHORT).show()
                     doStuff()
-                }
-                else{
+                } else {
                     Toast.makeText(this, "no permission granted", Toast.LENGTH_SHORT).show()
                     finish()
                 }
@@ -179,8 +181,7 @@ import kotlinx.android.synthetic.main.player_panel.*
 
     }
 
-    fun doStuff()
-    {
-        
+    fun doStuff() {
+
     }
- }
+}
