@@ -18,6 +18,7 @@ class Songs_Adapter(
 
     var context = context
     var arrayList = arrayList
+    var position = 0
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -33,13 +34,20 @@ class Songs_Adapter(
         position: Int
     ) {
         val song: Song_Model = arrayList.get(position)
+        this.position = position
         val viewHolder = holder as RecyclerViewViewHolder
         viewHolder.title.text = song.title
         viewHolder.duration.text = song.duration
         viewHolder.singer.text = song.image
         viewHolder.itemView.setOnClickListener {
-            MusicUtils.changePlayingMusic(song.data)
+            MusicUtils.PlayMusic(song.data)
+            updatePosition(viewHolder.adapterPosition)
+
         }
+    }
+
+    fun updatePosition(newIndex : Int){
+        position = newIndex
     }
 
     override fun getItemCount(): Int {

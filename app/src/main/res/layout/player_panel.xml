@@ -52,7 +52,7 @@
 
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/music_title_tv"
             android:layout_width="302dp"
             android:layout_height="wrap_content"
             android:gravity="center"

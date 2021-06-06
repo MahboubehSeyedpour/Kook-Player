@@ -12,7 +12,9 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.viewpager2.widget.ViewPager2
 import com.example.cassette.R
+import com.example.cassette.adapter.Songs_Adapter
 import com.example.cassette.adapter.ViewPagerFragmentAdapter
+import com.example.cassette.models.Song_Model
 import com.example.cassette.utlis.MusicUtils
 import com.example.cassette.views.Fragments.Favorite
 import com.example.cassette.views.Fragments.Library
@@ -96,8 +98,28 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         playerPanel.setup(bottomSheet, baseContext)
 
 
-        seekBar.setProgress(mediaPlayer.currentPosition/1000)
+        next_btn.setOnClickListener {
 
+            var position = Library.songsAdapter?.position
+            if (position != null) {
+                Library.songsAdapter?.updatePosition(++position)
+            }
+            if (position != null) {
+                val song : Song_Model? = Library.arraylist?.get(position)
+                MusicUtils.PlayMusic((song?.data).toString())
+            }
+        }
+
+        prev_btn.setOnClickListener {
+            var position = Library.songsAdapter?.position
+            if (position != null) {
+                Library.songsAdapter?.updatePosition(--position)
+            }
+            if (position != null && position >= 0) {
+                val song : Song_Model? = Library.arraylist?.get(position)
+                MusicUtils.PlayMusic((song?.data).toString())
+            }
+        }
 
         play_btn.setOnClickListener {
 

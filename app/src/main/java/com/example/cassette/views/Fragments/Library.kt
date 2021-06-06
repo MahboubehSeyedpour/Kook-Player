@@ -19,6 +19,7 @@ class Library : Fragment() {
 
     companion object {
         var arraylist: ArrayList<Song_Model>? = null
+        var songsAdapter: Songs_Adapter? = null
     }
 
     override fun onResume() {
@@ -40,22 +41,24 @@ class Library : Fragment() {
 
         arraylist = context?.let { MusicUtils.getListOfMusics(it) }
 
-        return view
-    }
-
-    val songListUpdateObserver =
-        object : Observer<ArrayList<Any>> {
-            override fun onChanged(songArrayList: ArrayList<Any>) {
-                val recyclerViewAdapter =
-                    activity?.let {
-                        Songs_Adapter(
-                            it,
-                            songArrayList as ArrayList<Song_Model>
-                        )
-                    }
-                songs_rv.layoutManager = LinearLayoutManager(context)
-                songs_rv.adapter = recyclerViewAdapter
-            }
+        songsAdapter = activity?.let {
+            Songs_Adapter(
+                it,
+                arraylist as ArrayList<Song_Model>
+            )
         }
 
-}
+
+            return view
+        }
+
+        val songListUpdateObserver =
+            object : Observer<ArrayList<Any>> {
+                override fun onChanged(songArrayList: ArrayList<Any>) {
+                    val recyclerViewAdapter = songsAdapter
+                    songs_rv.layoutManager = LinearLayoutManager(context)
+                    songs_rv.adapter = recyclerViewAdapter
+                }
+            }
+
+    }

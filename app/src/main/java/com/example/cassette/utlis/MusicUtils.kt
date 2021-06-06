@@ -35,7 +35,8 @@ object MusicUtils {
                         milliSecToDuration(cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)))
                     song.data =
                         cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA))
-                    song.image = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Albums.ALBUM_ART))
+                    song.image =
+                        cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Albums.ALBUM_ART))
                 } catch (e: Exception) {
                     song.duration = ""
                 }
@@ -47,8 +48,7 @@ object MusicUtils {
         return musicList
     }
 
-    fun setupMediaPlayer(context: Context)
-    {
+    fun setupMediaPlayer(context: Context) {
         this.context = context
         mediaPlayer = MediaPlayer.create(context, R.raw.nafas)
     }
@@ -62,16 +62,11 @@ object MusicUtils {
         )
     }
 
-    fun changePlayingMusic(content: String) {
+    fun PlayMusic(content: String) {
         val uri: Uri = Uri.parse(content)
         mediaPlayer.release()
         mediaPlayer = MediaPlayer.create(context, uri)
-        PlayMusic()
-    }
-
-    fun PlayMusic() {
         mediaPlayer.start()
-
     }
 
     fun milliSecToDuration(duration: Long): String {
