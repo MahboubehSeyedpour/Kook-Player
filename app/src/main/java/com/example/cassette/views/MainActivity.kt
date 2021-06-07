@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
                 Library.songsAdapter?.updatePosition(++position)
             }
             if (position != null) {
-                val song : Song_Model? = Library.arraylist?.get(position)
+                val song: Song_Model? = Library.arraylist?.get(position)
                 MusicUtils.PlayMusic((song?.data).toString())
             }
         }
@@ -117,7 +117,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
                 Library.songsAdapter?.updatePosition(--position)
             }
             if (position != null && position >= 0) {
-                val song : Song_Model? = Library.arraylist?.get(position)
+                val song: Song_Model? = Library.arraylist?.get(position)
                 MusicUtils.PlayMusic((song?.data).toString())
             }
         }
@@ -132,6 +132,14 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
                 play_btn.setImageResource(R.mipmap.ic_pause_track_pic_foreground)
             }
 
+        }
+
+        sort_iv.setOnClickListener {
+            sortByDateAdded()
+        }
+
+        sort_tv.setOnClickListener {
+            sortByDateAdded()
         }
 
 
@@ -206,5 +214,16 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
     fun doStuff() {
 
+    }
+
+    fun sortByDateAdded() {
+        Library.arraylist?.sortWith(compareByDescending { it.dateAdded })
+        var sortedList = Library.arraylist
+        sortMusicList(sortedList as ArrayList<Song_Model>)
+    }
+
+    fun sortMusicList(arrayList: ArrayList<Song_Model>) {
+        Library.songsAdapter?.arrayList = arrayList
+        Library.songsAdapter?.notifyDataSetChanged()
     }
 }

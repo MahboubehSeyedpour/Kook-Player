@@ -30,13 +30,17 @@ class Library : Fragment() {
         viewModel.getMutableLiveData().observe(this, songListUpdateObserver)
 
         pullToRefresh.setOnRefreshListener {
-            songsAdapter?.arrayList = context?.let { MusicUtils.getListOfMusics(it) }!!
-            songsAdapter?.notifyDataSetChanged()
+            notifyDataSetChanges()
             pullToRefresh.setRefreshing(false)
-
         }
-
     }
+
+    fun notifyDataSetChanges(){
+        songsAdapter?.arrayList = context?.let { MusicUtils.getListOfMusics(it) }!!
+        songsAdapter?.notifyDataSetChanged()
+    }
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,16 +62,16 @@ class Library : Fragment() {
         }
 
 
-            return view
+        return view
+    }
+
+    val songListUpdateObserver =
+        object : Observer<ArrayList<Any>> {
+            override fun onChanged(songArrayList: ArrayList<Any>) {
+                val recyclerViewAdapter = songsAdapter
+                songs_rv.layoutManager = LinearLayoutManager(context)
+                songs_rv.adapter = recyclerViewAdapter
+            }
         }
 
-        val songListUpdateObserver =
-            object : Observer<ArrayList<Any>> {
-                override fun onChanged(songArrayList: ArrayList<Any>) {
-                    val recyclerViewAdapter = songsAdapter
-                    songs_rv.layoutManager = LinearLayoutManager(context)
-                    songs_rv.adapter = recyclerViewAdapter
-                }
-            }
-
-    }
+}

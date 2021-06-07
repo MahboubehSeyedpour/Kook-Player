@@ -20,7 +20,6 @@ class PlayerPanel {
         bottomSheetBehaviour.addBottomSheetCallback(bottomsheetCallback)
 
         this.context = context
-
     }
 
     val bottomsheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
@@ -37,7 +36,6 @@ class PlayerPanel {
                 BottomSheetBehavior.STATE_COLLAPSED -> {
                     onPanelCollapsed()
                 }
-
             }
         }
 

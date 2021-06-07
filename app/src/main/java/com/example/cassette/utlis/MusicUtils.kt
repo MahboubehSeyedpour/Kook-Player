@@ -29,12 +29,16 @@ object MusicUtils {
             while (cursor.moveToNext()) {
                 val song = Song_Model()
                 try {
+
                     song.title =
                         cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME))
                     song.duration =
                         milliSecToDuration(cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)))
                     song.data =
                         cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA))
+                    song.dateAdded =
+                        cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATE_ADDED))
+
                 } catch (e: Exception) {
                     song.duration = ""
                 }
