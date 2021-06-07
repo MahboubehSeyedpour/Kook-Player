@@ -41,6 +41,19 @@ object MusicUtils {
 
                 musicList.add(song)
             }
+            val song = Song_Model()
+            try {
+                song.title =
+                    cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME))
+                song.duration =
+                    milliSecToDuration(cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)))
+                song.data =
+                    cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA))
+            } catch (e: Exception) {
+                song.duration = ""
+            }
+
+            musicList.add(song)
         }
 
         return musicList
