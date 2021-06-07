@@ -5,14 +5,15 @@ import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewpager2.widget.ViewPager2
 import com.example.cassette.R
-import com.example.cassette.adapter.Songs_Adapter
 import com.example.cassette.adapter.ViewPagerFragmentAdapter
 import com.example.cassette.models.Song_Model
 import com.example.cassette.utlis.MusicUtils
@@ -23,7 +24,7 @@ import com.example.cassette.views.Fragments.RecentlyAdded
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.base.*
-import kotlinx.android.synthetic.main.player_panel.*
+import kotlinx.android.synthetic.main.fragment_library.*
 import kotlinx.android.synthetic.main.player_remote.*
 
 

@@ -4,15 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:orientation="horizontal">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp">
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:srcCompat="@mipmap/ic_song_pic_foreground"
-        android:layout_margin="20dp" />
+        android:id="@+id/music_iv"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        tools:srcCompat="@mipmap/ic_song_pic_foreground" />
 
     <LinearLayout
         android:layout_width="wrap_content"

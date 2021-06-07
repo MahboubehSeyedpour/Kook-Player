@@ -38,11 +38,9 @@ class Songs_Adapter(
         val viewHolder = holder as RecyclerViewViewHolder
         viewHolder.title.text = song.title
         viewHolder.duration.text = song.duration
-        viewHolder.singer.text = song.image
         viewHolder.itemView.setOnClickListener {
             MusicUtils.PlayMusic(song.data)
             updatePosition(viewHolder.adapterPosition)
-
         }
     }
 
@@ -58,6 +56,5 @@ class Songs_Adapter(
         RecyclerView.ViewHolder(itemView) {
         val title = itemView.song_title
         val duration = itemView.song_duration
-        val singer = itemView.song_singer
     }
 }
