@@ -6,6 +6,8 @@ import android.net.Uri
 import com.example.cassette.R
 import com.example.cassette.models.Song_Model
 import com.example.cassette.views.Fragments.Library
+import kotlin.math.max
+import kotlin.random.Random.Default.nextInt
 
 object PlayerRemote {
     lateinit var mediaPlayer: MediaPlayer
@@ -32,35 +34,59 @@ object PlayerRemote {
         mediaPlayer.start()
     }
 
-    fun playNextMusic() {
-        var position = Library.songsAdapter?.position
-        if (position != null) {
-            Library.songsAdapter?.updatePosition(++position)
-        }
-        if (position != null) {
-            val song: Song_Model? = Library.arraylist?.get(position)
-            playMusic((song?.data).toString())
+    fun playNextMusic(mode: MainActivity.playerMode) {
+
+        when (mode) {
+            MainActivity.playerMode.NORMAL -> {
+                var position = Library.songsAdapter?.position
+                if (position != null) {
+                    Library.songsAdapter?.updatePosition(++position)
+                }
+                if (position != null) {
+                    val song: Song_Model? = Library.arraylist?.get(position)
+                    playMusic((song?.data).toString())
+                }
+            }
+            MainActivity.playerMode.SHUFFLE -> {
+                shuffleMode()
+            }
         }
     }
 
-    fun playPrevMusic() {
-        var position = Library.songsAdapter?.position
-        if (position != null) {
-            Library.songsAdapter?.updatePosition(--position)
-        }
-        if (position != null && position >= 0) {
-            val song: Song_Model? = Library.arraylist?.get(position)
-            playMusic((song?.data).toString())
+    fun playPrevMusic(mode: MainActivity.playerMode) {
+
+        when (mode) {
+            MainActivity.playerMode.NORMAL -> {
+                var position = Library.songsAdapter?.position
+                if (position != null) {
+                    Library.songsAdapter?.updatePosition(--position)
+                }
+                if (position != null && position >= 0) {
+                    val song: Song_Model? = Library.arraylist?.get(position)
+                    playMusic((song?.data).toString())
+                }
+            }
         }
     }
 
 
     //Music Playing Modes
     fun shuffleMode() {
-
+        var maxSize = Library.arraylist?.size
+        if (maxSize != null) {
+            var random = (0..maxSize).random()
+            var newSong = Library.arraylist?.get(random)?.data
+            if (newSong != null) {
+                playMusic(newSong)
+            }
+        }
     }
 
     fun repeatOneMode() {
+
+    }
+
+    fun repeatAllMode() {
 
     }
 }

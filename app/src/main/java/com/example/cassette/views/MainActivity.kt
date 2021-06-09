@@ -1,6 +1,7 @@
 package com.example.cassette.views
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.media.MediaPlayer
@@ -32,12 +33,24 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
     val PERMISSION_REQUEST = 111
     lateinit var mediaPlayer: MediaPlayer
+    lateinit var currentMode : playerMode
 
+    enum class playerMode(mode : String)
+    {
+        SHUFFLE("suffle"),
+        NORMAL("normal"),
+        REPEAT_ONE("repeat_one"),
+        REPEAT_ALL("repeat_all")
+    }
+
+    @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         PlayerRemote.setupRemote(applicationContext)
+
+        currentMode = playerMode.NORMAL
 
 //        val toolbar: Toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         // Sets the Toolbar to act as the ActionBar for this Activity window.
@@ -111,6 +124,8 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         })
 
 
+
+
         seekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             override fun onProgressChanged(
                 seekBar: SeekBar,
@@ -118,9 +133,15 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
                 fromUser: Boolean
             ) {
 
-                music_min.text = MusicUtils.milliSecToDuration((seekBar.max - progress).toLong() ).toString()
+                music_min.text =
+                    MusicUtils.milliSecToDuration((seekBar.max - progress).toLong()).toString()
 //                textView.setText(progress.toString() + "/" + seekBar.max)
 //                PlayerRemote.mediaPlayer.seekTo(progress * 1000)
+
+                if(seekBar.max - progress <= 0){
+                    PlayerRemote.playNextMusic(currentMode)
+                }
+
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
@@ -129,12 +150,12 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         })
 
 
-        next_btn.setOnClickListener {
-            PlayerRemote.playNextMusic()
+        next_btn.setOnClickListener() {
+            PlayerRemote.playNextMusic(currentMode)
         }
 
         prev_btn.setOnClickListener {
-            PlayerRemote.playPrevMusic()
+            PlayerRemote.playPrevMusic(currentMode)
         }
 
         play_btn.setOnClickListener {
@@ -154,6 +175,24 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
         sort_tv.setOnClickListener {
             sortByDateAdded()
+        }
+
+        shuffle_btn.setOnClickListener {
+            when(currentMode)
+            {
+                playerMode.NORMAL ->{
+                    currentMode = playerMode.SHUFFLE
+//                    Toast.makeText(this, "normal mode activated" , Toast.LENGTH_SHORT).show()
+                }
+
+
+                playerMode.SHUFFLE ->
+                {
+                    currentMode = playerMode.NORMAL
+//                    Toast.makeText(this, "shuffle mode activated" , Toast.LENGTH_SHORT).show()
+                }
+
+            }
         }
 
 

@@ -13,9 +13,7 @@ import kotlin.collections.ArrayList
 
 object MusicUtils {
 
-//    lateinit var mediaPlayer: MediaPlayer
     lateinit var context: Context
-
 
     fun getListOfMusics(context: Context): ArrayList<Song_Model> {
 
@@ -64,13 +62,6 @@ object MusicUtils {
 
         return musicList
     }
-
-//    fun PlayMusic(content: String) {
-//        val uri: Uri = Uri.parse(content)
-//        mediaPlayer.release()
-//        mediaPlayer = MediaPlayer.create(MusicUtils.context, uri)
-//        .mediaPlayer.start()
-//    }
 
     fun setupMediaPlayer(context: Context) {
         this.context = context
