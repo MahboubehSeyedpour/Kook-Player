@@ -5,13 +5,14 @@ import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.view.View
+import android.os.Handler
+import android.widget.SeekBar
+import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewpager2.widget.ViewPager2
 import com.example.cassette.R
 import com.example.cassette.adapter.ViewPagerFragmentAdapter
@@ -24,7 +25,6 @@ import com.example.cassette.views.Fragments.RecentlyAdded
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.base.*
-import kotlinx.android.synthetic.main.fragment_library.*
 import kotlinx.android.synthetic.main.player_remote.*
 
 
@@ -36,8 +36,8 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        MusicUtils.setupMediaPlayer(applicationContext)
-        this.mediaPlayer = MusicUtils.mediaPlayer
+
+        PlayerRemote.setupRemote(applicationContext)
 
 //        val toolbar: Toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         // Sets the Toolbar to act as the ActionBar for this Activity window.
@@ -98,40 +98,54 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         val playerPanel = PlayerPanel()
         playerPanel.setup(bottomSheet, baseContext)
 
+        val mHandler = Handler()
+        runOnUiThread(object : Runnable {
+            override fun run() {
+                if (PlayerRemote.mediaPlayer != null) {
+                    val mCurrentPosition = PlayerRemote.mediaPlayer.currentPosition / 1000
+                    seekBar.setProgress(mCurrentPosition)
+                    seekBar.max = PlayerRemote.mediaPlayer.duration / 1000
+                }
+                mHandler.postDelayed(this, 1000)
+            }
+        })
+
+
+        seekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
+            override fun onProgressChanged(
+                seekBar: SeekBar,
+                progress: Int,
+                fromUser: Boolean
+            ) {
+
+                music_min.text = MusicUtils.milliSecToDuration((seekBar.max - progress).toLong() ).toString()
+//                textView.setText(progress.toString() + "/" + seekBar.max)
+//                PlayerRemote.mediaPlayer.seekTo(progress * 1000)
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar) {}
+
+        })
+
 
         next_btn.setOnClickListener {
-
-            var position = Library.songsAdapter?.position
-            if (position != null) {
-                Library.songsAdapter?.updatePosition(++position)
-            }
-            if (position != null) {
-                val song: Song_Model? = Library.arraylist?.get(position)
-                MusicUtils.PlayMusic((song?.data).toString())
-            }
+            PlayerRemote.playNextMusic()
         }
 
         prev_btn.setOnClickListener {
-            var position = Library.songsAdapter?.position
-            if (position != null) {
-                Library.songsAdapter?.updatePosition(--position)
-            }
-            if (position != null && position >= 0) {
-                val song: Song_Model? = Library.arraylist?.get(position)
-                MusicUtils.PlayMusic((song?.data).toString())
-            }
+            PlayerRemote.playPrevMusic()
         }
 
         play_btn.setOnClickListener {
 
-            if (!MusicUtils.mediaPlayer.isPlaying) {
-                MusicUtils.mediaPlayer.start()
-                play_btn.setImageResource(R.mipmap.ic_play_track_pic_foreground)
+            if (!PlayerRemote.mediaPlayer.isPlaying) {
+                PlayerRemote.resumePlaying()
             } else {
-                MusicUtils.mediaPlayer.pause()
+                PlayerRemote.pauseMusic()
                 play_btn.setImageResource(R.mipmap.ic_pause_track_pic_foreground)
             }
-
+            updateUI()
         }
 
         sort_iv.setOnClickListener {
@@ -225,5 +239,9 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
     fun sortMusicList(arrayList: ArrayList<Song_Model>) {
         Library.songsAdapter?.arrayList = arrayList
         Library.songsAdapter?.notifyDataSetChanged()
+    }
+
+    fun updateUI() {
+        music_max.text = MusicUtils.getDurationOfCurrentMusic()
     }
 }

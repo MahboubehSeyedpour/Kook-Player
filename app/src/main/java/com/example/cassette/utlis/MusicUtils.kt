@@ -7,11 +7,13 @@ import android.net.Uri
 import android.provider.MediaStore
 import com.example.cassette.R
 import com.example.cassette.models.Song_Model
+import com.example.cassette.views.Fragments.Library
+import kotlinx.android.synthetic.main.player_remote.*
 import kotlin.collections.ArrayList
 
 object MusicUtils {
 
-    lateinit var mediaPlayer: MediaPlayer
+//    lateinit var mediaPlayer: MediaPlayer
     lateinit var context: Context
 
 
@@ -63,9 +65,16 @@ object MusicUtils {
         return musicList
     }
 
+//    fun PlayMusic(content: String) {
+//        val uri: Uri = Uri.parse(content)
+//        mediaPlayer.release()
+//        mediaPlayer = MediaPlayer.create(MusicUtils.context, uri)
+//        .mediaPlayer.start()
+//    }
+
     fun setupMediaPlayer(context: Context) {
         this.context = context
-        mediaPlayer = MediaPlayer.create(context, R.raw.nafas)
+//        mediaPlayer = MediaPlayer.create(context, R.raw.nafas)
     }
 
 //    TODO(deleteMusic func)
@@ -77,11 +86,9 @@ object MusicUtils {
         )
     }
 
-    fun PlayMusic(content: String) {
-        val uri: Uri = Uri.parse(content)
-        mediaPlayer.release()
-        mediaPlayer = MediaPlayer.create(context, uri)
-        mediaPlayer.start()
+    fun getDurationOfCurrentMusic(): String {
+        return Library.songsAdapter?.arrayList?.get(Library.songsAdapter!!.getCurrentPosition())?.duration
+            ?: "00:00:00"
     }
 
     fun milliSecToDuration(duration: Long): String {
@@ -92,6 +99,5 @@ object MusicUtils {
         val hour_final = minutes_temp / 60
         return "$hour_final : $minutes_final : $seconds_final"
     }
-
 
 }

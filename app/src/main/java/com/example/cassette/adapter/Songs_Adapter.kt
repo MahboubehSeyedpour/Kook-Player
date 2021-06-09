@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cassette.R
 import com.example.cassette.models.Song_Model
-import com.example.cassette.utlis.MusicUtils
+import com.example.cassette.views.PlayerRemote
 import kotlinx.android.synthetic.main.song_rv_item.view.*
 
 class Songs_Adapter(
@@ -39,13 +39,17 @@ class Songs_Adapter(
         viewHolder.title.text = song.title
         viewHolder.duration.text = song.duration
         viewHolder.itemView.setOnClickListener {
-            MusicUtils.PlayMusic(song.data)
+            PlayerRemote.playMusic(song.data)
             updatePosition(viewHolder.adapterPosition)
         }
     }
 
-    fun updatePosition(newIndex : Int){
+    fun updatePosition(newIndex: Int) {
         position = newIndex
+    }
+
+    fun getCurrentPosition(): Int {
+        return position
     }
 
     override fun getItemCount(): Int {

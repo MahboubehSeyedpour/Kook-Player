@@ -9,7 +9,8 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 class PlayerPanel {
 
     lateinit var bottomSheetBehaviour: BottomSheetBehavior<View>
-//    lateinit var bottomSheetnew: View
+
+    //    lateinit var bottomSheetnew: View
     lateinit var context: Context
 
     fun setup(bottomSheet: View, context: Context) {
