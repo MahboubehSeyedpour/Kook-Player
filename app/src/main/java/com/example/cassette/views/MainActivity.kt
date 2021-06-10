@@ -27,6 +27,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.base.*
 import kotlinx.android.synthetic.main.player_remote.*
+import kotlinx.android.synthetic.main.song_rv_item.*
 
 
 class MainActivity : AppCompatActivity(), LifecycleOwner {
@@ -169,6 +170,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
             updateUI()
         }
 
+
         sort_iv.setOnClickListener {
             sortByDateAdded()
         }
@@ -192,6 +194,10 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 //                    Toast.makeText(this, "shuffle mode activated" , Toast.LENGTH_SHORT).show()
                 }
 
+            }
+
+            music_menu_btn.setOnClickListener {
+                Toast.makeText(applicationContext, "menue btn clicked on item {${Library.songsAdapter?.getCurrentPosition()}}" , Toast.LENGTH_SHORT).show()
             }
         }
 

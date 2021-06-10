@@ -15,9 +15,9 @@
         tools:srcCompat="@mipmap/ic_song_pic_foreground" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/music_info"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_weight="3"
         android:orientation="vertical"
         android:layout_gravity="center_vertical">
 
@@ -39,7 +39,7 @@
                 android:text="duration" />
 
             <TextView
-                android:id="@+id/song_singer"
+                android:id="@+id/song_artist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -48,5 +48,12 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/music_menu_btn"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:padding="20dp"
+        app:srcCompat="@mipmap/ic_menu_pic_foreground" />
 
 </LinearLayout>

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -30,15 +29,25 @@ class Library : Fragment() {
         viewModel.getMutableLiveData().observe(this, songListUpdateObserver)
 
         pullToRefresh.setOnRefreshListener {
-            notifyDataSetChanges()
+//            spr
+//            notifyDataSetChanges()
             pullToRefresh.setRefreshing(false)
         }
+
+//        music_info.setOnClickListener {
+//            Toast.makeText(context , "item number {${Library.songsAdapter?.getCurrentPosition()}} was clicked" , Toast.LENGTH_SHORT).show()
+//        }
+//        music_menu_btn.setOnClickListener {
+//            Toast.makeText(context , "item number {${Library.songsAdapter?.getCurrentPosition()}} was clicked" , Toast.LENGTH_SHORT).show()
+//        }
     }
 
-    fun notifyDataSetChanges(){
-        songsAdapter?.arrayList = context?.let { MusicUtils.getListOfMusics(it) }!!
-        songsAdapter?.notifyDataSetChanged()
-    }
+
+//spr
+//    fun notifyDataSetChanges(){
+//        songsAdapter?.arrayList = context?.let { MusicUtils.getListOfMusics(it) }!!
+//        songsAdapter?.notifyDataSetChanged()
+//    }
 
 
 

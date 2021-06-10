@@ -4,9 +4,12 @@ import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cassette.R
 import com.example.cassette.models.Song_Model
+import com.example.cassette.views.MainActivity
 import com.example.cassette.views.PlayerRemote
 import kotlinx.android.synthetic.main.song_rv_item.view.*
 
@@ -38,10 +41,45 @@ class Songs_Adapter(
         val viewHolder = holder as RecyclerViewViewHolder
         viewHolder.title.text = song.title
         viewHolder.duration.text = song.duration
-        viewHolder.itemView.setOnClickListener {
+        viewHolder.artist.text = song.artist
+//        viewHolder.itemView.setOnClickListener {
+        viewHolder.title.setOnClickListener {
             PlayerRemote.playMusic(song.data)
             updatePosition(viewHolder.adapterPosition)
         }
+        viewHolder.duration.setOnClickListener {
+            PlayerRemote.playMusic(song.data)
+            updatePosition(viewHolder.adapterPosition)
+        }
+        viewHolder.artist.setOnClickListener {
+            PlayerRemote.playMusic(song.data)
+            updatePosition(viewHolder.adapterPosition)
+        }
+
+        viewHolder.menu_btn.setOnClickListener {
+            val popUpMenu = PopupMenu(context, it)
+            popUpMenu.inflate(R.menu.popup_menu)
+
+            popUpMenu.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.playNext_menu_item -> {
+                        Toast.makeText(context,"play next in item number {$position}",Toast.LENGTH_SHORT).show()
+                        true
+                    }
+                    R.id.addToPlayList_menu_item -> {
+                        Toast.makeText(context,"add to playlist in item number {$position}",Toast.LENGTH_SHORT).show()
+                        true
+                    }
+                    else -> false
+                }
+            }
+
+            popUpMenu.show()
+
+//            Toast.makeText(context , "item number {$position} was clicked" , Toast.LENGTH_SHORT).show()
+        }
+
+//        }
     }
 
     fun updatePosition(newIndex: Int) {
@@ -60,5 +98,8 @@ class Songs_Adapter(
         RecyclerView.ViewHolder(itemView) {
         val title = itemView.song_title
         val duration = itemView.song_duration
+        val artist = itemView.song_artist
+        val menu_btn = itemView.music_menu_btn
+
     }
 }
