@@ -1,14 +1,17 @@
 package com.example.cassette.adapter
 
 import android.app.Activity
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cassette.R
 import com.example.cassette.models.Song_Model
+//import com.example.cassette.utlis.MusicUtils
 import com.example.cassette.views.MainActivity
 import com.example.cassette.views.PlayerRemote
 import kotlinx.android.synthetic.main.song_rv_item.view.*
@@ -32,6 +35,7 @@ class Songs_Adapter(
         return RecyclerViewViewHolder(rootView)
     }
 
+    @RequiresApi(Build.VERSION_CODES.R)
     override fun onBindViewHolder(
         holder: RecyclerView.ViewHolder,
         position: Int
@@ -42,7 +46,8 @@ class Songs_Adapter(
         viewHolder.title.text = song.title
         viewHolder.duration.text = song.duration
         viewHolder.artist.text = song.artist
-//        viewHolder.itemView.setOnClickListener {
+
+
         viewHolder.title.setOnClickListener {
             PlayerRemote.playMusic(song.data)
             updatePosition(viewHolder.adapterPosition)
@@ -63,11 +68,61 @@ class Songs_Adapter(
             popUpMenu.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.playNext_menu_item -> {
-                        Toast.makeText(context,"play next in item number {$position}",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            context,
+                            "play next in item number {$position}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        updatePosition(viewHolder.adapterPosition)
                         true
                     }
                     R.id.addToPlayList_menu_item -> {
-                        Toast.makeText(context,"add to playlist in item number {$position}",Toast.LENGTH_SHORT).show()
+                        updatePosition(viewHolder.adapterPosition)
+                        Toast.makeText(
+                            context,
+                            "add to playlist in item number {$position}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        true
+                    }
+                    R.id.deleteFromDevice_menu_item -> {
+                        updatePosition(viewHolder.adapterPosition)
+                        val title: Array<String> =
+                            (viewHolder.itemView.song_title.text).map { it.toString() }
+                                .toTypedArray()
+                        MusicUtils.removeMusic(position, title)
+                        Toast.makeText(
+                            context,
+                            "add to delete from device in item number {$position}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        true
+                    }
+                    R.id.details_menu_item -> {
+                        updatePosition(viewHolder.adapterPosition)
+                        Toast.makeText(
+                            context,
+                            "add to details in item number {$position}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        true
+                    }
+                    R.id.share_menu_item -> {
+                        updatePosition(viewHolder.adapterPosition)
+                        Toast.makeText(
+                            context,
+                            "add to share in item number {$position}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        true
+                    }
+                    R.id.setAsRingtone_menu_item -> {
+                        updatePosition(viewHolder.adapterPosition)
+                        Toast.makeText(
+                            context,
+                            "add to set as ringtone in item number {$position}",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         true
                     }
                     else -> false
@@ -79,7 +134,6 @@ class Songs_Adapter(
 //            Toast.makeText(context , "item number {$position} was clicked" , Toast.LENGTH_SHORT).show()
         }
 
-//        }
     }
 
     fun updatePosition(newIndex: Int) {

@@ -12,7 +12,6 @@ import com.example.cassette.R
 import com.example.cassette.adapter.Songs_Adapter
 import com.example.cassette.datamodels.Songs_ViewModel
 import com.example.cassette.models.Song_Model
-import com.example.cassette.utlis.MusicUtils
 import kotlinx.android.synthetic.main.fragment_library.*
 
 class Library : Fragment() {
@@ -29,26 +28,17 @@ class Library : Fragment() {
         viewModel.getMutableLiveData().observe(this, songListUpdateObserver)
 
         pullToRefresh.setOnRefreshListener {
-//            spr
-//            notifyDataSetChanges()
+            notifyDataSetChanges()
             pullToRefresh.setRefreshing(false)
         }
-
-//        music_info.setOnClickListener {
-//            Toast.makeText(context , "item number {${Library.songsAdapter?.getCurrentPosition()}} was clicked" , Toast.LENGTH_SHORT).show()
-//        }
-//        music_menu_btn.setOnClickListener {
-//            Toast.makeText(context , "item number {${Library.songsAdapter?.getCurrentPosition()}} was clicked" , Toast.LENGTH_SHORT).show()
-//        }
     }
 
 
-//spr
-//    fun notifyDataSetChanges(){
-//        songsAdapter?.arrayList = context?.let { MusicUtils.getListOfMusics(it) }!!
-//        songsAdapter?.notifyDataSetChanged()
-//    }
-
+    //spr
+    fun notifyDataSetChanges() {
+        songsAdapter?.arrayList = context?.let { MusicUtils.getListOfMusics(it) }!!
+        songsAdapter?.notifyDataSetChanged()
+    }
 
 
     override fun onCreateView(
@@ -69,7 +59,6 @@ class Library : Fragment() {
                 arraylist as ArrayList<Song_Model>
             )
         }
-
 
         return view
     }
