@@ -23,4 +23,5 @@ class Song_Model(
     var data: String = ""
     var dateAdded : String = ""
     var artist : String = ""
+    var id : String = ""
 }

@@ -1,6 +1,9 @@
 package com.example.cassette.views.Fragments
 
+import MusicUtils.context
+import android.content.Context
 import android.os.Bundle
+import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +22,12 @@ class Library : Fragment() {
     companion object {
         var arraylist: ArrayList<Song_Model>? = null
         var songsAdapter: Songs_Adapter? = null
+
+        fun notifyDataSetChanges() {
+            songsAdapter?.arrayList = context?.let { MusicUtils.getListOfMusics(it) }!!
+            this.arraylist = songsAdapter?.arrayList
+            songsAdapter?.notifyDataSetChanged()
+        }
     }
 
     override fun onResume() {
@@ -34,7 +43,6 @@ class Library : Fragment() {
     }
 
 
-    //spr
     fun notifyDataSetChanges() {
         songsAdapter?.arrayList = context?.let { MusicUtils.getListOfMusics(it) }!!
         songsAdapter?.notifyDataSetChanged()

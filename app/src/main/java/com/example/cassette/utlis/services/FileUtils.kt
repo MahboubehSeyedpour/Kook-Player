@@ -4,6 +4,7 @@ import android.content.Context
 import android.database.Cursor
 import android.os.Environment
 import android.provider.MediaStore
+import android.widget.Toast
 import com.example.cassette.models.Song_Model
 import com.example.cassette.utlis.FilePathUtlis
 import java.io.File
@@ -22,5 +23,7 @@ object FileUtils {
         }
     }
 
-
+    fun checkFileExistance(file: File): Boolean {
+        return file.exists()
+    }
 }

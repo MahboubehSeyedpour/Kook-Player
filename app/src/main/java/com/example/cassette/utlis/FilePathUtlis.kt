@@ -17,6 +17,7 @@ object FilePathUtlis {
     val MUSIC_CANONICAL_PATH: String = MUSICS_INTERNAL_STORAGE.canonicalPath
 
     fun getMusicsUri(): Uri {
-        return MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+        val i = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+        return i
     }
 }

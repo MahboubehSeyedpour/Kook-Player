@@ -3,22 +3,13 @@
 import android.content.ContentUris
 import android.content.Context
 import android.database.Cursor
-import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Build
-import android.os.Build.ID
 import android.provider.MediaStore
 import androidx.annotation.RequiresApi
-import androidx.core.net.toUri
-import com.example.cassette.R
 import com.example.cassette.models.Song_Model
 import com.example.cassette.utlis.FilePathUtlis
 import com.example.cassette.views.Fragments.Library
-import com.example.cassette.views.PlayerRemote
-import kotlinx.android.synthetic.main.player_remote.*
-import java.net.URI
-import kotlin.collections.ArrayList
-import kotlin.concurrent.timerTask
 
 object MusicUtils {
 
@@ -61,6 +52,8 @@ object MusicUtils {
                             )
                         song.data =
                             cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA))
+                        song.id =
+                            cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID))
                         song.dateAdded =
                             cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATE_ADDED))
                         song.artist =
@@ -99,12 +92,136 @@ object MusicUtils {
 
 //    TODO(deleteMusic func)
 
+
+    fun getMusicUri(id: Long): Uri {
+        val sArtworkUri = Uri.parse("content://media/external/audio/media")
+        return ContentUris.withAppendedId(sArtworkUri, id)
+    }
+
     @RequiresApi(Build.VERSION_CODES.R)
     fun removeMusic(position: Int, title: Array<String>) {
-//        val uri : Uri = ContentUris.withAppendedId(MediaStore.Audio.Media.INTERNAL_CONTENT_URI, column_id)
-        val uri: Uri = Uri.parse("file:///" + Library.arraylist?.get(position)?.data)
-        context.contentResolver.delete(uri, "MediaStore.Audio.Media.TITLE =?", title)
 
+//       val ur =  Library.arraylist?.get(position)?.id?.toLong()?.let { getMusic(it) }
+        val id = Library.arraylist?.get(position)?.id
+        val id_long = id?.toLong()
+
+        val whereClause = "${MediaStore.Audio.Media.TITLE} = ?"
+        val selectionArgs = arrayOf("Toro Doost Daram.mp3".toString())
+
+            if (id_long != null) {
+                val ur = getMusicUri(id_long)
+                if (ur != null) {
+                    context.contentResolver.delete(ur, whereClause, selectionArgs)
+                }
+            }
+
+
+//        val uri: Uri? = Library.arraylist?.get(position)?.data?.let {
+//            MediaStore.Audio.Media.getContentUriForPath(
+//                it
+//            )
+//        }
+
+
+//        remove file from storage
+
+//        try {
+//            val uri = URI(Library.arraylist?.get(position)?.data)
+
+//        if (uri != null) {
+//            val whereclause: String = MediaStore.Audio.Media.TITLE + "=?"
+//            context.contentResolver.delete(uri, null, null)
+//            val i = 0
+//        }
+        val i = 0
+//                val file = File(uri.path)
+//
+//                try {
+//                    file.delete()
+//                    Toast.makeText(context, file.exists().toString(), Toast.LENGTH_SHORT).show()
+//
+//                } catch (exception: Exception) {
+//                    exception.printStackTrace()
+
+////                Toast.makeText(context, exception.toString(), Toast.LENGTH_SHORT).show()
+//                }
+////            Toast.makeText(context, file.delete().toString(), Toast.LENGTH_SHORT).show()
+////            Toast.makeText(context, file.exists().toString(), Toast.LENGTH_SHORT).show()
+//
+//
+////            remove from mediaStore
+//                var canonicalPath : String = ""
+//                try {
+//                    canonicalPath = file.canonicalPath
+//                } catch (exception: IOException) {
+//                    canonicalPath = file.absolutePath
+//                }
+//
+//                val m_uri: Uri? = Library.arraylist?.get(position)?.data?.let {
+//                    MediaStore.Files.getContentUri(
+//                        it
+//                    )
+//                }
+//                val whereclause1: String = MediaStore.Files.FileColumns.DATA + "=?"
+//                    if (m_uri != null) {
+//                        context.contentResolver.delete(m_uri, whereclause1, arrayOf(Library.arraylist?.get(position)?.data))
+//                    }
+//
+//            }
+
+
+//        } catch (exception: Exception) {
+//            Toast.makeText(context, "a problem has occurred, please try later", Toast.LENGTH_SHORT)
+//                .show()
+//        }
+
+//                val result = context.contentResolver.delete(m_uri, null, null)
+
+
+//            if (FileUtils.checkFileExistance(file)) {
+//                Toast.makeText(context, "فایل هست", Toast.LENGTH_SHORT).show()
+//                file.delete()
+//
+//                if (FileUtils.checkFileExistance(file)) {
+//                    Toast.makeText(context, "فایل همچنان هست", Toast.LENGTH_SHORT).show()
+//                    if (FileUtils.checkFileExistance(file)) {
+//                        Toast.makeText(context, "هنوزم هست", Toast.LENGTH_SHORT).show()
+//                        context.deleteFile(file.name)
+//
+//                        if (FileUtils.checkFileExistance(file)) {
+//                            Toast.makeText(
+//                                context,
+//                                "شاید باورت نشه ولی الانم هست، سمج چسبنده بی ریخت",
+//                                Toast.LENGTH_SHORT
+//                            ).show()
+//                        } else {
+//                            Toast.makeText(context, "file removed successfully", Toast.LENGTH_SHORT)
+//                                .show()
+//                        }
+//
+//
+//                    } else {
+//                        Toast.makeText(context, "file removed successfully", Toast.LENGTH_SHORT)
+//                            .show()
+//                    }
+//
+//
+//                } else {
+//                    Toast.makeText(context, "file removed successfully", Toast.LENGTH_SHORT).show()
+//                }
+//
+//            } else {
+//                Toast.makeText(context, "file does not exist", Toast.LENGTH_SHORT).show()
+//            }
+
+
+    }
+
+    fun getSongFileUri(songId: Long): Uri {
+        return ContentUris.withAppendedId(
+            MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+            songId.toLong()
+        )
     }
 
     fun getMediaColumns(): Array<String> {

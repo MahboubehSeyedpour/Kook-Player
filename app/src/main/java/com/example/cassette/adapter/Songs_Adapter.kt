@@ -90,12 +90,13 @@ class Songs_Adapter(
                         val title: Array<String> =
                             (viewHolder.itemView.song_title.text).map { it.toString() }
                                 .toTypedArray()
-                        MusicUtils.removeMusic(position, title)
-                        Toast.makeText(
-                            context,
-                            "add to delete from device in item number {$position}",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        val titles = arrayOf(viewHolder.itemView.song_title.text.toString())
+                        MusicUtils.removeMusic(position, titles)
+//                        Toast.makeText(
+//                            context,
+//                            "add to delete from device in item number {$position}",
+//                            Toast.LENGTH_SHORT
+//                        ).show()
                         true
                     }
                     R.id.details_menu_item -> {

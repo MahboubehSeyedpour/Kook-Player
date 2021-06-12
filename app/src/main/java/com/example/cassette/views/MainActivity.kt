@@ -1,7 +1,9 @@
 package com.example.cassette.views
 
+import MusicUtils
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.media.MediaPlayer
@@ -31,12 +33,18 @@ import kotlinx.android.synthetic.main.song_rv_item.*
 
 class MainActivity : AppCompatActivity(), LifecycleOwner {
 
-    val PERMISSION_REQUEST = 111
-    lateinit var mediaPlayer: MediaPlayer
-    lateinit var currentMode : playerMode
+    val PERMISSIONS_REQUEST_CODE = 1
 
-    enum class playerMode(mode : String)
-    {
+    val PERMISSIONS = arrayOf(
+        Manifest.permission.READ_EXTERNAL_STORAGE,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE
+    )
+
+
+    lateinit var mediaPlayer: MediaPlayer
+    lateinit var currentMode: playerMode
+
+    enum class playerMode(mode: String) {
         SHUFFLE("suffle"),
         NORMAL("normal"),
         REPEAT_ONE("repeat_one"),
@@ -81,31 +89,12 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
             tab.text = tabList[position]
         }.attach()
 
-        if (ContextCompat.checkSelfPermission(
-                applicationContext,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(
-                    this,
-                    Manifest.permission.READ_EXTERNAL_STORAGE
-                )
-            ) {
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                    PERMISSION_REQUEST
-                )
-            } else {
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                    PERMISSION_REQUEST
-                )
-            }
-        } else {
-            doStuff()
+
+
+        if (!hasPermissions(this, *PERMISSIONS)) {
+            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSIONS_REQUEST_CODE)
         }
+
 
         // bottomsheet manager
         val playerPanel = PlayerPanel()
@@ -138,7 +127,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 //                textView.setText(progress.toString() + "/" + seekBar.max)
 //                PlayerRemote.mediaPlayer.seekTo(progress * 1000)
 
-                if(seekBar.max - progress <= 0){
+                if (seekBar.max - progress <= 0) {
                     PlayerRemote.playNextMusic(currentMode)
                 }
 
@@ -179,16 +168,14 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         }
 
         shuffle_btn.setOnClickListener {
-            when(currentMode)
-            {
-                playerMode.NORMAL ->{
+            when (currentMode) {
+                playerMode.NORMAL -> {
                     currentMode = playerMode.SHUFFLE
 //                    Toast.makeText(this, "normal mode activated" , Toast.LENGTH_SHORT).show()
                 }
 
 
-                playerMode.SHUFFLE ->
-                {
+                playerMode.SHUFFLE -> {
                     currentMode = playerMode.NORMAL
 //                    Toast.makeText(this, "shuffle mode activated" , Toast.LENGTH_SHORT).show()
                 }
@@ -196,7 +183,11 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
             }
 
             music_menu_btn.setOnClickListener {
-                Toast.makeText(applicationContext, "menue btn clicked on item {${Library.songsAdapter?.getCurrentPosition()}}" , Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    applicationContext,
+                    "menue btn clicked on item {${Library.songsAdapter?.getCurrentPosition()}}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
 
@@ -243,8 +234,47 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 ////                Toast.makeText(applicationContext, FileUtils.listfiles(System.getProperty(FilePathUtlis.MUSIC_CANONICAL_PATH)), Toast.LENGTH_SHORT).show()
 //            }
 //        }
-
     }
+
+    fun hasPermissions(context: Context, vararg permissions: String): Boolean = permissions.all {
+        ActivityCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
+    }
+
+//    fun getPermissions(permissions: Map<String, Int>) {
+//
+//
+//
+//
+//
+//        for (permission in permissions) {
+//
+//            if (ContextCompat.checkSelfPermission(
+//                    applicationContext,
+//                    permission.key
+//                ) != PackageManager.PERMISSION_GRANTED
+//            ) {
+//                if (ActivityCompat.shouldShowRequestPermissionRationale(
+//                        this,
+//                        permission.key
+//                    )
+//                ) {
+//                    ActivityCompat.requestPermissions(
+//                        this,
+//                        arrayOf(permission.key),
+//                        permission.value
+//                    )
+//                } else {
+//                    ActivityCompat.requestPermissions(
+//                        this,
+//                        arrayOf(permission.key),
+//                        permission.value
+//                    )
+//                }
+//            } else {
+//                doStuff()
+//            }
+//        }
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -252,26 +282,23 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         grantResults: IntArray
     ) {
         when (requestCode) {
-            PERMISSION_REQUEST -> if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            PERMISSIONS_REQUEST_CODE -> if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 if (ContextCompat.checkSelfPermission(
                         this,
                         Manifest.permission.READ_EXTERNAL_STORAGE
                     ) == PackageManager.PERMISSION_GRANTED
                 ) {
-                    Toast.makeText(this, "permission granted", Toast.LENGTH_SHORT).show()
-                    doStuff()
+                    Toast.makeText(this, "permissions granted", Toast.LENGTH_SHORT).show()
+
+                    Library.notifyDataSetChanges()
+
                 } else {
-                    Toast.makeText(this, "no permission granted", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "no permissions granted", Toast.LENGTH_SHORT).show()
                     finish()
                 }
                 return
             }
         }
-
-    }
-
-    fun doStuff() {
-
     }
 
     fun sortByDateAdded() {
