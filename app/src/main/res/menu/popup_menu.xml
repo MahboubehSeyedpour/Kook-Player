@@ -3,20 +3,20 @@
 
     <item
         android:id="@+id/playNext_menu_item"
-        android:title="play next" />
+        android:title="@string/action_play_next" />
     <item
         android:id="@+id/addToPlayList_menu_item"
-        android:title="Add to playlist" />
+        android:title="@string/action_add_to_playing_queue" />
     <item
         android:id="@+id/share_menu_item"
-        android:title="Share" />
+        android:title="@string/action_share" />
     <item
         android:id="@+id/details_menu_item"
-        android:title="Details" />
+        android:title="@string/action_details" />
     <item
         android:id="@+id/setAsRingtone_menu_item"
-        android:title="Set as ringtone" />
+        android:title="@string/action_set_as_ringtone" />
     <item
         android:id="@+id/deleteFromDevice_menu_item"
-        android:title="Delete from device" />
+        android:title="@string/action_delete_from_device" />
 </menu>

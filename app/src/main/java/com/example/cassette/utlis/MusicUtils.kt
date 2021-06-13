@@ -1,15 +1,20 @@
 //package com.example.cassette.utlis
 
+import android.content.BroadcastReceiver
 import android.content.ContentUris
 import android.content.Context
+import android.content.Intent
 import android.database.Cursor
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.example.cassette.models.Song_Model
 import com.example.cassette.utlis.FilePathUtlis
 import com.example.cassette.views.Fragments.Library
+import java.io.File
+
 
 object MusicUtils {
 
@@ -29,14 +34,7 @@ object MusicUtils {
         )
         if (cursor != null) {
             while (cursor.moveToNext()) {
-                if (milliSecToDuration(
-                        cursor.getLong(
-                            cursor.getColumnIndexOrThrow(
-                                MediaStore.Audio.Media.DURATION
-                            )
-                        )
-                    ) != "0 : 0 : 0"
-                ) {
+                if (songIsEmpty(cursor)) {
                     val song = Song_Model()
                     try {
 
@@ -85,13 +83,21 @@ object MusicUtils {
         return musicList
     }
 
-//    fun setupMediaPlayer(context: Context) {
-//        this.context = context
-////        mediaPlayer = MediaPlayer.create(context, R.raw.nafas)
-//    }
-
 //    TODO(deleteMusic func)
 
+
+    fun songIsEmpty(cursor: Cursor): Boolean
+    {
+        val duration = milliSecToDuration(
+            cursor.getLong(
+                cursor.getColumnIndexOrThrow(
+                    MediaStore.Audio.Media.DURATION
+                )
+            )
+        )
+        return !duration.equals("0 : 0 : 0")
+
+    }
 
     fun getMusicUri(id: Long): Uri {
         val sArtworkUri = Uri.parse("content://media/external/audio/media")
@@ -101,120 +107,48 @@ object MusicUtils {
     @RequiresApi(Build.VERSION_CODES.R)
     fun removeMusic(position: Int, title: Array<String>) {
 
+
+//        remove from mediaStore
+
 //       val ur =  Library.arraylist?.get(position)?.id?.toLong()?.let { getMusic(it) }
         val id = Library.arraylist?.get(position)?.id
         val id_long = id?.toLong()
 
-        val whereClause = "${MediaStore.Audio.Media.TITLE} = ?"
-        val selectionArgs = arrayOf("Toro Doost Daram.mp3".toString())
+        val whereClause = "${MediaStore.Audio.Media._ID} = ?"
+        val selectionArgs = arrayOf(Library.arraylist?.get(position)?.id)
 
-            if (id_long != null) {
-                val ur = getMusicUri(id_long)
-                if (ur != null) {
-                    context.contentResolver.delete(ur, whereClause, selectionArgs)
-                }
-            }
+            context.contentResolver.delete(MediaStore.Audio.Media.getContentUri(Library.arraylist?.get(position)?.data), null, null)
+
+        if (id_long != null) {
+            val ur = getMusicUri(id_long)
 
 
-//        val uri: Uri? = Library.arraylist?.get(position)?.data?.let {
-//            MediaStore.Audio.Media.getContentUriForPath(
-//                it
-//            )
-//        }
+//            var garbage: String =""
+//            var parentPath: String = ""
+//            for (str in Library.arraylist?.get(position)?.data.toString())
+//            {
+//                if(!str.equals('/'))
+//                {
+//                    garbage = garbage + str
+//                }
+//                if(str.equals('/'))
+//                {
+//                    parentPath = parentPath + garbage
+//                    garbage = "/"
+//                }
+//            }
+//
+//            val path = parentPath
 
+
+//            val file = File(path , Library.arraylist?.get(position)?.title)
+//            file.delete()
+//            Toast.makeText(context, file.exists().toString(), Toast.LENGTH_SHORT).show()
+
+        }
 
 //        remove file from storage
-
-//        try {
-//            val uri = URI(Library.arraylist?.get(position)?.data)
-
-//        if (uri != null) {
-//            val whereclause: String = MediaStore.Audio.Media.TITLE + "=?"
-//            context.contentResolver.delete(uri, null, null)
-//            val i = 0
-//        }
-        val i = 0
-//                val file = File(uri.path)
-//
-//                try {
-//                    file.delete()
-//                    Toast.makeText(context, file.exists().toString(), Toast.LENGTH_SHORT).show()
-//
-//                } catch (exception: Exception) {
-//                    exception.printStackTrace()
-
-////                Toast.makeText(context, exception.toString(), Toast.LENGTH_SHORT).show()
-//                }
-////            Toast.makeText(context, file.delete().toString(), Toast.LENGTH_SHORT).show()
-////            Toast.makeText(context, file.exists().toString(), Toast.LENGTH_SHORT).show()
-//
-//
-////            remove from mediaStore
-//                var canonicalPath : String = ""
-//                try {
-//                    canonicalPath = file.canonicalPath
-//                } catch (exception: IOException) {
-//                    canonicalPath = file.absolutePath
-//                }
-//
-//                val m_uri: Uri? = Library.arraylist?.get(position)?.data?.let {
-//                    MediaStore.Files.getContentUri(
-//                        it
-//                    )
-//                }
-//                val whereclause1: String = MediaStore.Files.FileColumns.DATA + "=?"
-//                    if (m_uri != null) {
-//                        context.contentResolver.delete(m_uri, whereclause1, arrayOf(Library.arraylist?.get(position)?.data))
-//                    }
-//
-//            }
-
-
-//        } catch (exception: Exception) {
-//            Toast.makeText(context, "a problem has occurred, please try later", Toast.LENGTH_SHORT)
-//                .show()
-//        }
-
-//                val result = context.contentResolver.delete(m_uri, null, null)
-
-
-//            if (FileUtils.checkFileExistance(file)) {
-//                Toast.makeText(context, "فایل هست", Toast.LENGTH_SHORT).show()
-//                file.delete()
-//
-//                if (FileUtils.checkFileExistance(file)) {
-//                    Toast.makeText(context, "فایل همچنان هست", Toast.LENGTH_SHORT).show()
-//                    if (FileUtils.checkFileExistance(file)) {
-//                        Toast.makeText(context, "هنوزم هست", Toast.LENGTH_SHORT).show()
-//                        context.deleteFile(file.name)
-//
-//                        if (FileUtils.checkFileExistance(file)) {
-//                            Toast.makeText(
-//                                context,
-//                                "شاید باورت نشه ولی الانم هست، سمج چسبنده بی ریخت",
-//                                Toast.LENGTH_SHORT
-//                            ).show()
-//                        } else {
-//                            Toast.makeText(context, "file removed successfully", Toast.LENGTH_SHORT)
-//                                .show()
-//                        }
-//
-//
-//                    } else {
-//                        Toast.makeText(context, "file removed successfully", Toast.LENGTH_SHORT)
-//                            .show()
-//                    }
-//
-//
-//                } else {
-//                    Toast.makeText(context, "file removed successfully", Toast.LENGTH_SHORT).show()
-//                }
-//
-//            } else {
-//                Toast.makeText(context, "file does not exist", Toast.LENGTH_SHORT).show()
-//            }
-
-
+//        remove from mediaStore
     }
 
     fun getSongFileUri(songId: Long): Uri {

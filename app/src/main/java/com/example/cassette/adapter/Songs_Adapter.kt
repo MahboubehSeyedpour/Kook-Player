@@ -129,10 +129,7 @@ class Songs_Adapter(
                     else -> false
                 }
             }
-
             popUpMenu.show()
-
-//            Toast.makeText(context , "item number {$position} was clicked" , Toast.LENGTH_SHORT).show()
         }
 
     }
