@@ -11,8 +11,7 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cassette.R
 import com.example.cassette.models.Song_Model
-//import com.example.cassette.utlis.MusicUtils
-import com.example.cassette.views.MainActivity
+import com.example.cassette.views.Fragments.Library
 import com.example.cassette.views.PlayerRemote
 import kotlinx.android.synthetic.main.song_rv_item.view.*
 
@@ -87,16 +86,7 @@ class Songs_Adapter(
                     }
                     R.id.deleteFromDevice_menu_item -> {
                         updatePosition(viewHolder.adapterPosition)
-                        val title: Array<String> =
-                            (viewHolder.itemView.song_title.text).map { it.toString() }
-                                .toTypedArray()
-                        val titles = arrayOf(viewHolder.itemView.song_title.text.toString())
-                        MusicUtils.removeMusic(position, titles)
-//                        Toast.makeText(
-//                            context,
-//                            "add to delete from device in item number {$position}",
-//                            Toast.LENGTH_SHORT
-//                        ).show()
+                        Library.deletMusic(position)
                         true
                     }
                     R.id.details_menu_item -> {
@@ -110,11 +100,7 @@ class Songs_Adapter(
                     }
                     R.id.share_menu_item -> {
                         updatePosition(viewHolder.adapterPosition)
-                        Toast.makeText(
-                            context,
-                            "add to share in item number {$position}",
-                            Toast.LENGTH_SHORT
-                        ).show()
+//                        MusicUtils.shareMusic(position)
                         true
                     }
                     R.id.setAsRingtone_menu_item -> {

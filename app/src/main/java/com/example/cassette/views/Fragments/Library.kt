@@ -1,12 +1,17 @@
 package com.example.cassette.views.Fragments
 
+import MusicUtils
 import MusicUtils.context
-import android.content.Context
+import android.app.Activity
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
-import android.view.ContextMenu
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -19,14 +24,47 @@ import kotlinx.android.synthetic.main.fragment_library.*
 
 class Library : Fragment() {
 
-    companion object {
+
+    companion object Library {
         var arraylist: ArrayList<Song_Model>? = null
         var songsAdapter: Songs_Adapter? = null
+        val DELETE_REQUEST_CODE = 2
+        lateinit var activity: Activity
 
         fun notifyDataSetChanges() {
             songsAdapter?.arrayList = context?.let { MusicUtils.getListOfMusics(it) }!!
             this.arraylist = songsAdapter?.arrayList
             songsAdapter?.notifyDataSetChanged()
+        }
+
+
+        @RequiresApi(Build.VERSION_CODES.R)
+        fun deletMusic(position: Int) {
+            val urisToModify = mutableListOf(Library.arraylist?.get(position)?.uri)
+            val deletePendingIntent =
+                MediaStore.createDeleteRequest(context.contentResolver, urisToModify)
+
+            ActivityCompat.startIntentSenderForResult(
+                activity,
+                deletePendingIntent.intentSender,
+                DELETE_REQUEST_CODE,
+                null,
+                0,
+                0,
+                0,
+                null
+            )
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+
+        when (requestCode) {
+            2 -> if (resultCode == Activity.RESULT_OK) {
+                notifyDataSetChanges()
+            }
         }
     }
 
@@ -39,15 +77,10 @@ class Library : Fragment() {
         pullToRefresh.setOnRefreshListener {
             notifyDataSetChanges()
             pullToRefresh.setRefreshing(false)
+
         }
+
     }
-
-
-    fun notifyDataSetChanges() {
-        songsAdapter?.arrayList = context?.let { MusicUtils.getListOfMusics(it) }!!
-        songsAdapter?.notifyDataSetChanged()
-    }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,7 +100,7 @@ class Library : Fragment() {
                 arraylist as ArrayList<Song_Model>
             )
         }
-
+        Library.activity = this!!.getActivity()!!
         return view
     }
 

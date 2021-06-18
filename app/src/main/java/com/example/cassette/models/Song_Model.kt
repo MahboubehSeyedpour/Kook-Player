@@ -24,4 +24,5 @@ class Song_Model(
     var dateAdded : String = ""
     var artist : String = ""
     var id : String = ""
+    var uri : Uri? = null
 }

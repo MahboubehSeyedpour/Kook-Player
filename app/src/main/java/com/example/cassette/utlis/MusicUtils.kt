@@ -1,19 +1,12 @@
 //package com.example.cassette.utlis
 
-import android.content.BroadcastReceiver
 import android.content.ContentUris
 import android.content.Context
-import android.content.Intent
 import android.database.Cursor
-import android.net.Uri
-import android.os.Build
 import android.provider.MediaStore
-import android.widget.Toast
-import androidx.annotation.RequiresApi
 import com.example.cassette.models.Song_Model
 import com.example.cassette.utlis.FilePathUtlis
 import com.example.cassette.views.Fragments.Library
-import java.io.File
 
 
 object MusicUtils {
@@ -39,7 +32,7 @@ object MusicUtils {
                     try {
 
                         song.title =
-                            cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE))
+                            cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME))
                         song.duration =
                             milliSecToDuration(
                                 cursor.getLong(
@@ -59,6 +52,13 @@ object MusicUtils {
                         column_id =
                             cursor.getLong(cursor.getColumnIndex(MediaStore.MediaColumns._ID))
 
+                        song.uri = ContentUris
+                            .withAppendedId(
+                                MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                                cursor.getLong(cursor.getColumnIndex(MediaStore.Images.ImageColumns._ID))
+                            )
+
+
                         musicList.add(song)
                     } catch (e: Exception) {
                         song.duration = ""
@@ -73,21 +73,23 @@ object MusicUtils {
                     milliSecToDuration(cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)))
                 song.data =
                     cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA))
+
+                song.uri = ContentUris
+                    .withAppendedId(
+                        MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                        cursor.getLong(cursor.getColumnIndex(MediaStore.Images.ImageColumns._ID))
+                    )
+
+                musicList.add(song)
             } catch (e: Exception) {
                 song.duration = ""
             }
-
-            musicList.add(song)
         }
 
         return musicList
     }
 
-//    TODO(deleteMusic func)
-
-
-    fun songIsEmpty(cursor: Cursor): Boolean
-    {
+    fun songIsEmpty(cursor: Cursor): Boolean {
         val duration = milliSecToDuration(
             cursor.getLong(
                 cursor.getColumnIndexOrThrow(
@@ -99,64 +101,43 @@ object MusicUtils {
 
     }
 
-    fun getMusicUri(id: Long): Uri {
-        val sArtworkUri = Uri.parse("content://media/external/audio/media")
-        return ContentUris.withAppendedId(sArtworkUri, id)
-    }
-
-    @RequiresApi(Build.VERSION_CODES.R)
-    fun removeMusic(position: Int, title: Array<String>) {
-
-
-//        remove from mediaStore
-
-//       val ur =  Library.arraylist?.get(position)?.id?.toLong()?.let { getMusic(it) }
-        val id = Library.arraylist?.get(position)?.id
-        val id_long = id?.toLong()
-
-        val whereClause = "${MediaStore.Audio.Media._ID} = ?"
-        val selectionArgs = arrayOf(Library.arraylist?.get(position)?.id)
-
-            context.contentResolver.delete(MediaStore.Audio.Media.getContentUri(Library.arraylist?.get(position)?.data), null, null)
-
-        if (id_long != null) {
-            val ur = getMusicUri(id_long)
-
-
-//            var garbage: String =""
-//            var parentPath: String = ""
-//            for (str in Library.arraylist?.get(position)?.data.toString())
-//            {
-//                if(!str.equals('/'))
-//                {
-//                    garbage = garbage + str
-//                }
-//                if(str.equals('/'))
-//                {
-//                    parentPath = parentPath + garbage
-//                    garbage = "/"
-//                }
-//            }
+//    fun shareMusic(position: Int) {
 //
-//            val path = parentPath
+//        val song_uri = Library.arraylist?.get(position)?.uri
+//
+//
+//        val abs_file = File(URI.create("file:" + song_uri?.let {
+//            Library.arraylist?.get(position)?.id?.toLong()?.let { it1 ->
+//                ContentUris.withAppendedId(it, it1)
+//                    .toString()
+//            }
+//        }))
+//
+//        val uri = Uri.fromFile(abs_file)
+//        val newFile = File(uri.toString())
+//
+//        val fileUri: Uri? = try {
+//            FileProvider.getUriForFile(
+//                context,
+//                "${BuildConfig.APPLICATION_ID}.FileProvider",
+//                newFile
+//            )
+//        } catch (e: IllegalArgumentException) {
+//            Log.e(
+//                "File Selector",
+//                "The selected file can't be shared: $newFile"
+//            )
+//            null
+//        }
+//
+//        val share = Intent(Intent.ACTION_SEND)
+//        share.type = "audio/*"
+//        share.setDataAndType(fileUri, fileUri?.let { context.contentResolver.getType(it) })
+//        share.putExtra(Intent.EXTRA_STREAM, fileUri)
+//        share.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+//        context.startActivity(Intent.createChooser(share, "Share Sound File"))
+//    }
 
-
-//            val file = File(path , Library.arraylist?.get(position)?.title)
-//            file.delete()
-//            Toast.makeText(context, file.exists().toString(), Toast.LENGTH_SHORT).show()
-
-        }
-
-//        remove file from storage
-//        remove from mediaStore
-    }
-
-    fun getSongFileUri(songId: Long): Uri {
-        return ContentUris.withAppendedId(
-            MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-            songId.toLong()
-        )
-    }
 
     fun getMediaColumns(): Array<String> {
         return arrayOf(
