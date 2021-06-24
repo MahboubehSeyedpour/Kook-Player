@@ -1,5 +1,6 @@
 package com.example.cassette.adapter
 
+import MusicUtils
 import android.app.Activity
 import android.os.Build
 import android.view.LayoutInflater
@@ -100,7 +101,7 @@ class Songs_Adapter(
                     }
                     R.id.share_menu_item -> {
                         updatePosition(viewHolder.adapterPosition)
-//                        MusicUtils.shareMusic(position)
+                        MusicUtils.shareMusic(position)
                         true
                     }
                     R.id.setAsRingtone_menu_item -> {

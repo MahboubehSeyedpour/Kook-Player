@@ -2,11 +2,17 @@
 
 import android.content.ContentUris
 import android.content.Context
+import android.content.Intent
 import android.database.Cursor
+import android.net.Uri
 import android.provider.MediaStore
+import android.util.Log
+import androidx.core.content.FileProvider
+import com.example.cassette.BuildConfig
 import com.example.cassette.models.Song_Model
 import com.example.cassette.utlis.FilePathUtlis
 import com.example.cassette.views.Fragments.Library
+import java.io.File
 
 
 object MusicUtils {
@@ -101,42 +107,31 @@ object MusicUtils {
 
     }
 
-//    fun shareMusic(position: Int) {
-//
-//        val song_uri = Library.arraylist?.get(position)?.uri
-//
-//
-//        val abs_file = File(URI.create("file:" + song_uri?.let {
-//            Library.arraylist?.get(position)?.id?.toLong()?.let { it1 ->
-//                ContentUris.withAppendedId(it, it1)
-//                    .toString()
-//            }
-//        }))
-//
-//        val uri = Uri.fromFile(abs_file)
-//        val newFile = File(uri.toString())
-//
-//        val fileUri: Uri? = try {
-//            FileProvider.getUriForFile(
-//                context,
-//                "${BuildConfig.APPLICATION_ID}.FileProvider",
-//                newFile
-//            )
-//        } catch (e: IllegalArgumentException) {
-//            Log.e(
-//                "File Selector",
-//                "The selected file can't be shared: $newFile"
-//            )
-//            null
-//        }
-//
-//        val share = Intent(Intent.ACTION_SEND)
-//        share.type = "audio/*"
-//        share.setDataAndType(fileUri, fileUri?.let { context.contentResolver.getType(it) })
-//        share.putExtra(Intent.EXTRA_STREAM, fileUri)
-//        share.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-//        context.startActivity(Intent.createChooser(share, "Share Sound File"))
-//    }
+    fun shareMusic(position: Int) {
+
+        val requestFile = File(Library.arraylist?.get(position)?.data)
+
+        val fileUri: Uri? = try {
+            FileProvider.getUriForFile(
+                context,
+                "${BuildConfig.APPLICATION_ID}.FileProvider",
+                requestFile
+            )
+        } catch (e: IllegalArgumentException) {
+            Log.e(
+                "File Selector",
+                "The selected file can't be shared: $requestFile"
+            )
+            null
+        }
+
+        val shareIntent = Intent()
+        shareIntent.action = Intent.ACTION_SEND
+        shareIntent.putExtra(Intent.EXTRA_STREAM, fileUri)
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        shareIntent.type="audio/*"
+        context.startActivity(Intent.createChooser(shareIntent, "share audio"))
+    }
 
 
     fun getMediaColumns(): Array<String> {
