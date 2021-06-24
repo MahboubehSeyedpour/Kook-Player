@@ -32,13 +32,14 @@ object MusicUtils {
             null
         )
         if (cursor != null) {
-            while (cursor.moveToNext()) {
-                if (songIsEmpty(cursor)) {
+            do {
+                cursor.moveToNext()
+                if (!songIsEmpty(cursor)) {
                     val song = Song_Model()
                     try {
 
                         song.title =
-                            cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME))
+                            cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE))
                         song.duration =
                             milliSecToDuration(
                                 cursor.getLong(
@@ -70,26 +71,7 @@ object MusicUtils {
                         song.duration = ""
                     }
                 }
-            }
-            val song = Song_Model()
-            try {
-                song.title =
-                    cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME))
-                song.duration =
-                    milliSecToDuration(cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)))
-                song.data =
-                    cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA))
-
-                song.uri = ContentUris
-                    .withAppendedId(
-                        MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                        cursor.getLong(cursor.getColumnIndex(MediaStore.Images.ImageColumns._ID))
-                    )
-
-                musicList.add(song)
-            } catch (e: Exception) {
-                song.duration = ""
-            }
+            } while (!cursor.isLast)
         }
 
         return musicList
@@ -103,8 +85,7 @@ object MusicUtils {
                 )
             )
         )
-        return !duration.equals("0 : 0 : 0")
-
+        return duration.equals("0 : 0 : 0")
     }
 
     fun shareMusic(position: Int) {
@@ -129,8 +110,12 @@ object MusicUtils {
         shareIntent.action = Intent.ACTION_SEND
         shareIntent.putExtra(Intent.EXTRA_STREAM, fileUri)
         shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        shareIntent.type="audio/*"
+        shareIntent.type = "audio/*"
         context.startActivity(Intent.createChooser(shareIntent, "share audio"))
+    }
+
+    fun shareMusic(positions: ArrayList<Int>) {
+//        TODO(share multiple musics)
     }
 
 
