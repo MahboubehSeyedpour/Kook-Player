@@ -64,8 +64,6 @@ object MusicUtils {
                                 MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
                                 cursor.getLong(cursor.getColumnIndex(MediaStore.Images.ImageColumns._ID))
                             )
-
-
                         musicList.add(song)
                     } catch (e: Exception) {
                         song.duration = ""
@@ -73,7 +71,6 @@ object MusicUtils {
                 }
             } while (!cursor.isLast)
         }
-
         return musicList
     }
 

@@ -58,6 +58,8 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
         PlayerRemote.setupRemote(applicationContext)
 
+
+
         currentMode = playerMode.NORMAL
 
 //        val toolbar: Toolbar = findViewById<View>(R.id.toolbar) as Toolbar
@@ -97,8 +99,8 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
 
         // bottomsheet manager
-        val playerPanel = PlayerPanel()
-        playerPanel.setup(bottomSheet, baseContext)
+        val playerPanel = PlayerPanel_bottomSheet()
+        playerPanel.setup(this,bottomSheet, baseContext)
 
         val mHandler = Handler()
         runOnUiThread(object : Runnable {
