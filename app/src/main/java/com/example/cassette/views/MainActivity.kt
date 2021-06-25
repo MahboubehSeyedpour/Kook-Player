@@ -28,7 +28,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.base.*
 import kotlinx.android.synthetic.main.player_remote.*
-import kotlinx.android.synthetic.main.song_rv_item.*
 
 
 class MainActivity : AppCompatActivity(), LifecycleOwner {
@@ -115,8 +114,6 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         })
 
 
-
-
         seekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             override fun onProgressChanged(
                 seekBar: SeekBar,
@@ -173,23 +170,11 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
             when (currentMode) {
                 playerMode.NORMAL -> {
                     currentMode = playerMode.SHUFFLE
-//                    Toast.makeText(this, "normal mode activated" , Toast.LENGTH_SHORT).show()
                 }
-
 
                 playerMode.SHUFFLE -> {
                     currentMode = playerMode.NORMAL
-//                    Toast.makeText(this, "shuffle mode activated" , Toast.LENGTH_SHORT).show()
                 }
-
-            }
-
-            music_menu_btn.setOnClickListener {
-                Toast.makeText(
-                    applicationContext,
-                    "menue btn clicked on item {${Library.songsAdapter?.getCurrentPosition()}}",
-                    Toast.LENGTH_SHORT
-                ).show()
             }
         }
 
@@ -241,41 +226,6 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
     fun hasPermissions(context: Context, vararg permissions: String): Boolean = permissions.all {
         ActivityCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
     }
-
-//    fun getPermissions(permissions: Map<String, Int>) {
-//
-//
-//
-//
-//
-//        for (permission in permissions) {
-//
-//            if (ContextCompat.checkSelfPermission(
-//                    applicationContext,
-//                    permission.key
-//                ) != PackageManager.PERMISSION_GRANTED
-//            ) {
-//                if (ActivityCompat.shouldShowRequestPermissionRationale(
-//                        this,
-//                        permission.key
-//                    )
-//                ) {
-//                    ActivityCompat.requestPermissions(
-//                        this,
-//                        arrayOf(permission.key),
-//                        permission.value
-//                    )
-//                } else {
-//                    ActivityCompat.requestPermissions(
-//                        this,
-//                        arrayOf(permission.key),
-//                        permission.value
-//                    )
-//                }
-//            } else {
-//                doStuff()
-//            }
-//        }
 
 
     override fun onRequestPermissionsResult(

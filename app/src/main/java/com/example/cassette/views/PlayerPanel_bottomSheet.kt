@@ -7,7 +7,6 @@ import android.os.Build
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
-import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 class PlayerPanel_bottomSheet {
@@ -50,23 +49,12 @@ class PlayerPanel_bottomSheet {
                 BottomSheetBehavior.STATE_COLLAPSED -> {
                     onPanelCollapsed()
                 }
-                BottomSheetBehavior.STATE_SETTLING -> {
-
-                }
             }
         }
 
         fun onPanelExpanded() {
-            Toast.makeText(
-                context,
-                "state is EXPANDED",
-                Toast.LENGTH_SHORT
-            ).show()
-//            bottomSheet.visibility = View.GONE
-//            bottomSheetnew.visibility = View.VISIBLE
+
             bottomSheetBehaviour.setPeekHeight(Int.MAX_VALUE)
-//            bottomSheetBehaviour.isHideable = true
-//            bottomSheetBehaviour = BottomSheetBehavior.from(bottomSheetnew)
 
             if(Build.VERSION.SDK_INT>=21){
                 baseActivity.window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
@@ -79,11 +67,7 @@ class PlayerPanel_bottomSheet {
         }
 
         fun onPanelCollapsed() {
-            Toast.makeText(
-                context,
-                "state is Collapsed",
-                Toast.LENGTH_SHORT
-            ).show()
+
             bottomSheetBehaviour.setPeekHeight(140)
 
             if(Build.VERSION.SDK_INT>=21){
