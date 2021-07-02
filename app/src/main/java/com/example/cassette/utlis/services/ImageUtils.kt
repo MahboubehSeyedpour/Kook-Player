@@ -8,6 +8,6 @@ import com.bumptech.glide.Glide
 object ImageUtils {
 
     fun loadImage(context: Context, imageView: ImageView , data: String, bitmap: Bitmap){
-        Glide.with(context).load(bitmap).centerCrop().into(imageView)
+        Glide.with(context).load(bitmap).circleCrop().into(imageView)
     }
 }
