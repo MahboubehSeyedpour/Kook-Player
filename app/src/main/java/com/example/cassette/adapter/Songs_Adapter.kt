@@ -45,7 +45,7 @@ class Songs_Adapter(
         this.position = position
         val viewHolder = holder as RecyclerViewViewHolder
         viewHolder.title.text = song.title
-        viewHolder.duration.text = song.duration
+//        viewHolder.duration.text = song.duration
         viewHolder.artist.text = song.artist
         ImageUtils.loadImage(context, viewHolder.imageView, song.data, song.image)
 
@@ -54,10 +54,10 @@ class Songs_Adapter(
             PlayerRemote.playMusic(song.data)
             updatePosition(viewHolder.adapterPosition)
         }
-        viewHolder.duration.setOnClickListener {
-            PlayerRemote.playMusic(song.data)
-            updatePosition(viewHolder.adapterPosition)
-        }
+//        viewHolder.duration.setOnClickListener {
+//            PlayerRemote.playMusic(song.data)
+//            updatePosition(viewHolder.adapterPosition)
+//        }
         viewHolder.artist.setOnClickListener {
             PlayerRemote.playMusic(song.data)
             updatePosition(viewHolder.adapterPosition)
@@ -138,7 +138,7 @@ class Songs_Adapter(
     open inner class RecyclerViewViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
         val title = itemView.song_title
-        val duration = itemView.song_duration
+//        val duration = itemView.song_duration
         val artist = itemView.song_artist
         val menu_btn = itemView.music_menu_btn
         val imageView = itemView.music_iv
