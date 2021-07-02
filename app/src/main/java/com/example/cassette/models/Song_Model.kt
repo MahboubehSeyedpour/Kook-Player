@@ -1,5 +1,6 @@
 package com.example.cassette.models
 
+import android.graphics.Bitmap
 import android.net.Uri
 
 
@@ -25,4 +26,6 @@ class Song_Model(
     var artist : String = ""
     var id : String = ""
     var uri : Uri? = null
+    var albumId : String = ""
+    lateinit var image : Bitmap
 }

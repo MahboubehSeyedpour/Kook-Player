@@ -12,6 +12,7 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cassette.R
 import com.example.cassette.models.Song_Model
+import com.example.cassette.utlis.services.ImageUtils
 import com.example.cassette.views.Fragments.Library
 import com.example.cassette.views.PlayerRemote
 import kotlinx.android.synthetic.main.song_rv_item.view.*
@@ -46,6 +47,7 @@ class Songs_Adapter(
         viewHolder.title.text = song.title
         viewHolder.duration.text = song.duration
         viewHolder.artist.text = song.artist
+        ImageUtils.loadImage(context, viewHolder.imageView, song.data, song.image)
 
 
         viewHolder.title.setOnClickListener {
@@ -139,6 +141,6 @@ class Songs_Adapter(
         val duration = itemView.song_duration
         val artist = itemView.song_artist
         val menu_btn = itemView.music_menu_btn
-
+        val imageView = itemView.music_iv
     }
 }

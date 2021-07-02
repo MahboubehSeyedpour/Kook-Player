@@ -27,4 +27,8 @@ object FilePathUtlis {
             return MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
         }
     }
+
+    fun getAlbumsUri(): String {
+        return "content://media/external/audio/albumart"
+    }
 }

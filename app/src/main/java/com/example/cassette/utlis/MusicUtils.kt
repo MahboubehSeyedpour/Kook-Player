@@ -4,15 +4,19 @@ import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
 import android.database.Cursor
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.provider.MediaStore
 import android.util.Log
 import androidx.core.content.FileProvider
 import com.example.cassette.BuildConfig
+import com.example.cassette.R
 import com.example.cassette.models.Song_Model
 import com.example.cassette.utlis.FilePathUtlis
 import com.example.cassette.views.Fragments.Library
 import java.io.File
+import java.io.FileDescriptor
 
 
 object MusicUtils {
@@ -33,45 +37,86 @@ object MusicUtils {
         )
         if (cursor != null) {
             do {
-                cursor.moveToNext()
+                cursor!!.moveToNext()
                 if (!songIsEmpty(cursor)) {
-                    val song = Song_Model()
-                    try {
-
-                        song.title =
-                            cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE))
-                        song.duration =
-                            milliSecToDuration(
-                                cursor.getLong(
-                                    cursor.getColumnIndexOrThrow(
-                                        MediaStore.Audio.Media.DURATION
-                                    )
-                                )
-                            )
-                        song.data =
-                            cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA))
-                        song.id =
-                            cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID))
-                        song.dateAdded =
-                            cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATE_ADDED))
-                        song.artist =
-                            cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST))
-                        column_id =
-                            cursor.getLong(cursor.getColumnIndex(MediaStore.MediaColumns._ID))
-
-                        song.uri = ContentUris
-                            .withAppendedId(
-                                MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                                cursor.getLong(cursor.getColumnIndex(MediaStore.Images.ImageColumns._ID))
-                            )
-                        musicList.add(song)
-                    } catch (e: Exception) {
-                        song.duration = ""
-                    }
+                    musicList.add(getMusic(cursor))
                 }
-            } while (!cursor.isLast)
+            } while (!cursor!!.isLast)
         }
+
         return musicList
+    }
+
+    fun getAlbumart(album_id: Long?): Bitmap? {
+        var bm: Bitmap? = null
+        val options = BitmapFactory.Options()
+        try {
+            val sArtworkUri =
+                Uri.parse(FilePathUtlis.getAlbumsUri())
+
+
+            val uri = ContentUris.withAppendedId(sArtworkUri, album_id!!)
+            var pfd =
+                context.contentResolver.openFileDescriptor(uri, "r")
+            if (pfd != null) {
+                var fd: FileDescriptor? = pfd.fileDescriptor
+                bm = BitmapFactory.decodeFileDescriptor(fd, null, options)
+                pfd = null
+                fd = null
+            }
+        } catch (ee: Error) {
+        } catch (e: java.lang.Exception) {
+        }
+        return bm
+    }
+
+    fun getMusic(cursor: Cursor): Song_Model {
+        val song = Song_Model()
+        try {
+
+            song.title =
+                cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE))
+            song.duration =
+                milliSecToDuration(
+                    cursor.getLong(
+                        cursor.getColumnIndexOrThrow(
+                            MediaStore.Audio.Media.DURATION
+                        )
+                    )
+                )
+            song.data =
+                cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA))
+            song.id =
+                cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID))
+            song.dateAdded =
+                cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATE_ADDED))
+            song.artist =
+                cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST))
+            column_id =
+                cursor.getLong(cursor.getColumnIndex(MediaStore.MediaColumns._ID))
+
+            song.uri = ContentUris
+                .withAppendedId(
+                    MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                    cursor.getLong(cursor.getColumnIndex(MediaStore.Images.ImageColumns._ID))
+                )
+
+//            song.image = ContentUris.withAppendedId(MediaStore.Audio.Albums.ALBUM_ART)
+            song.albumId = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID))
+
+            val songArt = getAlbumart(song.albumId.toLong())
+            if (songArt != null) {
+                song.image = songArt
+            } else {
+                song.image = BitmapFactory.decodeResource(
+                    context.getResources(),
+                    R.drawable.ic_app_foreground
+                );
+            }
+        } catch (e: Exception) {
+            song.duration = ""
+        }
+        return song
     }
 
     fun songIsEmpty(cursor: Cursor): Boolean {
