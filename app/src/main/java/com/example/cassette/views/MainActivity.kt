@@ -23,7 +23,7 @@ import com.example.cassette.adapter.ViewPagerFragmentAdapter
 import com.example.cassette.views.Fragments.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.activity_main.*
+import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.base.*
 import kotlinx.android.synthetic.main.component_toolbar.*
 import kotlinx.android.synthetic.main.player_remote.*
@@ -97,8 +97,10 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
 
         // bottomsheet manager
-        val playerPanel = PlayerPanel_bottomSheet()
-        playerPanel.setup(this, bottomSheet, baseContext)
+//        val playerPanel = PlayerPanel_bottomSheet()
+//        playerPanel.setup(this, bottomSheet, baseContext)
+
+        val playerPanel = SlidingUpPanelLayout(baseContext)
 
         val mHandler = Handler()
         runOnUiThread(object : Runnable {

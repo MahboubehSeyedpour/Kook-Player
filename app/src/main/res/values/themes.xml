@@ -2,6 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.MusicPlayer" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Primary brand color. -->
+        <item name="android:windowActionBarOverlay">true</item>
         <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryVariant">@color/blue_dark</item>
         <item name="colorOnPrimary">@color/white</item>
