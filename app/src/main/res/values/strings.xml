@@ -17,4 +17,11 @@
     <string name="action_set_as_ringtone">Set as ringtone</string>
     <string name="action_delete_from_device">Delete from device</string>
 
+
+    <!--    modal bottom sheet items -->
+    <string name="first_item_modal_bottomsheet">Sort in ascending order</string>
+    <string name="second_item_modal_bottomsheet">Sort by name</string>
+    <string name="third_item_modal_bottomsheet">Sort by artist</string>
+    <string name="forth_item_modal_bottomsheet">Sort by year</string>
+
 </resources>

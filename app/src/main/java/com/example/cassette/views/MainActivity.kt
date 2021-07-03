@@ -9,6 +9,7 @@ import android.content.res.Resources
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
+import android.view.View
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.Toast
@@ -24,9 +25,12 @@ import com.example.cassette.views.Fragments.Favorite
 import com.example.cassette.views.Fragments.Library
 import com.example.cassette.views.Fragments.Playlist
 import com.example.cassette.views.Fragments.RecentlyAdded
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.base.*
+import kotlinx.android.synthetic.main.modal_bottom_sheet.*
 import kotlinx.android.synthetic.main.player_remote.*
 
 
@@ -39,7 +43,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         Manifest.permission.WRITE_EXTERNAL_STORAGE
     )
 
-
+    lateinit var bottomSheetBehaviour: BottomSheetBehavior<View>
     lateinit var mediaPlayer: MediaPlayer
     lateinit var currentMode: playerMode
 
@@ -99,7 +103,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
         // bottomsheet manager
         val playerPanel = PlayerPanel_bottomSheet()
-        playerPanel.setup(this,bottomSheet, baseContext)
+        playerPanel.setup(this, bottomSheet, baseContext)
 
         val mHandler = Handler()
         runOnUiThread(object : Runnable {
@@ -159,7 +163,42 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
 
         sort_iv.setOnClickListener {
-            sortByDateAdded()
+//            sortByDateAdded()
+            val bottomSheetDialog = BottomSheetDialog(this);
+            bottomSheetDialog.setContentView(R.layout.modal_bottom_sheet);
+            bottomSheetDialog.show()
+
+            bottomSheetDialog.ascendingOrder.setOnClickListener {
+                Toast.makeText(
+                    applicationContext,
+                    "${getResources().getString(R.string.first_item_modal_bottomsheet)} clicked",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            bottomSheetDialog.sortByName.setOnClickListener {
+                Toast.makeText(
+                    applicationContext,
+                    "${getResources().getString(R.string.second_item_modal_bottomsheet)} clicked",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            bottomSheetDialog.sortByArtist.setOnClickListener {
+                Toast.makeText(
+                    applicationContext,
+                    "${getResources().getString(R.string.third_item_modal_bottomsheet)} clicked",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            bottomSheetDialog.sortByYear.setOnClickListener {
+                Toast.makeText(
+                    applicationContext,
+                    "${getResources().getString(R.string.forth_item_modal_bottomsheet)} clicked",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
 
         sort_tv.setOnClickListener {
