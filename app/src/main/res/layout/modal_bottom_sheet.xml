@@ -151,7 +151,7 @@
                 android:layout_height="1dp"
                 android:layout_gravity="right"
                 android:layout_marginBottom="8dp"
-                android:background="@color/blue_green_dark" />
+                android:background="@color/light_grey" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"

@@ -110,7 +110,7 @@ object MusicUtils {
             } else {
                 song.image = BitmapFactory.decodeResource(
                     context.getResources(),
-                    R.drawable.ic_app_foreground
+                    R.mipmap.ic_music_foreground
                 );
             }
         } catch (e: Exception) {
