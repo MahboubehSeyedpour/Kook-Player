@@ -9,36 +9,12 @@
         android:id="@+id/include_toolbar"
         layout="@layout/component_toolbar" />
 
-    <com.google.android.material.tabs.TabLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <com.google.android.material.tabs.TabLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/tabLayout_home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabSelectedTextColor="@color/black"
-        app:tabIndicatorColor="@color/blue_light"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        android:gravity="right">
-
-        <TextView
-            android:id="@+id/sort_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="sort by date added"
-            android:layout_gravity="center"/>
-
-        <ImageView
-            android:id="@+id/sort_iv"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/ic_sort_in_ascending_order"/>
-    </LinearLayout>
-
+        app:tabIndicatorColor="@color/blue_light"
+        app:tabSelectedTextColor="@color/black" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewpager_home"

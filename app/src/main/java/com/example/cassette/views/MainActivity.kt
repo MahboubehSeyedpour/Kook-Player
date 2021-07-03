@@ -20,17 +20,12 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.viewpager2.widget.ViewPager2
 import com.example.cassette.R
 import com.example.cassette.adapter.ViewPagerFragmentAdapter
-import com.example.cassette.models.Song_Model
-import com.example.cassette.views.Fragments.Favorite
-import com.example.cassette.views.Fragments.Library
-import com.example.cassette.views.Fragments.Playlist
-import com.example.cassette.views.Fragments.RecentlyAdded
+import com.example.cassette.views.Fragments.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.base.*
-import kotlinx.android.synthetic.main.modal_bottom_sheet.*
+import kotlinx.android.synthetic.main.component_toolbar.*
 import kotlinx.android.synthetic.main.player_remote.*
 
 
@@ -54,7 +49,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         REPEAT_ALL("repeat_all")
     }
 
-    @SuppressLint("ResourceAsColor")
+    @SuppressLint("ResourceAsColor", "WrongConstant")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -163,46 +158,11 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
 
         sort_iv.setOnClickListener {
-//            sortByDateAdded()
-            val bottomSheetDialog = BottomSheetDialog(this);
-            bottomSheetDialog.setContentView(R.layout.modal_bottom_sheet);
-            bottomSheetDialog.show()
 
-            bottomSheetDialog.ascendingOrder.setOnClickListener {
-                Toast.makeText(
-                    applicationContext,
-                    "${getResources().getString(R.string.first_item_modal_bottomsheet)} clicked",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+            val bottomSheetDialog = Custom_BottomSheetDialogFragment.newInstance()
+            bottomSheetDialog?.setStyle(R.style.AppBottomSheetDialogTheme, R.style.AppBottomSheetDialogTheme)
+            bottomSheetDialog?.show(supportFragmentManager, "btmsheet")
 
-            bottomSheetDialog.sortByName.setOnClickListener {
-                Toast.makeText(
-                    applicationContext,
-                    "${getResources().getString(R.string.second_item_modal_bottomsheet)} clicked",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-
-            bottomSheetDialog.sortByArtist.setOnClickListener {
-                Toast.makeText(
-                    applicationContext,
-                    "${getResources().getString(R.string.third_item_modal_bottomsheet)} clicked",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-
-            bottomSheetDialog.sortByYear.setOnClickListener {
-                Toast.makeText(
-                    applicationContext,
-                    "${getResources().getString(R.string.forth_item_modal_bottomsheet)} clicked",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
-
-        sort_tv.setOnClickListener {
-            sortByDateAdded()
         }
 
         shuffle_btn.setOnClickListener {
@@ -290,17 +250,6 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
                 return
             }
         }
-    }
-
-    fun sortByDateAdded() {
-        Library.arraylist?.sortWith(compareByDescending { it.dateAdded })
-        var sortedList = Library.arraylist
-        sortMusicList(sortedList as ArrayList<Song_Model>)
-    }
-
-    fun sortMusicList(arrayList: ArrayList<Song_Model>) {
-        Library.songsAdapter?.arrayList = arrayList
-        Library.songsAdapter?.notifyDataSetChanged()
     }
 
     fun updateUI() {

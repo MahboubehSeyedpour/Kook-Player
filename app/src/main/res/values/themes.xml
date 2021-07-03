@@ -17,4 +17,14 @@
     <style name="Theme.Toolbar" parent="Theme.MusicPlayer">
 <!--        <item name="android:background">@color/blue_dark</item>-->
     </style>
+
+    <style name="AppBottomSheetDialogTheme"
+        parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+    </style>
+
+    <style name="AppModalStyle"
+        parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/rounded_btmsheet_bg</item>
+    </style>
 </resources>

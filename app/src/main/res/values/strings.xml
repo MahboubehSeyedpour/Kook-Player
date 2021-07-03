@@ -19,9 +19,10 @@
 
 
     <!--    modal bottom sheet items -->
-    <string name="first_item_modal_bottomsheet">Sort in ascending order</string>
-    <string name="second_item_modal_bottomsheet">Sort by name</string>
-    <string name="third_item_modal_bottomsheet">Sort by artist</string>
-    <string name="forth_item_modal_bottomsheet">Sort by year</string>
+    <string name="first_item_modal_bottomsheet">Date modified</string>
+    <string name="second_item_modal_bottomsheet">Name</string>
+    <string name="third_item_modal_bottomsheet">Artist</string>
+    <string name="forth_item_modal_bottomsheet">Genre</string>
+    <string name="fifth_item_modal_bottomsheet">Duration</string>
 
 </resources>
