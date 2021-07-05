@@ -4,7 +4,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 
 
-class Song_Model(
+class SongModel(
 //    val id: Long,
 
 //    val trackNumber: Int,

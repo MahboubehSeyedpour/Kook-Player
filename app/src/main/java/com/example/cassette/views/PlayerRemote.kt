@@ -4,10 +4,8 @@ import android.content.Context
 import android.media.MediaPlayer
 import android.net.Uri
 import com.example.cassette.R
-import com.example.cassette.models.Song_Model
+import com.example.cassette.models.SongModel
 import com.example.cassette.views.Fragments.Library
-import kotlin.math.max
-import kotlin.random.Random.Default.nextInt
 
 object PlayerRemote {
     lateinit var mediaPlayer: MediaPlayer
@@ -43,7 +41,7 @@ object PlayerRemote {
                     Library.songsAdapter?.updatePosition(++position)
                 }
                 if (position != null) {
-                    val song: Song_Model? = Library.arraylist?.get(position)
+                    val song: SongModel? = Library.arraylist?.get(position)
                     playMusic((song?.data).toString())
                 }
             }
@@ -62,7 +60,7 @@ object PlayerRemote {
                     Library.songsAdapter?.updatePosition(--position)
                 }
                 if (position != null && position >= 0) {
-                    val song: Song_Model? = Library.arraylist?.get(position)
+                    val song: SongModel? = Library.arraylist?.get(position)
                     playMusic((song?.data).toString())
                 }
             }

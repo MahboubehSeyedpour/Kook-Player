@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
     lateinit var currentMode: playerMode
 
     enum class playerMode(mode: String) {
-        SHUFFLE("suffle"),
+        SHUFFLE("shuffle"),
         NORMAL("normal"),
         REPEAT_ONE("repeat_one"),
         REPEAT_ALL("repeat_all")
@@ -101,6 +101,29 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 //        playerPanel.setup(this, bottomSheet, baseContext)
 
         val playerPanel = SlidingUpPanelLayout(baseContext)
+
+        playerPanel.addPanelSlideListener(object : SlidingUpPanelLayout.PanelSlideListener {
+            override fun onPanelSlide(panel: View?, slideOffset: Float) {
+            }
+
+            override fun onPanelStateChanged(
+                panel: View?,
+                previousState: SlidingUpPanelLayout.PanelState?,
+                newState: SlidingUpPanelLayout.PanelState?
+            ) {
+                when (newState?.name) {
+                    "Collapsed" -> {
+                        val i = 0
+                        //action when collapsed
+                    }
+                    "Expanded" -> {
+                        val i = 0
+                        //action when expanded
+                    }
+                }
+            }
+
+        })
 
         val mHandler = Handler()
         runOnUiThread(object : Runnable {
@@ -162,7 +185,10 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         sort_iv.setOnClickListener {
 
             val bottomSheetDialog = Custom_BottomSheetDialogFragment.newInstance()
-            bottomSheetDialog?.setStyle(R.style.AppBottomSheetDialogTheme, R.style.AppBottomSheetDialogTheme)
+            bottomSheetDialog?.setStyle(
+                R.style.AppBottomSheetDialogTheme,
+                R.style.AppBottomSheetDialogTheme
+            )
             bottomSheetDialog?.show(supportFragmentManager, "btmsheet")
 
         }

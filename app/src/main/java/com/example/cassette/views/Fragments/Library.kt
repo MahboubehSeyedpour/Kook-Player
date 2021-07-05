@@ -19,14 +19,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cassette.R
 import com.example.cassette.adapter.Songs_Adapter
 import com.example.cassette.datamodels.Songs_ViewModel
-import com.example.cassette.models.Song_Model
+import com.example.cassette.models.SongModel
 import kotlinx.android.synthetic.main.fragment_library.*
 
 class Library : Fragment() {
 
 
     companion object Library {
-        var arraylist: ArrayList<Song_Model>? = null
+        var arraylist: ArrayList<SongModel>? = null
         var songsAdapter: Songs_Adapter? = null
         val DELETE_REQUEST_CODE = 2
         lateinit var activity: Activity
@@ -97,7 +97,7 @@ class Library : Fragment() {
         songsAdapter = activity?.let {
             Songs_Adapter(
                 it,
-                arraylist as ArrayList<Song_Model>
+                arraylist as ArrayList<SongModel>
             )
         }
         Library.activity = this!!.getActivity()!!

@@ -12,7 +12,7 @@ import android.util.Log
 import androidx.core.content.FileProvider
 import com.example.cassette.BuildConfig
 import com.example.cassette.R
-import com.example.cassette.models.Song_Model
+import com.example.cassette.models.SongModel
 import com.example.cassette.utlis.FilePathUtlis
 import com.example.cassette.views.Fragments.Library
 import java.io.File
@@ -24,9 +24,9 @@ object MusicUtils {
     lateinit var context: Context
     var column_id: Long = -1
 
-    fun getListOfMusics(context: Context): ArrayList<Song_Model> {
+    fun getListOfMusics(context: Context): ArrayList<SongModel> {
 
-        val musicList = ArrayList<Song_Model>()
+        val musicList = ArrayList<SongModel>()
         this.context = context
         val cursor: Cursor? = context?.contentResolver?.query(
             FilePathUtlis.getMusicsUri(),
@@ -70,8 +70,8 @@ object MusicUtils {
         return bm
     }
 
-    fun getMusic(cursor: Cursor): Song_Model {
-        val song = Song_Model()
+    fun getMusic(cursor: Cursor): SongModel {
+        val song = SongModel()
         try {
 
             song.title =

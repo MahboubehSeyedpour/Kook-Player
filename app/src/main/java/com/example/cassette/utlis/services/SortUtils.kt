@@ -2,7 +2,7 @@ package com.example.cassette.utlis.services
 
 import android.content.Context
 import android.widget.Toast
-import com.example.cassette.models.Song_Model
+import com.example.cassette.models.SongModel
 import com.example.cassette.views.Fragments.Library
 
 object SortUtils {
@@ -10,19 +10,19 @@ object SortUtils {
     fun sortByDateAdded() {
         Library.arraylist?.sortWith(compareByDescending { it.dateAdded })
         var sortedList = Library.arraylist
-        sortMusicList(sortedList as ArrayList<Song_Model>)
+        sortMusicList(sortedList as ArrayList<SongModel>)
     }
 
     fun sortByName() {
         Library.arraylist?.sortWith(compareByDescending { it.title })
         var sortedList = Library.arraylist
-        sortMusicList(sortedList as ArrayList<Song_Model>)
+        sortMusicList(sortedList as ArrayList<SongModel>)
     }
 
     fun sortByArtist() {
         Library.arraylist?.sortWith(compareByDescending { it.artist })
         var sortedList = Library.arraylist
-        sortMusicList(sortedList as ArrayList<Song_Model>)
+        sortMusicList(sortedList as ArrayList<SongModel>)
     }
 
 //    fun sortByGenre() {
@@ -34,10 +34,10 @@ object SortUtils {
     fun sortByDuration() {
         Library.arraylist?.sortWith(compareByDescending { it.duration })
         var sortedList = Library.arraylist
-        sortMusicList(sortedList as ArrayList<Song_Model>)
+        sortMusicList(sortedList as ArrayList<SongModel>)
     }
 
-    fun sortMusicList(arrayList: ArrayList<Song_Model>) {
+    fun sortMusicList(arrayList: ArrayList<SongModel>) {
         Library.songsAdapter?.arrayList = arrayList
         Library.songsAdapter?.notifyDataSetChanged()
     }

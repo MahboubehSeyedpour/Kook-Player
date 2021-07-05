@@ -11,7 +11,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cassette.R
-import com.example.cassette.models.Song_Model
+import com.example.cassette.models.SongModel
 import com.example.cassette.utlis.services.ImageUtils
 import com.example.cassette.views.Fragments.Library
 import com.example.cassette.views.PlayerRemote
@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.song_rv_item.view.*
 
 class Songs_Adapter(
     context: Activity,
-    arrayList: ArrayList<Song_Model>
+    arrayList: ArrayList<SongModel>
 ) :
     RV_Base_Adapter() {
 
@@ -41,7 +41,7 @@ class Songs_Adapter(
         holder: RecyclerView.ViewHolder,
         position: Int
     ) {
-        val song: Song_Model = arrayList.get(position)
+        val song: SongModel = arrayList.get(position)
         this.position = position
         val viewHolder = holder as RecyclerViewViewHolder
         viewHolder.title.text = song.title
