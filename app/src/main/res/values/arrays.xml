@@ -6,4 +6,12 @@
         <item>Playlists</item>
         <item>Favorite</item>
     </string-array>
+    <string-array name="playlist_projection">
+        <item>MediaStore.Audio.Media._ID</item>
+        <item>MediaStore.Audio.Media.TITLE</item>
+        <item>MediaStore.Audio.Media.ARTIST</item>
+        <item>MediaStore.Audio.Media.DATA</item>
+        <item>MediaStore.Audio.Media.DURATION</item>
+        <item>MediaStore.Audio.Media.ALBUM_ID</item>
+    </string-array>
 </resources>

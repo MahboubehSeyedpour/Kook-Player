@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.cassette.R
 import com.example.cassette.utlis.PlaylistUtils
+import com.example.cassette.views.dialogs.CreatePlaylistDialog
 import kotlinx.android.synthetic.main.fragment_playlist.*
 
 
@@ -20,13 +21,11 @@ class Playlist : Fragment() {
 
         fab.setOnClickListener {
 
-            PlaylistUtils.getPlaylistMusics(context!!, 12)
+            val createPlaylist = CreatePlaylistDialog()
 
-//            val createPlaylist = CreatePlaylistDialog()
-//
-//            this.fragmentManager?.beginTransaction()?.let { it1 -> createPlaylist.show(it1, "playlist") }
-//
-//            context?.let { it1 -> PlaylistUtils.createPlaylist(it1, "me2") }
+            this.fragmentManager?.beginTransaction()?.let { it1 -> createPlaylist.show(it1, "playlist") }
+
+            context?.let { it1 -> PlaylistUtils.createPlaylist(it1, "me2") }
 
         }
     }

@@ -6,6 +6,7 @@ import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import android.provider.MediaStore
+import com.example.cassette.R
 import com.example.cassette.models.PlaylistModel
 import com.example.cassette.models.SongModel
 
@@ -110,14 +111,16 @@ object PlaylistUtils {
 
         val uri = MediaStore.Audio.Playlists.Members.getContentUri("external", id)
 
-        val projection = arrayOf(
-            MediaStore.Audio.Media._ID,
-            MediaStore.Audio.Media.TITLE,
-            MediaStore.Audio.Media.ARTIST,
-            MediaStore.Audio.Media.DATA,
-            MediaStore.Audio.Media.DURATION,
-            MediaStore.Audio.Media.ALBUM_ID
-        )
+//        val projection = arrayOf(
+//            MediaStore.Audio.Media._ID,
+//            MediaStore.Audio.Media.TITLE,
+//            MediaStore.Audio.Media.ARTIST,
+//            MediaStore.Audio.Media.DATA,
+//            MediaStore.Audio.Media.DURATION,
+//            MediaStore.Audio.Media.ALBUM_ID
+//        )
+
+        val projection = context.resources.getStringArray(R.array.playlist_projection)
 
         val selection = "${MediaStore.Audio.Media.IS_MUSIC}  != 0"
         val sortOrder = "${MediaStore.Audio.Playlists.Members.PLAY_ORDER} ASC"
