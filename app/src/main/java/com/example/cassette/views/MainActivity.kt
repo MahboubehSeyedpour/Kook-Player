@@ -205,7 +205,6 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
             }
         }
 
-
         ///////////////////////////////////////////////////////
 //        tablayout_home.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
 //            override fun onTabReselected(tab: TabLayout.Tab?) {

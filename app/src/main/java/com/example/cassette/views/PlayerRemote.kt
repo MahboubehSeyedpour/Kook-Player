@@ -8,6 +8,7 @@ import com.example.cassette.models.SongModel
 import com.example.cassette.views.Fragments.Library
 
 object PlayerRemote {
+
     lateinit var mediaPlayer: MediaPlayer
     lateinit var context: Context
 

@@ -28,22 +28,27 @@ object MusicUtils {
 
         val musicList = ArrayList<SongModel>()
         this.context = context
-        val cursor: Cursor? = context?.contentResolver?.query(
-            FilePathUtlis.getMusicsUri(),
-            null,
-            null,
-            null,
-            null
-        )
-        if (cursor != null) {
-            do {
-                cursor!!.moveToNext()
-                if (!songIsEmpty(cursor)) {
-                    musicList.add(getMusic(cursor))
-                }
-            } while (!cursor!!.isLast)
-        }
+        try {
+            val cursor: Cursor? = context?.contentResolver?.query(
+                FilePathUtlis.getMusicsUri(),
+                null,
+                null,
+                null,
+                null
+            )
+            if (cursor != null) {
+                do {
+                    cursor!!.moveToNext()
+                    if (!songIsEmpty(cursor)) {
+                        musicList.add(getMusic(cursor))
+                    }
+                } while (!cursor!!.isLast)
+            }
 
+
+        } catch (exception: java.lang.Exception) {
+//            TODO(handle the exception)
+        }
         return musicList
     }
 
@@ -64,8 +69,8 @@ object MusicUtils {
                 pfd = null
                 fd = null
             }
-        } catch (ee: Error) {
-        } catch (e: java.lang.Exception) {
+        } catch (exception: java.lang.Exception) {
+//           TODO(handle the exception)
         }
         return bm
     }
@@ -115,6 +120,7 @@ object MusicUtils {
             }
         } catch (e: Exception) {
             song.duration = ""
+            //            TODO(handle the exception)
         }
         return song
     }

@@ -19,21 +19,21 @@ object FilePathUtlis {
 
     fun getMusicsUri(): Uri {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            return MediaStore.Audio.Media.getContentUri(
+        when {
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> return MediaStore.Audio.Media.getContentUri(
                 MediaStore.VOLUME_EXTERNAL
             )
-        } else {
-            return MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+            else -> return MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
         }
+
+//        TODO(what will happen if there is no valid storage)
     }
 
     fun getAlbumsUri(): String {
         return "content://media/external/audio/albumart"
     }
 
-    fun getPlayListsUri() : Uri
-    {
-            return MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI
+    fun getPlayListsUri(): Uri {
+        return MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI
     }
 }

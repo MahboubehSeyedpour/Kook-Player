@@ -9,7 +9,7 @@ import androidx.fragment.app.DialogFragment
 import com.example.cassette.R
 
 
-class CreatePlaylist : DialogFragment() {
+class CreatePlaylistDialog : DialogFragment() {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
