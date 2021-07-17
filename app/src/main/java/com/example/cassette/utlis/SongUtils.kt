@@ -14,42 +14,82 @@ import com.example.cassette.BuildConfig
 import com.example.cassette.R
 import com.example.cassette.models.SongModel
 import com.example.cassette.utlis.FilePathUtlis
+import com.example.cassette.utlis.FileUtils
 import com.example.cassette.views.Fragments.Library
 import java.io.File
 import java.io.FileDescriptor
 
 
-object MusicUtils {
+object SongUtils {
 
     lateinit var context: Context
-    var column_id: Long = -1
 
-    fun getListOfMusics(context: Context): ArrayList<SongModel> {
+    fun getListOfSongs(context: Context): ArrayList<SongModel> {
 
         val musicList = ArrayList<SongModel>()
         this.context = context
+        val cursor = FileUtils.fetchFiles(
+            fileType = FileUtils.FILE_TYPES.MUSIC,
+            context = context,
+            projection = null,
+            selection = null,
+            selectionArgs = null,
+            sortOrder = null
+        )
+        if (cursor != null && cursor.getCount() != 0) {
+            do {
+                cursor.moveToNext()
+                musicList.add(createSong(cursor))
+            } while (!cursor.isLast)
+        } else {
+//                TODO(handle null cursor)
+        }
+        cursor?.close()
+        return musicList
+    }
+
+    fun createSong(cursor: Cursor): SongModel {
+        val song = SongModel()
         try {
-            val cursor: Cursor? = context?.contentResolver?.query(
-                FilePathUtlis.getMusicsUri(),
-                null,
-                null,
-                null,
-                null
-            )
-            if (cursor != null) {
-                do {
-                    cursor!!.moveToNext()
-                    if (!songIsEmpty(cursor)) {
-                        musicList.add(getMusic(cursor))
-                    }
-                } while (!cursor!!.isLast)
-            }
 
+            song.title =
+                cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE))
+            song.duration =
+                milliSecToDuration(
+                    cursor.getLong(
+                        cursor.getColumnIndexOrThrow(
+                            MediaStore.Audio.Media.DURATION
+                        )
+                    )
+                )
+            song.data = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA))
+            song.id = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID))
+            song.dateAdded =
+                cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATE_ADDED))
+            song.artist =
+                cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST))
+            song.uri = ContentUris
+                .withAppendedId(
+                    MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                    cursor.getLong(cursor.getColumnIndex(MediaStore.Images.ImageColumns._ID))
+                )
+            song.albumId =
+                cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM_ID))
+            song.image = addCoverImageToSong(song.albumId)
 
-        } catch (exception: java.lang.Exception) {
+        } catch (e: Exception) {
+            song.duration = ""
 //            TODO(handle the exception)
         }
-        return musicList
+
+        return song
+    }
+
+    fun addCoverImageToSong(albumId: String): Bitmap {
+
+        val songArt = getAlbumart(albumId.toLong())
+
+        return if (songArt != null) songArt else getDefaultAlbumArt()
     }
 
     fun getAlbumart(album_id: Long?): Bitmap? {
@@ -72,68 +112,16 @@ object MusicUtils {
         } catch (exception: java.lang.Exception) {
 //           TODO(handle the exception)
         }
+
         return bm
     }
 
-    fun getMusic(cursor: Cursor): SongModel {
-        val song = SongModel()
-        try {
 
-            song.title =
-                cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE))
-            song.duration =
-                milliSecToDuration(
-                    cursor.getLong(
-                        cursor.getColumnIndexOrThrow(
-                            MediaStore.Audio.Media.DURATION
-                        )
-                    )
-                )
-            song.data =
-                cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA))
-            song.id =
-                cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID))
-            song.dateAdded =
-                cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATE_ADDED))
-            song.artist =
-                cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST))
-            column_id =
-                cursor.getLong(cursor.getColumnIndex(MediaStore.MediaColumns._ID))
-
-            song.uri = ContentUris
-                .withAppendedId(
-                    MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                    cursor.getLong(cursor.getColumnIndex(MediaStore.Images.ImageColumns._ID))
-                )
-
-//            song.image = ContentUris.withAppendedId(MediaStore.Audio.Albums.ALBUM_ART)
-            song.albumId = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID))
-
-            val songArt = getAlbumart(song.albumId.toLong())
-            if (songArt != null) {
-                song.image = songArt
-            } else {
-                song.image = BitmapFactory.decodeResource(
-                    context.getResources(),
-                    R.mipmap.ic_music_foreground
-                );
-            }
-        } catch (e: Exception) {
-            song.duration = ""
-            //            TODO(handle the exception)
-        }
-        return song
-    }
-
-    fun songIsEmpty(cursor: Cursor): Boolean {
-        val duration = milliSecToDuration(
-            cursor.getLong(
-                cursor.getColumnIndexOrThrow(
-                    MediaStore.Audio.Media.DURATION
-                )
-            )
+    fun getDefaultAlbumArt(): Bitmap {
+        return BitmapFactory.decodeResource(
+            context.getResources(),
+            R.mipmap.ic_music_foreground
         )
-        return duration.equals("0 : 0 : 0")
     }
 
     fun shareMusic(position: Int) {
@@ -162,17 +150,10 @@ object MusicUtils {
         context.startActivity(Intent.createChooser(shareIntent, "share audio"))
     }
 
-    fun shareMusic(positions: ArrayList<Int>) {
+    fun shareMusics(positions: ArrayList<Int>) {
 //        TODO(share multiple musics)
     }
 
-
-    fun getMediaColumns(): Array<String> {
-        return arrayOf(
-            MediaStore.Audio.Media.DISPLAY_NAME,
-            MediaStore.Audio.Media.DATE_MODIFIED
-        )
-    }
 
     fun getDurationOfCurrentMusic(): String {
         return Library.songsAdapter?.arrayList?.get(Library.songsAdapter!!.getCurrentPosition())?.duration
@@ -186,6 +167,11 @@ object MusicUtils {
         val minutes_final = minutes_temp % 60
         val hour_final = minutes_temp / 60
         return "$hour_final : $minutes_final : $seconds_final"
+    }
+
+    fun showDetails(position: Int)
+    {
+//        TODO(retrieve details of the song)
     }
 
 }

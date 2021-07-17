@@ -3,26 +3,35 @@ package com.example.cassette.views
 import android.content.Context
 import android.media.MediaPlayer
 import android.net.Uri
-import com.example.cassette.R
 import com.example.cassette.models.SongModel
 import com.example.cassette.views.Fragments.Library
 
 object PlayerRemote {
 
-    lateinit var mediaPlayer: MediaPlayer
+    var mediaPlayer = MediaPlayer()
     lateinit var context: Context
 
+    enum class playerMode(mode: String) {
+        SHUFFLE("shuffle"),
+        NORMAL("normal"),
+        REPEAT_ONE("repeat_one"),
+        REPEAT_ALL("repeat_all")
+    }
+
     fun setupRemote(context: Context) {
-        mediaPlayer = MediaPlayer.create(context, R.raw.nafas)
         this.context = context
     }
 
 
     fun playMusic(content: String) {
+
         val uri: Uri = Uri.parse(content)
+
         mediaPlayer.release()
-        mediaPlayer = MediaPlayer.create(this.context, uri)
+
+        mediaPlayer = MediaPlayer.create(context, uri)
         mediaPlayer.start()
+
     }
 
     fun pauseMusic() {
@@ -33,32 +42,32 @@ object PlayerRemote {
         mediaPlayer.start()
     }
 
-    fun playNextMusic(mode: MainActivity.playerMode) {
+    fun playNextMusic(mode: playerMode) {
 
         when (mode) {
-            MainActivity.playerMode.NORMAL -> {
+            playerMode.NORMAL -> {
                 var position = Library.songsAdapter?.position
                 if (position != null) {
-                    Library.songsAdapter?.updatePosition(++position)
+                    Library.songsAdapter?.updatePosition(newIndex = ++position)
                 }
                 if (position != null) {
                     val song: SongModel? = Library.arraylist?.get(position)
                     playMusic((song?.data).toString())
                 }
             }
-            MainActivity.playerMode.SHUFFLE -> {
+            playerMode.SHUFFLE -> {
                 shuffleMode()
             }
         }
     }
 
-    fun playPrevMusic(mode: MainActivity.playerMode) {
+    fun playPrevMusic(mode: playerMode) {
 
         when (mode) {
-            MainActivity.playerMode.NORMAL -> {
+            playerMode.NORMAL -> {
                 var position = Library.songsAdapter?.position
                 if (position != null) {
-                    Library.songsAdapter?.updatePosition(--position)
+                    Library.songsAdapter?.updatePosition(newIndex = --position)
                 }
                 if (position != null && position >= 0) {
                     val song: SongModel? = Library.arraylist?.get(position)
@@ -87,5 +96,13 @@ object PlayerRemote {
 
     fun repeatAllMode() {
 
+    }
+
+    fun playSongAsNextMusic(position: Int) {
+//        TODO(play song as next music)
+    }
+
+    fun addToPlaylist(position: Int) {
+//        TODO(add song to play list)
     }
 }

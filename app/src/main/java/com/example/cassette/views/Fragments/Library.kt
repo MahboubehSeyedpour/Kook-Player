@@ -1,7 +1,7 @@
 package com.example.cassette.views.Fragments
 
-import MusicUtils
-import MusicUtils.context
+import SongUtils
+import SongUtils.context
 import android.app.Activity
 import android.content.Intent
 import android.os.Build
@@ -32,7 +32,7 @@ class Library : Fragment() {
         lateinit var activity: Activity
 
         fun notifyDataSetChanges() {
-            songsAdapter?.arrayList = context?.let { MusicUtils.getListOfMusics(it) }!!
+            songsAdapter?.arrayList = context?.let { SongUtils.getListOfSongs(context = it) }!!
             this.arraylist = songsAdapter?.arrayList
             songsAdapter?.notifyDataSetChanged()
         }
@@ -40,7 +40,7 @@ class Library : Fragment() {
 
         @RequiresApi(Build.VERSION_CODES.R)
         fun deletMusic(position: Int) {
-            val urisToModify = mutableListOf(Library.arraylist?.get(position)?.uri)
+            val urisToModify = mutableListOf(arraylist?.get(position)?.uri)
             val deletePendingIntent =
                 MediaStore.createDeleteRequest(context.contentResolver, urisToModify)
 
@@ -82,7 +82,6 @@ class Library : Fragment() {
             pullToRefresh.setRefreshing(false)
 
         }
-
     }
 
     override fun onCreateView(
@@ -94,8 +93,9 @@ class Library : Fragment() {
         val view = inflater.inflate(R.layout.fragment_library, container, false)
 
 //        TODO(check if the manifest permissions had been granted)
+//        TODO(take musics in Internal & External storage)
 
-        arraylist = context?.let { MusicUtils.getListOfMusics(it) }
+        arraylist = context?.let { SongUtils.getListOfSongs(it) }
 
         songsAdapter = activity?.let {
             Songs_Adapter(

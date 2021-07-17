@@ -1,12 +1,11 @@
 package com.example.cassette.views
 
-import MusicUtils
+import SongUtils
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.content.res.Resources
-import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
@@ -21,7 +20,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.cassette.R
 import com.example.cassette.adapter.ViewPagerFragmentAdapter
 import com.example.cassette.views.Fragments.*
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.tabs.TabLayoutMediator
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.base.*
@@ -38,16 +36,9 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         Manifest.permission.WRITE_EXTERNAL_STORAGE
     )
 
-    lateinit var bottomSheetBehaviour: BottomSheetBehavior<View>
-    lateinit var mediaPlayer: MediaPlayer
-    lateinit var currentMode: playerMode
+    lateinit var currentMode: PlayerRemote.playerMode
 
-    enum class playerMode(mode: String) {
-        SHUFFLE("shuffle"),
-        NORMAL("normal"),
-        REPEAT_ONE("repeat_one"),
-        REPEAT_ALL("repeat_all")
-    }
+
 
     @SuppressLint("ResourceAsColor", "WrongConstant")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,7 +49,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
 
 
-        currentMode = playerMode.NORMAL
+        currentMode = PlayerRemote.playerMode.NORMAL
 
 //        val toolbar: Toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         // Sets the Toolbar to act as the ActionBar for this Activity window.
@@ -146,7 +137,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
             ) {
 
                 music_min.text =
-                    MusicUtils.milliSecToDuration((seekBar.max - progress).toLong()).toString()
+                    SongUtils.milliSecToDuration((seekBar.max - progress).toLong()).toString()
 //                textView.setText(progress.toString() + "/" + seekBar.max)
 //                PlayerRemote.mediaPlayer.seekTo(progress * 1000)
 
@@ -195,12 +186,12 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
         shuffle_btn.setOnClickListener {
             when (currentMode) {
-                playerMode.NORMAL -> {
-                    currentMode = playerMode.SHUFFLE
+                PlayerRemote.playerMode.NORMAL -> {
+                    currentMode = PlayerRemote.playerMode.SHUFFLE
                 }
 
-                playerMode.SHUFFLE -> {
-                    currentMode = playerMode.NORMAL
+                PlayerRemote.playerMode.SHUFFLE -> {
+                    currentMode = PlayerRemote.playerMode.NORMAL
                 }
             }
         }
@@ -280,6 +271,6 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
     }
 
     fun updateUI() {
-        music_max.text = MusicUtils.getDurationOfCurrentMusic()
+        music_max.text = SongUtils.getDurationOfCurrentMusic()
     }
 }

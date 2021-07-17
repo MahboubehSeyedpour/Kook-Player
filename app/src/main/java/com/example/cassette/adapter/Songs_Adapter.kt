@@ -1,6 +1,6 @@
 package com.example.cassette.adapter
 
-import MusicUtils
+import SongUtils
 import android.app.Activity
 import android.os.Build
 import android.view.LayoutInflater
@@ -12,7 +12,7 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cassette.R
 import com.example.cassette.models.SongModel
-import com.example.cassette.utlis.services.ImageUtils
+import com.example.cassette.utlis.ImageUtils
 import com.example.cassette.views.Fragments.Library
 import com.example.cassette.views.PlayerRemote
 import kotlinx.android.synthetic.main.song_rv_item.view.*
@@ -23,9 +23,9 @@ class Songs_Adapter(
 ) :
     RV_Base_Adapter() {
 
-    var context = context
-    var arrayList = arrayList
-    var position = 0
+        var context = context
+        var arrayList = arrayList
+        var position = 0
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -41,86 +41,67 @@ class Songs_Adapter(
         holder: RecyclerView.ViewHolder,
         position: Int
     ) {
+
         val song: SongModel = arrayList.get(position)
         this.position = position
         val viewHolder = holder as RecyclerViewViewHolder
         viewHolder.title.text = song.title
 //        viewHolder.duration.text = song.duration
         viewHolder.artist.text = song.artist
-        ImageUtils.loadImage(context, viewHolder.imageView, song.data, song.image)
+        ImageUtils.loadImage(
+            context = context,
+            imageView = viewHolder.imageView,
+            image = song.image
+        )
 
 
-        viewHolder.title.setOnClickListener {
-            PlayerRemote.playMusic(song.data)
-            updatePosition(viewHolder.adapterPosition)
+        viewHolder.recyclerItem.setOnClickListener {
+            PlayerRemote.playMusic(content = song.data)
+            updatePosition(newIndex = viewHolder.adapterPosition)
         }
-//        viewHolder.duration.setOnClickListener {
-//            PlayerRemote.playMusic(song.data)
-//            updatePosition(viewHolder.adapterPosition)
-//        }
-        viewHolder.artist.setOnClickListener {
-            PlayerRemote.playMusic(song.data)
-            updatePosition(viewHolder.adapterPosition)
-        }
+
 
         viewHolder.menu_btn.setOnClickListener {
             val popUpMenu = PopupMenu(context, it)
             popUpMenu.inflate(R.menu.popup_menu)
 
             popUpMenu.setOnMenuItemClickListener {
-                when (it.itemId) {
-                    R.id.playNext_menu_item -> {
-                        Toast.makeText(
-                            context,
-                            "play next in item number {$position}",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        updatePosition(viewHolder.adapterPosition)
-                        true
-                    }
-                    R.id.addToPlayList_menu_item -> {
-                        updatePosition(viewHolder.adapterPosition)
-                        Toast.makeText(
-                            context,
-                            "add to playlist in item number {$position}",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        true
-                    }
-                    R.id.deleteFromDevice_menu_item -> {
-                        updatePosition(viewHolder.adapterPosition)
-                        Library.deletMusic(position)
-                        true
-                    }
-                    R.id.details_menu_item -> {
-                        updatePosition(viewHolder.adapterPosition)
-                        Toast.makeText(
-                            context,
-                            "add to details in item number {$position}",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        true
-                    }
-                    R.id.share_menu_item -> {
-                        updatePosition(viewHolder.adapterPosition)
-                        MusicUtils.shareMusic(position)
-                        true
-                    }
-                    R.id.setAsRingtone_menu_item -> {
-                        updatePosition(viewHolder.adapterPosition)
-                        Toast.makeText(
-                            context,
-                            "add to set as ringtone in item number {$position}",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        true
-                    }
-                    else -> false
-                }
+                updatePosition(viewHolder.adapterPosition)
+                return@setOnMenuItemClickListener handleMenueButtonClickListener(it.itemId)
             }
             popUpMenu.show()
         }
 
+    }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    fun handleMenueButtonClickListener(itemId: Int): Boolean {
+        when (itemId) {
+            R.id.playNext_menu_item -> {
+                PlayerRemote.playSongAsNextMusic(position)
+            }
+            R.id.addToPlayList_menu_item -> {
+                PlayerRemote.addToPlaylist(position)
+            }
+            R.id.deleteFromDevice_menu_item -> {
+                Library.deletMusic(position)
+            }
+            R.id.details_menu_item -> {
+                SongUtils.showDetails(position)
+            }
+            R.id.share_menu_item -> {
+                SongUtils.shareMusic(position)
+            }
+            R.id.setAsRingtone_menu_item -> {
+                Toast.makeText(
+                    context,
+                    "add to set as ringtone in item number {$position}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            else -> return false
+        }
+        return true
     }
 
     fun updatePosition(newIndex: Int) {
@@ -138,9 +119,9 @@ class Songs_Adapter(
     open inner class RecyclerViewViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
         val title = itemView.song_title
-//        val duration = itemView.song_duration
         val artist = itemView.song_artist
         val menu_btn = itemView.music_menu_btn
         val imageView = itemView.music_iv
+        val recyclerItem = itemView.sont_container
     }
 }

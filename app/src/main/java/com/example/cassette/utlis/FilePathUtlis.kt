@@ -1,7 +1,6 @@
 package com.example.cassette.utlis
 
 import android.net.Uri
-import android.os.Build
 import android.os.Environment
 import android.os.Environment.DIRECTORY_MUSIC
 import android.provider.MediaStore
@@ -18,13 +17,13 @@ object FilePathUtlis {
     val MUSIC_CANONICAL_PATH: String = MUSICS_INTERNAL_STORAGE.canonicalPath
 
     fun getMusicsUri(): Uri {
-
-        when {
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> return MediaStore.Audio.Media.getContentUri(
-                MediaStore.VOLUME_EXTERNAL
-            )
-            else -> return MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
-        }
+        return MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+//        when {
+//            Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> return MediaStore.Audio.Media.getContentUri(
+//                MediaStore.VOLUME_EXTERNAL
+//            )
+//            else -> return MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+//        }
 
 //        TODO(what will happen if there is no valid storage)
     }

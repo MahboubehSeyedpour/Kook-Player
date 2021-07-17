@@ -1,6 +1,6 @@
 package com.example.cassette.utlis
 
-import MusicUtils
+import SongUtils
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
@@ -23,15 +23,18 @@ object PlaylistUtils {
     fun getPlaylists(context: Context): ArrayList<PlaylistModel> {
         val array = ArrayList<PlaylistModel>()
 
-        val uri = MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI
-        val projection = arrayOf(
-            MediaStore.Audio.Playlists._ID,
-            MediaStore.Audio.Playlists.NAME
+//        val cursor = context?.contentResolver?.query(uri, projection, null, null, sortOrder)
+        val cursor = FileUtils.fetchFiles(
+            fileType = FileUtils.FILE_TYPES.PLAYLIST,
+            context = context,
+            projection = arrayOf(
+                MediaStore.Audio.Playlists._ID,
+                MediaStore.Audio.Playlists.NAME
+            ),
+            selection = null,
+            selectionArgs = null,
+            sortOrder = "${MediaStore.Audio.Playlists.NAME} ASC"
         )
-
-        val sortOrder = "${MediaStore.Audio.Playlists.NAME} ASC"
-
-        val cursor = context?.contentResolver?.query(uri, projection, null, null, sortOrder)
 
         if (cursor != null) {
             cursor.moveToFirst()
@@ -47,20 +50,22 @@ object PlaylistUtils {
             }
 
             cursor.close()
+        } else {
+//            TODO(handle null cursor)
         }
 
         return array
     }
 
-    fun deletePlaylist(context: Context, id: Long) {
+    fun deletePlaylist(context: Context, playlist_Id: Long) {
         try {
-            val playlistId = id.toString()
+            val playlistId = playlist_Id.toString()
             val resolver = context?.contentResolver
             val where = MediaStore.Audio.Playlists._ID + "=?"
             val whereVal = arrayOf(playlistId)
             resolver?.delete(MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI, where, whereVal)
         } catch (exception: Exception) {
-            //            TODO(handle the exception)
+//            TODO(handle the exception)
         }
     }
 
@@ -82,9 +87,9 @@ object PlaylistUtils {
     }
 
 
-    fun getPlaylistSize(context: Context, id: Long): Int {
+    fun getPlaylistSize(context: Context, playlisId: Long): Int {
         var count = 0
-        val uri = MediaStore.Audio.Playlists.Members.getContentUri("external", id)
+        val uri = MediaStore.Audio.Playlists.Members.getContentUri("external", playlisId)
 
         val projection = arrayOf(MediaStore.Audio.Playlists.Members._ID)
         val selection = MediaStore.Audio.Media.IS_MUSIC + " != 0"
@@ -106,10 +111,14 @@ object PlaylistUtils {
     }
 
 
-    fun getPlaylistMusics(context: Context, id: Long): ArrayList<SongModel> {
+    fun getMusicsRelatedToSpecificPlaylist(
+        context: Context,
+        playlistId: Long
+    ): ArrayList<SongModel> {
+
         val array = ArrayList<SongModel>()
 
-        val uri = MediaStore.Audio.Playlists.Members.getContentUri("external", id)
+        val uri = MediaStore.Audio.Playlists.Members.getContentUri("external", playlistId)
 
 //        val projection = arrayOf(
 //            MediaStore.Audio.Media._ID,
@@ -139,7 +148,7 @@ object PlaylistUtils {
 
 //                array.add(Track(id, title, artist, data, duration, albumId))
 
-                MusicUtils.getMusic(cursor)
+                SongUtils.createSong(cursor)
 
                 cursor.moveToNext()
             }
