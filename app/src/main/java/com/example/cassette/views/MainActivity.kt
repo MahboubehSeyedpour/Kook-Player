@@ -164,9 +164,9 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         play_btn.setOnClickListener {
 
             if (!PlayerRemote.mediaPlayer.isPlaying) {
-                PlayerRemote.resumePlaying()
+                PlayerRemote.player.resumePlaying()
             } else {
-                PlayerRemote.pauseMusic()
+                PlayerRemote.player.pauseMusic()
                 play_btn.setImageResource(R.mipmap.ic_pause_track_pic_foreground)
             }
             updateUI()
@@ -259,7 +259,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
                 ) {
                     Toast.makeText(this, "permissions granted", Toast.LENGTH_SHORT).show()
 
-                    Library.notifyDataSetChanges()
+//                    Library.notifyDataSetChanges()
 
                 } else {
                     Toast.makeText(this, "no permissions granted", Toast.LENGTH_SHORT).show()

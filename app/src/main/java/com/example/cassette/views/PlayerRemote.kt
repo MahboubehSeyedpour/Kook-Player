@@ -2,7 +2,6 @@ package com.example.cassette.views
 
 import android.content.Context
 import android.media.MediaPlayer
-import android.net.Uri
 import com.example.cassette.models.SongModel
 import com.example.cassette.views.Fragments.Library
 
@@ -10,6 +9,7 @@ object PlayerRemote {
 
     var mediaPlayer = MediaPlayer()
     lateinit var context: Context
+    val player: Player by lazy { Player(context) }
 
     enum class playerMode(mode: String) {
         SHUFFLE("shuffle"),
@@ -22,26 +22,6 @@ object PlayerRemote {
         this.context = context
     }
 
-
-    fun playMusic(content: String) {
-
-        val uri: Uri = Uri.parse(content)
-
-        mediaPlayer.release()
-
-        mediaPlayer = MediaPlayer.create(context, uri)
-        mediaPlayer.start()
-
-    }
-
-    fun pauseMusic() {
-        mediaPlayer.pause()
-    }
-
-    fun resumePlaying() {
-        mediaPlayer.start()
-    }
-
     fun playNextMusic(mode: playerMode) {
 
         when (mode) {
@@ -51,8 +31,8 @@ object PlayerRemote {
                     Library.songsAdapter?.updatePosition(newIndex = ++position)
                 }
                 if (position != null) {
-                    val song: SongModel? = Library.arraylist?.get(position)
-                    playMusic((song?.data).toString())
+                    val song: SongModel? = Library.songsAdapter?.getSong(position)
+                    player.playMusic((song?.data).toString())
                 }
             }
             playerMode.SHUFFLE -> {
@@ -70,8 +50,8 @@ object PlayerRemote {
                     Library.songsAdapter?.updatePosition(newIndex = --position)
                 }
                 if (position != null && position >= 0) {
-                    val song: SongModel? = Library.arraylist?.get(position)
-                    playMusic((song?.data).toString())
+                    val song: SongModel? = Library.songsAdapter?.getSong(position)
+                    player.playMusic((song?.data).toString())
                 }
             }
         }
@@ -80,14 +60,15 @@ object PlayerRemote {
 
     //Music Playing Modes
     fun shuffleMode() {
-        var maxSize = Library.arraylist?.size
-        if (maxSize != null) {
-            var random = (0..maxSize).random()
-            var newSong = Library.arraylist?.get(random)?.data
-            if (newSong != null) {
-                playMusic(newSong)
-            }
-        }
+//        var maxSize = Library.arraylist?.size
+//        if (maxSize != null) {
+//            var random = (0..maxSize).random()
+//            var newSong = Library.arraylist?.get(random)?.data
+//            var newSong = Library.songsAdapter
+//            if (newSong != null) {
+//                playMusic(newSong)
+//            }
+//        }
     }
 
     fun repeatOneMode() {

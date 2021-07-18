@@ -23,9 +23,9 @@ class Playlist : Fragment() {
 
             val createPlaylist = CreatePlaylistDialog()
 
-            this.fragmentManager?.beginTransaction()?.let { it1 -> createPlaylist.show(it1, "playlist") }
+            this.fragmentManager?.beginTransaction()?.let { it -> createPlaylist.show(it, "playlist") }
 
-            context?.let { it1 -> PlaylistUtils.createPlaylist(it1, "me2") }
+            context?.let { it -> PlaylistUtils.createPlaylist(it, "me2") }
 
         }
     }

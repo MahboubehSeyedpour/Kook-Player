@@ -31,8 +31,6 @@ object PlaylistUtils {
                 MediaStore.Audio.Playlists._ID,
                 MediaStore.Audio.Playlists.NAME
             ),
-            selection = null,
-            selectionArgs = null,
             sortOrder = "${MediaStore.Audio.Playlists.NAME} ASC"
         )
 
@@ -70,7 +68,7 @@ object PlaylistUtils {
     }
 
 
-    fun addMusicToPlaylist(context: Context, id: Long, tracks: ArrayList<SongModel>) {
+    fun addToPlaylist(context: Context, id: Long, tracks: ArrayList<SongModel>) {
         val count = getPlaylistSize(context, id)
         val values = arrayOfNulls<ContentValues>(tracks.size)
 
@@ -159,7 +157,7 @@ object PlaylistUtils {
         return array
     }
 
-    fun deletePlaylistTrack(context: Context, playlistId: Long, trackId: Long) {
+    fun deleteFromPlaylist(context: Context, playlistId: Long, trackId: Long) {
 
         try {
             val uri = MediaStore.Audio.Playlists.Members.getContentUri("external", playlistId)
@@ -178,6 +176,16 @@ object PlaylistUtils {
             oldPos,
             newPos
         )
+    }
+
+    fun renamePlaylist()
+    {
+
+    }
+
+    fun moveItem()
+    {
+
     }
 
 }

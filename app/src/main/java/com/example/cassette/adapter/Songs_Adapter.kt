@@ -2,6 +2,7 @@ package com.example.cassette.adapter
 
 import SongUtils
 import android.app.Activity
+import android.net.Uri
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.cassette.R
 import com.example.cassette.models.SongModel
 import com.example.cassette.utlis.ImageUtils
-import com.example.cassette.views.Fragments.Library
 import com.example.cassette.views.PlayerRemote
 import kotlinx.android.synthetic.main.song_rv_item.view.*
 
@@ -23,9 +23,9 @@ class Songs_Adapter(
 ) :
     RV_Base_Adapter() {
 
-        var context = context
-        var arrayList = arrayList
-        var position = 0
+    var context = context
+    var arrayList = arrayList
+    var position = 0
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -48,7 +48,7 @@ class Songs_Adapter(
         viewHolder.title.text = song.title
 //        viewHolder.duration.text = song.duration
         viewHolder.artist.text = song.artist
-        ImageUtils.loadImage(
+        ImageUtils.loadImageToImageView(
             context = context,
             imageView = viewHolder.imageView,
             image = song.image
@@ -56,7 +56,7 @@ class Songs_Adapter(
 
 
         viewHolder.recyclerItem.setOnClickListener {
-            PlayerRemote.playMusic(content = song.data)
+            PlayerRemote.player.playMusic(content = song.data)
             updatePosition(newIndex = viewHolder.adapterPosition)
         }
 
@@ -66,7 +66,7 @@ class Songs_Adapter(
             popUpMenu.inflate(R.menu.popup_menu)
 
             popUpMenu.setOnMenuItemClickListener {
-                updatePosition(viewHolder.adapterPosition)
+//                updatePosition(viewHolder.adapterPosition)
                 return@setOnMenuItemClickListener handleMenueButtonClickListener(it.itemId)
             }
             popUpMenu.show()
@@ -84,13 +84,13 @@ class Songs_Adapter(
                 PlayerRemote.addToPlaylist(position)
             }
             R.id.deleteFromDevice_menu_item -> {
-                Library.deletMusic(position)
+                getSongUri(position)?.let { SongUtils.deletMusic(context, it) }
             }
             R.id.details_menu_item -> {
                 SongUtils.showDetails(position)
             }
             R.id.share_menu_item -> {
-                SongUtils.shareMusic(position)
+                SongUtils.shareMusic(getSong(position))
             }
             R.id.setAsRingtone_menu_item -> {
                 Toast.makeText(
@@ -114,6 +114,35 @@ class Songs_Adapter(
 
     override fun getItemCount(): Int {
         return arrayList.size
+    }
+
+    fun getCurrentSongTitle(): String {
+        return arrayList.get(position).title
+    }
+
+    fun getSongDuration(position: Int): String {
+        return arrayList.get(position).duration
+    }
+
+
+    fun getSongUri(position: Int): Uri?
+    {
+        return arrayList.get(position).uri
+    }
+
+    fun getSongData(position: Int): String{
+        return arrayList.get(position).data
+    }
+
+    fun getSong(position: Int): SongModel
+    {
+        return arrayList.get(position)
+    }
+
+    fun update()
+    {
+        arrayList = SongUtils.getListOfSongs(context)
+        notifyDataSetChanged()
     }
 
     open inner class RecyclerViewViewHolder(itemView: View) :

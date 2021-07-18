@@ -2,13 +2,11 @@
 
     <!--    app-->
     <string name="app_name">cassette</string>
-
-
+    
     <!--    tab layout-->
     <string name="text_label_1">Library</string>
     <string name="text_label_2">Recently Added</string>
     <string name="text_label_3">Playlists</string>
-
 
     <string name="action_play_next">play next</string>
     <string name="action_add_to_playing_queue">Add to playing queue</string>
@@ -17,12 +15,16 @@
     <string name="action_set_as_ringtone">Set as ringtone</string>
     <string name="action_delete_from_device">Delete from device</string>
 
-
     <!--    modal bottom sheet items -->
     <string name="first_item_modal_bottomsheet">Date modified</string>
     <string name="second_item_modal_bottomsheet">Name</string>
     <string name="third_item_modal_bottomsheet">Artist</string>
     <string name="forth_item_modal_bottomsheet">Genre</string>
     <string name="fifth_item_modal_bottomsheet">Duration</string>
+
+    <!--   add playlist dialog -->
+    <string name="add_playlistDialog_positive_btn">Ok</string>
+    <string name="add_playlistDialog_negative_btn">Cancel</string>
+    <string name="add_playlistDialog_title">create playlist</string>
 
 </resources>

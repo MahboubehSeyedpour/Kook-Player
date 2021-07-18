@@ -1,17 +1,13 @@
 package com.example.cassette.views.Fragments
 
-import SongUtils
-import SongUtils.context
 import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -26,40 +22,18 @@ class Library : Fragment() {
 
 
     companion object Library {
-        var arraylist: ArrayList<SongModel>? = null
+
+        var arraylist = arrayListOf<SongModel>()
         var songsAdapter: Songs_Adapter? = null
         val DELETE_REQUEST_CODE = 2
-        lateinit var activity: Activity
 
         fun notifyDataSetChanges() {
-            songsAdapter?.arrayList = context?.let { SongUtils.getListOfSongs(context = it) }!!
-            this.arraylist = songsAdapter?.arrayList
-            songsAdapter?.notifyDataSetChanged()
-        }
-
-
-        @RequiresApi(Build.VERSION_CODES.R)
-        fun deletMusic(position: Int) {
-            val urisToModify = mutableListOf(arraylist?.get(position)?.uri)
-            val deletePendingIntent =
-                MediaStore.createDeleteRequest(context.contentResolver, urisToModify)
-
-            ActivityCompat.startIntentSenderForResult(
-                activity,
-                deletePendingIntent.intentSender,
-                DELETE_REQUEST_CODE,
-                null,
-                0,
-                0,
-                0,
-                null
-            )
+            songsAdapter?.update()
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
 
         when (requestCode) {
             2 -> if (resultCode == Activity.RESULT_OK) {
@@ -76,6 +50,8 @@ class Library : Fragment() {
 
         val viewModel = ViewModelProvider(this).get(Songs_ViewModel::class.java)
         viewModel.getMutableLiveData().observe(this, songListUpdateObserver)
+
+        notifyDataSetChanges()
 
         pullToRefresh.setOnRefreshListener {
             notifyDataSetChanges()
@@ -95,15 +71,13 @@ class Library : Fragment() {
 //        TODO(check if the manifest permissions had been granted)
 //        TODO(take musics in Internal & External storage)
 
-        arraylist = context?.let { SongUtils.getListOfSongs(it) }
-
         songsAdapter = activity?.let {
             Songs_Adapter(
                 it,
-                arraylist as ArrayList<SongModel>
+                arraylist
             )
         }
-        Library.activity = this!!.getActivity()!!
+
         return view
     }
 
