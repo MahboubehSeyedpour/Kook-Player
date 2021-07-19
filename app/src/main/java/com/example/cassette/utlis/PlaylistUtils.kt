@@ -44,7 +44,7 @@ object PlaylistUtils {
 
                 cursor.moveToNext()
 
-                array.add(PlaylistModel(id, name))
+                array.add(PlaylistModel(id, name, 0))
             }
 
             cursor.close()

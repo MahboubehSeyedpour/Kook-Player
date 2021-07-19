@@ -1,6 +1,7 @@
 package com.example.cassette.models
 
-data class PlaylistModel(
-    val id: Long,
-    val name: String
-){}
+class PlaylistModel(var id: Long = 0,
+                    var name: String = "",
+                    var countOfSongs: Int = 0) {
+
+}

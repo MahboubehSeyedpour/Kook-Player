@@ -7,8 +7,7 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.PopupMenu
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cassette.R
@@ -17,11 +16,10 @@ import com.example.cassette.utlis.ImageUtils
 import com.example.cassette.views.PlayerRemote
 import kotlinx.android.synthetic.main.song_rv_item.view.*
 
-class Songs_Adapter(
+class SongsAdapter(
     context: Activity,
     arrayList: ArrayList<SongModel>
-) :
-    RV_Base_Adapter() {
+) : RV_Base_Adapter() {
 
     var context = context
     var arrayList = arrayList
@@ -37,12 +35,9 @@ class Songs_Adapter(
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
-    override fun onBindViewHolder(
-        holder: RecyclerView.ViewHolder,
-        position: Int
-    ) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
-        val song: SongModel = arrayList.get(position)
+        val song: SongModel = arrayList[position]
         this.position = position
         val viewHolder = holder as RecyclerViewViewHolder
         viewHolder.title.text = song.title
@@ -61,7 +56,7 @@ class Songs_Adapter(
         }
 
 
-        viewHolder.menu_btn.setOnClickListener {
+        viewHolder.menuBtn.setOnClickListener {
             val popUpMenu = PopupMenu(context, it)
             popUpMenu.inflate(R.menu.popup_menu)
 
@@ -125,32 +120,29 @@ class Songs_Adapter(
     }
 
 
-    fun getSongUri(position: Int): Uri?
-    {
+    fun getSongUri(position: Int): Uri? {
         return arrayList.get(position).uri
     }
 
-    fun getSongData(position: Int): String{
+    fun getSongData(position: Int): String {
         return arrayList.get(position).data
     }
 
-    fun getSong(position: Int): SongModel
-    {
+    fun getSong(position: Int): SongModel {
         return arrayList.get(position)
     }
 
-    fun update()
-    {
+    fun update() {
         arrayList = SongUtils.getListOfSongs(context)
         notifyDataSetChanged()
     }
 
     open inner class RecyclerViewViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
-        val title = itemView.song_title
-        val artist = itemView.song_artist
-        val menu_btn = itemView.music_menu_btn
-        val imageView = itemView.music_iv
-        val recyclerItem = itemView.sont_container
+        val title: TextView = itemView.song_title
+        val artist: TextView = itemView.song_artist
+        val menuBtn: ImageView = itemView.music_menu_btn
+        val imageView: ImageView = itemView.music_iv
+        val recyclerItem: LinearLayout = itemView.sont_container
     }
 }

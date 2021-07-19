@@ -2,7 +2,6 @@ package com.example.cassette.datamodels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import kotlin.collections.ArrayList
 
 abstract class BaseViewModel : ViewModel() {
 

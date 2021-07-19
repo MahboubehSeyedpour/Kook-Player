@@ -1,9 +1,10 @@
 package com.example.cassette.datamodels
 
 import androidx.lifecycle.MutableLiveData
-import com.example.cassette.views.Fragments.Library
+import com.example.cassette.models.PlaylistModel
+import com.example.cassette.views.Fragments.Playlist
 
-class Songs_ViewModel : BaseViewModel() {
+class PlaylistViewModel : BaseViewModel() {
 
     override var liveData = MutableLiveData<ArrayList<Any>>()
     override var arrayList = ArrayList<Any>()
@@ -22,22 +23,13 @@ class Songs_ViewModel : BaseViewModel() {
     override fun fillRecyclerView() {
 //        REST API can be called here
         populateList();
-        liveData.setValue(arrayList);
+        liveData.value = arrayList
     }
 
     override fun populateList() {
 
-//        var song = Song_Model("Nafas e ki budi to", "00:5:32")
+        val playlist1 = PlaylistModel(1, "Road Trip" , 12)
+        Playlist.arrayList.add(playlist1)
 
-        arrayList = Library.arraylist!!  as ArrayList<Any>
-
-//        arrayList.add(song);
-//        song = Song_Model("title", "00:5:32")
-//        arrayList.add(song);
-//        arrayList.add(song);
-//        arrayList.add(song);
-//        arrayList.add(song);
-//        arrayList.add(song);
     }
-
 }

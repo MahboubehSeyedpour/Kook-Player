@@ -13,8 +13,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cassette.R
-import com.example.cassette.adapter.Songs_Adapter
-import com.example.cassette.datamodels.Songs_ViewModel
+import com.example.cassette.adapter.SongsAdapter
+import com.example.cassette.datamodels.SongsViewModel
 import com.example.cassette.models.SongModel
 import kotlinx.android.synthetic.main.fragment_library.*
 
@@ -24,7 +24,7 @@ class Library : Fragment() {
     companion object Library {
 
         var arraylist = arrayListOf<SongModel>()
-        var songsAdapter: Songs_Adapter? = null
+        var songsAdapter: SongsAdapter? = null
         val DELETE_REQUEST_CODE = 2
 
         fun notifyDataSetChanges() {
@@ -48,10 +48,10 @@ class Library : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        val viewModel = ViewModelProvider(this).get(Songs_ViewModel::class.java)
+        val viewModel = ViewModelProvider(this).get(SongsViewModel::class.java)
         viewModel.getMutableLiveData().observe(this, songListUpdateObserver)
 
-        notifyDataSetChanges()
+
 
         pullToRefresh.setOnRefreshListener {
             notifyDataSetChanges()
@@ -72,11 +72,13 @@ class Library : Fragment() {
 //        TODO(take musics in Internal & External storage)
 
         songsAdapter = activity?.let {
-            Songs_Adapter(
+            SongsAdapter(
                 it,
                 arraylist
             )
         }
+
+        notifyDataSetChanges()
 
         return view
     }
