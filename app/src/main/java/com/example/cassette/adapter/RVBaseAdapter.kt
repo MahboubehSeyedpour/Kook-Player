@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 //supert type for recyclerviews
 
-abstract class RV_Base_Adapter() :
+abstract class RVBaseAdapter() :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     abstract override fun onCreateViewHolder(

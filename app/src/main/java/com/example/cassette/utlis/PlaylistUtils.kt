@@ -12,48 +12,66 @@ import com.example.cassette.models.SongModel
 
 object PlaylistUtils {
 
+    var playlists = ArrayList<PlaylistModel>()
+    lateinit var context : Context
+
     fun createPlaylist(context: Context, name: String) {
+
+        this.context = context
+
         val resolver = context?.contentResolver
         val values = ContentValues()
         values.put(MediaStore.Audio.Playlists.NAME, name)
         val uri = FilePathUtlis.getPlayListsUri()
         resolver?.insert(uri, values)
+
+//        Create new playlist :/
     }
 
-    fun getPlaylists(context: Context): ArrayList<PlaylistModel> {
+    fun getPlaylists(context: Context?): ArrayList<PlaylistModel> {
         val array = ArrayList<PlaylistModel>()
 
-//        val cursor = context?.contentResolver?.query(uri, projection, null, null, sortOrder)
-        val cursor = FileUtils.fetchFiles(
-            fileType = FileUtils.FILE_TYPES.PLAYLIST,
-            context = context,
-            projection = arrayOf(
-                MediaStore.Audio.Playlists._ID,
-                MediaStore.Audio.Playlists.NAME
-            ),
-            sortOrder = "${MediaStore.Audio.Playlists.NAME} ASC"
-        )
+        if(context != null)
+        {
+            //        val cursor = context?.contentResolver?.query(uri, projection, null, null, sortOrder)
+            val cursor = FileUtils.fetchFiles(
+                fileType = FileUtils.FILE_TYPES.PLAYLIST,
+                context = context,
+                projection = arrayOf(
+                    MediaStore.Audio.Playlists._ID,
+                    MediaStore.Audio.Playlists.NAME
+                ),
+                sortOrder = "${MediaStore.Audio.Playlists.NAME} ASC"
+            )
 
-        if (cursor != null) {
-            cursor.moveToFirst()
-            while (!cursor.isAfterLast) {
-                val id =
-                    cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Playlists._ID)).toLong()
-                val name: String =
-                    cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Playlists.NAME))
+            if (cursor != null) {
+                cursor.moveToFirst()
+                while (!cursor.isAfterLast) {
+                    val id =
+                        cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Playlists._ID)).toLong()
+                    val name: String =
+                        cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Playlists.NAME))
 
-                cursor.moveToNext()
+                    cursor.moveToNext()
 
-                array.add(PlaylistModel(id, name, 0))
+                    array.add(PlaylistModel(id, name, 0))
+                }
+
+                cursor.close()
+            } else {
+//            TODO(handle null cursor)
             }
 
-            cursor.close()
-        } else {
-//            TODO(handle null cursor)
+            playlists = array
         }
-
         return array
     }
+
+    fun getCachedPlaylists(): ArrayList<PlaylistModel>
+    {
+       return playlists
+    }
+
 
     fun deletePlaylist(context: Context, playlist_Id: Long) {
         try {

@@ -6,7 +6,7 @@ import com.example.cassette.views.Fragments.Library
 class SongsViewModel : BaseViewModel() {
 
     override var liveData = MutableLiveData<ArrayList<Any>>()
-    override var arrayList = ArrayList<Any>()
+    override var dataset = ArrayList<Any>()
 
     init {
         liveData = MutableLiveData()
@@ -22,14 +22,14 @@ class SongsViewModel : BaseViewModel() {
     override fun fillRecyclerView() {
 //        REST API can be called here
         populateList();
-        liveData.value = arrayList
+        liveData.value = dataset
     }
 
     override fun populateList() {
 
 //        var song = Song_Model("Nafas e ki budi to", "00:5:32")
 
-        arrayList = Library.arraylist!!  as ArrayList<Any>
+        dataset = Library.dataset!!  as ArrayList<Any>
 
 //        arrayList.add(song);
 //        song = Song_Model("title", "00:5:32")

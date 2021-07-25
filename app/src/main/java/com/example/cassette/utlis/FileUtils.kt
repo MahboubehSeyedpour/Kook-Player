@@ -18,10 +18,10 @@ object FileUtils {
     }
 
     fun fileType(file: File): String {
-        when {
-            file.isDirectory -> return "${file.name} + is directory"
-            file.isFile -> return "${file.name} + is file"
-            else -> return "${file.name} not file, not dir"
+        return when {
+            file.isDirectory -> "${file.name} + is directory"
+            file.isFile -> "${file.name} + is file"
+            else -> "${file.name} not file, not dir"
         }
     }
 
@@ -42,19 +42,19 @@ object FileUtils {
 
     fun getUriForFile(context: Context, authority: String, fileToBeShared: File): Uri?
     {
-        try {
-             val uri =  FileProvider.getUriForFile(
+        return try {
+            val uri =  FileProvider.getUriForFile(
                 context,
                 authority,
                 fileToBeShared
             )
-            return uri
+            uri
         } catch (e: IllegalArgumentException) {
             Log.e(
                 "File Selector",
                 "The selected file can't be shared: $fileToBeShared"
             )
-            return null
+            null
         }
     }
 
@@ -73,9 +73,9 @@ object FileUtils {
 
         val path: Uri
 
-        when (fileType) {
-            FILE_TYPES.MUSIC -> path = FilePathUtlis.getMusicsUri()
-            FILE_TYPES.PLAYLIST -> path = FilePathUtlis.getPlayListsUri()
+        path = when (fileType) {
+            FILE_TYPES.MUSIC -> FilePathUtlis.getMusicsUri()
+            FILE_TYPES.PLAYLIST -> FilePathUtlis.getPlayListsUri()
         }
 
         try {

@@ -8,20 +8,20 @@ import com.example.cassette.views.Fragments.Library
 object SortUtils {
 
     fun sortByDateAdded() {
-        Library.arraylist?.sortWith(compareByDescending { it.dateAdded })
-        var sortedList = Library.arraylist
+        Library.dataset?.sortWith(compareByDescending { it.dateAdded })
+        var sortedList = Library.dataset
         sortMusicList(sortedList as ArrayList<SongModel>)
     }
 
     fun sortByName() {
-        Library.arraylist?.sortWith(compareByDescending { it.title })
-        var sortedList = Library.arraylist
+        Library.dataset?.sortWith(compareByDescending { it.title })
+        var sortedList = Library.dataset
         sortMusicList(sortedList as ArrayList<SongModel>)
     }
 
     fun sortByArtist() {
-        Library.arraylist?.sortWith(compareByDescending { it.artist })
-        var sortedList = Library.arraylist
+        Library.dataset?.sortWith(compareByDescending { it.artist })
+        var sortedList = Library.dataset
         sortMusicList(sortedList as ArrayList<SongModel>)
     }
 
@@ -32,20 +32,20 @@ object SortUtils {
 //    }
 
     fun sortByDuration() {
-        Library.arraylist?.sortWith(compareByDescending { it.duration })
-        var sortedList = Library.arraylist
+        Library.dataset?.sortWith(compareByDescending { it.duration })
+        var sortedList = Library.dataset
         sortMusicList(sortedList as ArrayList<SongModel>)
     }
 
     fun sortMusicList(arrayList: ArrayList<SongModel>) {
-        Library.songsAdapter?.arrayList = arrayList
+        Library.songsAdapter?.dataset = arrayList
         Library.songsAdapter?.notifyDataSetChanged()
     }
 
     fun changeSortingOrder(context: Context, item: String) {
         Toast.makeText(
             context,
-            "${item} clicked",
+            "$item clicked",
             Toast.LENGTH_SHORT
         ).show()
 

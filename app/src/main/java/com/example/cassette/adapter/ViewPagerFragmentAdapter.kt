@@ -16,7 +16,7 @@ class ViewPagerFragmentAdapter(fragmentManager: FragmentManager, lifecycle: Life
 
     override fun createFragment(position: Int): Fragment {
         // return fragment that corresponds to this 'position'
-        return arrayList.get(position)
+        return arrayList[position]
     }
 
     fun addFragment(fragment : Fragment){

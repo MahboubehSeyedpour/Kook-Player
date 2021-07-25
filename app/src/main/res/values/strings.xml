@@ -2,11 +2,6 @@
 
     <!--    app-->
     <string name="app_name">cassette</string>
-    
-    <!--    tab layout-->
-    <string name="text_label_1">Library</string>
-    <string name="text_label_2">Recently Added</string>
-    <string name="text_label_3">Playlists</string>
 
     <string name="action_play_next">play next</string>
     <string name="action_add_to_playing_queue">Add to playing queue</string>

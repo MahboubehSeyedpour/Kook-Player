@@ -1,19 +1,12 @@
 package com.example.cassette.datamodels
 
 import androidx.lifecycle.MutableLiveData
-import com.example.cassette.models.PlaylistModel
-import com.example.cassette.views.Fragments.Playlist
+import com.example.cassette.utlis.PlaylistUtils
 
 class PlaylistViewModel : BaseViewModel() {
 
     override var liveData = MutableLiveData<ArrayList<Any>>()
-    override var arrayList = ArrayList<Any>()
-
-    init {
-        liveData = MutableLiveData()
-        fillRecyclerView()
-    }
-
+    override var dataset = ArrayList<Any>()
 
     override fun getMutableLiveData(): MutableLiveData<ArrayList<Any>> {
         return liveData
@@ -23,13 +16,18 @@ class PlaylistViewModel : BaseViewModel() {
     override fun fillRecyclerView() {
 //        REST API can be called here
         populateList();
-        liveData.value = arrayList
+        liveData.value = dataset
     }
 
     override fun populateList() {
 
-        val playlist1 = PlaylistModel(1, "Road Trip" , 12)
-        Playlist.arrayList.add(playlist1)
+        dataset = PlaylistUtils.getCachedPlaylists() as ArrayList<Any>
 
     }
+
+    init {
+        liveData = MutableLiveData<ArrayList<Any>>()
+        fillRecyclerView()
+    }
+
 }

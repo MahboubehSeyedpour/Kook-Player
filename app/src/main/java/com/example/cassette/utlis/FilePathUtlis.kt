@@ -10,10 +10,10 @@ import java.io.File
 //using android.os.Environment / getExternalStorageDirectory / etc.
 
 object FilePathUtlis {
-    val MUSICS_INTERNAL_STORAGE: File =
+    private val MUSICS_INTERNAL_STORAGE: File =
         Environment.getExternalStoragePublicDirectory(DIRECTORY_MUSIC)
 
-    //TODO("findpath for external storage")
+    //TODO("find path for external storage")
     val MUSIC_CANONICAL_PATH: String = MUSICS_INTERNAL_STORAGE.canonicalPath
 
     fun getMusicsUri(): Uri {

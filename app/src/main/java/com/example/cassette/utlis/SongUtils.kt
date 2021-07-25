@@ -28,7 +28,7 @@ object SongUtils {
             fileType = FileUtils.FILE_TYPES.MUSIC,
             context = context
         )
-        if (cursor != null && cursor.getCount() != 0) {
+        if (cursor != null && cursor.count != 0) {
             do {
                 cursor.moveToNext()
                 musicList.add(createSong(cursor))
@@ -117,17 +117,18 @@ object SongUtils {
 
 
     fun getDurationOfCurrentMusic(): String {
-        return Library.songsAdapter?.arrayList?.get(Library.songsAdapter!!.getCurrentPosition())?.duration
-            ?: "00:00:00"
+        return Library.songsAdapter?.dataset?.get(Library.songsAdapter!!.getCurrentPosition())?.duration
+            ?: "00:00"
     }
 
     fun milliSecToDuration(duration: Long): String {
         val millisec_temp = duration / 1000
         val seconds_final = millisec_temp % 60
         val minutes_temp = millisec_temp / 60
-        val minutes_final = minutes_temp % 60
+        val minutes_final = minutes_temp % 60 + millisec_temp/60
         val hour_final = minutes_temp / 60
-        return "$hour_final : $minutes_final : $seconds_final"
+//        return "$hour_final : $minutes_final : $seconds_final"
+        return "$minutes_final : $seconds_final"
     }
 
     fun showDetails(position: Int) {

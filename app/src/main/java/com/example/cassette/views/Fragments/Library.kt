@@ -23,9 +23,9 @@ class Library : Fragment() {
 
     companion object Library {
 
-        var arraylist = arrayListOf<SongModel>()
+        var dataset = arrayListOf<SongModel>()
         var songsAdapter: SongsAdapter? = null
-        val DELETE_REQUEST_CODE = 2
+        const val DELETE_REQUEST_CODE = 2
 
         fun notifyDataSetChanges() {
             songsAdapter?.update()
@@ -74,7 +74,7 @@ class Library : Fragment() {
         songsAdapter = activity?.let {
             SongsAdapter(
                 it,
-                arraylist
+                dataset
             )
         }
 

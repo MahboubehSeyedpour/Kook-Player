@@ -59,12 +59,13 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
 //        TODO( "implement hideStatusBar() function");
 
-        val res: Resources = resources
-        val tabList = res.getStringArray(R.array.tabNames)
+
 
 //        val adapter = ViewPagerAdapter(tabList.asList())
 //        viewpager_home.adapter = adapter
 
+        val res: Resources = resources
+        val tabNames = res.getStringArray(R.array.tabNames)
 
         val adapter = ViewPagerFragmentAdapter(supportFragmentManager, lifecycle)
         adapter.addFragment(Library())
@@ -77,10 +78,8 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
         TabLayoutMediator(tabLayout_home, viewpager_home)
         { tab, position ->
-            tab.text = tabList[position]
+            tab.text = tabNames[position]
         }.attach()
-
-
 
         if (!hasPermissions(this, *PERMISSIONS)) {
             ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSIONS_REQUEST_CODE)
@@ -240,7 +239,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 //        }
     }
 
-    fun hasPermissions(context: Context, vararg permissions: String): Boolean = permissions.all {
+    private fun hasPermissions(context: Context, vararg permissions: String): Boolean = permissions.all {
         ActivityCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
     }
 
@@ -251,7 +250,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         grantResults: IntArray
     ) {
         when (requestCode) {
-            PERMISSIONS_REQUEST_CODE -> if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            PERMISSIONS_REQUEST_CODE -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 if (ContextCompat.checkSelfPermission(
                         this,
                         Manifest.permission.READ_EXTERNAL_STORAGE
@@ -270,7 +269,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         }
     }
 
-    fun updateUI() {
+    private fun updateUI() {
         music_max.text = SongUtils.getDurationOfCurrentMusic()
     }
 }

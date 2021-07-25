@@ -19,10 +19,10 @@ import kotlinx.android.synthetic.main.song_rv_item.view.*
 class SongsAdapter(
     context: Activity,
     arrayList: ArrayList<SongModel>
-) : RV_Base_Adapter() {
+) : RVBaseAdapter() {
 
     var context = context
-    var arrayList = arrayList
+    var dataset = arrayList
     var position = 0
 
     override fun onCreateViewHolder(
@@ -37,11 +37,11 @@ class SongsAdapter(
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
-        val song: SongModel = arrayList[position]
+        val song: SongModel = dataset[position]
         this.position = position
         val viewHolder = holder as RecyclerViewViewHolder
         viewHolder.title.text = song.title
-//        viewHolder.duration.text = song.duration
+        viewHolder.duration.text = song.duration
         viewHolder.artist.text = song.artist
         ImageUtils.loadImageToImageView(
             context = context,
@@ -108,32 +108,32 @@ class SongsAdapter(
     }
 
     override fun getItemCount(): Int {
-        return arrayList.size
+        return dataset.size
     }
 
     fun getCurrentSongTitle(): String {
-        return arrayList.get(position).title
+        return dataset[position].title
     }
 
     fun getSongDuration(position: Int): String {
-        return arrayList.get(position).duration
+        return dataset[position].duration
     }
 
 
     fun getSongUri(position: Int): Uri? {
-        return arrayList.get(position).uri
+        return dataset[position].uri
     }
 
     fun getSongData(position: Int): String {
-        return arrayList.get(position).data
+        return dataset[position].data
     }
 
     fun getSong(position: Int): SongModel {
-        return arrayList.get(position)
+        return dataset[position]
     }
 
     fun update() {
-        arrayList = SongUtils.getListOfSongs(context)
+        dataset = SongUtils.getListOfSongs(context)
         notifyDataSetChanged()
     }
 
@@ -141,6 +141,7 @@ class SongsAdapter(
         RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.song_title
         val artist: TextView = itemView.song_artist
+        val duration : TextView = itemView.song_duration
         val menuBtn: ImageView = itemView.music_menu_btn
         val imageView: ImageView = itemView.music_iv
         val recyclerItem: LinearLayout = itemView.sont_container

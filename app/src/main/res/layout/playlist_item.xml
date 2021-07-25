@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
-
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/playlist_item"
     android:layout_width="150dp"
-    android:layout_height="200dp"
+    android:layout_height="180dp"
     app:cardCornerRadius="20dp"
     android:layout_margin="15dp"
     app:layout_constraintBottom_toBottomOf="parent"
@@ -67,7 +65,7 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/music_menu_btn"
+        android:id="@+id/playlist_menu_btn"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_gravity="right"
