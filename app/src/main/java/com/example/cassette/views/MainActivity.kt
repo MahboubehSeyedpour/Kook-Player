@@ -6,12 +6,14 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.content.res.Resources
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -41,13 +43,13 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
 
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("ResourceAsColor", "WrongConstant")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         PlayerRemote.setupRemote(applicationContext, music_album_image)
-
 
 
         currentMode = PlayerRemote.playerMode.NORMAL

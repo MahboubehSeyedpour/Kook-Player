@@ -22,8 +22,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
-        android:layout_width="302dp"
-        android:layout_height="302dp"
+        android:layout_width="202dp"
+        android:layout_height="202dp"
         android:elevation="4dp"
         android:translationZ="40dp"
         app:cardCornerRadius="170dp"
@@ -33,13 +33,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.27"
-        android:layout_margin="20dp">
+        android:layout_margin="10dp">
 
         <ImageView
             android:id="@+id/music_album_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:srcCompat="@mipmap/ic_song_pic_foreground" />
+            app:srcCompat="@mipmap/ic_music_foreground" />
 
 
     </androidx.cardview.widget.CardView>
@@ -48,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_margin="30dp">
+        android:layout_margin="10dp">
 
 
         <TextView

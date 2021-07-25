@@ -46,13 +46,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="00:00:00" />
+            android:text="00:00" />
 
         <TextView
             android:id="@+id/music_max"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="00:00:00" />
+            android:text="00:00" />
 
 
     </LinearLayout>
@@ -62,46 +62,53 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
         android:layout_marginBottom="16dp"
+        android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
         app:layout_constraintVertical_bias="0.093"
         tools:layout_editor_absoluteX="30dp">
 
-        <ImageView
-            android:id="@+id/shuffle_btn"
-            android:layout_width="49dp"
-            android:layout_height="43dp"
-            android:layout_weight="1"
-            app:srcCompat="@mipmap/ic_shuffle_pic_foreground"/>
 
         <ImageView
             android:id="@+id/prev_btn"
-            android:layout_width="49dp"
-            android:layout_height="43dp"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
             app:srcCompat="@mipmap/ic_previous_track_pic_foreground"
             tools:layout_editor_absoluteX="113dp"
             tools:layout_editor_absoluteY="577dp" />
 
-        <ImageView
-            android:id="@+id/play_btn"
-            android:layout_width="49dp"
-            android:layout_height="43dp"
-            android:layout_weight="1"
-            app:srcCompat="@mipmap/ic_play_track_pic_foreground" />
+
+            <ImageView
+                android:id="@+id/play_btn"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:src="@drawable/ic_play"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:padding="10dp"/>
+
 
         <ImageView
             android:id="@+id/next_btn"
-            android:layout_width="49dp"
-            android:layout_height="43dp"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
             app:srcCompat="@mipmap/ic_next_track_pic_foreground" />
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/shuffle_btn"
+        android:layout_width="49dp"
+        android:layout_height="43dp"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.121"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintVertical_bias="0.125"
+        app:srcCompat="@mipmap/ic_shuffle_pic_foreground" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
