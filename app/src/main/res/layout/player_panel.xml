@@ -26,7 +26,7 @@
         android:layout_height="302dp"
         android:elevation="4dp"
         android:translationZ="40dp"
-        app:cardCornerRadius="50dp"
+        app:cardCornerRadius="170dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -36,7 +36,7 @@
         android:layout_margin="20dp">
 
         <ImageView
-            android:id="@+id/music_"
+            android:id="@+id/music_album_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:srcCompat="@mipmap/ic_song_pic_foreground" />

@@ -2,6 +2,7 @@ package com.example.cassette.views
 
 import android.content.Context
 import android.media.MediaPlayer
+import android.widget.ImageView
 import com.example.cassette.models.SongModel
 import com.example.cassette.views.Fragments.Library
 
@@ -9,7 +10,8 @@ object PlayerRemote {
 
     var mediaPlayer = MediaPlayer()
     lateinit var context: Context
-    val player: Player by lazy { Player(context) }
+    val player: Player by lazy { Player(context, imageView) }
+    lateinit var imageView: ImageView
 
     enum class playerMode(mode: String) {
         SHUFFLE("shuffle"),
@@ -18,8 +20,9 @@ object PlayerRemote {
         REPEAT_ALL("repeat_all")
     }
 
-    fun setupRemote(context: Context) {
+    fun setupRemote(context: Context, songImageViewInPanel: ImageView) {
         this.context = context
+        imageView = songImageViewInPanel
     }
 
     fun playNextMusic(mode: playerMode) {
@@ -32,7 +35,7 @@ object PlayerRemote {
                 }
                 if (position != null) {
                     val song: SongModel? = Library.songsAdapter?.getSong(position)
-                    player.playMusic((song?.data).toString())
+                    player.playMusic(song!!)
                 }
             }
             playerMode.SHUFFLE -> {
@@ -51,7 +54,7 @@ object PlayerRemote {
                 }
                 if (position != null && position >= 0) {
                     val song: SongModel? = Library.songsAdapter?.getSong(position)
-                    player.playMusic((song?.data).toString())
+                    player.playMusic(song!!)
                 }
             }
         }

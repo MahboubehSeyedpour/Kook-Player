@@ -3,15 +3,21 @@ package com.example.cassette.views
 import android.content.Context
 import android.media.MediaPlayer
 import android.net.Uri
+import android.widget.ImageView
+import com.example.cassette.models.SongModel
+import com.example.cassette.utlis.ImageUtils
 
-class Player(context: Context)
+class Player(context: Context, imageView: ImageView)
 {
 
     val context = context
+    val songImageViewInPanel: ImageView = imageView
 
-    fun playMusic(content: String) {
+    fun playMusic(song: SongModel) {
 
-        val uri: Uri = Uri.parse(content)
+        loadSongImage(song, songImageViewInPanel)
+
+        val uri: Uri = Uri.parse(song.data)
 
         PlayerRemote.mediaPlayer.release()
 
@@ -31,5 +37,10 @@ class Player(context: Context)
     fun seekTo()
     {
 //        TODO()
+    }
+
+    fun loadSongImage(song: SongModel, imageView: ImageView)
+    {
+        ImageUtils.loadImageToImageView(context, imageView, song.image)
     }
 }

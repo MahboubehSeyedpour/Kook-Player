@@ -24,6 +24,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.base.*
 import kotlinx.android.synthetic.main.component_toolbar.*
+import kotlinx.android.synthetic.main.player_panel.*
 import kotlinx.android.synthetic.main.player_remote.*
 
 
@@ -45,7 +46,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        PlayerRemote.setupRemote(applicationContext)
+        PlayerRemote.setupRemote(applicationContext, music_album_image)
 
 
 

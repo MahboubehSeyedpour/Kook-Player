@@ -51,7 +51,7 @@ class SongsAdapter(
 
 
         viewHolder.recyclerItem.setOnClickListener {
-            PlayerRemote.player.playMusic(content = song.data)
+            PlayerRemote.player.playMusic(song)
             updatePosition(newIndex = viewHolder.adapterPosition)
         }
 
