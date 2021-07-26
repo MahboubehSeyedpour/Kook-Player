@@ -41,13 +41,15 @@ class SongsAdapter(
         this.position = position
         val viewHolder = holder as RecyclerViewViewHolder
         viewHolder.title.text = song.title
-        viewHolder.duration.text = song.duration
+        viewHolder.duration.text = song.duration.toString()
         viewHolder.artist.text = song.artist
-        ImageUtils.loadImageToImageView(
-            context = context,
-            imageView = viewHolder.imageView,
-            image = song.image
-        )
+        song.image?.let {
+            ImageUtils.loadImageToImageView(
+                context = context,
+                imageView = viewHolder.imageView,
+                image = it
+            )
+        }
 
 
         viewHolder.recyclerItem.setOnClickListener {
@@ -116,7 +118,7 @@ class SongsAdapter(
     }
 
     fun getSongDuration(position: Int): String {
-        return dataset[position].duration
+        return dataset[position].duration.toString()
     }
 
 

@@ -5,27 +5,21 @@ import android.net.Uri
 
 
 class SongModel(
-//    val id: Long,
-
-//    val trackNumber: Int,
-//    val year: Int,
-
-//    val data: String,
-//    val dateModified: Long,
-//    val albumId: Long,
-//    val albumName: String,
-//    val artistId: Long,
-//    val artistName: String,
-//    val composer: String?,
-//    val albumArtist: String?
+    var title: String = "",
+    val duration: Long = -1,
+    val data: String = "",
+    val dateAdded : String = "",
+    val artist : String = "",
+    val id : String = "",
+    val uri : Uri? = null,
+    val albumId : Long = -1, //TODO(change to long)
+    val image : Bitmap? = null,
+    val trackNumber: String = "",
+    val year: Int = -1,
+    val dateModified: Long = -1,
+    val artistId: Long = -1,
+    val artistName: String = "",
+    val composer: String? = "",
+    val albumArtist: String?= ""
 ) {
-    var title: String = ""
-    var duration: String = ""
-    var data: String = ""
-    var dateAdded : String = ""
-    var artist : String = ""
-    var id : String = ""
-    var uri : Uri? = null
-    var albumId : String = ""
-    lateinit var image : Bitmap
 }

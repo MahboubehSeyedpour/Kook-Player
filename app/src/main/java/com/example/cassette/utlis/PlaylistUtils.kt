@@ -1,6 +1,5 @@
 package com.example.cassette.utlis
 
-import SongUtils
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
@@ -9,6 +8,7 @@ import android.provider.MediaStore
 import com.example.cassette.R
 import com.example.cassette.models.PlaylistModel
 import com.example.cassette.models.SongModel
+import com.example.cassette.repositories.SongsRepository
 
 object PlaylistUtils {
 
@@ -164,7 +164,7 @@ object PlaylistUtils {
 
 //                array.add(Track(id, title, artist, data, duration, albumId))
 
-                SongUtils.createSong(cursor)
+                SongsRepository(context).getSongFromCursor(cursor)
 
                 cursor.moveToNext()
             }

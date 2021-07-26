@@ -1,9 +1,7 @@
 //package com.example.cassette.utlis
 
 import android.app.Activity
-import android.content.ContentUris
 import android.content.Context
-import android.database.Cursor
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
@@ -11,8 +9,8 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import com.example.cassette.BuildConfig
 import com.example.cassette.models.SongModel
+import com.example.cassette.repositories.SongsRepository
 import com.example.cassette.utlis.FileUtils
-import com.example.cassette.utlis.ImageUtils
 import com.example.cassette.views.Fragments.Library
 
 
@@ -31,7 +29,7 @@ object SongUtils {
         if (cursor != null && cursor.count != 0) {
             do {
                 cursor.moveToNext()
-                musicList.add(createSong(cursor))
+                musicList.add(SongsRepository(context).getSongFromCursor(cursor))
             } while (!cursor.isLast)
         } else {
 //                TODO(handle null cursor)
@@ -40,44 +38,6 @@ object SongUtils {
         return musicList
     }
 
-    fun createSong(cursor: Cursor): SongModel {
-        val song = SongModel()
-        try {
-
-            song.title =
-                cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE))
-            song.duration =
-                milliSecToDuration(
-                    cursor.getLong(
-                        cursor.getColumnIndexOrThrow(
-                            MediaStore.Audio.Media.DURATION
-                        )
-                    )
-                )
-            song.data = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA))
-            song.id = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID))
-            song.dateAdded =
-                cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATE_ADDED))
-            song.artist =
-                cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST))
-            song.uri = ContentUris
-                .withAppendedId(
-                    MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                    cursor.getLong(cursor.getColumnIndex(MediaStore.Images.ImageColumns._ID))
-                )
-            song.albumId =
-                cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM_ID))
-
-            song.image = ImageUtils.albumArtUriToBitmap(context, song.albumId.toLong())
-                ?: ImageUtils.getDefaultAlbumArt(context)
-
-        } catch (e: Exception) {
-            song.duration = ""
-//            TODO(handle the exception)
-        }
-
-        return song
-    }
 
     fun shareMusic(song: SongModel) {
 
@@ -111,24 +71,8 @@ object SongUtils {
         )
     }
 
-    fun shareMultipleMusics(positions: ArrayList<Int>) {
+    fun shareMultipleMusics(vararg positions: ArrayList<Int>) {
 //        TODO(share multiple musics)
-    }
-
-
-    fun getDurationOfCurrentMusic(): String {
-        return Library.songsAdapter?.dataset?.get(Library.songsAdapter!!.getCurrentPosition())?.duration
-            ?: "00:00"
-    }
-
-    fun milliSecToDuration(duration: Long): String {
-        val millisec_temp = duration / 1000
-        val seconds_final = millisec_temp % 60
-        val minutes_temp = millisec_temp / 60
-        val minutes_final = minutes_temp % 60 + millisec_temp/60
-        val hour_final = minutes_temp / 60
-//        return "$hour_final : $minutes_final : $seconds_final"
-        return "$minutes_final : $seconds_final"
     }
 
     fun showDetails(position: Int) {

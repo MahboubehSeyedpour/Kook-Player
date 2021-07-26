@@ -1,6 +1,5 @@
 package com.example.cassette.views
 
-import SongUtils
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
@@ -21,6 +20,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.viewpager2.widget.ViewPager2
 import com.example.cassette.R
 import com.example.cassette.adapter.ViewPagerFragmentAdapter
+import com.example.cassette.utlis.TimeUtils
 import com.example.cassette.views.Fragments.*
 import com.frolo.waveformseekbar.WaveformSeekBar
 import com.google.android.material.tabs.TabLayoutMediator
@@ -59,52 +59,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         currentMode = PlayerRemote.playerMode.NORMAL
 
 
-
-
         seekBar.visibility = View.GONE
-
-
-//        circularProgressBar.apply {
-//            // Set Progress
-//            progress = 65f
-//            // or with animation
-//            setProgressWithAnimation(65f, 1000) // =1s
-//
-//            // Set Progress Max
-//            progressMax = 200f
-//
-//            // Set ProgressBar Color
-//            progressBarColor = Color.BLACK
-//            // or with gradient
-//            progressBarColorStart = Color.GRAY
-//            progressBarColorEnd = Color.RED
-//            progressBarColorDirection = CircularProgressBar.GradientDirection.TOP_TO_BOTTOM
-//
-//            // Set background ProgressBar Color
-//            backgroundProgressBarColor = Color.GRAY
-//            // or with gradient
-//            backgroundProgressBarColorStart = Color.WHITE
-//            backgroundProgressBarColorEnd = Color.RED
-//            backgroundProgressBarColorDirection = CircularProgressBar.GradientDirection.TOP_TO_BOTTOM
-//
-//            // Set Width
-//            progressBarWidth = 7f // in DP
-//            backgroundProgressBarWidth = 3f // in DP
-//
-//            // Other
-//            roundBorder = true
-//            startAngle = 180f
-//            progressDirection = CircularProgressBar.ProgressDirection.TO_RIGHT
-//        }
-//
-//
-//        circularProgressBar.onProgressChangeListener = { progress ->
-//            // Do something
-//        }
-//
-//        circularProgressBar.onIndeterminateModeChangeListener = { isEnable ->
-//            // Do something
-//        }
 
 
         waveform_seek_bar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener,
@@ -259,7 +214,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
             ) {
 
                 music_min.text =
-                    SongUtils.milliSecToDuration((seekBar.max - progress).toLong()).toString()
+                    TimeUtils.milliSecToDuration((seekBar.max - progress).toLong())
 //                textView.setText(progress.toString() + "/" + seekBar.max)
 //                PlayerRemote.mediaPlayer.seekTo(progress * 1000)
 
@@ -410,6 +365,6 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
     }
 
     private fun updateUI() {
-        music_max.text = SongUtils.getDurationOfCurrentMusic()
+        music_max.text = TimeUtils.getDurationOfCurrentMusic()
     }
 }

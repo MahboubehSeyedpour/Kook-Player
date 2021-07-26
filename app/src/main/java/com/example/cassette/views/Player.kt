@@ -18,7 +18,7 @@ class Player(context: Context, imageView: ImageView, textView: TextView)
 
     fun playMusic(song: SongModel) {
 
-        loadSongImage(song.image, songImageViewInPanel)
+        song.image?.let { loadSongImage(it, songImageViewInPanel) }
         loadSongTitle(song.title, songTitleTextView)
 
         val uri: Uri = Uri.parse(song.data)
@@ -51,5 +51,11 @@ class Player(context: Context, imageView: ImageView, textView: TextView)
     fun loadSongTitle(title: String, txtView: TextView)
     {
         txtView.text=title
+    }
+
+    fun getRemainingTimeInPercentage(progressInPercentage: Float): Float
+    {
+//        TODO(get current song and calculate remaining time)
+        return 0f
     }
 }
