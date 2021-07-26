@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.musicplayer"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -60,4 +60,8 @@ dependencies {
 
     //Sliding Up Panel
     compile 'com.sothree.slidinguppanel:library:3.4.0'
+
+//    wave form seekbar
+    implementation 'com.mikhaellopez:circularprogressbar:3.1.0'
+    implementation 'com.github.alexei-frolo:WaveformSeekBar:1.0'
 }

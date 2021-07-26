@@ -22,12 +22,14 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.cassette.R
 import com.example.cassette.adapter.ViewPagerFragmentAdapter
 import com.example.cassette.views.Fragments.*
+import com.frolo.waveformseekbar.WaveformSeekBar
 import com.google.android.material.tabs.TabLayoutMediator
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.base.*
 import kotlinx.android.synthetic.main.component_toolbar.*
 import kotlinx.android.synthetic.main.player_panel.*
 import kotlinx.android.synthetic.main.player_remote.*
+import kotlin.random.Random
 
 
 class MainActivity : AppCompatActivity(), LifecycleOwner {
@@ -39,8 +41,10 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         Manifest.permission.WRITE_EXTERNAL_STORAGE
     )
 
-    lateinit var currentMode: PlayerRemote.playerMode
+    var likeState: Boolean = false
 
+
+    lateinit var currentMode: PlayerRemote.playerMode
 
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -49,10 +53,112 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        PlayerRemote.setupRemote(applicationContext, music_album_image)
+        PlayerRemote.setupRemote(applicationContext, music_album_image, music_title_tv)
 
 
         currentMode = PlayerRemote.playerMode.NORMAL
+
+
+
+
+        seekBar.visibility = View.GONE
+
+
+//        circularProgressBar.apply {
+//            // Set Progress
+//            progress = 65f
+//            // or with animation
+//            setProgressWithAnimation(65f, 1000) // =1s
+//
+//            // Set Progress Max
+//            progressMax = 200f
+//
+//            // Set ProgressBar Color
+//            progressBarColor = Color.BLACK
+//            // or with gradient
+//            progressBarColorStart = Color.GRAY
+//            progressBarColorEnd = Color.RED
+//            progressBarColorDirection = CircularProgressBar.GradientDirection.TOP_TO_BOTTOM
+//
+//            // Set background ProgressBar Color
+//            backgroundProgressBarColor = Color.GRAY
+//            // or with gradient
+//            backgroundProgressBarColorStart = Color.WHITE
+//            backgroundProgressBarColorEnd = Color.RED
+//            backgroundProgressBarColorDirection = CircularProgressBar.GradientDirection.TOP_TO_BOTTOM
+//
+//            // Set Width
+//            progressBarWidth = 7f // in DP
+//            backgroundProgressBarWidth = 3f // in DP
+//
+//            // Other
+//            roundBorder = true
+//            startAngle = 180f
+//            progressDirection = CircularProgressBar.ProgressDirection.TO_RIGHT
+//        }
+//
+//
+//        circularProgressBar.onProgressChangeListener = { progress ->
+//            // Do something
+//        }
+//
+//        circularProgressBar.onIndeterminateModeChangeListener = { isEnable ->
+//            // Do something
+//        }
+
+
+        waveform_seek_bar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener,
+            WaveformSeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+//                waveform_seek_bar.setProgressInPercentage(0.25F)
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+
+            }
+
+            override fun onProgressInPercentageChanged(
+                seekBar: WaveformSeekBar?,
+                percent: Float,
+                fromUser: Boolean
+            ) {
+
+            }
+
+            override fun onStartTrackingTouch(seekBar: WaveformSeekBar?) {
+
+            }
+
+            override fun onStopTrackingTouch(seekBar: WaveformSeekBar?) {
+                Toast.makeText(
+                    baseContext,
+                    "Tracked: percent=" + waveform_seek_bar.getProgressPercent(),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+        })
+        waveform_seek_bar.setWaveform(createWaveform(), true)
+
+
+        like_iv.setOnClickListener {
+            when(likeState)
+            {
+                true -> {
+                    like_iv.setImageResource(R.drawable.ic_heart)
+                    likeState = false
+                }
+                false -> {
+                    like_iv.setImageResource(R.drawable.ic_filled_heart)
+                    likeState = true
+                }
+            }
+        }
+
 
 //        val toolbar: Toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         // Sets the Toolbar to act as the ActionBar for this Activity window.
@@ -61,7 +167,6 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
 
 //        TODO( "implement hideStatusBar() function");
-
 
 
 //        val adapter = ViewPagerAdapter(tabList.asList())
@@ -95,6 +200,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
         val playerPanel = SlidingUpPanelLayout(baseContext)
 
+
         playerPanel.addPanelSlideListener(object : SlidingUpPanelLayout.PanelSlideListener {
             override fun onPanelSlide(panel: View?, slideOffset: Float) {
             }
@@ -118,6 +224,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
         })
 
+
         val mHandler = Handler()
         runOnUiThread(object : Runnable {
             override fun run() {
@@ -130,6 +237,19 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
             }
         })
 
+
+        val mHandler1 = Handler()
+        runOnUiThread(object : Runnable {
+            override fun run() {
+                if (PlayerRemote.mediaPlayer != null) {
+                    val mCurrentPosition = PlayerRemote.mediaPlayer.currentPosition / 1000
+                    if (mCurrentPosition > 0) {
+                        waveform_seek_bar.setProgressInPercentage((mCurrentPosition / 100.0).toFloat())
+                    }
+                }
+                mHandler1.postDelayed(this, 1000)
+            }
+        })
 
         seekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             override fun onProgressChanged(
@@ -242,9 +362,26 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 //        }
     }
 
-    private fun hasPermissions(context: Context, vararg permissions: String): Boolean = permissions.all {
-        ActivityCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
+
+    private fun createWaveform(): IntArray? {
+        val random = Random(System.currentTimeMillis())
+        val length: Int = 50 + random.nextInt(50)
+        val values = IntArray(length)
+        var maxValue = 0
+        for (i in 0 until length) {
+            val newValue: Int = 5 + random.nextInt(50)
+            if (newValue > maxValue) {
+                maxValue = newValue
+            }
+            values[i] = newValue
+        }
+        return values
     }
+
+    private fun hasPermissions(context: Context, vararg permissions: String): Boolean =
+        permissions.all {
+            ActivityCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
+        }
 
 
     override fun onRequestPermissionsResult(
