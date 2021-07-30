@@ -81,7 +81,11 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
                 percent: Float,
                 fromUser: Boolean
             ) {
-
+                if (PlayerRemote.mediaPlayer.isPlaying) {
+                    music_min.text = TimeUtils.milliSecToDuration(
+                        (percent * TimeUtils.getDurationOfCurrentMusic().toLong()).toLong()
+                    )
+                }
             }
 
             override fun onStartTrackingTouch(seekBar: WaveformSeekBar?) {
@@ -101,15 +105,14 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
 
         like_iv.setOnClickListener {
-            when(likeState)
-            {
+            likeState = when (likeState) {
                 true -> {
                     like_iv.setImageResource(R.drawable.ic_heart)
-                    likeState = false
+                    false
                 }
                 false -> {
                     like_iv.setImageResource(R.drawable.ic_filled_heart)
-                    likeState = true
+                    true
                 }
             }
         }
@@ -180,17 +183,17 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         })
 
 
-        val mHandler = Handler()
-        runOnUiThread(object : Runnable {
-            override fun run() {
-                if (PlayerRemote.mediaPlayer != null) {
-                    val mCurrentPosition = PlayerRemote.mediaPlayer.currentPosition / 1000
-                    seekBar.setProgress(mCurrentPosition)
-                    seekBar.max = PlayerRemote.mediaPlayer.duration / 1000
-                }
-                mHandler.postDelayed(this, 1000)
-            }
-        })
+//        val mHandler = Handler()
+//        runOnUiThread(object : Runnable {
+//            override fun run() {
+//                if (PlayerRemote.mediaPlayer != null) {
+//                    val mCurrentPosition = PlayerRemote.mediaPlayer.currentPosition / 1000
+//                    seekBar.setProgress(mCurrentPosition)
+//                    seekBar.max = PlayerRemote.mediaPlayer.duration / 1000
+//                }
+//                mHandler.postDelayed(this, 1000)
+//            }
+//        })
 
 
         val mHandler1 = Handler()
@@ -365,6 +368,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
     }
 
     private fun updateUI() {
-        music_max.text = TimeUtils.getDurationOfCurrentMusic()
+        music_max.text =
+            TimeUtils.milliSecToDuration(TimeUtils.getDurationOfCurrentMusic().toLong())
     }
 }
