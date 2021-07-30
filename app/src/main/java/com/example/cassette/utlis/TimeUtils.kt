@@ -5,13 +5,18 @@ import com.example.cassette.views.Fragments.Library
 object TimeUtils
 {
     fun milliSecToDuration(duration: Long): String {
-        val millisec_temp = duration / 1000
-        val seconds_final = millisec_temp % 60
-        val minutes_temp = millisec_temp / 60
-        val minutes_final = minutes_temp % 60 + millisec_temp / 60
-        val hour_final = minutes_temp / 60
-//        return "$hour_final : $minutes_final : $seconds_final"
-        return "$minutes_final : $seconds_final"
+        val minutes = duration / 1000 / 60
+        val seconds = duration / 1000 % 60
+
+        if (minutes <10)
+        {
+            if(seconds <10)
+            {
+                return "0$minutes : 0$seconds"
+            }
+            return "0$minutes : $seconds"
+        }
+        return "$minutes : $seconds"
     }
 
     fun getDurationOfCurrentMusic(): String {
