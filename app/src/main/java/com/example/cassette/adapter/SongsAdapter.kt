@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.cassette.R
 import com.example.cassette.models.SongModel
 import com.example.cassette.utlis.ImageUtils
+import com.example.cassette.utlis.TimeUtils
 import com.example.cassette.views.PlayerRemote
 import kotlinx.android.synthetic.main.song_rv_item.view.*
 
@@ -41,7 +42,7 @@ class SongsAdapter(
         this.position = position
         val viewHolder = holder as RecyclerViewViewHolder
         viewHolder.title.text = song.title
-        viewHolder.duration.text = song.duration.toString()
+        viewHolder.duration.text = TimeUtils.milliSecToDuration(song.duration)
         viewHolder.artist.text = song.artist
         song.image?.let {
             ImageUtils.loadImageToImageView(
@@ -58,13 +59,13 @@ class SongsAdapter(
         }
 
 
-        viewHolder.menuBtn.setOnClickListener {
+        viewHolder.menuBtn.setOnClickListener { it ->
             val popUpMenu = PopupMenu(context, it)
             popUpMenu.inflate(R.menu.popup_menu)
 
             popUpMenu.setOnMenuItemClickListener {
 //                updatePosition(viewHolder.adapterPosition)
-                return@setOnMenuItemClickListener handleMenueButtonClickListener(it.itemId)
+                return@setOnMenuItemClickListener handleMenuButtonClickListener(it.itemId)
             }
             popUpMenu.show()
         }
@@ -72,7 +73,7 @@ class SongsAdapter(
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
-    fun handleMenueButtonClickListener(itemId: Int): Boolean {
+    fun handleMenuButtonClickListener(itemId: Int): Boolean {
         when (itemId) {
             R.id.playNext_menu_item -> {
                 PlayerRemote.playSongAsNextMusic(position)
