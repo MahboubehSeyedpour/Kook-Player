@@ -247,7 +247,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
                 PlayerRemote.player.resumePlaying()
             } else {
                 PlayerRemote.player.pauseMusic()
-                play_btn.setImageResource(R.mipmap.ic_pause_track_pic_foreground)
+                play_btn.setImageResource(R.drawable.ic_pause)
             }
             updateUI()
         }

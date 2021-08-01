@@ -97,7 +97,7 @@
             android:id="@+id/prev_btn"
             android:layout_width="50dp"
             android:layout_height="30dp"
-            app:srcCompat="@mipmap/ic_previous_track_pic_foreground"
+            app:srcCompat="@drawable/ic_previous_track"
             tools:layout_editor_absoluteX="113dp"
             tools:layout_editor_absoluteY="577dp" />
 
@@ -116,7 +116,7 @@
             android:id="@+id/next_btn"
             android:layout_width="50dp"
             android:layout_height="30dp"
-            app:srcCompat="@mipmap/ic_next_track_pic_foreground" />
+            app:srcCompat="@drawable/ic_next_track" />
 
     </LinearLayout>
 
