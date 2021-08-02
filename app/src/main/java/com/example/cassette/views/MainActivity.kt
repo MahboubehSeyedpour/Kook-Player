@@ -20,6 +20,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.viewpager2.widget.ViewPager2
 import com.example.cassette.R
 import com.example.cassette.adapter.ViewPagerFragmentAdapter
+import com.example.cassette.player.PlayerRemote
 import com.example.cassette.utlis.TimeUtils
 import com.example.cassette.views.Fragments.*
 import com.frolo.waveformseekbar.WaveformSeekBar
@@ -244,9 +245,9 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         play_btn.setOnClickListener {
 
             if (!PlayerRemote.mediaPlayer.isPlaying) {
-                PlayerRemote.player.resumePlaying()
+                PlayerRemote.playerProgressbar.resumePlaying()
             } else {
-                PlayerRemote.player.pauseMusic()
+                PlayerRemote.playerProgressbar.pauseMusic()
                 play_btn.setImageResource(R.drawable.ic_pause)
             }
             updateUI()

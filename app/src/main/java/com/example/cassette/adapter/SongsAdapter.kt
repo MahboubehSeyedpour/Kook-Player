@@ -12,9 +12,9 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cassette.R
 import com.example.cassette.models.SongModel
+import com.example.cassette.player.PlayerRemote
 import com.example.cassette.utlis.ImageUtils
 import com.example.cassette.utlis.TimeUtils
-import com.example.cassette.views.PlayerRemote
 import kotlinx.android.synthetic.main.song_rv_item.view.*
 
 class SongsAdapter(
@@ -54,7 +54,7 @@ class SongsAdapter(
 
 
         viewHolder.recyclerItem.setOnClickListener {
-            PlayerRemote.player.playMusic(song)
+            PlayerRemote.playerProgressbar.playMusic(song)
             updatePosition(newIndex = viewHolder.adapterPosition)
         }
 

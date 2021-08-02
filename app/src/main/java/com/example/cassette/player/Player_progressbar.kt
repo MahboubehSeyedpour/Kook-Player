@@ -1,4 +1,4 @@
-package com.example.cassette.utlis
+package com.example.cassette.player
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -7,14 +7,13 @@ import android.net.Uri
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.cassette.models.SongModel
-import com.example.cassette.views.PlayerRemote
+import com.example.cassette.utlis.ImageUtils
 
-class Player(context: Context, imageView: ImageView, textView: TextView)
-{
+class Player_progressbar(context: Context, imageView: ImageView, textView: TextView) {
 
     val context = context
     val songImageViewInPanel: ImageView = imageView
-    val songTitleTextView : TextView = textView
+    val songTitleTextView: TextView = textView
 
     fun playMusic(song: SongModel) {
 
@@ -38,23 +37,23 @@ class Player(context: Context, imageView: ImageView, textView: TextView)
         PlayerRemote.mediaPlayer.start()
     }
 
-    fun seekTo()
-    {
+    fun seekTo() {
 //        TODO()
     }
 
-    fun loadSongImage(image: Bitmap, imageView: ImageView)
-    {
-        ImageUtils.loadImageToImageView(context, imageView, image)
+    fun loadSongImage(image: Bitmap, imageView: ImageView) {
+        ImageUtils.loadImageToImageView(
+            context,
+            imageView,
+            image
+        )
     }
 
-    fun loadSongTitle(title: String, txtView: TextView)
-    {
-        txtView.text=title
+    fun loadSongTitle(title: String, txtView: TextView) {
+        txtView.text = title
     }
 
-    fun getRemainingTimeInPercentage(progressInPercentage: Float): Float
-    {
+    fun getRemainingTimeInPercentage(progressInPercentage: Float): Float {
 //        TODO(get current song and calculate remaining time)
         return 0f
     }

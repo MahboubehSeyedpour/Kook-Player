@@ -1,19 +1,18 @@
-package com.example.cassette.views
+package com.example.cassette.player
 
 import android.content.Context
 import android.media.MediaPlayer
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.cassette.models.SongModel
-import com.example.cassette.utlis.Player
 import com.example.cassette.views.Fragments.Library
 
 object PlayerRemote {
 
     var mediaPlayer = MediaPlayer()
     lateinit var context: Context
-    val player: Player by lazy {
-        Player(
+    val playerProgressbar: Player_progressbar by lazy {
+        Player_progressbar(
             context,
             imageView,
             textView
@@ -30,9 +29,9 @@ object PlayerRemote {
     }
 
     fun setupRemote(context: Context, songImageViewInPanel: ImageView, textView: TextView) {
-        this.context = context
+        PlayerRemote.context = context
         imageView = songImageViewInPanel
-        this.textView = textView
+        PlayerRemote.textView = textView
     }
 
     fun playNextMusic(mode: playerMode) {
@@ -45,7 +44,7 @@ object PlayerRemote {
                 }
                 if (position != null) {
                     val song: SongModel? = Library.songsAdapter?.getSong(position)
-                    player.playMusic(song!!)
+                    playerProgressbar.playMusic(song!!)
                 }
             }
             playerMode.SHUFFLE -> {
@@ -64,7 +63,7 @@ object PlayerRemote {
                 }
                 if (position != null && position >= 0) {
                     val song: SongModel? = Library.songsAdapter?.getSong(position)
-                    player.playMusic(song!!)
+                    playerProgressbar.playMusic(song!!)
                 }
             }
         }
