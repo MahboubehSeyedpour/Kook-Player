@@ -44,24 +44,24 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    //Viewproviders
+    // Viewproviders
     implementation 'android.arch.lifecycle:extensions:1.1.1'
 
-    //ViewModel
+    // ViewModel
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
 
-    //Swipe to refresh
+    // Swipe to refresh
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
-    //Glide
+    // Glide
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     // Glide v4 uses this new annotation processor -- see https://bumptech.github.io/glide/doc/generatedapi.html
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
-    //Sliding Up Panel
+    // Sliding Up Panel
     compile 'com.sothree.slidinguppanel:library:3.4.0'
 
-//    wave form seekbar
+    // Wave form seekbar
     implementation 'com.mikhaellopez:circularprogressbar:3.1.0'
     implementation 'com.github.alexei-frolo:WaveformSeekBar:1.0'
 }

@@ -20,10 +20,10 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textField"
-        android:layout_width="match_parent"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:hint="playlist name"
+        android:hint="Name"
         android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,20 +49,27 @@
             android:layout_width="100dp"
             android:layout_height="48dp"
             android:text="Cancel"
+            android:layout_weight="1"
             android:textAllCaps="false"
-            android:layout_margin="10dp" />
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="10dp"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnPositive"
-            android:layout_width="100dp"
+            android:layout_width="220dp"
             android:layout_height="48dp"
             android:gravity="center"
             android:text="Ok"
-            android:layout_weight="2"
+            android:layout_weight="3"
             android:textColor="@color/white"
             android:backgroundTint="@color/blue_dark"
             android:textAllCaps="false"
-            android:layout_margin="10dp"/>
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"/>
 
 
     </LinearLayout>

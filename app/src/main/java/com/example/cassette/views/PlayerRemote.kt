@@ -5,13 +5,20 @@ import android.media.MediaPlayer
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.cassette.models.SongModel
+import com.example.cassette.utlis.Player
 import com.example.cassette.views.Fragments.Library
 
 object PlayerRemote {
 
     var mediaPlayer = MediaPlayer()
     lateinit var context: Context
-    val player: Player by lazy { Player(context, imageView, textView) }
+    val player: Player by lazy {
+        Player(
+            context,
+            imageView,
+            textView
+        )
+    }
     lateinit var imageView: ImageView
     lateinit var textView: TextView
 

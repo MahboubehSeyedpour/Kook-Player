@@ -63,7 +63,7 @@ class Playlist : Fragment() {
             this.fragmentManager?.beginTransaction()
                 ?.let { it -> createPlaylist.show(it, "playlist") }
 
-            context?.let { it -> PlaylistUtils.createPlaylist(it, "me2") }
+//            context?.let { it -> PlaylistUtils.createPlaylist(it, "me2") }
 
             viewModel?.liveData?.value = PlaylistUtils.getPlaylists(context) as ArrayList<Any>
         }

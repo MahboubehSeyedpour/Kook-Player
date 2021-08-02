@@ -1,4 +1,4 @@
-package com.example.cassette.views
+package com.example.cassette.utlis
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -7,7 +7,7 @@ import android.net.Uri
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.cassette.models.SongModel
-import com.example.cassette.utlis.ImageUtils
+import com.example.cassette.views.PlayerRemote
 
 class Player(context: Context, imageView: ImageView, textView: TextView)
 {
