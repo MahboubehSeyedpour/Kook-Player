@@ -77,36 +77,36 @@
 
         </androidx.cardview.widget.CardView>
 
-<!--    </FrameLayout>-->
+        <!--    </FrameLayout>-->
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_margin="30dp">
-
-
-        <TextView
-            android:id="@+id/music_title_tv"
-            android:layout_width="202dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:singleLine="true"
             android:gravity="center"
-            android:textStyle="bold"
-            android:text=""
-            android:textColor="#283333"
-            android:textSize="20dp"
-            app:layout_constraintBottom_toTopOf="@+id/seekBar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView" />
+            android:layout_margin="30dp">
 
-    </LinearLayout>
 
-    <include
-        android:id="@+id/player_remote"
-        layout="@layout/player_remote"/>
+            <TextView
+                android:id="@+id/music_title_tv"
+                android:layout_width="202dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:text=""
+                android:textColor="#283333"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toTopOf="@+id/seekBar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.495"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+        </LinearLayout>
+
+        <include
+            android:id="@+id/player_remote"
+            layout="@layout/player_remote"/>
 
 </LinearLayout>

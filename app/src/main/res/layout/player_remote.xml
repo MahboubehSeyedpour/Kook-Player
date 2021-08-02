@@ -29,14 +29,15 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:gravity="center">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/music_min"
@@ -83,23 +84,26 @@
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="16dp"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.093"
-        tools:layout_editor_absoluteX="30dp">
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp">
+<!--        android:layout_marginTop="30dp"-->
+<!--        android:layout_marginBottom="16dp"-->
+<!--        tools:layout_editor_absoluteX="30dp"-->
+<!--        app:layout_constraintVertical_bias="0.093"-->
 
 
         <ImageView
             android:id="@+id/prev_btn"
             android:layout_width="50dp"
             android:layout_height="30dp"
-            app:srcCompat="@drawable/ic_previous_track"
-            tools:layout_editor_absoluteX="113dp"
-            tools:layout_editor_absoluteY="577dp" />
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_previous_track" />
+<!--        tools:layout_editor_absoluteX="113dp"-->
+<!--        tools:layout_editor_absoluteY="577dp"-->
 
 
         <ImageView
@@ -107,71 +111,93 @@
             android:layout_width="90dp"
             android:layout_height="80dp"
             android:layout_gravity="center"
-            android:layout_marginLeft="20dp"
             android:padding="10dp"
+            android:layout_weight="1"
             android:src="@drawable/ic_play" />
+<!--        android:layout_marginLeft="20dp"-->
 
 
         <ImageView
             android:id="@+id/next_btn"
             android:layout_width="50dp"
             android:layout_height="30dp"
+            android:layout_weight="1"
             app:srcCompat="@drawable/ic_next_track" />
 
     </LinearLayout>
 
-
-    <ImageView
-        android:id="@+id/shuffle_btn"
-        android:layout_width="39dp"
-        android:layout_height="33dp"
-        android:layout_weight="1"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.121"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        app:layout_constraintVertical_bias="0.45"
-        app:srcCompat="@drawable/ic_shuffle" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+<!--        app:layout_constraintVertical_bias="0.415"-->
 
-    <ImageView
-        android:id="@+id/repeat_btn"
-        android:layout_width="39dp"
-        android:layout_height="33dp"
-        android:layout_weight="1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.878"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        app:layout_constraintVertical_bias="0.45"
-        app:srcCompat="@drawable/ic_repeat" />
+        <ImageView
+            android:id="@+id/shuffle_btn"
+            android:layout_width="39dp"
+            android:layout_height="33dp"
+            android:layout_weight="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.121"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+            app:layout_constraintVertical_bias="0.45"
+            app:srcCompat="@drawable/ic_shuffle" />
 
-    <ImageView
-        android:id="@+id/lyrics_btn"
-        android:layout_width="39dp"
-        android:layout_height="33dp"
-        android:layout_weight="1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        app:layout_constraintVertical_bias="0.466"
-        app:srcCompat="@drawable/ic_song_lyrics" />
+        <ImageView
+            android:id="@+id/repeat_btn"
+            android:layout_width="39dp"
+            android:layout_height="33dp"
+            android:layout_weight="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.878"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+            app:layout_constraintVertical_bias="0.45"
+            app:srcCompat="@drawable/ic_repeat" />
+
+        <ImageView
+            android:id="@+id/lyrics_btn"
+            android:layout_width="39dp"
+            android:layout_height="33dp"
+            android:layout_weight="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+            app:layout_constraintVertical_bias="0.466"
+            app:srcCompat="@drawable/ic_song_lyrics" />
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="-30dp" />
 
 
     <!--    <Button-->
-<!--        android:layout_width="180dp"-->
-<!--        android:layout_height="150dp"-->
-<!--        android:layout_marginTop="52dp"-->
-<!--        android:background="@drawable/rounded_btn_bg"-->
-<!--        android:gravity="center_horizontal"-->
-<!--        android:paddingTop="40dp"-->
-<!--        android:text="Lyrics"-->
-<!--        android:textAllCaps="false"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.194"-->
-<!--        app:layout_constraintStart_toEndOf="@+id/shuffle_btn"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />-->
+    <!--        android:layout_width="180dp"-->
+    <!--        android:layout_height="150dp"-->
+    <!--        android:layout_marginTop="52dp"-->
+    <!--        android:background="@drawable/rounded_btn_bg"-->
+    <!--        android:gravity="center_horizontal"-->
+    <!--        android:paddingTop="40dp"-->
+    <!--        android:text="Lyrics"-->
+    <!--        android:textAllCaps="false"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintHorizontal_bias="0.194"-->
+    <!--        app:layout_constraintStart_toEndOf="@+id/shuffle_btn"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
