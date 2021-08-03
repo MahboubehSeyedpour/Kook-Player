@@ -26,6 +26,7 @@ import com.example.cassette.views.Fragments.*
 import com.frolo.waveformseekbar.WaveformSeekBar
 import com.google.android.material.tabs.TabLayoutMediator
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.base.*
 import kotlinx.android.synthetic.main.component_toolbar.*
 import kotlinx.android.synthetic.main.player_panel.*
@@ -157,11 +158,13 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 //        val playerPanel = PlayerPanel_bottomSheet()
 //        playerPanel.setup(this, bottomSheet, baseContext)
 
-        val playerPanel = SlidingUpPanelLayout(baseContext)
 
 
-        playerPanel.addPanelSlideListener(object : SlidingUpPanelLayout.PanelSlideListener {
+        val playerPanel = sliding_layout
+        playerPanel.addPanelSlideListener(object : SlidingUpPanelLayout.PanelSlideListener
+        {
             override fun onPanelSlide(panel: View?, slideOffset: Float) {
+
             }
 
             override fun onPanelStateChanged(
@@ -169,18 +172,12 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
                 previousState: SlidingUpPanelLayout.PanelState?,
                 newState: SlidingUpPanelLayout.PanelState?
             ) {
-                when (newState?.name) {
-                    "Collapsed" -> {
-                        val i = 0
-                        //action when collapsed
-                    }
-                    "Expanded" -> {
-                        val i = 0
-                        //action when expanded
-                    }
+                when(playerPanel.panelState)
+                {
+                    SlidingUpPanelLayout.PanelState.EXPANDED -> Toast.makeText(baseContext, "expanded", Toast.LENGTH_SHORT).show()
+                    SlidingUpPanelLayout.PanelState.COLLAPSED -> Toast.makeText(baseContext, "collapsed", Toast.LENGTH_SHORT).show()
                 }
             }
-
         })
 
 

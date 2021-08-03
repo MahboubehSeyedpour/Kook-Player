@@ -55,7 +55,6 @@ class SongsRepository(val context: Context) {
             "",
             ""
         )
-        return SongModel()
     }
 }
 
