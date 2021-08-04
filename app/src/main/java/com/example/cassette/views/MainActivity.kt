@@ -160,16 +160,16 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
 //
 //
-//        sort_iv.setOnClickListener {
-//
-//            val bottomSheetDialog = Custom_BottomSheetDialogFragment.newInstance()
-//            bottomSheetDialog?.setStyle(
-//                R.style.AppBottomSheetDialogTheme,
-//                R.style.AppBottomSheetDialogTheme
-//            )
-//            bottomSheetDialog?.show(supportFragmentManager, "btmsheet")
-//
-//        }
+        binding.includeBase.includeToolbar.sortIv.setOnClickListener {
+
+            val bottomSheetDialog = Custom_BottomSheetDialogFragment.newInstance()
+            bottomSheetDialog?.setStyle(
+                R.style.AppBottomSheetDialogTheme,
+                R.style.AppBottomSheetDialogTheme
+            )
+            bottomSheetDialog?.show(supportFragmentManager, "btmsheet")
+
+        }
 
 
         ///////////////////////////////////////////////////////
