@@ -9,9 +9,11 @@ import android.widget.TextView
 import com.example.cassette.models.SongModel
 import com.example.cassette.utlis.ImageUtils
 
-class Player_progressbar(context: Context, imageView: ImageView, textView: TextView) {
+class MediaPlayerAgent(context: Context, imageView: ImageView, textView: TextView) {
+
 
     val context = context
+    var mediaPlayer = MediaPlayer()
     val songImageViewInPanel: ImageView = imageView
     val songTitleTextView: TextView = textView
 
@@ -22,19 +24,19 @@ class Player_progressbar(context: Context, imageView: ImageView, textView: TextV
 
         val uri: Uri = Uri.parse(song.data)
 
-        PlayerRemote.mediaPlayer.release()
+        mediaPlayer.release()
 
-        PlayerRemote.mediaPlayer = MediaPlayer.create(context, uri)
-        PlayerRemote.mediaPlayer.start()
+        mediaPlayer = MediaPlayer.create(context, uri)
+        mediaPlayer.start()
 
     }
 
     fun pauseMusic() {
-        PlayerRemote.mediaPlayer.pause()
+        mediaPlayer.pause()
     }
 
     fun resumePlaying() {
-        PlayerRemote.mediaPlayer.start()
+        mediaPlayer.start()
     }
 
     fun seekTo() {
@@ -56,5 +58,10 @@ class Player_progressbar(context: Context, imageView: ImageView, textView: TextV
     fun getRemainingTimeInPercentage(progressInPercentage: Float): Float {
 //        TODO(get current song and calculate remaining time)
         return 0f
+    }
+
+    fun isPlaying(): Boolean
+    {
+        return mediaPlayer.isPlaying
     }
 }

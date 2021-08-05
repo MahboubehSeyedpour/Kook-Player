@@ -7,7 +7,6 @@ import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -20,12 +19,11 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.cassette.R
 import com.example.cassette.adapter.ViewPagerFragmentAdapter
 import com.example.cassette.databinding.ActivityMainBinding
-import com.example.cassette.player.PlayerRemote
+import com.example.cassette.player.MediaPlayerAgent
 import com.example.cassette.views.Fragments.*
 import com.google.android.material.tabs.TabLayoutMediator
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.base.*
-import kotlinx.android.synthetic.main.player_remote.*
 
 
 class MainActivity : AppCompatActivity(), LifecycleOwner {
@@ -36,6 +34,8 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         Manifest.permission.READ_EXTERNAL_STORAGE,
         Manifest.permission.WRITE_EXTERNAL_STORAGE
     )
+
+    lateinit var mediaPlayer: MediaPlayerAgent
 
     lateinit var binding: ActivityMainBinding
 
@@ -122,18 +122,23 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 //        })
 
 
-        val mHandler1 = Handler()
-        runOnUiThread(object : Runnable {
-            override fun run() {
-                if (PlayerRemote.mediaPlayer != null) {
-                    val mCurrentPosition = PlayerRemote.mediaPlayer.currentPosition / 1000
-                    if (mCurrentPosition > 0) {
-                        waveform_seek_bar.setProgressInPercentage((mCurrentPosition / 100.0).toFloat())
-                    }
-                }
-                mHandler1.postDelayed(this, 1000)
-            }
-        })
+        //spr
+//        val mHandler1 = Handler()
+//        runOnUiThread(object : Runnable {
+//            override fun run() {
+//                if (PlayerRemote.mediaPlayer != null) {
+//                    val mCurrentPosition = PlayerRemote.mediaPlayer.currentPosition / 1000
+//                    if (mCurrentPosition > 0) {
+//                        waveform_seek_bar.setProgressInPercentage((mCurrentPosition / 100.0).toFloat())
+//                    }
+//                }
+//                mHandler1.postDelayed(this, 1000)
+//            }
+//        })
+
+
+
+
 
 //        seekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
 //            override fun onProgressChanged(
@@ -249,7 +254,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
     }
 
 
-    fun initBottomSheet() {
+    private fun initBottomSheet() {
         val fragment = PlayerPanelFragment()
         val fragmentManager: FragmentManager = supportFragmentManager
         val transaction = fragmentManager.beginTransaction()

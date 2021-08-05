@@ -12,7 +12,7 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cassette.R
 import com.example.cassette.models.SongModel
-import com.example.cassette.player.PlayerRemote
+import com.example.cassette.player.Coordinator
 import com.example.cassette.utlis.ImageUtils
 import com.example.cassette.utlis.TimeUtils
 import kotlinx.android.synthetic.main.song_rv_item.view.*
@@ -54,7 +54,7 @@ class SongsAdapter(
 
 
         viewHolder.recyclerItem.setOnClickListener {
-            PlayerRemote.playerProgressbar.playMusic(song)
+            Coordinator.playSelectedSong(song)
             updatePosition(newIndex = viewHolder.adapterPosition)
         }
 
@@ -76,10 +76,10 @@ class SongsAdapter(
     fun handleMenuButtonClickListener(itemId: Int): Boolean {
         when (itemId) {
             R.id.playNext_menu_item -> {
-                PlayerRemote.playSongAsNextMusic(position)
+//                PlayerRemote.playSongAsNextMusic(position)
             }
             R.id.addToPlayList_menu_item -> {
-                PlayerRemote.addToPlaylist(position)
+//                PlayerRemote.addToPlaylist(position)
             }
             R.id.deleteFromDevice_menu_item -> {
                 getSongUri(position)?.let { SongUtils.deletMusic(context, it) }
@@ -144,7 +144,7 @@ class SongsAdapter(
         RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.song_title
         val artist: TextView = itemView.song_artist
-        val duration : TextView = itemView.song_duration
+        val duration: TextView = itemView.song_duration
         val menuBtn: ImageView = itemView.music_menu_btn
         val imageView: ImageView = itemView.music_iv
         val recyclerItem: LinearLayout = itemView.sont_container

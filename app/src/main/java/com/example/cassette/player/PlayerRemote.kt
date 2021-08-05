@@ -1,18 +1,18 @@
 package com.example.cassette.player
 
 import android.content.Context
-import android.media.MediaPlayer
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import com.example.cassette.models.SongModel
-import com.example.cassette.views.Fragments.Library
 
-object PlayerRemote {
+class PlayerRemote(val view: View) {
 
-    var mediaPlayer = MediaPlayer()
+//    var mediaPlayer = MediaPlayer()
     lateinit var context: Context
-    val playerProgressbar: Player_progressbar by lazy {
-        Player_progressbar(
+    var currentPlayerMode: PlayerStateRepository.PlayerModes = PlayerStateRepository.PlayerModes.REPEAT_ALL
+
+    val MEDIA_PLAYER_AGENT: MediaPlayerAgent by lazy {
+        MediaPlayerAgent(
             context,
             imageView,
             textView
@@ -21,53 +21,54 @@ object PlayerRemote {
     lateinit var imageView: ImageView
     lateinit var textView: TextView
 
-    enum class playerMode(mode: String) {
-        SHUFFLE("shuffle"),
-        NORMAL("normal"),
-        REPEAT_ONE("repeat_one"),
-        REPEAT_ALL("repeat_all")
-    }
 
-    fun setupRemote(context: Context, songImageViewInPanel: ImageView, textView: TextView) {
-        PlayerRemote.context = context
-        imageView = songImageViewInPanel
-        PlayerRemote.textView = textView
-    }
 
-    fun playNextMusic(mode: playerMode) {
+//    fun setupRemote(context: Context, songImageViewInPanel: ImageView, textView: TextView) {
+//        PlayerRemote.context = context
+//        imageView = songImageViewInPanel
+//        PlayerRemote.textView = textView
+//    }
 
-        when (mode) {
-            playerMode.NORMAL -> {
-                var position = Library.songsAdapter?.position
-                if (position != null) {
-                    Library.songsAdapter?.updatePosition(newIndex = ++position)
-                }
-                if (position != null) {
-                    val song: SongModel? = Library.songsAdapter?.getSong(position)
-                    playerProgressbar.playMusic(song!!)
-                }
-            }
-            playerMode.SHUFFLE -> {
-                shuffleMode()
-            }
-        }
-    }
+//    fun playNextMusic(mode: PlayerStateRepository.PlayerModes) {
+//
+//        when (mode) {
+//            PlayerStateRepository.PlayerModes.REPEAT_ALL -> {
+//                var position = Library.songsAdapter?.position
+//                if (position != null) {
+//                    Library.songsAdapter?.updatePosition(newIndex = ++position)
+//                }
+//                if (position != null) {
+//                    val song: SongModel? = Library.songsAdapter?.getSong(position)
+//                    MEDIA_PLAYER_AGENT.playMusic(song!!)
+//                }
+//            }
+//            PlayerStateRepository.PlayerModes.SHUFFLE -> {
+//                shuffleMode()
+//            }
+//            PlayerStateRepository.PlayerModes.REPEAT_ONE -> {
+//                Library.songsAdapter?.position?.let { Library.songsAdapter?.updatePosition(newIndex = it) }
+//            }
+//        }
+//    }
 
-    fun playPrevMusic(mode: playerMode) {
-
-        when (mode) {
-            playerMode.NORMAL -> {
-                var position = Library.songsAdapter?.position
-                if (position != null) {
-                    Library.songsAdapter?.updatePosition(newIndex = --position)
-                }
-                if (position != null && position >= 0) {
-                    val song: SongModel? = Library.songsAdapter?.getSong(position)
-                    playerProgressbar.playMusic(song!!)
-                }
-            }
-        }
-    }
+//    fun playPrevMusic(mode: PlayerStateRepository.PlayerModes) {
+//
+//        when (mode) {
+//            PlayerStateRepository.PlayerModes.REPEAT_ALL -> {
+//                var position = Library.songsAdapter?.position
+//                if (position != null) {
+//                    Library.songsAdapter?.updatePosition(newIndex = --position)
+//                }
+//                if (position != null && position >= 0) {
+//                    val song: SongModel? = Library.songsAdapter?.getSong(position)
+//                    MEDIA_PLAYER_AGENT.playMusic(song!!)
+//                }
+//            }
+//            PlayerStateRepository.PlayerModes.REPEAT_ONE -> {
+//                Library.songsAdapter?.position?.let { Library.songsAdapter?.updatePosition(newIndex = it) }
+//            }
+//        }
+//    }
 
 
     //Music Playing Modes

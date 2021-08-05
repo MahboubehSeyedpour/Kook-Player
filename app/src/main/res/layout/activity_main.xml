@@ -1,24 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<androidx.constraintlayout.widget.ConstraintLayout-->
-<!--    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent">-->
-
-
-<!--    <include-->
-<!--        android:id="@+id/include_base"-->
-<!--        layout="@layout/base"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent" />-->
-
-
-<!--    <FrameLayout-->
-<!--        android:id="@+id/bottomSheetContainer"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"/>-->
-
-
-<!--</androidx.constraintlayout.widget.ConstraintLayout>-->
-
 <com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:sothree="http://schemas.android.com/apk/res-auto"
 android:id="@+id/sliding_layout"

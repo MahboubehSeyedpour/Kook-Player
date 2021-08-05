@@ -151,18 +151,36 @@
             app:layout_constraintVertical_bias="0.45"
             app:srcCompat="@drawable/ic_shuffle" />
 
-        <ImageView
-            android:id="@+id/repeat_btn"
+        <FrameLayout
+            android:id="@+id/repeatLayout"
             android:layout_width="39dp"
             android:layout_height="33dp"
-            android:layout_weight="1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.878"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-            app:layout_constraintVertical_bias="0.45"
-            app:srcCompat="@drawable/ic_repeat" />
+            android:layout_gravity="center">
+
+            <ImageView
+                android:id="@+id/repeat_btn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.878"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+                app:layout_constraintVertical_bias="0.45"
+                app:srcCompat="@drawable/ic_repeat" />
+
+            <TextView
+                android:id="@+id/playOneSongLabel_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:textColor="@color/black"
+                android:textSize="10dp"
+                android:textStyle="bold"
+                android:layout_gravity="center"/>
+        </FrameLayout>
+
 
         <ImageView
             android:id="@+id/lyrics_btn"

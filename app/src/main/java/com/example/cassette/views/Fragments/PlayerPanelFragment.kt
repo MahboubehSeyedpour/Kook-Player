@@ -6,21 +6,27 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.example.cassette.R
 import com.example.cassette.databinding.FragmentPlayerPanelBinding
+import com.example.cassette.player.Coordinator
 import com.example.cassette.player.PlayerRemote
+import com.example.cassette.player.PlayerStateRepository
 import com.example.cassette.utlis.TimeUtils
 import com.frolo.waveformseekbar.WaveformSeekBar
 import kotlinx.android.synthetic.main.player_remote.*
 import kotlin.random.Random
 
 
-class PlayerPanelFragment: Fragment() {
+class PlayerPanelFragment : Fragment() {
 
     lateinit var binding: FragmentPlayerPanelBinding
     var likeState: Boolean = false
-    var currentMode: PlayerRemote.playerMode = PlayerRemote.playerMode.NORMAL
+    var currentMode: PlayerStateRepository.PlayerModes = PlayerStateRepository.PlayerModes.REPEAT_ALL
+
+
+    lateinit var playerRemote : PlayerRemote
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,7 +44,9 @@ class PlayerPanelFragment: Fragment() {
     override fun onResume() {
         super.onResume()
 
-        binding.playerRemote.seekBar.visibility = View.GONE
+        setVisibilities()
+
+        context?.let { Coordinator.setupMediaPlayerAgent(it, binding.musicAlbumImage, binding.musicTitleTv) }
 
         binding.likeIv.setOnClickListener {
             likeState = when (likeState) {
@@ -53,7 +61,8 @@ class PlayerPanelFragment: Fragment() {
             }
         }
 
-        binding.playerRemote.waveformSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener,
+        binding.playerRemote.waveformSeekBar.setOnSeekBarChangeListener(object :
+            SeekBar.OnSeekBarChangeListener,
             WaveformSeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
 //                waveform_seek_bar.setProgressInPercentage(0.25F)
@@ -72,7 +81,7 @@ class PlayerPanelFragment: Fragment() {
                 percent: Float,
                 fromUser: Boolean
             ) {
-                if (PlayerRemote.mediaPlayer.isPlaying) {
+                if (Coordinator.playerIsPlaying()) {
                     binding.playerRemote.musicMin.text = TimeUtils.milliSecToDuration(
                         (percent * TimeUtils.getDurationOfCurrentMusic().toLong()).toLong()
                     )
@@ -95,23 +104,21 @@ class PlayerPanelFragment: Fragment() {
         waveform_seek_bar.setWaveform(createWaveform(), true)
 
 
-        context?.let { PlayerRemote.setupRemote(it, binding.musicAlbumImage, binding.musicTitleTv) }
-
         binding.playerRemote.nextBtn.setOnClickListener() {
-            PlayerRemote.playNextMusic(currentMode)
+            Coordinator.playNextSong()
         }
 
 
         binding.playerRemote.prevBtn.setOnClickListener {
-            PlayerRemote.playPrevMusic(currentMode)
+            Coordinator.playPrevSong()
         }
 
         binding.playerRemote.playBtn.setOnClickListener {
 
-            if (!PlayerRemote.mediaPlayer.isPlaying) {
-                PlayerRemote.playerProgressbar.resumePlaying()
+            if (!Coordinator.playerIsPlaying()) {
+                Coordinator.resumePlaying()
             } else {
-                PlayerRemote.playerProgressbar.pauseMusic()
+                Coordinator.pauseSong()
                 play_btn.setImageResource(R.drawable.ic_pause)
             }
             updateUI()
@@ -119,14 +126,33 @@ class PlayerPanelFragment: Fragment() {
 
         binding.playerRemote.shuffleBtn.setOnClickListener {
             when (currentMode) {
-                PlayerRemote.playerMode.NORMAL -> {
-                    currentMode = PlayerRemote.playerMode.SHUFFLE
+                PlayerStateRepository.PlayerModes.REPEAT_ALL -> {
+                    currentMode = PlayerStateRepository.PlayerModes.SHUFFLE
                 }
 
-                PlayerRemote.playerMode.SHUFFLE -> {
-                    currentMode = PlayerRemote.playerMode.NORMAL
+                PlayerStateRepository.PlayerModes.SHUFFLE -> {
+                    currentMode = PlayerStateRepository.PlayerModes.REPEAT_ALL
                 }
             }
+        }
+
+        binding.playerRemote.repeatLayout.setOnClickListener {
+            if (PlayerStateRepository.currentPlayerMode == PlayerStateRepository.PlayerModes.REPEAT_ALL) {
+                changePlayerMode(PlayerStateRepository.PlayerModes.REPEAT_ONE)
+            } else {
+                changePlayerMode(PlayerStateRepository.PlayerModes.REPEAT_ONE)
+            }
+        }
+    }
+
+    fun changePlayerMode(newMode: PlayerStateRepository.PlayerModes) {
+
+        Coordinator.changePlayerMode(newMode)
+
+        if (binding.playerRemote.playOneSongLabelTv.isVisible) {
+            binding.playerRemote.playOneSongLabelTv.visibility = View.GONE
+        } else {
+            binding.playerRemote.playOneSongLabelTv.visibility = View.VISIBLE
         }
     }
 
@@ -148,5 +174,10 @@ class PlayerPanelFragment: Fragment() {
     private fun updateUI() {
         binding.playerRemote.musicMax.text =
             TimeUtils.milliSecToDuration(TimeUtils.getDurationOfCurrentMusic().toLong())
+    }
+
+    fun setVisibilities() {
+        binding.playerRemote.seekBar.visibility = View.GONE
+        binding.playerRemote.playOneSongLabelTv.visibility = View.GONE
     }
 }
