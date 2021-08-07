@@ -1,32 +1,26 @@
 package com.example.cassette.views.Fragments
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.example.cassette.R
 import com.example.cassette.databinding.FragmentPlayerPanelBinding
+import com.example.cassette.extensions.isShuffle
 import com.example.cassette.player.Coordinator
-import com.example.cassette.player.PlayerRemote
 import com.example.cassette.player.PlayerStateRepository
 import com.example.cassette.utlis.TimeUtils
-import com.frolo.waveformseekbar.WaveformSeekBar
-import kotlinx.android.synthetic.main.player_remote.*
-import kotlin.random.Random
 
 
 class PlayerPanelFragment : Fragment() {
 
     lateinit var binding: FragmentPlayerPanelBinding
     var likeState: Boolean = false
-    var currentMode: PlayerStateRepository.PlayerModes = PlayerStateRepository.PlayerModes.REPEAT_ALL
-
-
-    lateinit var playerRemote : PlayerRemote
+    var playingState: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,7 +40,13 @@ class PlayerPanelFragment : Fragment() {
 
         setVisibilities()
 
-        context?.let { Coordinator.setupMediaPlayerAgent(it, binding.musicAlbumImage, binding.musicTitleTv) }
+        context?.let {
+            Coordinator.setupMediaPlayerAgent(
+                it,
+                binding.musicAlbumImage,
+                binding.musicTitleTv
+            )
+        }
 
         binding.likeIv.setOnClickListener {
             likeState = when (likeState) {
@@ -61,47 +61,112 @@ class PlayerPanelFragment : Fragment() {
             }
         }
 
-        binding.playerRemote.waveformSeekBar.setOnSeekBarChangeListener(object :
-            SeekBar.OnSeekBarChangeListener,
-            WaveformSeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-//                waveform_seek_bar.setProgressInPercentage(0.25F)
+//        binding.playerRemote.waveformSeekBar.setOnSeekBarChangeListener(object :
+//            SeekBar.OnSeekBarChangeListener,
+//            WaveformSeekBar.OnSeekBarChangeListener {
+//            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+//                Toast.makeText(
+//                    context,
+//                    "onProgressChanged",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+////                waveform_seek_bar.setProgressInPercentage(0.25F)
+//            }
+//
+//            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+//                Toast.makeText(
+//                    context,
+//                    "onStartTrackingTouch",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//            }
+//
+//            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+//                Toast.makeText(
+//                    context,
+//                    "onStopTrackingTouch",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//            }
+//
+//            override fun onProgressInPercentageChanged(
+//                seekBar: WaveformSeekBar?,
+//                percent: Float,
+//                fromUser: Boolean
+//            ) {
+//                if (Coordinator.playerIsPlaying()) {
+//
+//                    Toast.makeText(
+//                        context,
+//                        "onProgressInPercentageChanged",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//
+//                    binding.playerRemote.musicMin.text = TimeUtils.milliSecToDuration(
+//                        (percent * TimeUtils.getDurationOfCurrentMusic().toLong()).toLong()
+//                    )
+//                }
+//            }
+//
+//            override fun onStartTrackingTouch(seekBar: WaveformSeekBar?) {
+//
+//            }
+//
+//            override fun onStopTrackingTouch(seekBar: WaveformSeekBar?) {
+//                Toast.makeText(
+//                    context,
+//                    "Tracked: percent=" + waveform_seek_bar.progressPercent,
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//            }
+//
+//        })
+//        waveform_seek_bar.setWaveform(createWaveform(), true)
+
+
+        val mHandler = Handler()
+        activity?.runOnUiThread(object : Runnable {
+            override fun run() {
+                if (Coordinator != null) {
+                    val mCurrentPosition = Coordinator.getCurrentMediaPlayerPosition() / 1000
+                    binding.playerRemote.seekBar.setProgress(mCurrentPosition)
+                    binding.playerRemote.seekBar.max = Coordinator.getMediaPlayerDuration() / 1000
+                    if (Coordinator.playerIsPlaying()) {
+                        updateProgress(mCurrentPosition)
+                    }
+                }
+                mHandler.postDelayed(this, 1000)
             }
+        })
 
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
 
-            }
+        binding.playerRemote.seekBar.setOnSeekBarChangeListener(object :
+            SeekBar.OnSeekBarChangeListener {
 
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-
-            }
-
-            override fun onProgressInPercentageChanged(
-                seekBar: WaveformSeekBar?,
-                percent: Float,
+            override fun onProgressChanged(
+                seekBar: SeekBar,
+                progress: Int,
                 fromUser: Boolean
             ) {
-                if (Coordinator.playerIsPlaying()) {
-                    binding.playerRemote.musicMin.text = TimeUtils.milliSecToDuration(
-                        (percent * TimeUtils.getDurationOfCurrentMusic().toLong()).toLong()
-                    )
+
+//                Toast.makeText(
+//                    context,
+//                    "onProgressChanged , progress is:$progress",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+
+                seekBar.setProgress(progress)
+
+                if (seekBar.max - progress <= 0) {
+                    Coordinator.playNextSong()
                 }
-            }
-
-            override fun onStartTrackingTouch(seekBar: WaveformSeekBar?) {
 
             }
 
-            override fun onStopTrackingTouch(seekBar: WaveformSeekBar?) {
-                Toast.makeText(
-                    context,
-                    "Tracked: percent=" + waveform_seek_bar.progressPercent,
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+            override fun onStartTrackingTouch(seekBar: SeekBar) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar) {}
 
         })
-        waveform_seek_bar.setWaveform(createWaveform(), true)
 
 
         binding.playerRemote.nextBtn.setOnClickListener() {
@@ -113,25 +178,30 @@ class PlayerPanelFragment : Fragment() {
             Coordinator.playPrevSong()
         }
 
-        binding.playerRemote.playBtn.setOnClickListener {
+        binding.playerRemote.playOrPauseLayout.setOnClickListener {
 
             if (!Coordinator.playerIsPlaying()) {
+                binding.playerRemote.pauseBtn.visibility = View.GONE
+                binding.playerRemote.playBtn.visibility = View.VISIBLE
                 Coordinator.resumePlaying()
             } else {
+                binding.playerRemote.pauseBtn.visibility = View.VISIBLE
+                binding.playerRemote.playBtn.visibility = View.GONE
                 Coordinator.pauseSong()
-                play_btn.setImageResource(R.drawable.ic_pause)
             }
             updateUI()
+
         }
 
         binding.playerRemote.shuffleBtn.setOnClickListener {
-            when (currentMode) {
+            val i = Coordinator.getCurrentPlayerMode().isShuffle()
+            when (Coordinator.getCurrentPlayerMode()) {
                 PlayerStateRepository.PlayerModes.REPEAT_ALL -> {
-                    currentMode = PlayerStateRepository.PlayerModes.SHUFFLE
+                    Coordinator.changePlayerMode(PlayerStateRepository.PlayerModes.SHUFFLE)
                 }
 
                 PlayerStateRepository.PlayerModes.SHUFFLE -> {
-                    currentMode = PlayerStateRepository.PlayerModes.REPEAT_ALL
+                    Coordinator.changePlayerMode(PlayerStateRepository.PlayerModes.REPEAT_ALL)
                 }
             }
         }
@@ -156,20 +226,20 @@ class PlayerPanelFragment : Fragment() {
         }
     }
 
-    private fun createWaveform(): IntArray? {
-        val random = Random(System.currentTimeMillis())
-        val length: Int = 50 + random.nextInt(50)
-        val values = IntArray(length)
-        var maxValue = 0
-        for (i in 0 until length) {
-            val newValue: Int = 5 + random.nextInt(50)
-            if (newValue > maxValue) {
-                maxValue = newValue
-            }
-            values[i] = newValue
-        }
-        return values
-    }
+//    private fun createWaveform(): IntArray? {
+//        val random = Random(System.currentTimeMillis())
+//        val length: Int = 50 + random.nextInt(50)
+//        val values = IntArray(length)
+//        var maxValue = 0
+//        for (i in 0 until length) {
+//            val newValue: Int = 5 + random.nextInt(50)
+//            if (newValue > maxValue) {
+//                maxValue = newValue
+//            }
+//            values[i] = newValue
+//        }
+//        return values
+//    }
 
     private fun updateUI() {
         binding.playerRemote.musicMax.text =
@@ -177,7 +247,12 @@ class PlayerPanelFragment : Fragment() {
     }
 
     fun setVisibilities() {
-        binding.playerRemote.seekBar.visibility = View.GONE
+        binding.playerRemote.pauseBtn.visibility = View.GONE
         binding.playerRemote.playOneSongLabelTv.visibility = View.GONE
+    }
+
+    fun updateProgress(progressInPercentage: Int) {
+        binding.playerRemote.musicMin.text =
+            TimeUtils.milliSecToDuration((progressInPercentage * 1000).toLong())
     }
 }

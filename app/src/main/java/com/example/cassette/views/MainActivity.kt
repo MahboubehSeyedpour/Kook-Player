@@ -88,11 +88,15 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 //        val playerPanel = PlayerPanel_bottomSheet()
 //        playerPanel.setup(this, bottomSheet, baseContext)
 
-        val playerPanel = binding.slidingLayout
-        playerPanel.addPanelSlideListener(object : SlidingUpPanelLayout.PanelSlideListener
-        {
-            override fun onPanelSlide(panel: View?, slideOffset: Float) {
 
+        binding.slidingLayout.addPanelSlideListener(object :
+            SlidingUpPanelLayout.PanelSlideListener {
+            override fun onPanelSlide(panel: View?, slideOffset: Float) {
+//                Toast.makeText(
+//                    baseContext,
+//                    "onPanelSlide",
+//                    Toast.LENGTH_SHORT
+//                ).show()
             }
 
             override fun onPanelStateChanged(
@@ -100,10 +104,17 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
                 previousState: SlidingUpPanelLayout.PanelState?,
                 newState: SlidingUpPanelLayout.PanelState?
             ) {
-                when(playerPanel.panelState)
-                {
-                    SlidingUpPanelLayout.PanelState.EXPANDED -> Toast.makeText(baseContext, "expanded", Toast.LENGTH_SHORT).show()
-                    SlidingUpPanelLayout.PanelState.COLLAPSED -> Toast.makeText(baseContext, "collapsed", Toast.LENGTH_SHORT).show()
+                when (binding.slidingLayout.panelState) {
+                    SlidingUpPanelLayout.PanelState.EXPANDED -> Toast.makeText(
+                        baseContext,
+                        "expanded",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    SlidingUpPanelLayout.PanelState.COLLAPSED -> Toast.makeText(
+                        baseContext,
+                        "collapsed",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         })
@@ -135,9 +146,6 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 //                mHandler1.postDelayed(this, 1000)
 //            }
 //        })
-
-
-
 
 
 //        seekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
@@ -259,6 +267,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         val fragmentManager: FragmentManager = supportFragmentManager
         val transaction = fragmentManager.beginTransaction()
         transaction.addToBackStack(null)
-        transaction.add(binding.bottomSheetContainer.id, fragment, "bottom sheet container").commit()
+        transaction.add(binding.bottomSheetContainer.id, fragment, "bottom sheet container")
+            .commit()
     }
 }

@@ -19,5 +19,10 @@ interface MediaPlayerCoordinatorInterface
 
     fun changePlayerMode(newMode: PlayerStateRepository.PlayerModes)
 
-    fun playSelectedSong(song: SongModel)
+    fun playSelectedSong(song: SongModel, position: Int)
+
+    fun getCurrentPlayerMode() : PlayerStateRepository.PlayerModes
+    {
+        return PlayerStateRepository.currentPlayerMode
+    }
 }

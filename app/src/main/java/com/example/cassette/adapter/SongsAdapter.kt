@@ -54,7 +54,7 @@ class SongsAdapter(
 
 
         viewHolder.recyclerItem.setOnClickListener {
-            Coordinator.playSelectedSong(song)
+            Coordinator.playSelectedSong(song, position)
             updatePosition(newIndex = viewHolder.adapterPosition)
         }
 

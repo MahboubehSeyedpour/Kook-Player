@@ -8,6 +8,7 @@ import android.provider.MediaStore
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import com.example.cassette.BuildConfig
+import com.example.cassette.extensions.getLong
 import com.example.cassette.models.SongModel
 import com.example.cassette.repositories.SongsRepository
 import com.example.cassette.utlis.FileUtils
@@ -29,7 +30,8 @@ object SongUtils {
         if (cursor != null && cursor.count != 0) {
             do {
                 cursor.moveToNext()
-                musicList.add(SongsRepository(context).getSongFromCursor(cursor))
+                if (cursor.getLong(MediaStore.Audio.AudioColumns.DURATION) > 0)
+                    musicList.add(SongsRepository(context).getSongFromCursor(cursor))
             } while (!cursor.isLast)
         } else {
 //                TODO(handle null cursor)

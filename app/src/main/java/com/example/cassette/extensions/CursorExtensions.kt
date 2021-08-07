@@ -8,7 +8,8 @@ fun Cursor.getLong(columnName: String): Long{
     }
     catch (exception : Exception)
     {
-        throw IllegalStateException("invalid column $columnName")
+        return 0
+//        throw IllegalStateException("invalid column $columnName")
     }
 }
 
@@ -18,7 +19,8 @@ fun Cursor.getString(columnName: String): String{
     }
     catch (exception : Exception)
     {
-        throw IllegalStateException("invalid column $columnName")
+        return ""
+//        throw IllegalStateException("invalid column $columnName")
     }
 }
 
@@ -28,6 +30,7 @@ fun Cursor.getInt(columnName: String): Int{
     }
     catch (exception : Exception)
     {
-        throw IllegalStateException("invalid column $columnName")
+        return 0
+//        throw IllegalStateException("invalid column $columnName")
     }
 }

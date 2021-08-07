@@ -106,15 +106,34 @@
 <!--        tools:layout_editor_absoluteY="577dp"-->
 
 
-        <ImageView
-            android:id="@+id/play_btn"
+        <FrameLayout
+            android:id="@+id/playOrPause_layout"
             android:layout_width="90dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center"
-            android:padding="10dp"
-            android:layout_weight="1"
-            android:src="@drawable/ic_play" />
-<!--        android:layout_marginLeft="20dp"-->
+            android:layout_height="80dp">
+
+            <ImageView
+                android:id="@+id/play_btn"
+                android:layout_width="90dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:layout_weight="1"
+                android:src="@drawable/ic_play" />
+            <!--        android:layout_marginLeft="20dp"-->
+
+
+            <ImageView
+                android:id="@+id/pause_btn"
+                android:layout_width="90dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:layout_weight="1"
+                android:src="@drawable/ic_pause" />
+            <!--        android:layout_marginLeft="20dp"-->
+
+
+        </FrameLayout>
 
 
         <ImageView

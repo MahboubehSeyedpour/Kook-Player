@@ -32,7 +32,7 @@ class PlayerPanel_bottomSheet {
 
     }
 
-    val bottomsheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
+    private val bottomsheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
         override fun onSlide(bottomSheet: View, slideOffset: Float) {
         }
 

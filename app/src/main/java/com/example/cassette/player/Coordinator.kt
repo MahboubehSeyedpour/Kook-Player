@@ -17,22 +17,23 @@ object Coordinator : MediaPlayerCoordinatorInterface {
 
     override fun playNextSong()
     {
-        mediaPlayerAgent?.playMusic(PlayerStateRepository.getNextMusic())
+        PlayerStateRepository.updatePlayingQueue()
+        mediaPlayerAgent.playMusic(PlayerStateRepository.getNextMusic())
     }
 
     override fun playPrevSong()
     {
-        mediaPlayerAgent?.playMusic(PlayerStateRepository.getNextMusic())
+        mediaPlayerAgent.playMusic(PlayerStateRepository.getPrevMusic())
     }
 
     override fun playerIsPlaying(): Boolean
     {
-        return mediaPlayerAgent?.isPlaying() ?: false
+        return mediaPlayerAgent.isPlaying() ?: false
     }
 
     override fun pauseSong()
     {
-        mediaPlayerAgent?.pauseMusic()
+        mediaPlayerAgent.pauseMusic()
     }
 
     override fun resumePlaying()
@@ -42,10 +43,30 @@ object Coordinator : MediaPlayerCoordinatorInterface {
 
     override fun changePlayerMode(newMode: PlayerStateRepository.PlayerModes)
     {
+//        PlayerStateRepository.playingQueue.clear()
+        PlayerStateRepository.updatePlayingQueue()
         PlayerStateRepository.currentPlayerMode = newMode
+
     }
 
-    override fun playSelectedSong(song: SongModel) {
+    override fun playSelectedSong(song: SongModel, position: Int) {
+        PlayerStateRepository.currentMusicPosition = position
         mediaPlayerAgent.playMusic(song)
     }
+
+
+    fun getCurrentMediaPlayerPosition(): Int
+    {
+        return mediaPlayerAgent.getCurrentPosition()
+    }
+
+    fun getMediaPlayerDuration(): Int{
+        return mediaPlayerAgent.getDuration()
+    }
+
+    fun getCurrentPlayingSong(): SongModel
+    {
+        return mediaPlayerAgent.getCurrentPlayingSong()
+    }
+
 }

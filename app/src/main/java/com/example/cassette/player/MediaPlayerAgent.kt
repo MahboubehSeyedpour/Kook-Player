@@ -12,10 +12,12 @@ import com.example.cassette.utlis.ImageUtils
 class MediaPlayerAgent(context: Context, imageView: ImageView, textView: TextView) {
 
 
-    val context = context
-    var mediaPlayer = MediaPlayer()
-    val songImageViewInPanel: ImageView = imageView
-    val songTitleTextView: TextView = textView
+    private val context = context
+    private var mediaPlayer = MediaPlayer()
+    private val songImageViewInPanel: ImageView = imageView
+    private val songTitleTextView: TextView = textView
+    private lateinit var currentPlayingSong: SongModel
+
 
     fun playMusic(song: SongModel) {
 
@@ -28,6 +30,8 @@ class MediaPlayerAgent(context: Context, imageView: ImageView, textView: TextVie
 
         mediaPlayer = MediaPlayer.create(context, uri)
         mediaPlayer.start()
+
+        currentPlayingSong = song
 
     }
 
@@ -60,8 +64,19 @@ class MediaPlayerAgent(context: Context, imageView: ImageView, textView: TextVie
         return 0f
     }
 
-    fun isPlaying(): Boolean
-    {
+    fun isPlaying(): Boolean {
         return mediaPlayer.isPlaying
+    }
+
+    fun getCurrentPosition(): Int {
+        return mediaPlayer.currentPosition
+    }
+
+    fun getDuration(): Int {
+        return mediaPlayer.duration
+    }
+
+    fun getCurrentPlayingSong(): SongModel {
+        return currentPlayingSong
     }
 }
