@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cassette.R
 import com.example.cassette.models.SongModel
@@ -147,6 +148,6 @@ class SongsAdapter(
         val duration: TextView = itemView.song_duration
         val menuBtn: ImageView = itemView.music_menu_btn
         val imageView: ImageView = itemView.music_iv
-        val recyclerItem: LinearLayout = itemView.song_container
+        val recyclerItem: ConstraintLayout = itemView.song_container
     }
 }
