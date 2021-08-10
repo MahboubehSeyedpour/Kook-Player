@@ -98,7 +98,7 @@
             android:ellipsize="end"
             android:gravity="center"
             android:singleLine="true"
-            android:text=""
+            tools:text="Song title"
             android:textColor="#283333"
             android:textSize="20dp"
             android:textStyle="bold" />

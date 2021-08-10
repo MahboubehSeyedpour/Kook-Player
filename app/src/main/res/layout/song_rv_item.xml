@@ -37,7 +37,7 @@
                 android:paddingRight="10dp"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text="songer name"
+                tools:text="songer name"
                 android:textColor="@color/dark_grey"
                 android:textSize="14dp"
                 android:gravity="left"
@@ -50,7 +50,7 @@
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:paddingRight="10dp"
-                android:text="singer"
+                tools:text="singer"
                 android:textSize="12dp" />
 
         </LinearLayout>
@@ -60,7 +60,7 @@
             android:id="@+id/song_duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="00:00"
+            tools:text="00:00"
             android:textSize="12dp"/>
 
     </LinearLayout>
