@@ -147,6 +147,6 @@ class SongsAdapter(
         val duration: TextView = itemView.song_duration
         val menuBtn: ImageView = itemView.music_menu_btn
         val imageView: ImageView = itemView.music_iv
-        val recyclerItem: LinearLayout = itemView.sont_container
+        val recyclerItem: LinearLayout = itemView.song_container
     }
 }
