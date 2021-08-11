@@ -1,4 +1,4 @@
-package com.example.cassette.datamodels
+package com.example.cassette.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import com.example.cassette.utlis.PlaylistUtils

@@ -8,33 +8,33 @@ import com.example.cassette.views.Fragments.Library
 object SortUtils {
 
     fun sortByDateAdded() {
-        Library.dataset?.sortWith(compareByDescending { it.dateAdded })
-        var sortedList = Library.dataset
-        sortMusicList(sortedList as ArrayList<SongModel>)
+        Library.viewModel?.getDataSet().sortWith(compareByDescending { it.dateAdded })
+        var sortedList = Library.viewModel?.getDataSet()
+        sortMusicList(sortedList)
     }
 
     fun sortByName() {
-        Library.dataset?.sortWith(compareByDescending { it.title })
-        var sortedList = Library.dataset
-        sortMusicList(sortedList as ArrayList<SongModel>)
+        Library.viewModel?.getDataSet().sortWith(compareByDescending { it.title })
+        var sortedList = Library.viewModel?.getDataSet()
+        sortMusicList(sortedList)
     }
 
     fun sortByArtist() {
-        Library.dataset?.sortWith(compareByDescending { it.artist })
-        var sortedList = Library.dataset
-        sortMusicList(sortedList as ArrayList<SongModel>)
+        Library.viewModel?.getDataSet().sortWith(compareByDescending { it.artist })
+        var sortedList = Library.viewModel?.getDataSet()
+        sortMusicList(sortedList)
     }
 
 //    fun sortByGenre() {
 //        Library.arraylist?.sortWith(compareByDescending { it.genre })
 //        var sortedList = Library.arraylist
-//        sortMusicList(sortedList as ArrayList<Song_Model>)
+//        sortMusicList(sortedList)
 //    }
 
     fun sortByDuration() {
-        Library.dataset?.sortWith(compareByDescending { it.duration })
-        var sortedList = Library.dataset
-        sortMusicList(sortedList as ArrayList<SongModel>)
+        Library.viewModel?.getDataSet().sortWith(compareByDescending { it.duration })
+        var sortedList = Library.viewModel?.getDataSet()
+        sortMusicList(sortedList)
     }
 
     fun sortMusicList(arrayList: ArrayList<SongModel>) {

@@ -164,7 +164,7 @@ object PlaylistUtils {
 
 //                array.add(Track(id, title, artist, data, duration, albumId))
 
-                SongsRepository(context).getSongFromCursor(cursor)
+                SongsRepository(context).createSongFromCursor(cursor)
 
                 cursor.moveToNext()
             }

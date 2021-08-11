@@ -1,6 +1,7 @@
 package com.example.cassette.views.Fragments
 
 import android.app.Activity
+import android.app.Application
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -14,23 +15,29 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cassette.R
 import com.example.cassette.adapter.SongsAdapter
-import com.example.cassette.datamodels.SongsViewModel
 import com.example.cassette.models.SongModel
+import com.example.cassette.viewModel.SongsViewModel
 import kotlinx.android.synthetic.main.fragment_library.*
 
-class Library : Fragment() {
-
+class Library(val application: Application) : Fragment() {
 
     companion object Library {
 
-        var dataset = arrayListOf<SongModel>()
+//        var dataset = arrayListOf<SongModel>()
         var songsAdapter: SongsAdapter? = null
+
+        lateinit var viewModel: SongsViewModel
+
         const val DELETE_REQUEST_CODE = 2
 
         fun notifyDataSetChanges() {
             songsAdapter?.update()
         }
     }
+
+//    private val viewModel: SongsViewModel by viewModels(
+//        factoryProducer = { SavedStateViewModelFactory(application, this) }
+//    )
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -47,11 +54,6 @@ class Library : Fragment() {
 
     override fun onResume() {
         super.onResume()
-
-        val viewModel = ViewModelProvider(this).get(SongsViewModel::class.java)
-        viewModel.getMutableLiveData().observe(this, songListUpdateObserver)
-
-
 
         pullToRefresh.setOnRefreshListener {
             notifyDataSetChanges()
@@ -71,10 +73,15 @@ class Library : Fragment() {
 //        TODO(check if the manifest permissions had been granted)
 //        TODO(take musics in Internal & External storage)
 
+        viewModel = ViewModelProvider(this).get(SongsViewModel::class.java)
+        context?.let { viewModel.setFragmentContext(it) }
+        viewModel.getMutableLiveData().observe(viewLifecycleOwner, songListUpdateObserver)
+
+
         songsAdapter = activity?.let {
             SongsAdapter(
                 it,
-                dataset
+                viewModel.dataset as ArrayList<SongModel>
             )
         }
 

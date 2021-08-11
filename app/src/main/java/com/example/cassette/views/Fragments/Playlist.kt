@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.cassette.R
 import com.example.cassette.adapter.PlaylistAdapter
-import com.example.cassette.datamodels.PlaylistViewModel
+import com.example.cassette.viewModel.PlaylistViewModel
 import com.example.cassette.models.PlaylistModel
 import com.example.cassette.utlis.PlaylistUtils
 import com.example.cassette.views.dialogs.CreatePlaylistDialog

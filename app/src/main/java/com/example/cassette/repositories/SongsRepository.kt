@@ -9,11 +9,12 @@ import com.example.cassette.extensions.getInt
 import com.example.cassette.extensions.getLong
 import com.example.cassette.extensions.getString
 import com.example.cassette.models.SongModel
+import com.example.cassette.utlis.FileUtils
 import com.example.cassette.utlis.ImageUtils
 
 class SongsRepository(val context: Context) {
 
-    fun getSongFromCursor(cursor: Cursor): SongModel {
+    fun createSongFromCursor(cursor: Cursor): SongModel {
         val title = cursor.getString(AudioColumns.TITLE)
         val duration = cursor.getLong(AudioColumns.DURATION)
         val data = cursor.getString(AudioColumns.DATA)
@@ -55,6 +56,27 @@ class SongsRepository(val context: Context) {
             "",
             ""
         )
+    }
+
+
+    fun getListOfSongs(): ArrayList<SongModel> {
+
+        val songs = ArrayList<SongModel>()
+        val cursor = FileUtils.fetchFiles(
+            fileType = FileUtils.FILE_TYPES.MUSIC,
+            context = context
+        )
+        if (cursor != null && cursor.count != 0) {
+            do {
+                cursor.moveToNext()
+                if (cursor.getLong(MediaStore.Audio.AudioColumns.DURATION) > 0)
+                    songs.add(createSongFromCursor(cursor))
+            } while (!cursor.isLast)
+        } else {
+//                TODO(handle null cursor)
+        }
+        cursor?.close()
+        return songs
     }
 }
 

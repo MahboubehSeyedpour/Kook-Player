@@ -31,7 +31,7 @@ object SongUtils {
             do {
                 cursor.moveToNext()
                 if (cursor.getLong(MediaStore.Audio.AudioColumns.DURATION) > 0)
-                    musicList.add(SongsRepository(context).getSongFromCursor(cursor))
+                    musicList.add(SongsRepository(context).createSongFromCursor(cursor))
             } while (!cursor.isLast)
         } else {
 //                TODO(handle null cursor)

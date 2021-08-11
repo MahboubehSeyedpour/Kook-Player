@@ -2,6 +2,7 @@ package com.example.cassette.views
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Application
 import android.content.Context
 import android.content.pm.PackageManager
 import android.content.res.Resources
@@ -66,7 +67,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         val tabNames = res.getStringArray(R.array.tabNames)
 
         val adapter = ViewPagerFragmentAdapter(supportFragmentManager, lifecycle)
-        adapter.addFragment(Library())
+        adapter.addFragment(Library(application))
         adapter.addFragment(RecentlyAdded())
         adapter.addFragment(Playlist())
         adapter.addFragment(Favorite())
