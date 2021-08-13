@@ -12,17 +12,16 @@ class PlaylistViewModel : BaseViewModel() {
         return liveData
     }
 
-
     override fun fillRecyclerView() {
 //        REST API can be called here
-        populateList();
-        liveData.value = dataset
+
+        liveData.value = populateList()
     }
 
-    override fun populateList() {
+    override fun populateList(): ArrayList<Any> {
 
         dataset = PlaylistUtils.getCachedPlaylists() as ArrayList<Any>
-
+        return dataset
     }
 
     init {

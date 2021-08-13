@@ -30,18 +30,20 @@ class SongsViewModel : BaseViewModel() {
 
 
     override fun fillRecyclerView() {
+
 //        REST API can be called here
-        populateList();
-        liveData.value = dataset
+
+        liveData.value = populateList()
     }
 
-    override fun populateList() {
+    override fun populateList(): ArrayList<Any> {
 
 //        var song = Song_Model("Nafas e ki budi to", "00:5:32")
 
         dataset = songsRepository.getListOfSongs()!! as ArrayList<Any>
 
-        val i = 0
+        return dataset
+
 //        arrayList.add(song);
 //        song = Song_Model("title", "00:5:32")
 //        arrayList.add(song);
@@ -51,8 +53,7 @@ class SongsViewModel : BaseViewModel() {
 //        arrayList.add(song);
     }
 
-    fun getDataSet(): ArrayList<SongModel>
-    {
+    fun getDataSet(): ArrayList<SongModel> {
         return dataset as ArrayList<SongModel>
     }
 

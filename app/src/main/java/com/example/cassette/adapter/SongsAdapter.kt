@@ -19,12 +19,10 @@ import com.example.cassette.utlis.TimeUtils
 import kotlinx.android.synthetic.main.song_rv_item.view.*
 
 class SongsAdapter(
-    context: Activity,
-    arrayList: ArrayList<SongModel>
+    val context: Activity,
+    var dataset: ArrayList<SongModel>
 ) : RVBaseAdapter() {
 
-    var context = context
-    var dataset = arrayList
     var position = 0
 
     override fun onCreateViewHolder(

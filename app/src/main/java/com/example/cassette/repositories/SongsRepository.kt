@@ -58,7 +58,6 @@ class SongsRepository(val context: Context) {
         )
     }
 
-
     fun getListOfSongs(): ArrayList<SongModel> {
 
         val songs = ArrayList<SongModel>()

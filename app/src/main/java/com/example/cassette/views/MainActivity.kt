@@ -2,10 +2,8 @@ package com.example.cassette.views
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Application
 import android.content.Context
 import android.content.pm.PackageManager
-import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -20,7 +18,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.cassette.R
 import com.example.cassette.adapter.ViewPagerFragmentAdapter
 import com.example.cassette.databinding.ActivityMainBinding
-import com.example.cassette.player.MediaPlayerAgent
 import com.example.cassette.views.Fragments.*
 import com.google.android.material.tabs.TabLayoutMediator
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
@@ -36,18 +33,17 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         Manifest.permission.WRITE_EXTERNAL_STORAGE
     )
 
-    lateinit var mediaPlayer: MediaPlayerAgent
-
     lateinit var binding: ActivityMainBinding
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("ResourceAsColor", "WrongConstant")
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
+
+        //use viewBinding to bind the layout to the activity
         binding = ActivityMainBinding.inflate(layoutInflater)
-
         setContentView(binding.root)
-
 
         initBottomSheet()
 
@@ -63,8 +59,8 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 //        val adapter = ViewPagerAdapter(tabList.asList())
 //        viewpager_home.adapter = adapter
 
-        val res: Resources = resources
-        val tabNames = res.getStringArray(R.array.tabNames)
+
+        val tabNames = resources.getStringArray(R.array.tabNames)
 
         val adapter = ViewPagerFragmentAdapter(supportFragmentManager, lifecycle)
         adapter.addFragment(Library(application))
@@ -242,6 +238,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             PERMISSIONS_REQUEST_CODE -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 if (ContextCompat.checkSelfPermission(
