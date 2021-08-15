@@ -73,4 +73,8 @@ dependencies {
     // Wave form seekbar
     implementation 'com.mikhaellopez:circularprogressbar:3.1.0'
     implementation 'com.github.alexei-frolo:WaveformSeekBar:1.0'
+
+
+    //ProgressWheel
+    implementation 'com.zekapp.library:progreswheelview:1.1.5'
 }

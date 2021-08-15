@@ -9,31 +9,22 @@
     android:orientation="vertical"
     tools:context=".views.Fragments.PlayerPanelFragment">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:gravity="right"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/back_btn"
-            app:srcCompat="?attr/homeAsUpIndicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <include
+            android:id="@+id/playerPanel_header_on_expanded_state"
+            layout="@layout/playerpanel_header_on_expanded_state"/>
 
-        <ImageView
-            android:id="@+id/empty_iv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="2" />
+        <include
+            android:id="@+id/playerPanel_header_on_collapsed_state"
+            layout="@layout/playerpanel_header_on_collapsed_state"/>
 
-        <ImageView
-            android:id="@+id/like_iv"
-            app:srcCompat="@drawable/ic_heart"
-            android:layout_width="24dp"
-            android:layout_height="24dp" />
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 
     <!--    <FrameLayout-->

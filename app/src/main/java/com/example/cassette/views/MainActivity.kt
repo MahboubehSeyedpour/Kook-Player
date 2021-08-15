@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
     )
 
     lateinit var binding: ActivityMainBinding
+    lateinit var playerPanelFragment: PlayerPanelFragment
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("ResourceAsColor", "WrongConstant")
@@ -79,16 +80,24 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
                 newState: SlidingUpPanelLayout.PanelState?
             ) {
                 when (binding.slidingLayout.panelState) {
-                    SlidingUpPanelLayout.PanelState.EXPANDED -> Toast.makeText(
-                        baseContext,
-                        "expanded",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    SlidingUpPanelLayout.PanelState.COLLAPSED -> Toast.makeText(
-                        baseContext,
-                        "collapsed",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    SlidingUpPanelLayout.PanelState.EXPANDED -> {
+                        Toast.makeText(
+                            baseContext,
+                            "expanded",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        playerPanelFragment.setVisibiliyForPlayerPanelHeaderOnExpanded(View.VISIBLE)
+                        playerPanelFragment.setVisibiliyForPlayerPanelHeaderOnCollapsed(View.GONE)
+                    }
+                    SlidingUpPanelLayout.PanelState.COLLAPSED -> {
+                        Toast.makeText(
+                            baseContext,
+                            "collapsed",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        playerPanelFragment.setVisibiliyForPlayerPanelHeaderOnExpanded(View.GONE)
+                        playerPanelFragment.setVisibiliyForPlayerPanelHeaderOnCollapsed(View.VISIBLE)
+                    }
                 }
             }
         })
@@ -267,11 +276,11 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
 
     private fun initBottomSheet() {
-        val fragment = PlayerPanelFragment()
+        playerPanelFragment = PlayerPanelFragment()
         val fragmentManager: FragmentManager = supportFragmentManager
         val transaction = fragmentManager.beginTransaction()
         transaction.addToBackStack(null)
-        transaction.add(binding.bottomSheetContainer.id, fragment, "bottom sheet container")
+        transaction.add(binding.bottomSheetContainer.id, playerPanelFragment, "bottom sheet container")
             .commit()
     }
 }

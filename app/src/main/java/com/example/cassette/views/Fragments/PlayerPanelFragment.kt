@@ -14,6 +14,8 @@ import com.example.cassette.extensions.isShuffle
 import com.example.cassette.player.Coordinator
 import com.example.cassette.player.PlayerStateRepository
 import com.example.cassette.utlis.TimeUtils
+import kotlinx.android.synthetic.main.playerpanel_header_on_collapsed_state.view.*
+import kotlin.random.Random
 
 
 class PlayerPanelFragment : Fragment() {
@@ -32,8 +34,11 @@ class PlayerPanelFragment : Fragment() {
 
         binding = FragmentPlayerPanelBinding.bind(view)
 
+        initViewsVisibility()
+
         return view
     }
+
 
     override fun onResume() {
         super.onResume()
@@ -48,18 +53,19 @@ class PlayerPanelFragment : Fragment() {
             )
         }
 
-        binding.likeIv.setOnClickListener {
+        binding.playerPanelHeaderOnExpandedState.likeIv.setOnClickListener {
             likeState = when (likeState) {
                 true -> {
-                    binding.likeIv.setImageResource(R.drawable.ic_heart)
+                    binding.playerPanelHeaderOnExpandedState.likeIv.setImageResource(R.drawable.ic_heart)
                     false
                 }
                 false -> {
-                    binding.likeIv.setImageResource(R.drawable.ic_filled_heart)
+                    binding.playerPanelHeaderOnExpandedState.likeIv.setImageResource(R.drawable.ic_filled_heart)
                     true
                 }
             }
         }
+
 
 //        binding.playerRemote.waveformSeekBar.setOnSeekBarChangeListener(object :
 //            SeekBar.OnSeekBarChangeListener,
@@ -133,6 +139,17 @@ class PlayerPanelFragment : Fragment() {
                     binding.playerRemote.seekBar.max = Coordinator.getMediaPlayerDuration() / 1000
                     if (Coordinator.playerIsPlaying()) {
                         updateProgress(mCurrentPosition)
+                        if (binding.playerPanelHeaderOnCollapsedState.headerOnCollapsedState.visibility == View.VISIBLE) {
+                            val current = mCurrentPosition
+                            val temp = current * 360
+                            val dur = Coordinator.getMediaPlayerDuration() / 1000
+                            val temp_temp = temp / dur
+                            updateWheelProgress(temp_temp)
+
+                            binding.playerPanelHeaderOnCollapsedState.headerOnCollapsedState.song_title_on_header.text =
+                                if (Coordinator.playerIsPlaying()) Coordinator.getCurrentPlayingSong().title else ""
+                        }
+
                     }
                 }
                 mHandler.postDelayed(this, 1000)
@@ -213,6 +230,13 @@ class PlayerPanelFragment : Fragment() {
                 changePlayerMode(PlayerStateRepository.PlayerModes.REPEAT_ONE)
             }
         }
+
+        binding.playerPanelHeaderOnCollapsedState.headerOnCollapsedState.play_btn_on_header.setOnClickListener {
+            Coordinator.resumePlaying()
+            binding.playerPanelHeaderOnCollapsedState.headerOnCollapsedState.song_title_on_header.text =
+                if (Coordinator.playerIsPlaying()) Coordinator.getCurrentPlayingSong().title else ""
+//            binding.playerPanelHeaderOnCollapsedState.wheelprogress.setPercentage(90)
+        }
     }
 
     fun changePlayerMode(newMode: PlayerStateRepository.PlayerModes) {
@@ -226,20 +250,20 @@ class PlayerPanelFragment : Fragment() {
         }
     }
 
-//    private fun createWaveform(): IntArray? {
-//        val random = Random(System.currentTimeMillis())
-//        val length: Int = 50 + random.nextInt(50)
-//        val values = IntArray(length)
-//        var maxValue = 0
-//        for (i in 0 until length) {
-//            val newValue: Int = 5 + random.nextInt(50)
-//            if (newValue > maxValue) {
-//                maxValue = newValue
-//            }
-//            values[i] = newValue
-//        }
-//        return values
-//    }
+    private fun createWaveform(): IntArray? {
+        val random = Random(System.currentTimeMillis())
+        val length: Int = 50 + random.nextInt(50)
+        val values = IntArray(length)
+        var maxValue = 0
+        for (i in 0 until length) {
+            val newValue: Int = 5 + random.nextInt(50)
+            if (newValue > maxValue) {
+                maxValue = newValue
+            }
+            values[i] = newValue
+        }
+        return values
+    }
 
     private fun updateUI() {
         binding.playerRemote.musicMax.text =
@@ -254,5 +278,22 @@ class PlayerPanelFragment : Fragment() {
     fun updateProgress(progressInPercentage: Int) {
         binding.playerRemote.musicMin.text =
             TimeUtils.milliSecToDuration((progressInPercentage * 1000).toLong())
+    }
+
+    fun updateWheelProgress(progressInPercentage: Int) {
+        binding.playerPanelHeaderOnCollapsedState.wheelprogress.setPercentage(progressInPercentage)
+    }
+
+    fun setVisibiliyForPlayerPanelHeaderOnExpanded(visibility: Int) {
+        binding.playerPanelHeaderOnExpandedState.headerOnExpandedState.visibility = visibility
+    }
+
+    fun setVisibiliyForPlayerPanelHeaderOnCollapsed(visibility: Int) {
+        binding.playerPanelHeaderOnCollapsedState.headerOnCollapsedState.visibility = visibility
+    }
+
+    fun initViewsVisibility() {
+        binding.playerPanelHeaderOnExpandedState.headerOnExpandedState.visibility = View.GONE
+        binding.playerPanelHeaderOnCollapsedState.headerOnCollapsedState.visibility = View.VISIBLE
     }
 }
