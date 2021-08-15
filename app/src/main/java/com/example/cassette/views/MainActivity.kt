@@ -46,6 +46,8 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         setContentView(binding.root)
 
         initBottomSheet()
+        initTabs()
+        checkForPermissions()
 
 //        val toolbar: Toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         // Sets the Toolbar to act as the ActionBar for this Activity window.
@@ -54,31 +56,6 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
 
 //        TODO( "implement hideStatusBar() function");
-
-
-//        val adapter = ViewPagerAdapter(tabList.asList())
-//        viewpager_home.adapter = adapter
-
-
-        val tabNames = resources.getStringArray(R.array.tabNames)
-
-        val adapter = ViewPagerFragmentAdapter(supportFragmentManager, lifecycle)
-        adapter.addFragment(Library(application))
-        adapter.addFragment(RecentlyAdded())
-        adapter.addFragment(Playlist())
-        adapter.addFragment(Favorite())
-        viewpager_home.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-        viewpager_home.adapter = adapter
-
-
-        TabLayoutMediator(tabLayout_home, viewpager_home)
-        { tab, position ->
-            tab.text = tabNames[position]
-        }.attach()
-
-        if (!hasPermissions(this, *PERMISSIONS)) {
-            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSIONS_REQUEST_CODE)
-        }
 
 
         // bottomsheet manager
@@ -256,6 +233,35 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
                 }
                 return
             }
+        }
+    }
+
+    private fun initTabs() {
+
+//        val adapter = ViewPagerAdapter(tabList.asList())
+//        viewpager_home.adapter = adapter
+
+
+        val tabNames = resources.getStringArray(R.array.tabNames)
+
+        val adapter = ViewPagerFragmentAdapter(supportFragmentManager, lifecycle)
+        adapter.addFragment(Library(application))
+        adapter.addFragment(RecentlyAdded())
+        adapter.addFragment(Playlist())
+        adapter.addFragment(Favorite())
+        viewpager_home.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        viewpager_home.adapter = adapter
+
+
+        TabLayoutMediator(binding.includeBase.includeToolbar.tabLayoutHome, viewpager_home)
+        { tab, position ->
+            tab.text = tabNames[position]
+        }.attach()
+    }
+
+    private fun checkForPermissions() {
+        if (!hasPermissions(this, *PERMISSIONS)) {
+            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSIONS_REQUEST_CODE)
         }
     }
 
