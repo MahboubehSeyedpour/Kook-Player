@@ -35,7 +35,7 @@
         </activity>
         <activity
             android:name="com.example.cassette.views.MainActivity"
-            android:theme="@style/Theme.MusicPlayer"></activity>
+            android:theme="@style/Theme.MusicPlayer" />
     </application>
 
 </manifest>
