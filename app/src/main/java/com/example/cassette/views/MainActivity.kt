@@ -26,11 +26,15 @@ import kotlinx.android.synthetic.main.base.*
 
 class MainActivity : AppCompatActivity(), LifecycleOwner {
 
-    val PERMISSIONS_REQUEST_CODE = 1
 
-    val PERMISSIONS = arrayOf(
-        Manifest.permission.READ_EXTERNAL_STORAGE,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE
+    companion object {
+        var permissionsGranted: Boolean = false
+    }
+
+    private val PERMISSIONS_REQUEST_CODE = 1
+
+    private val PERMISSIONS = arrayOf(
+        Manifest.permission.READ_EXTERNAL_STORAGE
     )
 
     lateinit var binding: ActivityMainBinding
@@ -46,23 +50,11 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initBottomSheet()
-        initTabs()
         checkForPermissions()
-
-//        val toolbar: Toolbar = findViewById<View>(R.id.toolbar) as Toolbar
-        // Sets the Toolbar to act as the ActionBar for this Activity window.
-        // Make sure the toolbar exists in the activity and is not null
-//        setSupportActionBar(toolbar)
-
+        initTabs()
+        initBottomSheet()
 
 //        TODO( "implement hideStatusBar() function");
-
-
-        // bottomsheet manager
-//        val playerPanel = PlayerPanel_bottomSheet()
-//        playerPanel.setup(this, bottomSheet, baseContext)
-
 
         binding.slidingLayout.addPanelSlideListener(object :
             SlidingUpPanelLayout.PanelSlideListener {
@@ -103,59 +95,6 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         })
 
 
-//        val mHandler = Handler()
-//        runOnUiThread(object : Runnable {
-//            override fun run() {
-//                if (PlayerRemote.mediaPlayer != null) {
-//                    val mCurrentPosition = PlayerRemote.mediaPlayer.currentPosition / 1000
-//                    seekBar.setProgress(mCurrentPosition)
-//                    seekBar.max = PlayerRemote.mediaPlayer.duration / 1000
-//                }
-//                mHandler.postDelayed(this, 1000)
-//            }
-//        })
-
-
-        //spr
-//        val mHandler1 = Handler()
-//        runOnUiThread(object : Runnable {
-//            override fun run() {
-//                if (PlayerRemote.mediaPlayer != null) {
-//                    val mCurrentPosition = PlayerRemote.mediaPlayer.currentPosition / 1000
-//                    if (mCurrentPosition > 0) {
-//                        waveform_seek_bar.setProgressInPercentage((mCurrentPosition / 100.0).toFloat())
-//                    }
-//                }
-//                mHandler1.postDelayed(this, 1000)
-//            }
-//        })
-
-
-//        seekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
-//            override fun onProgressChanged(
-//                seekBar: SeekBar,
-//                progress: Int,
-//                fromUser: Boolean
-//            ) {
-//
-//                music_min.text =
-//                    TimeUtils.milliSecToDuration((seekBar.max - progress).toLong())
-////                textView.setText(progress.toString() + "/" + seekBar.max)
-////                PlayerRemote.mediaPlayer.seekTo(progress * 1000)
-//
-//                if (seekBar.max - progress <= 0) {
-//                    PlayerRemote.playNextMusic(currentMode)
-//                }
-//
-//            }
-//
-//            override fun onStartTrackingTouch(seekBar: SeekBar) {}
-//            override fun onStopTrackingTouch(seekBar: SeekBar) {}
-//
-//        })
-
-//
-//
         binding.includeBase.includeToolbar.sortIv.setOnClickListener {
 
             val bottomSheetDialog = Custom_BottomSheetDialogFragment.newInstance()
@@ -164,60 +103,66 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
                 R.style.AppBottomSheetDialogTheme
             )
             bottomSheetDialog?.show(supportFragmentManager, "btmsheet")
-
         }
 
+/*
+        tablayout_home.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+                Toast.makeText(
+                    applicationContext,
+                    "tab reselected: ${tab?.text}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
 
-        ///////////////////////////////////////////////////////
-//        tablayout_home.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-//            override fun onTabReselected(tab: TabLayout.Tab?) {
-//                Toast.makeText(
-//                    applicationContext,
-//                    "tab reselected: ${tab?.text}",
-//                    Toast.LENGTH_SHORT
-//                ).show()
-//            }
-//
-//            override fun onTabUnselected(tab: TabLayout.Tab?) {
-//                Toast.makeText(
-//                    applicationContext,
-//                    "tab unselected: ${tab?.text}",
-//                    Toast.LENGTH_SHORT
-//                ).show()
-//            }
-//
-//            override fun onTabSelected(tab: TabLayout.Tab?) {
-//                Toast.makeText(applicationContext, "tab selected: ${tab?.text}", Toast.LENGTH_SHORT)
-//                    .show()
-//            }
-//        })
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+                Toast.makeText(
+                    applicationContext,
+                    "tab unselected: ${tab?.text}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
 
-//        val viewModel =
-//            ViewModelProvider(this).get(com.example.cassette.datamodels.Songs::class.java)
-//        viewModel.getMutableLiveData().observe(this, songListUpdateObserver)
-//////////////////////////////////////
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                Toast.makeText(applicationContext, "tab selected: ${tab?.text}", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        })
 
+        val viewModel =
+            ViewModelProvider(this).get(com.example.cassette.datamodels.Songs::class.java)
+        viewModel.getMutableLiveData().observe(this, songListUpdateObserver)
+ */
+
+/*
         //temp: a button to check if the absolute path is correct
-//        button.setOnClickListener {
-//
-//            File(FilePathUtlis.MUSIC_CANONICAL_PATH).walk().forEach {
-//                if (it.isDirectory) {
-//                    Toast.makeText(applicationContext, FileUtils.listfiles(it).toString(), Toast.LENGTH_SHORT).show()
-//                }
-//                if (it.isFile) {
-//                    Toast.makeText(applicationContext, it.toString(), Toast.LENGTH_SHORT).show()
-//                }
-////                Toast.makeText(applicationContext, FileUtils.listfiles(System.getProperty(FilePathUtlis.MUSIC_CANONICAL_PATH)), Toast.LENGTH_SHORT).show()
-//            }
-//        }
+        button.setOnClickListener {
+
+            File(FilePathUtlis.MUSIC_CANONICAL_PATH).walk().forEach {
+                if (it.isDirectory) {
+                    Toast.makeText(applicationContext, FileUtils.listfiles(it).toString(), Toast.LENGTH_SHORT).show()
+                }
+                if (it.isFile) {
+                    Toast.makeText(applicationContext, it.toString(), Toast.LENGTH_SHORT).show()
+                }
+                Toast.makeText(applicationContext, FileUtils.listfiles(System.getProperty(FilePathUtlis.MUSIC_CANONICAL_PATH)), Toast.LENGTH_SHORT).show()
+            }
+        }
+
+         */
+
     }
 
+    private fun checkForPermissions() {
+        if (!hasPermissions(this, *PERMISSIONS)) {
+            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSIONS_REQUEST_CODE)
+        }
+    }
 
     private fun hasPermissions(context: Context, vararg permissions: String): Boolean =
         permissions.all {
             ActivityCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
         }
-
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -232,14 +177,14 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
                         Manifest.permission.READ_EXTERNAL_STORAGE
                     ) == PackageManager.PERMISSION_GRANTED
                 ) {
-                    Toast.makeText(this, "permissions granted", Toast.LENGTH_SHORT).show()
-
-//                    Library.notifyDataSetChanges()
+                    permissionsGranted = true
 
                 } else {
-                    Toast.makeText(this, "no permissions granted", Toast.LENGTH_SHORT).show()
+                    permissionsGranted = false
                     finish()
                 }
+                initTabs()
+                initBottomSheet()
                 return
             }
         }
@@ -268,19 +213,17 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         }.attach()
     }
 
-    private fun checkForPermissions() {
-        if (!hasPermissions(this, *PERMISSIONS)) {
-            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSIONS_REQUEST_CODE)
-        }
-    }
-
 
     private fun initBottomSheet() {
         playerPanelFragment = PlayerPanelFragment()
         val fragmentManager: FragmentManager = supportFragmentManager
         val transaction = fragmentManager.beginTransaction()
         transaction.addToBackStack(null)
-        transaction.add(binding.bottomSheetContainer.id, playerPanelFragment, "bottom sheet container")
+        transaction.add(
+            binding.bottomSheetContainer.id,
+            playerPanelFragment,
+            "bottom sheet container"
+        )
             .commit()
     }
 }

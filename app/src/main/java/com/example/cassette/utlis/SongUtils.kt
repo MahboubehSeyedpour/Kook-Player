@@ -40,6 +40,10 @@ object SongUtils {
         return musicList
     }
 
+    fun getSongPosition(song: SongModel): Int{
+       return Library.viewModel.getDataSet().indexOf(song)
+    }
+
 
     fun shareMusic(song: SongModel) {
 

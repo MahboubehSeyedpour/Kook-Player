@@ -79,4 +79,9 @@ class MediaPlayerAgent(context: Context, imageView: ImageView, textView: TextVie
     fun getCurrentPlayingSong(): SongModel {
         return currentPlayingSong
     }
+
+    fun seekToTime()
+    {
+//        TODO(use MediaPlayer.seekto())
+    }
 }

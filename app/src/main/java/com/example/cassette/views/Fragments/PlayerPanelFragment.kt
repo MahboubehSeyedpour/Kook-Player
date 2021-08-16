@@ -12,7 +12,9 @@ import com.example.cassette.R
 import com.example.cassette.databinding.FragmentPlayerPanelBinding
 import com.example.cassette.extensions.isShuffle
 import com.example.cassette.player.Coordinator
-import com.example.cassette.player.PlayerStateRepository
+import com.example.cassette.player.PlayerStateRepository.PlayerModes
+import com.example.cassette.player.PlayerStateRepository.PlayerModes.*
+import com.example.cassette.player.PlayerStateRepository.currentPlayerMode
 import com.example.cassette.utlis.TimeUtils
 import kotlinx.android.synthetic.main.playerpanel_header_on_collapsed_state.view.*
 import kotlin.random.Random
@@ -172,7 +174,7 @@ class PlayerPanelFragment : Fragment() {
 //                    Toast.LENGTH_SHORT
 //                ).show()
 
-                seekBar.setProgress(progress)
+                seekBar.progress = progress
 
                 if (seekBar.max - progress <= 0) {
                     Coordinator.playNextSong()
@@ -198,36 +200,36 @@ class PlayerPanelFragment : Fragment() {
         binding.playerRemote.playOrPauseLayout.setOnClickListener {
 
             if (!Coordinator.playerIsPlaying()) {
-                binding.playerRemote.pauseBtn.visibility = View.GONE
-                binding.playerRemote.playBtn.visibility = View.VISIBLE
-                Coordinator.resumePlaying()
-            } else {
                 binding.playerRemote.pauseBtn.visibility = View.VISIBLE
                 binding.playerRemote.playBtn.visibility = View.GONE
+                Coordinator.resumePlaying()
+            } else {
+                binding.playerRemote.pauseBtn.visibility = View.GONE
+                binding.playerRemote.playBtn.visibility = View.VISIBLE
                 Coordinator.pauseSong()
             }
             updateUI()
-
         }
 
         binding.playerRemote.shuffleBtn.setOnClickListener {
             val i = Coordinator.getCurrentPlayerMode().isShuffle()
+
             when (Coordinator.getCurrentPlayerMode()) {
-                PlayerStateRepository.PlayerModes.REPEAT_ALL -> {
-                    Coordinator.changePlayerMode(PlayerStateRepository.PlayerModes.SHUFFLE)
+                REPEAT_ALL -> {
+                    Coordinator.changePlayerMode(SHUFFLE)
                 }
 
-                PlayerStateRepository.PlayerModes.SHUFFLE -> {
-                    Coordinator.changePlayerMode(PlayerStateRepository.PlayerModes.REPEAT_ALL)
+                SHUFFLE -> {
+                    Coordinator.changePlayerMode(REPEAT_ALL)
                 }
             }
         }
 
         binding.playerRemote.repeatLayout.setOnClickListener {
-            if (PlayerStateRepository.currentPlayerMode == PlayerStateRepository.PlayerModes.REPEAT_ALL) {
-                changePlayerMode(PlayerStateRepository.PlayerModes.REPEAT_ONE)
+            if (currentPlayerMode == REPEAT_ALL) {
+                changePlayerMode(REPEAT_ONE)
             } else {
-                changePlayerMode(PlayerStateRepository.PlayerModes.REPEAT_ONE)
+                changePlayerMode(REPEAT_ONE)
             }
         }
 
@@ -239,7 +241,7 @@ class PlayerPanelFragment : Fragment() {
         }
     }
 
-    fun changePlayerMode(newMode: PlayerStateRepository.PlayerModes) {
+    fun changePlayerMode(newMode: PlayerModes) {
 
         Coordinator.changePlayerMode(newMode)
 
@@ -271,7 +273,8 @@ class PlayerPanelFragment : Fragment() {
     }
 
     fun setVisibilities() {
-        binding.playerRemote.pauseBtn.visibility = View.GONE
+        binding.playerRemote.pauseBtn.visibility = View.VISIBLE
+        binding.playerRemote.playBtn.visibility = View.GONE
         binding.playerRemote.playOneSongLabelTv.visibility = View.GONE
     }
 

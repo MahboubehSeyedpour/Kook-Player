@@ -68,7 +68,8 @@ class SongsRepository(val context: Context) {
         if (cursor != null && cursor.count != 0) {
             do {
                 cursor.moveToNext()
-                if (cursor.getLong(MediaStore.Audio.AudioColumns.DURATION) > 0)
+                val i = cursor.getLong(AudioColumns.DURATION)
+                if (cursor.getLong(AudioColumns.DURATION) > 60000)
                     songs.add(createSongFromCursor(cursor))
             } while (!cursor.isLast)
         } else {

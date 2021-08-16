@@ -23,7 +23,6 @@ class Library(val application: Application) : Fragment() {
 
     companion object Library {
 
-//        var dataset = arrayListOf<SongModel>()
         var songsAdapter: SongsAdapter? = null
 
         lateinit var viewModel: SongsViewModel
@@ -31,13 +30,9 @@ class Library(val application: Application) : Fragment() {
         const val DELETE_REQUEST_CODE = 2
 
         fun notifyDataSetChanges() {
-            songsAdapter?.update()
+            songsAdapter?.dataset = viewModel.getDataSet()
         }
     }
-
-//    private val viewModel: SongsViewModel by viewModels(
-//        factoryProducer = { SavedStateViewModelFactory(application, this) }
-//    )
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -57,8 +52,7 @@ class Library(val application: Application) : Fragment() {
 
         pullToRefresh.setOnRefreshListener {
             notifyDataSetChanges()
-            pullToRefresh.setRefreshing(false)
-
+            pullToRefresh.isRefreshing = false
         }
     }
 
@@ -72,6 +66,7 @@ class Library(val application: Application) : Fragment() {
 
 //        TODO(check if the manifest permissions had been granted)
 //        TODO(take musics in Internal & External storage)
+
 
         viewModel = ViewModelProvider(this).get(SongsViewModel::class.java)
         context?.let { viewModel.setFragmentContext(it) }
@@ -90,7 +85,7 @@ class Library(val application: Application) : Fragment() {
         return view
     }
 
-    val songListUpdateObserver =
+    private val songListUpdateObserver =
         object : Observer<ArrayList<Any>> {
             override fun onChanged(songArrayList: ArrayList<Any>) {
                 val recyclerViewAdapter = songsAdapter

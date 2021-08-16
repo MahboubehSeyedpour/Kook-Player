@@ -139,6 +139,12 @@ class SongsAdapter(
         notifyDataSetChanged()
     }
 
+    fun updateDataset(dataset: ArrayList<SongModel>)
+    {
+        this.dataset = dataset
+        notifyDataSetChanged()
+    }
+
     open inner class RecyclerViewViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.song_title

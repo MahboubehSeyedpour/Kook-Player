@@ -12,7 +12,6 @@ object PlayerStateRepository
 
     enum class PlayerModes(mode: String) {
         SHUFFLE("shuffle"),
-        NORMAL("normal"),
         REPEAT_ONE("repeat_one"),
         REPEAT_ALL("repeat_all")
     }
