@@ -13,9 +13,7 @@ class PlayerRemote(val view: View) {
 
     val MEDIA_PLAYER_AGENT: MediaPlayerAgent by lazy {
         MediaPlayerAgent(
-            context,
-            imageView,
-            textView
+            context
         )
     }
     lateinit var imageView: ImageView

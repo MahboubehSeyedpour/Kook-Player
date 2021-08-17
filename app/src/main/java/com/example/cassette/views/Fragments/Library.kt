@@ -54,6 +54,8 @@ class Library(val application: Application) : Fragment() {
             notifyDataSetChanges()
             pullToRefresh.isRefreshing = false
         }
+
+        com.example.cassette.player.Coordinator.initNowPlayingQueue()
     }
 
     override fun onCreateView(

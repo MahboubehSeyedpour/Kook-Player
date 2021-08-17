@@ -15,12 +15,12 @@
         android:layout_height="wrap_content">
 
         <include
-            android:id="@+id/playerPanel_header_on_expanded_state"
-            layout="@layout/playerpanel_header_on_expanded_state"/>
+            android:id="@+id/onExpand"
+            layout="@layout/panel_header_on_expanded"/>
 
         <include
-            android:id="@+id/playerPanel_header_on_collapsed_state"
-            layout="@layout/playerpanel_header_on_collapsed_state"/>
+            android:id="@+id/onCollapse"
+            layout="@layout/panel_header_on_collapsed"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

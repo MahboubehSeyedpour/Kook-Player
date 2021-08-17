@@ -1,85 +1,94 @@
 package com.example.cassette.player
 
 import android.content.Context
-import android.widget.ImageView
-import android.widget.TextView
-import com.example.cassette.`interface`.MediaPlayerCoordinatorInterface
+import com.example.cassette.`interface`.CoordinatorInterface
 import com.example.cassette.models.SongModel
-import com.example.cassette.player.PlayerStateRepository.PlayerModes.*
-import com.example.cassette.player.PlayerStateRepository.currentPlayerMode
+import com.example.cassette.player.Enums.PlayingOrder.REPEAT_ALL
+import com.example.cassette.player.Enums.PlayingOrder.SHUFFLE
 import com.example.cassette.views.Fragments.Library
+import com.example.cassette.views.Fragments.Library.Library.songsAdapter
+import com.example.cassette.views.Fragments.Library.Library.viewModel
 
-object Coordinator : MediaPlayerCoordinatorInterface {
-
-    private lateinit var mediaPlayerAgent: MediaPlayerAgent
-    private lateinit var nowPlayingQueue: ArrayList<SongModel>
-    private var currentMusicPosition: Int = Library.songsAdapter?.getCurrentPosition() ?: -1
+object Coordinator : CoordinatorInterface {
 
 
-    fun setupMediaPlayerAgent(context: Context, imageView: ImageView, textView: TextView) {
-        mediaPlayerAgent = MediaPlayerAgent(context, imageView, textView)
+    override lateinit var nowPlayingQueue: ArrayList<SongModel>
+    override lateinit var playingOrder: Enums.PlayingOrder
+    override lateinit var mediaPlayerAgent: MediaPlayerAgent
+    override var position: Int = songsAdapter?.getCurrentPosition() ?: -1
+
+    override fun setup(context: Context) {
+        mediaPlayerAgent = MediaPlayerAgent(context)
+    }
+
+    override fun initNowPlayingQueue() {
+//        TODO("check for last playing mode")
+        playingOrder = REPEAT_ALL
+        nowPlayingQueue = viewModel.getDataSet()
     }
 
     override fun playNextSong() {
-        mediaPlayerAgent.playMusic(getNextMusic())
-    }
-
-    fun getNextMusic(): SongModel {
-        return when (currentPlayerMode) {
-            REPEAT_ALL -> nowPlayingQueue[++currentMusicPosition]
-            REPEAT_ONE -> getCurrentPlayingSong()
-            SHUFFLE -> nowPlayingQueue[++currentMusicPosition]
-        }
+        play(++position)
     }
 
     override fun playPrevSong() {
-        mediaPlayerAgent.playMusic(PlayerStateRepository.getPrevMusic())
+        play(--position)
     }
 
-    override fun playerIsPlaying(): Boolean {
-        return mediaPlayerAgent.isPlaying() ?: false
-    }
-
-    override fun pauseSong() {
+    override fun pause() {
         mediaPlayerAgent.pauseMusic()
     }
 
-    override fun resumePlaying() {
+    override fun play(position: Int) {
+        mediaPlayerAgent.playMusic(nowPlayingQueue[position % viewModel.getDataSet().size].data)
+    }
+
+    override fun updateNowPlayingQueue() {
+        when (playingOrder) {
+//            TODO(shuffle as an extension not a function)
+            SHUFFLE -> nowPlayingQueue =
+                Library.viewModel.getDataSet().toList().shuffled() as ArrayList<SongModel>
+            REPEAT_ALL -> nowPlayingQueue = viewModel.getDataSet()
+        }
+    }
+
+    override fun changePlayingMode(order: Enums.PlayingOrder) {
+        playingOrder = order
+        updateNowPlayingQueue()
+    }
+
+    override fun isPlaying(): Boolean {
+        return mediaPlayerAgent.isPlaying()
+    }
+
+    override fun resume() {
         mediaPlayerAgent.resumePlaying()
     }
 
-    override fun changePlayerMode(newMode: PlayerStateRepository.PlayerModes) {
-        currentPlayerMode = newMode
-        nowPlayingQueue = updateNowPlayingQueue(newMode)
+    override fun getCurrentPlayingSong(): SongModel {
+        return Library.viewModel.getDataSet()[position]
     }
 
-    private fun updateNowPlayingQueue(newMode: PlayerStateRepository.PlayerModes): ArrayList<SongModel> {
-
-        when (newMode) {
-            SHUFFLE -> {
-                return Library.viewModel.getDataSet().toList().shuffled() as ArrayList<SongModel>
-            }
-            REPEAT_ALL -> Library.viewModel.getDataSet()
-            else -> Library.viewModel.getDataSet().shuffle()
-        }
-        return arrayListOf()
+    override fun getNextSongPosition(): Int {
+        return 1
     }
 
-    override fun playSelectedSong(song: SongModel, position: Int) {
-        PlayerStateRepository.currentMusicPosition = position
-        mediaPlayerAgent.playMusic(song)
+    override fun getCurrentSongPosition(): Int {
+        position = Library.songsAdapter?.getCurrentPosition() ?: -1
+        return position
     }
 
+    override fun playSelectedSong() {
+        position = Library.songsAdapter?.getCurrentPosition() ?: -1
+        play(position)
+    }
 
-    fun getCurrentMediaPlayerPosition(): Int {
+    override fun getPositionInPlayer(): Int {
         return mediaPlayerAgent.getCurrentPosition()
     }
 
-    fun getMediaPlayerDuration(): Int {
-        return mediaPlayerAgent.getDuration()
+    override fun seekTo(newPosition: Int) {
+        mediaPlayerAgent.seekTo(newPosition)
     }
 
-    fun getCurrentPlayingSong(): SongModel {
-        return mediaPlayerAgent.getCurrentPlayingSong()
-    }
 }

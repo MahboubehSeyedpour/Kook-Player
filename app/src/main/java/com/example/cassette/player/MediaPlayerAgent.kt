@@ -9,29 +9,30 @@ import android.widget.TextView
 import com.example.cassette.models.SongModel
 import com.example.cassette.utlis.ImageUtils
 
-class MediaPlayerAgent(context: Context, imageView: ImageView, textView: TextView) {
+class MediaPlayerAgent(context: Context) {
 
 
     private val context = context
     private var mediaPlayer = MediaPlayer()
-    private val songImageViewInPanel: ImageView = imageView
-    private val songTitleTextView: TextView = textView
+
+    //    private val songImageViewInPanel: ImageView = imageView
+//    private val songTitleTextView: TextView = textView
     private lateinit var currentPlayingSong: SongModel
 
 
-    fun playMusic(song: SongModel) {
+    fun playMusic(data: String) {
 
-        song.image?.let { loadSongImage(it, songImageViewInPanel) }
-        loadSongTitle(song.title, songTitleTextView)
+//        song.image?.let { loadSongImage(it, songImageViewInPanel) }
+//        loadSongTitle(song.title, songTitleTextView)
 
-        val uri: Uri = Uri.parse(song.data)
+        val uri: Uri = Uri.parse(data)
 
         mediaPlayer.release()
 
         mediaPlayer = MediaPlayer.create(context, uri)
         mediaPlayer.start()
 
-        currentPlayingSong = song
+//        currentPlayingSong = song
 
     }
 
@@ -43,8 +44,9 @@ class MediaPlayerAgent(context: Context, imageView: ImageView, textView: TextVie
         mediaPlayer.start()
     }
 
-    fun seekTo() {
-//        TODO()
+    fun seekTo(newPosition: Int) {
+
+        mediaPlayer.seekTo(newPosition)
     }
 
     fun loadSongImage(image: Bitmap, imageView: ImageView) {
@@ -80,8 +82,7 @@ class MediaPlayerAgent(context: Context, imageView: ImageView, textView: TextVie
         return currentPlayingSong
     }
 
-    fun seekToTime()
-    {
+    fun seekToTime() {
 //        TODO(use MediaPlayer.seekto())
     }
 }

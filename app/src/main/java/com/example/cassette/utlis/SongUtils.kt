@@ -8,9 +8,7 @@ import android.provider.MediaStore
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import com.example.cassette.BuildConfig
-import com.example.cassette.extensions.getLong
 import com.example.cassette.models.SongModel
-import com.example.cassette.repositories.SongsRepository
 import com.example.cassette.utlis.FileUtils
 import com.example.cassette.views.Fragments.Library
 
@@ -18,27 +16,6 @@ import com.example.cassette.views.Fragments.Library
 object SongUtils {
 
     lateinit var context: Context
-
-    fun getListOfSongs(context: Context): ArrayList<SongModel> {
-
-        val musicList = ArrayList<SongModel>()
-        this.context = context
-        val cursor = FileUtils.fetchFiles(
-            fileType = FileUtils.FILE_TYPES.MUSIC,
-            context = context
-        )
-        if (cursor != null && cursor.count != 0) {
-            do {
-                cursor.moveToNext()
-                if (cursor.getLong(MediaStore.Audio.AudioColumns.DURATION) > 0)
-                    musicList.add(SongsRepository(context).createSongFromCursor(cursor))
-            } while (!cursor.isLast)
-        } else {
-//                TODO(handle null cursor)
-        }
-        cursor?.close()
-        return musicList
-    }
 
     fun getSongPosition(song: SongModel): Int{
        return Library.viewModel.getDataSet().indexOf(song)

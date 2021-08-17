@@ -53,8 +53,8 @@ class SongsAdapter(
 
 
         viewHolder.recyclerItem.setOnClickListener {
-            Coordinator.playSelectedSong(song, position)
             updatePosition(newIndex = viewHolder.adapterPosition)
+            Coordinator.playSelectedSong()
         }
 
 
@@ -132,17 +132,6 @@ class SongsAdapter(
 
     fun getSong(position: Int): SongModel {
         return dataset[position]
-    }
-
-    fun update() {
-        dataset = SongUtils.getListOfSongs(context)
-        notifyDataSetChanged()
-    }
-
-    fun updateDataset(dataset: ArrayList<SongModel>)
-    {
-        this.dataset = dataset
-        notifyDataSetChanged()
     }
 
     open inner class RecyclerViewViewHolder(itemView: View) :

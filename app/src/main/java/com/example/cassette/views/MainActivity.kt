@@ -18,6 +18,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.cassette.R
 import com.example.cassette.adapter.ViewPagerFragmentAdapter
 import com.example.cassette.databinding.ActivityMainBinding
+import com.example.cassette.player.Enums
 import com.example.cassette.views.Fragments.*
 import com.google.android.material.tabs.TabLayoutMediator
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
@@ -73,22 +74,22 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
             ) {
                 when (binding.slidingLayout.panelState) {
                     SlidingUpPanelLayout.PanelState.EXPANDED -> {
-                        Toast.makeText(
-                            baseContext,
-                            "expanded",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        playerPanelFragment.setVisibiliyForPlayerPanelHeaderOnExpanded(View.VISIBLE)
-                        playerPanelFragment.setVisibiliyForPlayerPanelHeaderOnCollapsed(View.GONE)
+//                        Toast.makeText(
+//                            baseContext,
+//                            "expanded",
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+                        playerPanelFragment.updatePanelBasedOnState(Enums.PanelState.EXPANDED)
+
                     }
                     SlidingUpPanelLayout.PanelState.COLLAPSED -> {
-                        Toast.makeText(
-                            baseContext,
-                            "collapsed",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        playerPanelFragment.setVisibiliyForPlayerPanelHeaderOnExpanded(View.GONE)
-                        playerPanelFragment.setVisibiliyForPlayerPanelHeaderOnCollapsed(View.VISIBLE)
+//                        Toast.makeText(
+//                            baseContext,
+//                            "collapsed",
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+                        playerPanelFragment.updatePanelBasedOnState(Enums.PanelState.COLLAPSED)
+
                     }
                 }
             }
