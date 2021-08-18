@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:elevation="10dp">
+    android:elevation="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -36,17 +36,21 @@
             app:layout_constraintLeft_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <include
+        android:id="@+id/newToolbar"
+        layout="@layout/expandable_toolbar"/>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout_home"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabIndicator="@drawable/tab_indicator"
-        app:tabIndicatorColor="@color/blue_light"
-        app:tabIndicatorFullWidth="false"
-        app:tabSelectedTextColor="@color/dark_grey">
+        android:layout_height="wrap_content">
 
     </com.google.android.material.tabs.TabLayout>
+<!--    app:tabIndicatorColor="@color/blue_light"-->
+<!--    app:tabIndicatorFullWidth="false"-->
+<!--    app:tabSelectedTextColor="@color/dark_grey"-->
 
 </com.google.android.material.appbar.AppBarLayout>

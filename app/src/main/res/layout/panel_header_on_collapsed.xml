@@ -47,9 +47,9 @@
 
         <com.app.progresviews.ProgressWheel
             android:id="@+id/wheelprogress"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            app:barWidth="5dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:barWidth="2dp"
             app:countTextColor="@android:color/transparent"
             app:countTextSize="20sp"
             app:defTextColor="@android:color/black"
@@ -64,8 +64,8 @@
 
         <ImageView
             android:id="@+id/play_btn_on_header"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

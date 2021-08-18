@@ -24,4 +24,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <!--    Toolbar -->
+    <string name="home_tab">Songs</string>
+    <string name="playlist_tab">Playlists</string>
+    <string name="fav_tab">Favorite</string>
+
 </resources>

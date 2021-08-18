@@ -17,6 +17,7 @@ import com.example.cassette.player.Enums.PanelState
 import com.example.cassette.player.Enums.PanelState.COLLAPSED
 import com.example.cassette.player.Enums.PanelState.EXPANDED
 import com.example.cassette.player.PlayerStateRepository
+import com.example.cassette.utlis.ImageUtils
 import com.example.cassette.utlis.TimeUtils
 import com.frolo.waveformseekbar.WaveformSeekBar
 import kotlinx.android.synthetic.main.fragment_player_panel.view.*
@@ -99,6 +100,11 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
             ) {
                 if (Coordinator.isPlaying()) {
 
+                    setSongTitle()
+                    setSongImage()
+
+//                    binding.musicTitleTv.startAnimation(inFromRightAnimation())
+
                     binding.playerRemote.musicMin.text = TimeUtils.milliSecToDuration(
                         (percent * TimeUtils.getDurationOfCurrentMusic().toLong()).toLong()
                     )
@@ -111,11 +117,13 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
             }
 
             override fun onStopTrackingTouch(seekBar: WaveformSeekBar?) {
-                Toast.makeText(
-                    context,
-                    "Tracked: percent=" + waveform_seek_bar.progressPercent,
-                    Toast.LENGTH_SHORT
-                ).show()
+//                Toast.makeText(
+//                    context,
+//                    "Tracked: percent=" + waveform_seek_bar.progressPercent,
+//                    Toast.LENGTH_SHORT
+//                ).show()
+
+                Coordinator.seekTo((waveform_seek_bar.progressPercent * Coordinator.getCurrentPlayingSong().duration).toInt())
             }
 
         })
@@ -141,8 +149,6 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
 //
 //        })
 
-
-
     }
 
 
@@ -151,11 +157,17 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
     }
 
     override fun setSongImage() {
-        TODO("Not yet implemented")
+        context?.let {
+            ImageUtils.loadImageToImageView(
+                it,
+                binding.musicAlbumImage,
+                Coordinator.getCurrentPlayingSong().image!!
+            )
+        }
     }
 
     override fun setSongTitle() {
-        TODO("Not yet implemented")
+        binding.musicTitleTv.text = Coordinator.getCurrentPlayingSong().title
     }
 
     override fun getPanelState() {
@@ -250,7 +262,10 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
                 switchPlayPauseButton()
             }
 
-            binding.playerRemote.shuffleBtn -> Coordinator.changePlayingMode(Enums.PlayingOrder.SHUFFLE)
+            binding.playerRemote.shuffleBtn -> {
+                Coordinator.changePlayingMode(Enums.PlayingOrder.SHUFFLE)
+                Toast.makeText(context, "shuffle is ON", Toast.LENGTH_SHORT).show()
+            }
 
             binding.playerRemote.repeatLayout -> {
                 if (PlayerStateRepository.currentPlayerMode == PlayerStateRepository.PlayerModes.REPEAT_ALL) {
@@ -300,4 +315,73 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
     fun setBinding(view: View) {
         binding = FragmentPlayerPanelBinding.bind(view)
     }
+
+//    private fun inFromRightAnimation() : Animation
+//    {
+//        val inFromRight: Animation = TranslateAnimation(
+//            Animation.RELATIVE_TO_PARENT,
+//            +1.0f,
+//            Animation.RELATIVE_TO_PARENT,
+//            0.0f,
+//            Animation.RELATIVE_TO_PARENT,
+//            0.0f,
+//            Animation.RELATIVE_TO_PARENT,
+//            0.0f
+//        )
+//        inFromRight.duration = 4000
+//        inFromRight.interpolator = AccelerateInterpolator()
+//        return inFromRight
+//    }
+//
+//    private fun outToLeftAnimation(): Animation
+//    {
+//        val outtoLeft = TranslateAnimation(
+//            Animation.RELATIVE_TO_PARENT,
+//            0.0f,
+//            Animation.RELATIVE_TO_PARENT,
+//            -1.0f,
+//            Animation.RELATIVE_TO_PARENT,
+//            0.0f,
+//            Animation.RELATIVE_TO_PARENT,
+//            0.0f
+//        )
+//        outtoLeft.duration = 8000
+//        outtoLeft.interpolator = AccelerateInterpolator()
+//        return outtoLeft
+//    }
+//
+//    private fun  inFromLeftAnimation(): Animation
+//    {
+//        val inFromLeft = TranslateAnimation(
+//            Animation.RELATIVE_TO_PARENT,
+//            -1.0f,
+//            Animation.RELATIVE_TO_PARENT,
+//            0.0f,
+//            Animation.RELATIVE_TO_PARENT,
+//            0.0f,
+//            Animation.RELATIVE_TO_PARENT,
+//            0.0f
+//        )
+//        inFromLeft.duration = 2000
+//        inFromLeft.interpolator = AccelerateInterpolator()
+//        return inFromLeft
+//    }
+//
+//    private fun  outToRightAnimation() : Animation
+//    {
+//        val outtoRight = TranslateAnimation(
+//            Animation.RELATIVE_TO_PARENT,
+//            0.0f,
+//            Animation.RELATIVE_TO_PARENT,
+//            +1.0f,
+//            Animation.RELATIVE_TO_PARENT,
+//            0.0f,
+//            Animation.RELATIVE_TO_PARENT,
+//            0.0f
+//        )
+//        outtoRight.duration = 2000
+//        outtoRight.interpolator = AccelerateInterpolator ()
+//        return outtoRight
+//    }
+
 }

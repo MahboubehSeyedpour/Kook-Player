@@ -7,7 +7,6 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -20,8 +19,10 @@ import com.example.cassette.adapter.ViewPagerFragmentAdapter
 import com.example.cassette.databinding.ActivityMainBinding
 import com.example.cassette.player.Enums
 import com.example.cassette.views.Fragments.*
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
+import github.com.st235.lib_expandablebottombar.ExpandableBottomBar
 import kotlinx.android.synthetic.main.base.*
 
 
@@ -106,31 +107,99 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
             bottomSheetDialog?.show(supportFragmentManager, "btmsheet")
         }
 
-/*
-        tablayout_home.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+
+        binding.includeBase.includeToolbar.newToolbar.expandableToolbar.onItemSelectedListener =
+            { view, menuItem, b ->
+                when (menuItem.text) {
+                    "songs" -> {
+//                        Toast.makeText(
+//                            baseContext,
+//                            "Songs clicked",
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+
+                        viewpager_home.setCurrentItem(0, true)
+
+                    }
+
+                    "Playlists" -> {
+//                        Toast.makeText(
+//                            baseContext,
+//                            "Playlists clicked",
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+
+                        viewpager_home.setCurrentItem(1, true)
+                    }
+                    "Favorits" -> {
+//                        Toast.makeText(
+//                            baseContext,
+//                            "Favorits clicked",
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+
+                        viewpager_home.setCurrentItem(2, true)
+//                        binding.includeBase.includeToolbar.tabLayoutHome.selectTab(
+//                            binding.includeBase.includeToolbar.tabLayoutHome.getTabAt(
+//                                3
+//                            )
+//                        )
+                    }
+
+                }
+            }
+
+
+        binding.includeBase.includeToolbar.tabLayoutHome.addOnTabSelectedListener(object :
+            TabLayout.OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab?) {
-                Toast.makeText(
-                    applicationContext,
-                    "tab reselected: ${tab?.text}",
-                    Toast.LENGTH_SHORT
-                ).show()
+//                Toast.makeText(
+//                    applicationContext,
+//                    "tab reselected: ${tab?.text}",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+
+                when (tab?.text) {
+                    "Library" -> binding.includeBase.includeToolbar.newToolbar.expandableToolbar.menu.select(
+                        R.id.songs
+                    )
+                    "Playlists" -> binding.includeBase.includeToolbar.newToolbar.expandableToolbar.menu.select(
+                        R.id.playlist
+                    )
+                    "Favorite" -> binding.includeBase.includeToolbar.newToolbar.expandableToolbar.menu.select(
+                        R.id.favorites
+                    )
+                }
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
-                Toast.makeText(
-                    applicationContext,
-                    "tab unselected: ${tab?.text}",
-                    Toast.LENGTH_SHORT
-                ).show()
+//                Toast.makeText(
+//                    applicationContext,
+//                    "tab unselected: ${tab?.text}",
+//                    Toast.LENGTH_SHORT
+//                ).show()
             }
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                Toast.makeText(applicationContext, "tab selected: ${tab?.text}", Toast.LENGTH_SHORT)
-                    .show()
+//                Toast.makeText(applicationContext, "tab selected: ${tab?.text}", Toast.LENGTH_SHORT)
+//                    .show()
+
+                when (tab?.text) {
+                    "Library" -> binding.includeBase.includeToolbar.newToolbar.expandableToolbar.menu.select(
+                        R.id.songs
+                    )
+                    "Playlists" -> binding.includeBase.includeToolbar.newToolbar.expandableToolbar.menu.select(
+                        R.id.playlist
+                    )
+                    "Favorite" -> binding.includeBase.includeToolbar.newToolbar.expandableToolbar.menu.select(
+                        R.id.favorites
+                    )
+                }
+
             }
         })
 
-        val viewModel =
+/*        val viewModel =
             ViewModelProvider(this).get(com.example.cassette.datamodels.Songs::class.java)
         viewModel.getMutableLiveData().observe(this, songListUpdateObserver)
  */
@@ -152,6 +221,10 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
          */
 
+    }
+
+    fun updateToolbar(tabName: String) {
+//        binding.includeBase.includeToolbar.newToolbar.expandableBottomBar.menu.select(menu.items[position].id)
     }
 
     private fun checkForPermissions() {
@@ -201,17 +274,75 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
         val adapter = ViewPagerFragmentAdapter(supportFragmentManager, lifecycle)
         adapter.addFragment(Library(application))
-        adapter.addFragment(RecentlyAdded())
+//        adapter.addFragment(RecentlyAdded())
         adapter.addFragment(Playlist())
         adapter.addFragment(Favorite())
         viewpager_home.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         viewpager_home.adapter = adapter
 
 
+        val bottomBar: ExpandableBottomBar = findViewById(R.id.expandable_toolbar)
+        val menu = bottomBar.menu
+
+
+        var selectedTab: TabLayout.Tab
+        var selectedPosition: Int
+
+        binding.includeBase.includeToolbar.tabLayoutHome.visibility = View.GONE
+
         TabLayoutMediator(binding.includeBase.includeToolbar.tabLayoutHome, viewpager_home)
         { tab, position ->
             tab.text = tabNames[position]
+            selectedTab = tab
+            selectedPosition = position
         }.attach()
+
+//        menu.add(
+//            MenuItemDescriptor.Builder(
+//                this,
+//                R.id.home,
+//                R.drawable.ic_songs,
+//                R.string.home_tab,
+//                Color.GRAY
+//            )
+//                .build()
+//        )
+//        menu.add(
+//            MenuItemDescriptor.Builder(
+//                this,
+//                R.id.playlist,
+//                R.drawable.ic_playlist,
+//                R.string.playlist_tab,
+//                Color.BLUE
+//            )
+//                .build()
+//        )
+//        menu.add(
+//            MenuItemDescriptor.Builder(
+//                this,
+//                R.id.favorites,
+//                R.drawable.ic_heart,
+//                R.string.fav_tab,
+//                Color.MAGENTA
+//            )
+//                .build()
+//        )
+
+
+//        bottomBar.onItemSelectedListener = { view, menuItem ->
+//            /**
+//             * handle menu item clicks here,
+//             * but clicks on already selected item will not affect this callback
+//             */
+//        }
+//
+//        bottomBar.onItemReselectedListener = { view, menuItem ->
+//            /**
+//             * handle here all the click in already selected items
+//             */
+//        }
+
+
     }
 
 

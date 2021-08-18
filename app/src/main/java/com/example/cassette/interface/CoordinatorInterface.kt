@@ -22,6 +22,7 @@ interface CoordinatorInterface {
     fun pause() //pause current playing song
     fun play(position: Int) //play new song
     fun resume() //resume current playing song
+    fun stop()
 
 
 //    update
@@ -35,7 +36,6 @@ interface CoordinatorInterface {
 
 //    get Info
     fun getCurrentPlayingSong(): SongModel
-    fun getNextSongPosition(): Int
     fun getCurrentSongPosition(): Int
     fun playSelectedSong()
     fun getPositionInPlayer(): Int

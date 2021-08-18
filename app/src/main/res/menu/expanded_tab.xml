@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/songs"
+        android:title="songs"
+        android:icon="@drawable/ic_songs"
+        app:exb_color="#FF8888" />
+
+<!--    <item-->
+<!--        android:id="@+id/recent"-->
+<!--        android:title="Recent"-->
+<!--        android:icon="@drawable/ic_recent"-->
+<!--        app:exb_color="#fa2" />-->
+
+    <item
+        android:id="@+id/playlist"
+        android:title="Playlists"
+        android:icon="@drawable/ic_playlist"
+        app:exb_color="#4599FF" />
+
+    <item
+        android:id="@+id/favorites"
+        android:title="Favorits"
+        android:icon="@drawable/ic_heart"
+        app:exb_color="#757575" />
+<!--    #959595-->
+</menu>

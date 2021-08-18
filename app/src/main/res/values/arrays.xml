@@ -2,7 +2,7 @@
 <resources>
     <string-array name="tabNames">
         <item>Library</item>
-        <item>Recently Added</item>
+<!--        <item>Recently Added</item>-->
         <item>Playlists</item>
         <item>Favorite</item>
     </string-array>

@@ -12,11 +12,11 @@ object TimeUtils
         {
             if(seconds <10)
             {
-                return "0$minutes : 0$seconds"
+                return "0$minutes:0$seconds"
             }
-            return "0$minutes : $seconds"
+            return "0$minutes:$seconds"
         }
-        return "$minutes : $seconds"
+        return "$minutes:$seconds"
     }
 
     fun getDurationOfCurrentMusic(): String {

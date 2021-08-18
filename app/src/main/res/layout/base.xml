@@ -9,6 +9,7 @@
         android:id="@+id/include_toolbar"
         layout="@layout/component_appbar" />
 
+
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewpager_home"
         android:layout_width="match_parent"

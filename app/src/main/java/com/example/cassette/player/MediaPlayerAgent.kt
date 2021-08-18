@@ -85,4 +85,9 @@ class MediaPlayerAgent(context: Context) {
     fun seekToTime() {
 //        TODO(use MediaPlayer.seekto())
     }
+
+    fun stop()
+    {
+        mediaPlayer.stop()
+    }
 }

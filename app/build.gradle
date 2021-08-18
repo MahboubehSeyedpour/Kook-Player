@@ -77,4 +77,7 @@ dependencies {
 
     //ProgressWheel
     implementation 'com.zekapp.library:progreswheelview:1.1.5'
+
+    //    header as Tablayout
+    implementation 'com.github.st235:expandablebottombar:1.4.0'
 }

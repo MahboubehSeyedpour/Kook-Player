@@ -40,7 +40,14 @@ object Coordinator : CoordinatorInterface {
     }
 
     override fun play(position: Int) {
-        mediaPlayerAgent.playMusic(nowPlayingQueue[position % viewModel.getDataSet().size].data)
+        if(position >= Library.viewModel.getDataSet().size)
+        {
+            mediaPlayerAgent.stop()
+        }
+        else{
+            mediaPlayerAgent.playMusic(nowPlayingQueue[position].data)
+        }
+
     }
 
     override fun updateNowPlayingQueue() {
@@ -69,12 +76,7 @@ object Coordinator : CoordinatorInterface {
         return Library.viewModel.getDataSet()[position]
     }
 
-    override fun getNextSongPosition(): Int {
-        return 1
-    }
-
     override fun getCurrentSongPosition(): Int {
-        position = Library.songsAdapter?.getCurrentPosition() ?: -1
         return position
     }
 
@@ -89,6 +91,10 @@ object Coordinator : CoordinatorInterface {
 
     override fun seekTo(newPosition: Int) {
         mediaPlayerAgent.seekTo(newPosition)
+    }
+
+    override fun stop() {
+        mediaPlayerAgent.stop()
     }
 
 }
