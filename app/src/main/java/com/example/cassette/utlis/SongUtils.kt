@@ -22,7 +22,7 @@ object SongUtils {
     }
 
 
-    fun shareMusic(song: SongModel) {
+    fun shareMusic(context: Context, song: SongModel) {
 
         val fileToBeShared = FileUtils.convertSongToFile(song.data)
 

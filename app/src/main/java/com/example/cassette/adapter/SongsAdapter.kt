@@ -74,9 +74,9 @@ class SongsAdapter(
     @RequiresApi(Build.VERSION_CODES.R)
     fun handleMenuButtonClickListener(itemId: Int): Boolean {
         when (itemId) {
-            R.id.playNext_menu_item -> {
-//                PlayerRemote.playSongAsNextMusic(position)
-            }
+//            R.id.playNext_menu_item -> {
+////                PlayerRemote.playSongAsNextMusic(position)
+//            }
             R.id.addToPlayList_menu_item -> {
 //                PlayerRemote.addToPlaylist(position)
             }
@@ -87,15 +87,15 @@ class SongsAdapter(
                 SongUtils.showDetails(position)
             }
             R.id.share_menu_item -> {
-                SongUtils.shareMusic(getSong(position))
+                SongUtils.shareMusic(context, getSong(position))
             }
-            R.id.setAsRingtone_menu_item -> {
-                Toast.makeText(
-                    context,
-                    "add to set as ringtone in item number {$position}",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+//            R.id.setAsRingtone_menu_item -> {
+//                Toast.makeText(
+//                    context,
+//                    "add to set as ringtone in item number {$position}",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//            }
             else -> return false
         }
         return true
