@@ -16,6 +16,19 @@
     <color name="grey">#465a61</color>
     <color name="red">#fe646f</color>
     <color name="light_red">#FFC7CB</color>
+    <color name="splash_screen_bgColor">#fff</color>
+
+    <!--    btn-->
+    <color name="confirm_btn_bgColor">#3f51b5</color>
+    <color name="confirm_btn_txt">#fff</color>
+
+    <!--    toolbar-->
+    <color name="toolbar_itemInactiveColor">#ACACAC</color>
+
+    <!--    FAB-->
+    <color name="fab_bgColor">#fe646f</color>
+
+
 </resources>
 
-<!--    #596c76-->
+    <!--    #596c76-->

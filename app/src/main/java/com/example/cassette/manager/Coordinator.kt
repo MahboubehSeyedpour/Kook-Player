@@ -1,10 +1,12 @@
-package com.example.cassette.player
+package com.example.cassette.manager
 
 import android.content.Context
 import com.example.cassette.`interface`.CoordinatorInterface
 import com.example.cassette.models.SongModel
+import com.example.cassette.player.Enums
 import com.example.cassette.player.Enums.PlayingOrder.REPEAT_ALL
 import com.example.cassette.player.Enums.PlayingOrder.SHUFFLE
+import com.example.cassette.player.MediaPlayerAgent
 import com.example.cassette.views.Fragments.Library
 import com.example.cassette.views.Fragments.Library.Library.songsAdapter
 import com.example.cassette.views.Fragments.Library.Library.viewModel

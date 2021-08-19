@@ -12,7 +12,7 @@
             android:layout_margin="10dp"
             android:padding="5dp"
             app:exb_backgroundCornerRadius="15dp"
-            app:exb_itemInactiveColor="#ACACAC"
+            app:exb_itemInactiveColor="@color/toolbar_itemInactiveColor"
             app:exb_item_horizontal_margin="20dp"
             app:exb_items="@menu/expanded_tab"
             app:layout_constraintBottom_toBottomOf="parent"

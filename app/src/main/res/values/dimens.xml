@@ -1,2 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+
+    <!--    splash screen-->
+    <dimen name="splash_screen_icon_height">70dp</dimen>
+    <dimen name="splash_screen_icon_width">70dp</dimen>
+
+
+    <!--    icon-->
+    <dimen name="icon_width">24dp</dimen>
+    <dimen name="icon_height">24dp</dimen>
+
+
+    <!--    margin-->
+    <dimen name="normal_margin">16dp</dimen>
+
+    <!--    text size-->
+    <dimen name="article_size">16dp</dimen>
+    <dimen name="title_size">18sp</dimen>
+    <dimen name="subtitle_size">16dp</dimen>
+
+</resources>

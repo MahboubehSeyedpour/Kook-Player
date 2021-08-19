@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cassette.R
 import com.example.cassette.adapter.SongsAdapter
+import com.example.cassette.manager.Coordinator
 import com.example.cassette.models.SongModel
 import com.example.cassette.viewModel.SongsViewModel
 import kotlinx.android.synthetic.main.fragment_library.*
@@ -55,7 +56,7 @@ class Library(val application: Application) : Fragment() {
             pullToRefresh.isRefreshing = false
         }
 
-        com.example.cassette.player.Coordinator.initNowPlayingQueue()
+        Coordinator.initNowPlayingQueue()
     }
 
     override fun onCreateView(

@@ -20,7 +20,7 @@
         android:layout_margin="16dp"
         android:contentDescription="add playlist"
         android:src="@drawable/add"
-        app:backgroundTint="@color/red"
+        app:backgroundTint="@color/fab_bgColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.954"

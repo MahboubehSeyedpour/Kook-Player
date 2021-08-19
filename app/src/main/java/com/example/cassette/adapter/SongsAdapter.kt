@@ -13,7 +13,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cassette.R
 import com.example.cassette.models.SongModel
-import com.example.cassette.player.Coordinator
+import com.example.cassette.manager.Coordinator
 import com.example.cassette.utlis.ImageUtils
 import com.example.cassette.utlis.TimeUtils
 import kotlinx.android.synthetic.main.song_rv_item.view.*

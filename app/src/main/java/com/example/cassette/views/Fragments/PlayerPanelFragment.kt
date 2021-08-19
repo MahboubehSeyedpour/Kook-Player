@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import com.example.cassette.R
 import com.example.cassette.`interface`.PlayerPanelInterface
 import com.example.cassette.databinding.FragmentPlayerPanelBinding
-import com.example.cassette.player.Coordinator
+import com.example.cassette.manager.Coordinator
 import com.example.cassette.player.Enums
 import com.example.cassette.player.Enums.PanelState
 import com.example.cassette.player.Enums.PanelState.COLLAPSED

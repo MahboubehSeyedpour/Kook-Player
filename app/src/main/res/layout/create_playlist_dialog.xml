@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="create playlist"
-        android:textSize="24dp"
+        android:textSize="@dimen/title_size"
         android:textStyle="bold"
         android:textColor="@color/blue_dark"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,7 +22,7 @@
         android:id="@+id/textField"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="@dimen/normal_margin"
         android:hint="Name"
         android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,7 +42,7 @@
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/textField"
         tools:layout_editor_absoluteX="12dp"
-        android:layout_margin="10dp">
+        android:layout_margin="@dimen/normal_margin">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnNegative"
@@ -63,8 +63,8 @@
             android:gravity="center"
             android:text="Ok"
             android:layout_weight="3"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/blue_dark"
+            android:textColor="@color/confirm_btn_txt"
+            android:backgroundTint="@color/confirm_btn_bgColor"
             android:textAllCaps="false"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="5dp"
