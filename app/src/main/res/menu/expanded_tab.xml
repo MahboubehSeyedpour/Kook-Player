@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/songs"
-        android:title="songs"
+        android:title="Songs"
         android:icon="@drawable/ic_songs"
         app:exb_color="#FF8888" />
 

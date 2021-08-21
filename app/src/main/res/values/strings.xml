@@ -29,4 +29,8 @@
     <string name="playlist_tab">Playlists</string>
     <string name="fav_tab">Favorite</string>
 
+    <!--    notification-->
+    <string name="notification_channel_name">Music channel</string>
+    <string name="notification_description">Shows the currently playing music</string>
+
 </resources>

@@ -20,6 +20,15 @@ class MediaPlayerAgent(context: Context) {
     private lateinit var currentPlayingSong: SongModel
 
 
+    fun getMediaPlayer(): MediaPlayer
+    {
+        return mediaPlayer
+    }
+
+    fun reset(){
+        mediaPlayer.reset()
+    }
+
     fun playMusic(data: String) {
 
 //        song.image?.let { loadSongImage(it, songImageViewInPanel) }
@@ -34,7 +43,36 @@ class MediaPlayerAgent(context: Context) {
 
 //        currentPlayingSong = song
 
+
+        playAsService()
+
+
+
     }
+
+
+
+    fun playAsService()
+    {
+//        val pendingIntent: PendingIntent =
+//            Intent(this, ExampleActivity::class.java).let { notificationIntent ->
+//                PendingIntent.getActivity(this, 0, notificationIntent, 0)
+//            }
+//
+//        val notification: Notification = Notification.Builder(context,
+//            NotificationManager.IMPORTANCE_HIGH.toString()
+//        )
+//            .setContentTitle("notification_title")
+//            .setContentText("notification_message")
+//            .setSmallIcon(R.drawable.ic_heart)
+//            .setContentIntent(pendingIntent)
+//            .setTicker("ticker_text")
+//            .build()
+
+// Notification ID cannot be 0.
+//        startForeground(ONGOING_NOTIFICATION_ID, notification)
+    }
+
 
     fun pauseMusic() {
         mediaPlayer.pause()

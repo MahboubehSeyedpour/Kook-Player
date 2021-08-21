@@ -5,6 +5,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="28" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+
 
     <application
         android:allowBackup="true"
@@ -36,6 +38,7 @@
         <activity
             android:name="com.example.cassette.views.MainActivity"
             android:theme="@style/Theme.MusicPlayer" />
+        <service android:name=".services.NotificationPlayerService"/>
     </application>
 
 </manifest>

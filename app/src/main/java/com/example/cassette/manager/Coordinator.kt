@@ -12,8 +12,6 @@ import com.example.cassette.views.Fragments.Library.Library.songsAdapter
 import com.example.cassette.views.Fragments.Library.Library.viewModel
 
 object Coordinator : CoordinatorInterface {
-
-
     override lateinit var nowPlayingQueue: ArrayList<SongModel>
     override lateinit var playingOrder: Enums.PlayingOrder
     override lateinit var mediaPlayerAgent: MediaPlayerAgent
@@ -30,26 +28,30 @@ object Coordinator : CoordinatorInterface {
     }
 
     override fun playNextSong() {
-        play(++position)
+        if (hasNext())
+            play(getNextSong())
+        else
+            mediaPlayerAgent.stop()
     }
 
     override fun playPrevSong() {
-        play(--position)
+        if (hasPrev())
+            play(getPrevSong())
+        else
+            mediaPlayerAgent.stop()
     }
 
     override fun pause() {
         mediaPlayerAgent.pauseMusic()
     }
 
-    override fun play(position: Int) {
-        if(position >= Library.viewModel.getDataSet().size)
-        {
-            mediaPlayerAgent.stop()
-        }
-        else{
-            mediaPlayerAgent.playMusic(nowPlayingQueue[position].data)
-        }
+    override fun play(song: String) {
+        mediaPlayerAgent.playMusic(song)
+    }
 
+    fun onSongCompletion() {
+        mediaPlayerAgent.reset()
+        playNextSong()
     }
 
     override fun updateNowPlayingQueue() {
@@ -84,11 +86,32 @@ object Coordinator : CoordinatorInterface {
 
     override fun playSelectedSong() {
         position = Library.songsAdapter?.getCurrentPosition() ?: -1
-        play(position)
+        play(getSongAtPosition(position))
     }
 
     override fun getPositionInPlayer(): Int {
         return mediaPlayerAgent.getCurrentPosition()
+    }
+
+    override fun hasNext(): Boolean {
+        return position < Library.viewModel.getDataSet().size
+    }
+
+    override fun hasPrev(): Boolean {
+        return position < 0
+    }
+
+
+    override fun getPrevSong(): String {
+        return nowPlayingQueue[--position].data
+    }
+
+    override fun getNextSong(): String {
+        return nowPlayingQueue[++position].data
+    }
+
+    override fun getSongAtPosition(position: Int): String {
+        return nowPlayingQueue[position].data
     }
 
     override fun seekTo(newPosition: Int) {
@@ -97,6 +120,10 @@ object Coordinator : CoordinatorInterface {
 
     override fun stop() {
         mediaPlayerAgent.stop()
+    }
+
+    override fun release() {
+//        TODO("Not yet implemented")
     }
 
 }

@@ -20,9 +20,10 @@ interface CoordinatorInterface {
     fun playNextSong()
     fun playPrevSong()
     fun pause() //pause current playing song
-    fun play(position: Int) //play new song
+    fun play(song: String) //play new song
     fun resume() //resume current playing song
     fun stop()
+    fun release()
 
 
 //    update
@@ -39,6 +40,11 @@ interface CoordinatorInterface {
     fun getCurrentSongPosition(): Int
     fun playSelectedSong()
     fun getPositionInPlayer(): Int
+    fun hasNext(): Boolean
+    fun hasPrev(): Boolean
+    fun getPrevSong(): String
+    fun getNextSong(): String
+    fun getSongAtPosition(position: Int): String
 
 
 //    seek bar

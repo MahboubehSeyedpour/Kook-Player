@@ -17,6 +17,7 @@ import com.example.cassette.player.Enums.PanelState
 import com.example.cassette.player.Enums.PanelState.COLLAPSED
 import com.example.cassette.player.Enums.PanelState.EXPANDED
 import com.example.cassette.player.PlayerStateRepository
+import com.example.cassette.services.NotificationPlayerService
 import com.example.cassette.utlis.ImageUtils
 import com.example.cassette.utlis.TimeUtils
 import com.frolo.waveformseekbar.WaveformSeekBar
@@ -46,8 +47,11 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
         return view
     }
 
+
     override fun onResume() {
         super.onResume()
+
+        createNotifService()
 
         context?.let {
             Coordinator.setup(
@@ -227,6 +231,7 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
     }
 
     override fun updatePanelBasedOnState(newState: PanelState) {
+
         when (newState) {
             EXPANDED -> {
 
@@ -260,6 +265,7 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
             binding.playerRemote.playOrPauseLayout -> {
                 if (!Coordinator.isPlaying()) Coordinator.resume() else Coordinator.pause()
                 switchPlayPauseButton()
+                startForegroundService()
             }
 
             binding.playerRemote.shuffleBtn -> {
@@ -316,72 +322,17 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
         binding = FragmentPlayerPanelBinding.bind(view)
     }
 
-//    private fun inFromRightAnimation() : Animation
-//    {
-//        val inFromRight: Animation = TranslateAnimation(
-//            Animation.RELATIVE_TO_PARENT,
-//            +1.0f,
-//            Animation.RELATIVE_TO_PARENT,
-//            0.0f,
-//            Animation.RELATIVE_TO_PARENT,
-//            0.0f,
-//            Animation.RELATIVE_TO_PARENT,
-//            0.0f
-//        )
-//        inFromRight.duration = 4000
-//        inFromRight.interpolator = AccelerateInterpolator()
-//        return inFromRight
-//    }
-//
-//    private fun outToLeftAnimation(): Animation
-//    {
-//        val outtoLeft = TranslateAnimation(
-//            Animation.RELATIVE_TO_PARENT,
-//            0.0f,
-//            Animation.RELATIVE_TO_PARENT,
-//            -1.0f,
-//            Animation.RELATIVE_TO_PARENT,
-//            0.0f,
-//            Animation.RELATIVE_TO_PARENT,
-//            0.0f
-//        )
-//        outtoLeft.duration = 8000
-//        outtoLeft.interpolator = AccelerateInterpolator()
-//        return outtoLeft
-//    }
-//
-//    private fun  inFromLeftAnimation(): Animation
-//    {
-//        val inFromLeft = TranslateAnimation(
-//            Animation.RELATIVE_TO_PARENT,
-//            -1.0f,
-//            Animation.RELATIVE_TO_PARENT,
-//            0.0f,
-//            Animation.RELATIVE_TO_PARENT,
-//            0.0f,
-//            Animation.RELATIVE_TO_PARENT,
-//            0.0f
-//        )
-//        inFromLeft.duration = 2000
-//        inFromLeft.interpolator = AccelerateInterpolator()
-//        return inFromLeft
-//    }
-//
-//    private fun  outToRightAnimation() : Animation
-//    {
-//        val outtoRight = TranslateAnimation(
-//            Animation.RELATIVE_TO_PARENT,
-//            0.0f,
-//            Animation.RELATIVE_TO_PARENT,
-//            +1.0f,
-//            Animation.RELATIVE_TO_PARENT,
-//            0.0f,
-//            Animation.RELATIVE_TO_PARENT,
-//            0.0f
-//        )
-//        outtoRight.duration = 2000
-//        outtoRight.interpolator = AccelerateInterpolator ()
-//        return outtoRight
-//    }
+    fun createNotifService() {
+        val notificationPlayerService = NotificationPlayerService()
+    }
+
+    fun startForegroundService() {
+        context?.let {
+            NotificationPlayerService.startNotification(
+                it,
+                "Foreground service is running"
+            )
+        }
+    }
 
 }

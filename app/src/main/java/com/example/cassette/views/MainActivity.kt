@@ -223,10 +223,6 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
     }
 
-    fun updateToolbar(tabName: String) {
-//        binding.includeBase.includeToolbar.newToolbar.expandableBottomBar.menu.select(menu.items[position].id)
-    }
-
     private fun checkForPermissions() {
         if (!hasPermissions(this, *PERMISSIONS)) {
             ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSIONS_REQUEST_CODE)
@@ -345,7 +341,6 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
     }
 
-
     private fun initBottomSheet() {
         playerPanelFragment = PlayerPanelFragment()
         val fragmentManager: FragmentManager = supportFragmentManager
@@ -358,4 +353,5 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         )
             .commit()
     }
+
 }
