@@ -53,7 +53,7 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
 
         createNotifService()
 
-        context?.let {
+        activity?.baseContext?.let {
             Coordinator.setup(
                 it
             )
