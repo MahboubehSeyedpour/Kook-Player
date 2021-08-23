@@ -3,6 +3,7 @@ package com.example.cassette.repositories
 import android.content.ContentUris
 import android.content.Context
 import android.database.Cursor
+import android.media.MediaMetadataRetriever
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio.AudioColumns
 import com.example.cassette.extensions.getInt
@@ -39,6 +40,11 @@ class SongsRepository(val context: Context) {
         val image = ImageUtils.albumArtUriToBitmap(context, albumId.toLong())
             ?: ImageUtils.getDefaultAlbumArt(context)
 
+
+        val metadata = MediaMetadataRetriever()
+        metadata.setDataSource(data)
+        val bitrate = metadata.extractMetadata(MediaMetadataRetriever.METADATA_KEY_BITRATE)
+
         return SongModel(
             title,
             duration,
@@ -49,6 +55,7 @@ class SongsRepository(val context: Context) {
             uri,
             albumId,
             size,
+            bitrate,
             image,
             "",
             year,

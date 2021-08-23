@@ -9,14 +9,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cassette.R
-import com.example.cassette.models.SongModel
 import com.example.cassette.manager.Coordinator
+import com.example.cassette.models.SongModel
 import com.example.cassette.utlis.ImageUtils
 import com.example.cassette.utlis.TimeUtils
+import com.example.cassette.views.dialogs.SongDetailsDialog
 import kotlinx.android.synthetic.main.song_rv_item.view.*
+
 
 class SongsAdapter(
     val context: Activity,
@@ -41,7 +45,7 @@ class SongsAdapter(
         this.position = position
         val viewHolder = holder as RecyclerViewViewHolder
         viewHolder.title.text = song.title
-        viewHolder.duration.text = TimeUtils.milliSecToDuration(song.duration)
+        viewHolder.duration.text = song.duration?.let { TimeUtils.milliSecToDuration(it) }
         viewHolder.artist.text = song.artist
         song.image?.let {
             ImageUtils.loadImageToImageView(
@@ -64,7 +68,7 @@ class SongsAdapter(
 
             popUpMenu.setOnMenuItemClickListener {
 //                updatePosition(viewHolder.adapterPosition)
-                return@setOnMenuItemClickListener handleMenuButtonClickListener(it.itemId)
+                return@setOnMenuItemClickListener handleMenuButtonClickListener(it.itemId, viewHolder.adapterPosition)
             }
             popUpMenu.show()
         }
@@ -72,7 +76,7 @@ class SongsAdapter(
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
-    fun handleMenuButtonClickListener(itemId: Int): Boolean {
+    fun handleMenuButtonClickListener(itemId: Int, position: Int): Boolean {
         when (itemId) {
 //            R.id.playNext_menu_item -> {
 ////                PlayerRemote.playSongAsNextMusic(position)
@@ -84,10 +88,18 @@ class SongsAdapter(
                 getSongUri(position)?.let { SongUtils.deletMusic(context, it) }
             }
             R.id.details_menu_item -> {
-                SongUtils.showDetails(position)
+
+                val songDetailsDialog = SongDetailsDialog(dataset[position])
+
+                val manager: FragmentManager = (context as AppCompatActivity).supportFragmentManager
+
+                manager?.beginTransaction()
+                    ?.let { it -> songDetailsDialog.show(it, "songDetails") }
+
             }
             R.id.share_menu_item -> {
                 SongUtils.shareMusic(context, getSong(position))
+
             }
 //            R.id.setAsRingtone_menu_item -> {
 //                Toast.makeText(

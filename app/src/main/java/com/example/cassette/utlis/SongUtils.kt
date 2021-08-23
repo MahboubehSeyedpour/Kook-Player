@@ -17,8 +17,8 @@ object SongUtils {
 
     lateinit var context: Context
 
-    fun getSongPosition(song: SongModel): Int{
-       return Library.viewModel.getDataSet().indexOf(song)
+    fun getSongPosition(song: SongModel): Int {
+        return Library.viewModel.getDataSet().indexOf(song)
     }
 
 
@@ -56,10 +56,6 @@ object SongUtils {
 
     fun shareMultipleMusics(vararg positions: ArrayList<Int>) {
 //        TODO(share multiple musics)
-    }
-
-    fun showDetails(position: Int) {
-//        TODO(retrieve details of the song)
     }
 
 }
