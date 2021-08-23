@@ -34,6 +34,7 @@ class SongsRepository(val context: Context) {
                 cursor.getLong(cursor.getColumnIndex(MediaStore.Images.ImageColumns._ID))
             )
         val albumId = cursor.getLong(AudioColumns.ALBUM_ID)
+        val size = cursor.getString(AudioColumns.SIZE)
 
         val image = ImageUtils.albumArtUriToBitmap(context, albumId.toLong())
             ?: ImageUtils.getDefaultAlbumArt(context)
@@ -47,6 +48,7 @@ class SongsRepository(val context: Context) {
             id,
             uri,
             albumId,
+            size,
             image,
             "",
             year,

@@ -13,6 +13,7 @@ class SongModel(
     val id : String = "",
     val uri : Uri? = null,
     val albumId : Long = -1, //TODO(change to long)
+    val size: String = "",
     val image : Bitmap? = null,
     val trackNumber: String = "",
     val year: Int = -1,
