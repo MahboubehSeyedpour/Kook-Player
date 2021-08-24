@@ -19,11 +19,6 @@ class SongsViewModel : BaseViewModel() {
         dataset.value = ArrayList()
     }
 
-
-//    override fun getMutableLiveData(): MutableLiveData<ArrayList<Any>> {
-//        return dataset
-//    }
-
     fun setFragmentContext(context: Context) {
         this.context = context
         songsRepository = SongsRepository(context)
@@ -44,7 +39,7 @@ class SongsViewModel : BaseViewModel() {
     }
 
 
-    fun updateDataset() {
+    override fun updateDataset() {
 
         dataset.value = songsRepository.getListOfSongs()!! as ArrayList<Any>
     }

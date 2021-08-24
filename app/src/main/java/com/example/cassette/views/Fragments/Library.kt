@@ -1,7 +1,6 @@
 package com.example.cassette.views.Fragments
 
 import android.app.Activity
-import android.app.Application
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -20,7 +19,7 @@ import com.example.cassette.models.SongModel
 import com.example.cassette.viewModel.SongsViewModel
 import kotlinx.android.synthetic.main.fragment_library.*
 
-class Library(val application: Application) : Fragment() {
+class Library : Fragment() {
 
     companion object Library {
 
@@ -43,7 +42,6 @@ class Library(val application: Application) : Fragment() {
                 notifyDataSetChanges()
             }
             else -> {
-
             }
         }
     }
@@ -59,10 +57,6 @@ class Library(val application: Application) : Fragment() {
         Coordinator.initNowPlayingQueue()
 
         songs_rv.layoutManager = LinearLayoutManager(context)
-
-
-
-
 
     }
 
@@ -80,7 +74,6 @@ class Library(val application: Application) : Fragment() {
 
         viewModel = ViewModelProvider(this).get(SongsViewModel::class.java)
         context?.let { viewModel.setFragmentContext(it) }
-//        viewModel.getMutableLiveData().observe(viewLifecycleOwner, songListUpdateObserver)
         viewModel.dataset.observe(viewLifecycleOwner, songListUpdateObserver)
 
         songsAdapter = activity?.let {
@@ -94,15 +87,6 @@ class Library(val application: Application) : Fragment() {
 
         return view
     }
-
-    private val songListUpdateObserve =
-        object : Observer<ArrayList<Any>> {
-            override fun onChanged(songArrayList: ArrayList<Any>) {
-                val recyclerViewAdapter = songsAdapter
-                songs_rv.layoutManager = LinearLayoutManager(context)
-                songs_rv.adapter = recyclerViewAdapter
-            }
-        }
 
 
     private val songListUpdateObserver = Observer<ArrayList<Any>> { dataset ->

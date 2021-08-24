@@ -1,46 +1,40 @@
 package com.example.cassette.viewModel
 
-//class PlaylistViewModel : BaseViewModel() {
-//
-//
-//    override var liveData = MutableLiveData<ArrayList<Any>>()
-//    override var dataset = ArrayList<Any>()
-//    lateinit var context : Context
-//
-//
-//    init {
-//        liveData = MutableLiveData<ArrayList<Any>>()
-//
-////        fillRecyclerView()
-//    }
-//
-//    fun setViewModelContext(context: Context)
-//    {
-//        this.context = context
-//        liveData.value = populateList()
-//    }
-//
-//    override fun getMutableLiveData(): MutableLiveData<ArrayList<Any>> {
-//
-//        return liveData
-//    }
-//
-//    override fun fillRecyclerView() {
-//////        REST API can be called here
-////
-////        liveData.value = populateList()
-//    }
-//
-//    override fun populateList(): ArrayList<Any> {
-//
-//        dataset = PlaylistRepository().getPlaylists(context) as ArrayList<Any>
-//        return dataset
-//    }
-//
-//    fun updateDataset(): ArrayList<Any> {
-//
-//        dataset = PlaylistRepository().getPlaylists(context) as ArrayList<Any>
-//        return dataset
-//    }
-//
-//}
+import android.content.Context
+import androidx.lifecycle.MutableLiveData
+import com.example.cassette.models.SongModel
+import com.example.cassette.repositories.PlaylistRepository
+
+class PlaylistViewModel : BaseViewModel() {
+
+
+    override var dataset: MutableLiveData<ArrayList<Any>> = MutableLiveData()
+    lateinit var context: Context
+    lateinit var playlistRepository: PlaylistRepository
+
+
+    init {
+        dataset.value = ArrayList()
+    }
+
+
+    fun setFragmentContext(context: Context) {
+        this.context = context
+        playlistRepository = PlaylistRepository(context)
+        fillRecyclerView()
+    }
+
+    override fun fillRecyclerView() {
+        updateDataset()
+    }
+
+    override fun updateDataset() {
+
+        dataset.value = playlistRepository.getPlaylists()!! as ArrayList<Any>
+    }
+
+    fun getDataSet(): ArrayList<SongModel> {
+        return dataset.value as ArrayList<SongModel>
+    }
+
+}

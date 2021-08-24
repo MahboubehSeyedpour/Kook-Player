@@ -18,6 +18,7 @@ import com.example.cassette.manager.Coordinator
 import com.example.cassette.models.SongModel
 import com.example.cassette.utlis.ImageUtils
 import com.example.cassette.utlis.TimeUtils
+import com.example.cassette.views.dialogs.AddSongToPlaylistDialog
 import com.example.cassette.views.dialogs.SongDetailsDialog
 import kotlinx.android.synthetic.main.song_rv_item.view.*
 
@@ -79,20 +80,20 @@ class SongsAdapter(
     fun handleMenuButtonClickListener(itemId: Int, position: Int): Boolean {
         when (itemId) {
 //            R.id.playNext_menu_item -> {
-////                PlayerRemote.playSongAsNextMusic(position)
+//                PlayerRemote.playSongAsNextMusic(position)
 //            }
-//            R.id.addToPlayList_menu_item -> {
-//
-//
-//                val addSongToPlaylist = AddSongToPlaylistDialog(getSong(position))
-//
-//                val manager: FragmentManager = (context as AppCompatActivity).supportFragmentManager
-//
-//                manager?.beginTransaction()
-//                    ?.let { it -> addSongToPlaylist.show(it, "addSongToPlaylist") }
-//
-//
-//            }
+            R.id.addToPlayList_menu_item -> {
+
+
+                val addSongToPlaylist = AddSongToPlaylistDialog(getSong(position))
+
+                val manager: FragmentManager = (context as AppCompatActivity).supportFragmentManager
+
+                manager?.beginTransaction()
+                    ?.let { it -> addSongToPlaylist.show(it, "addSongToPlaylist") }
+
+
+            }
             R.id.deleteFromDevice_menu_item -> {
                 getSongUri(position)?.let { SongUtils.deletMusic(context, it) }
             }

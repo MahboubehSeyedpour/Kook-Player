@@ -6,10 +6,10 @@ import com.example.cassette.models.PlaylistModel
 import com.example.cassette.utlis.FileUtils
 import com.example.cassette.utlis.PlaylistUtils
 
-class PlaylistRepository
+class PlaylistRepository(val context: Context?)
 {
 
-    fun getPlaylists(context: Context?): ArrayList<PlaylistModel> {
+    fun getPlaylists(): ArrayList<PlaylistModel> {
         val array = ArrayList<PlaylistModel>()
 
         if(context != null)
@@ -47,12 +47,5 @@ class PlaylistRepository
         }
         return array
     }
-
-
-    fun getCachedPlaylists(): ArrayList<PlaylistModel>
-    {
-        return PlaylistUtils.playlists
-    }
-
 
 }

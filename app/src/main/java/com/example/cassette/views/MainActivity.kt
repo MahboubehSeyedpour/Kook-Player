@@ -28,7 +28,6 @@ import kotlinx.android.synthetic.main.base.*
 
 class MainActivity : AppCompatActivity(), LifecycleOwner {
 
-
     companion object {
         var permissionsGranted: Boolean = false
     }
@@ -199,11 +198,6 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
             }
         })
 
-/*        val viewModel =
-            ViewModelProvider(this).get(com.example.cassette.datamodels.Songs::class.java)
-        viewModel.getMutableLiveData().observe(this, songListUpdateObserver)
- */
-
 /*
         //temp: a button to check if the absolute path is correct
         button.setOnClickListener {
@@ -269,7 +263,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         val tabNames = resources.getStringArray(R.array.tabNames)
 
         val adapter = ViewPagerFragmentAdapter(supportFragmentManager, lifecycle)
-        adapter.addFragment(Library(application))
+        adapter.addFragment(Library())
 //        adapter.addFragment(RecentlyAdded())
         adapter.addFragment(Playlist())
         adapter.addFragment(Favorite())
