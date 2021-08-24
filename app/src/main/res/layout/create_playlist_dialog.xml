@@ -30,6 +30,7 @@
         app:layout_constraintTop_toBottomOf="@id/tvTitle">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/playlist_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

@@ -1,32 +1,46 @@
 package com.example.cassette.viewModel
 
-import androidx.lifecycle.MutableLiveData
-import com.example.cassette.utlis.PlaylistUtils
-
-class PlaylistViewModel : BaseViewModel() {
-
-    override var liveData = MutableLiveData<ArrayList<Any>>()
-    override var dataset = ArrayList<Any>()
-
-    override fun getMutableLiveData(): MutableLiveData<ArrayList<Any>> {
-        return liveData
-    }
-
-    override fun fillRecyclerView() {
-//        REST API can be called here
-
-        liveData.value = populateList()
-    }
-
-    override fun populateList(): ArrayList<Any> {
-
-        dataset = PlaylistUtils.getCachedPlaylists() as ArrayList<Any>
-        return dataset
-    }
-
-    init {
-        liveData = MutableLiveData<ArrayList<Any>>()
-        fillRecyclerView()
-    }
-
-}
+//class PlaylistViewModel : BaseViewModel() {
+//
+//
+//    override var liveData = MutableLiveData<ArrayList<Any>>()
+//    override var dataset = ArrayList<Any>()
+//    lateinit var context : Context
+//
+//
+//    init {
+//        liveData = MutableLiveData<ArrayList<Any>>()
+//
+////        fillRecyclerView()
+//    }
+//
+//    fun setViewModelContext(context: Context)
+//    {
+//        this.context = context
+//        liveData.value = populateList()
+//    }
+//
+//    override fun getMutableLiveData(): MutableLiveData<ArrayList<Any>> {
+//
+//        return liveData
+//    }
+//
+//    override fun fillRecyclerView() {
+//////        REST API can be called here
+////
+////        liveData.value = populateList()
+//    }
+//
+//    override fun populateList(): ArrayList<Any> {
+//
+//        dataset = PlaylistRepository().getPlaylists(context) as ArrayList<Any>
+//        return dataset
+//    }
+//
+//    fun updateDataset(): ArrayList<Any> {
+//
+//        dataset = PlaylistRepository().getPlaylists(context) as ArrayList<Any>
+//        return dataset
+//    }
+//
+//}

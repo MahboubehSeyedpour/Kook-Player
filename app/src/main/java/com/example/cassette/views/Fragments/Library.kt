@@ -31,7 +31,7 @@ class Library(val application: Application) : Fragment() {
         const val DELETE_REQUEST_CODE = 2
 
         fun notifyDataSetChanges() {
-            songsAdapter?.dataset = viewModel.getDataSet()
+            viewModel.updateDataset()
         }
     }
 
@@ -57,6 +57,13 @@ class Library(val application: Application) : Fragment() {
         }
 
         Coordinator.initNowPlayingQueue()
+
+        songs_rv.layoutManager = LinearLayoutManager(context)
+
+
+
+
+
     }
 
     override fun onCreateView(
@@ -73,13 +80,13 @@ class Library(val application: Application) : Fragment() {
 
         viewModel = ViewModelProvider(this).get(SongsViewModel::class.java)
         context?.let { viewModel.setFragmentContext(it) }
-        viewModel.getMutableLiveData().observe(viewLifecycleOwner, songListUpdateObserver)
-
+//        viewModel.getMutableLiveData().observe(viewLifecycleOwner, songListUpdateObserver)
+        viewModel.dataset.observe(viewLifecycleOwner, songListUpdateObserver)
 
         songsAdapter = activity?.let {
             SongsAdapter(
                 it,
-                viewModel.dataset as ArrayList<SongModel>
+                viewModel.dataset.value as ArrayList<SongModel>
             )
         }
 
@@ -88,7 +95,7 @@ class Library(val application: Application) : Fragment() {
         return view
     }
 
-    private val songListUpdateObserver =
+    private val songListUpdateObserve =
         object : Observer<ArrayList<Any>> {
             override fun onChanged(songArrayList: ArrayList<Any>) {
                 val recyclerViewAdapter = songsAdapter
@@ -96,5 +103,12 @@ class Library(val application: Application) : Fragment() {
                 songs_rv.adapter = recyclerViewAdapter
             }
         }
+
+
+    private val songListUpdateObserver = Observer<ArrayList<Any>> { dataset ->
+        songsAdapter?.dataset = dataset as ArrayList<SongModel>
+        songs_rv.adapter = songsAdapter
+    }
+
 
 }

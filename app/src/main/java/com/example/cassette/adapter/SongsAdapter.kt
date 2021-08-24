@@ -81,15 +81,24 @@ class SongsAdapter(
 //            R.id.playNext_menu_item -> {
 ////                PlayerRemote.playSongAsNextMusic(position)
 //            }
-            R.id.addToPlayList_menu_item -> {
-//                PlayerRemote.addToPlaylist(position)
-            }
+//            R.id.addToPlayList_menu_item -> {
+//
+//
+//                val addSongToPlaylist = AddSongToPlaylistDialog(getSong(position))
+//
+//                val manager: FragmentManager = (context as AppCompatActivity).supportFragmentManager
+//
+//                manager?.beginTransaction()
+//                    ?.let { it -> addSongToPlaylist.show(it, "addSongToPlaylist") }
+//
+//
+//            }
             R.id.deleteFromDevice_menu_item -> {
                 getSongUri(position)?.let { SongUtils.deletMusic(context, it) }
             }
             R.id.details_menu_item -> {
 
-                val songDetailsDialog = SongDetailsDialog(dataset[position])
+                val songDetailsDialog = SongDetailsDialog(getSong(position))
 
                 val manager: FragmentManager = (context as AppCompatActivity).supportFragmentManager
 
