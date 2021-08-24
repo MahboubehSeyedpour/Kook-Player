@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.cassette.R
+import com.example.cassette.`interface`.PassData
 import com.example.cassette.adapter.PlaylistAdapter
 import com.example.cassette.models.PlaylistModel
 import com.example.cassette.utlis.PlaylistUtils
@@ -17,9 +18,11 @@ import com.example.cassette.views.dialogs.CreatePlaylistDialog
 import kotlinx.android.synthetic.main.fragment_playlist.*
 
 
-class Playlist : Fragment() {
+class Playlist : Fragment(), PassData {
 
     var playlistAdapter: PlaylistAdapter? = null
+
+    private var newPlaylistName: String = ""
 
     companion object {
         var viewModel: PlaylistViewModel? = null
@@ -47,6 +50,16 @@ class Playlist : Fragment() {
     }
 
 
+    override fun passDataToInvokingFragment(str: String?) {
+        newPlaylistName = str ?: ""
+
+        context?.let { it ->
+            PlaylistUtils.createPlaylist(it, newPlaylistName)
+
+            viewModel?.updateDataset()
+        }
+    }
+
     override fun onResume() {
         super.onResume()
 
@@ -56,20 +69,14 @@ class Playlist : Fragment() {
 
             val createPlaylist = CreatePlaylistDialog()
 
-            this.fragmentManager?.beginTransaction()
-                ?.let { it -> createPlaylist.show(it, "playlist") }
+            createPlaylist.setTargetFragment(this, 0)
+            this.fragmentManager?.let { it1 -> createPlaylist.show(it1, "pl") }
 
-            context?.let { it ->
-                PlaylistUtils.createPlaylist(it, "test playlist0")
-
-                viewModel?.updateDataset()
             }
-
-        }
         viewModel?.updateDataset()
     }
 
-    val playlistUpdateObserver = Observer<ArrayList<Any>> { dataset ->
+    private val playlistUpdateObserver = Observer<ArrayList<Any>> { dataset ->
         playlistAdapter?.dataset = dataset as ArrayList<PlaylistModel>
         playlist_rv.adapter = playlistAdapter
     }

@@ -4,21 +4,28 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.example.cassette.R
+import com.example.cassette.`interface`.PassData
+import com.example.cassette.databinding.CreatePlaylistDialogBinding
 import kotlinx.android.synthetic.main.create_playlist_dialog.*
+import kotlinx.android.synthetic.main.create_playlist_dialog.view.*
 
 
 class CreatePlaylistDialog : DialogFragment() {
+
+
+    lateinit var binding: CreatePlaylistDialogBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        getDialog()!!.getWindow()?.setBackgroundDrawableResource(R.drawable.round_corner_bg);
-        return inflater.inflate(R.layout.create_playlist_dialog, container, false)
+        dialog!!.window?.setBackgroundDrawableResource(R.drawable.round_corner_bg);
+        val view =  inflater.inflate(R.layout.create_playlist_dialog, container, false)
+        binding = CreatePlaylistDialogBinding.bind(view)
+        return view
 
     }
 
@@ -41,13 +48,11 @@ class CreatePlaylistDialog : DialogFragment() {
         super.onResume()
 
         btnPositive.setOnClickListener {
-            Toast.makeText(context, "ok pressed", Toast.LENGTH_SHORT).show()
+            val targetFragment = targetFragment
+            val passData : PassData = targetFragment as PassData
+            targetFragment.passDataToInvokingFragment(binding.textField.playlist_name.text.toString())
+
             this.dismiss()
         }
-//
-//        btnNegative.setOnClickListener {
-//            Toast.makeText(context, "cancel pressed", Toast.LENGTH_SHORT).show()
-//            this.dismiss()
-//        }
     }
 }
