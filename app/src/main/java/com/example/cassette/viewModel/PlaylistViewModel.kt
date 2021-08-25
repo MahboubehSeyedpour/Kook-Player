@@ -2,7 +2,7 @@ package com.example.cassette.viewModel
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
-import com.example.cassette.models.SongModel
+import com.example.cassette.models.PlaylistModel
 import com.example.cassette.repositories.PlaylistRepository
 
 class PlaylistViewModel : BaseViewModel() {
@@ -33,8 +33,8 @@ class PlaylistViewModel : BaseViewModel() {
         dataset.value = playlistRepository.getPlaylists()!! as ArrayList<Any>
     }
 
-    fun getDataSet(): ArrayList<SongModel> {
-        return dataset.value as ArrayList<SongModel>
+    fun getDataSet(): ArrayList<PlaylistModel> {
+        return dataset.value as ArrayList<PlaylistModel>
     }
 
 }

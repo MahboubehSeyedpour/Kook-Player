@@ -18,7 +18,6 @@ import com.example.cassette.manager.Coordinator
 import com.example.cassette.models.SongModel
 import com.example.cassette.utlis.ImageUtils
 import com.example.cassette.utlis.TimeUtils
-import com.example.cassette.views.dialogs.AddSongToPlaylistDialog
 import com.example.cassette.views.dialogs.SongDetailsDialog
 import kotlinx.android.synthetic.main.song_rv_item.view.*
 
@@ -26,9 +25,11 @@ import kotlinx.android.synthetic.main.song_rv_item.view.*
 class SongsAdapter(
     val context: Activity,
     var dataset: ArrayList<SongModel>
-) : RVBaseAdapter() {
+) : RVBaseAdapter(){
 
     var position = 0
+
+    lateinit var dataSend: OnDataSend
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -69,7 +70,10 @@ class SongsAdapter(
 
             popUpMenu.setOnMenuItemClickListener {
 //                updatePosition(viewHolder.adapterPosition)
-                return@setOnMenuItemClickListener handleMenuButtonClickListener(it.itemId, viewHolder.adapterPosition)
+                return@setOnMenuItemClickListener handleMenuButtonClickListener(
+                    it.itemId,
+                    viewHolder.adapterPosition
+                )
             }
             popUpMenu.show()
         }
@@ -85,13 +89,21 @@ class SongsAdapter(
             R.id.addToPlayList_menu_item -> {
 
 
-                val addSongToPlaylist = AddSongToPlaylistDialog(getSong(position))
+//                val addSongToPlaylist = AddSongToPlaylistDialog(getSong(position))
+//
+//                val manager: FragmentManager = (context as AppCompatActivity).supportFragmentManager
 
-                val manager: FragmentManager = (context as AppCompatActivity).supportFragmentManager
+//                manager?.beginTransaction()
+//                    ?.let { it -> addSongToPlaylist.show(it, "addSongToPlaylist") }
 
-                manager?.beginTransaction()
-                    ?.let { it -> addSongToPlaylist.show(it, "addSongToPlaylist") }
+//                val i = context.supportFragmentManager.fragments
 
+
+                dataSend.onSend(context,  getSong(position))
+
+
+//                addSongToPlaylist.setTargetFragment(context.supportFragmentManager.fragments[0], 0)
+//                this.fragmentManager?.let { it1 -> createPlaylist.show(it1, "addSongToPlaylist") }
 
             }
             R.id.deleteFromDevice_menu_item -> {
@@ -164,5 +176,13 @@ class SongsAdapter(
         val menuBtn: ImageView = itemView.music_menu_btn
         val imageView: ImageView = itemView.music_iv
         val recyclerItem: ConstraintLayout = itemView.song_container
+    }
+
+    interface OnDataSend {
+        fun onSend(context: Activity, songModel: SongModel)
+    }
+
+    fun OnDataSend(dataSend: OnDataSend) {
+        this.dataSend = dataSend
     }
 }

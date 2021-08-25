@@ -74,6 +74,7 @@ class Playlist : Fragment(), PassData {
 
             }
         viewModel?.updateDataset()
+
     }
 
     private val playlistUpdateObserver = Observer<ArrayList<Any>> { dataset ->

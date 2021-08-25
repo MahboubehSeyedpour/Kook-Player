@@ -52,6 +52,10 @@ class CreatePlaylistDialog : DialogFragment() {
             val passData : PassData = targetFragment as PassData
             targetFragment.passDataToInvokingFragment(binding.textField.playlist_name.text.toString())
 
+
+
+
+
             this.dismiss()
         }
     }

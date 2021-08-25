@@ -6,14 +6,14 @@ import com.example.cassette.models.PlaylistModel
 import com.example.cassette.utlis.FileUtils
 import com.example.cassette.utlis.PlaylistUtils
 
-class PlaylistRepository(val context: Context?)
-{
+class PlaylistRepository(val context: Context?) {
+
+    var playlistArray = ArrayList<PlaylistModel>()
 
     fun getPlaylists(): ArrayList<PlaylistModel> {
         val array = ArrayList<PlaylistModel>()
 
-        if(context != null)
-        {
+        if (context != null) {
             //        val cursor = context?.contentResolver?.query(uri, projection, null, null, sortOrder)
             val cursor = FileUtils.fetchFiles(
                 fileType = FileUtils.FILE_TYPES.PLAYLIST,
@@ -29,7 +29,8 @@ class PlaylistRepository(val context: Context?)
                 cursor.moveToFirst()
                 while (!cursor.isAfterLast) {
                     val id =
-                        cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Playlists._ID)).toLong()
+                        cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Playlists._ID))
+                            .toLong()
                     val name: String =
                         cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Playlists.NAME))
 
@@ -45,7 +46,21 @@ class PlaylistRepository(val context: Context?)
 
             PlaylistUtils.playlists = array
         }
+
+        playlistArray = array
         return array
     }
+
+
+    fun getPlaylistIdByName(name: String): String {
+
+        playlistArray = getPlaylists()
+
+        for (playlist in playlistArray) {
+            if (playlist.name == name) return playlist.id.toString() else continue
+        }
+        return "-1"
+    }
+
 
 }

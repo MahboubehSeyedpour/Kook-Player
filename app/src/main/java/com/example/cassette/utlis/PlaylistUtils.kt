@@ -13,9 +13,9 @@ import com.example.cassette.repositories.SongsRepository
 object PlaylistUtils {
 
     var playlists = ArrayList<PlaylistModel>()
-    lateinit var context : Context
+    lateinit var context: Context
 
-    fun createPlaylist(context: Context, name: String) {
+    fun createPlaylist(context: Context, name: String): String {
 
         this.context = context
 
@@ -24,6 +24,8 @@ object PlaylistUtils {
         values.put(MediaStore.Audio.Playlists.NAME, name)
         val uri = FilePathUtlis.getPlayListsUri()
         resolver?.insert(uri, values)
+
+        return MediaStore.Audio.Playlists.Members.PLAYLIST_ID
 
 //        Create new playlist :/
     }
@@ -105,23 +107,41 @@ object PlaylistUtils {
         val selection = "${MediaStore.Audio.Media.IS_MUSIC}  != 0"
         val sortOrder = "${MediaStore.Audio.Playlists.Members.PLAY_ORDER} ASC"
 
-        val cursor = context.contentResolver.query(uri, projection, selection, null, sortOrder)
+        val cursor = context.contentResolver.query(uri, null, null, null, sortOrder)
+//        val cursor =
+//            FileUtils.fetchFiles(
+//                FileUtils.FILE_TYPES.PLAYLIST,
+//                context,
+//                null,
+//                null,
+//                null,
+//                sortOrder
+//            )
 
         if (cursor != null) {
             cursor.moveToFirst()
-            while (cursor!!.isLast) {
-//                val id = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media._ID)).toLong()
-//                val title = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE))
-//                val artist = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST))
-//                val data = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA))
-//                val duration = MusicUtils.milliSecToDuration(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION)).toLong())
-//                val albumId = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID)).toLong()
+//            while (cursor != null && cursor.count != 0) {
+////                val id = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media._ID)).toLong()
+////                val title = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE))
+////                val artist = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST))
+////                val data = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA))
+////                val duration = MusicUtils.milliSecToDuration(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION)).toLong())
+////                val albumId = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID)).toLong()
+//
+////                array.add(Track(id, title, artist, data, duration, albumId))
+//
+//                array.add(SongsRepository(context).createSongFromCursor(cursor))
+//
+//                cursor.moveToNext()
+//            }
 
-//                array.add(Track(id, title, artist, data, duration, albumId))
-
-                SongsRepository(context).createSongFromCursor(cursor)
-
-                cursor.moveToNext()
+            if (cursor != null && cursor.count != 0) {
+                do {
+                    cursor.moveToNext()
+                    array.add(SongsRepository(context).createSongFromCursor(cursor))
+                } while (!cursor.isLast)
+            } else {
+//                TODO(handle null cursor)
             }
 
             cursor.close()
@@ -151,13 +171,11 @@ object PlaylistUtils {
         )
     }
 
-    fun renamePlaylist()
-    {
+    fun renamePlaylist() {
 
     }
 
-    fun moveItem()
-    {
+    fun moveItem() {
 
     }
 

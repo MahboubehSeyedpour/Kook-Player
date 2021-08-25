@@ -16,7 +16,9 @@ import com.example.cassette.R
 import com.example.cassette.adapter.SongsAdapter
 import com.example.cassette.manager.Coordinator
 import com.example.cassette.models.SongModel
+import com.example.cassette.viewModel.PlaylistViewModel
 import com.example.cassette.viewModel.SongsViewModel
+import com.example.cassette.views.dialogs.AddSongToPlaylistDialog
 import kotlinx.android.synthetic.main.fragment_library.*
 
 class Library : Fragment() {
@@ -83,6 +85,30 @@ class Library : Fragment() {
             )
         }
 
+        songsAdapter?.OnDataSend(
+            object : SongsAdapter.OnDataSend {
+                override fun onSend(context: Activity, songModel: SongModel) {
+
+                    createDialogToSelectPlaylist()
+
+//                    PlaylistUtils.addToPlaylist(
+//                        context,
+//                        PlaylistUtils.playlists[0].id,
+//                        arrayListOf(songModel)
+//                    )
+
+
+//                    val playlistRepository = PlaylistRepository(context)
+//                    val n = playlistRepository.getPlaylistIdByName("car")
+//                    val y = playlistRepository.getPlaylists()
+//                    PlaylistUtils.addToPlaylist(context, n.toLong(), arrayListOf(songModel))
+//                    val ii = PlaylistUtils.getPlaylistSize(context, n.toLong())
+//                    val bc = PlaylistUtils.getMusicsRelatedToSpecificPlaylist(context, n.toLong())
+                    val b = 0
+                }
+            }
+        )
+
         notifyDataSetChanges()
 
         return view
@@ -92,6 +118,19 @@ class Library : Fragment() {
     private val songListUpdateObserver = Observer<ArrayList<Any>> { dataset ->
         songsAdapter?.dataset = dataset as ArrayList<SongModel>
         songs_rv.adapter = songsAdapter
+    }
+
+    fun createDialogToSelectPlaylist()
+    {
+//        Playlist.viewModel?.updateDataset()
+        val vm = PlaylistViewModel()
+        context?.let { vm.setFragmentContext(it) }
+        vm.updateDataset()
+        val addSongToPlaylistDialog = AddSongToPlaylistDialog(vm.getDataSet())
+
+        addSongToPlaylistDialog?.setTargetFragment(this, 0)
+        this.fragmentManager?.let { it1 -> addSongToPlaylistDialog?.show(it1, "pl") }
+
     }
 
 
