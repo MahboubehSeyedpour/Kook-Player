@@ -2,15 +2,11 @@ package com.example.cassette.views
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Context
-import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
 import androidx.viewpager2.widget.ViewPager2
@@ -18,6 +14,7 @@ import com.example.cassette.R
 import com.example.cassette.adapter.ViewPagerFragmentAdapter
 import com.example.cassette.databinding.ActivityMainBinding
 import com.example.cassette.player.Enums
+import com.example.cassette.utlis.PermissionProvider
 import com.example.cassette.views.Fragments.*
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -32,9 +29,9 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         var permissionsGranted: Boolean = false
     }
 
-    private val PERMISSIONS_REQUEST_CODE = 1
+//    private val PERMISSIONS_REQUEST_CODE = 1
 
-    private val PERMISSIONS = arrayOf(
+    private val permissions = arrayOf(
         Manifest.permission.READ_EXTERNAL_STORAGE
     )
 
@@ -217,41 +214,53 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
     }
 
-    private fun checkForPermissions() {
-        if (!hasPermissions(this, *PERMISSIONS)) {
-            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSIONS_REQUEST_CODE)
-        }
-    }
+//    private fun checkForPermissions() {
+//        if (!hasPermissions(this, *PERMISSIONS)) {
+//            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSIONS_REQUEST_CODE)
+//        }
+//    }
 
-    private fun hasPermissions(context: Context, vararg permissions: String): Boolean =
-        permissions.all {
-            ActivityCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
+//    private fun hasPermissions(context: Context, vararg permissions: String): Boolean =
+//        permissions.all {
+//            ActivityCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
+//        }
+
+//    override fun onRequestPermissionsResult(
+//        requestCode: Int,
+//        permissions: Array<out String>,
+//        grantResults: IntArray
+//    ) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+//        when (requestCode) {
+//            PERMISSIONS_REQUEST_CODE -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                if (ContextCompat.checkSelfPermission(
+//                        this,
+//                        Manifest.permission.READ_EXTERNAL_STORAGE
+//                    ) == PackageManager.PERMISSION_GRANTED
+//                ) {
+//                    permissionsGranted = true
+//
+//                } else {
+//                    permissionsGranted = false
+//                    finish()
+//                }
+//                initTabs()
+//                initBottomSheet()
+//                return
+//            }
+//        }
+//    }
+
+    fun checkForPermissions() {
+        val permissionProvider = PermissionProvider()
+        permissionProvider.askForPermission(this, permissions)
+
+        if (permissionProvider.permissionIsGranted)
+        {
+            initTabs()
+            initBottomSheet()
         }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            PERMISSIONS_REQUEST_CODE -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                if (ContextCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.READ_EXTERNAL_STORAGE
-                    ) == PackageManager.PERMISSION_GRANTED
-                ) {
-                    permissionsGranted = true
-
-                } else {
-                    permissionsGranted = false
-                    finish()
-                }
-                initTabs()
-                initBottomSheet()
-                return
-            }
-        }
     }
 
     private fun initTabs() {

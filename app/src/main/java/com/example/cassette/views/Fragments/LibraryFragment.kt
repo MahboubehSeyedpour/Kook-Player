@@ -67,6 +67,8 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
 
         songs_rv.layoutManager = LinearLayoutManager(context)
 
+        viewModel.updateDataset()
+
     }
 
     override fun onCreateView(
@@ -99,20 +101,6 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
                     selectedSong = songModel
 
                     createDialogToSelectPlaylist()
-
-//                    PlaylistUtils.addToPlaylist(
-//                        context,
-//                        PlaylistUtils.playlists[0].id,
-//                        arrayListOf(songModel)
-//                    )
-
-
-//                    val playlistRepository = PlaylistRepository(context)
-//                    val n = playlistRepository.getPlaylistIdByName("car")
-//                    val y = playlistRepository.getPlaylists()
-//                    PlaylistUtils.addToPlaylist(context, n.toLong(), arrayListOf(songModel))
-//                    val ii = PlaylistUtils.getPlaylistSize(context, n.toLong())
-//                    val bc = PlaylistUtils.getMusicsRelatedToSpecificPlaylist(context, n.toLong())
                 }
             }
         )
@@ -159,21 +147,7 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
                     arrayListOf(selectedSong)
                 )
             }
-
-            val numOfSongs = playlist.songsId.size
-            val i = 0
-//            val numOfSongs =
-//                context?.let { PlaylistUtils.getMusicsRelatedToSpecificPlaylist(it, playlistId.toLong()) }
-
-//            playlist.countOfSongs = numOfSongs?.size ?: 0
         }
-//        val n = playlistRepository.getPlaylistIdByName("car")
-//        val y = playlistRepository.getPlaylists()
-//        PlaylistUtils.addToPlaylist(context, n.toLong(), arrayListOf(songModel))
-//        val ii = PlaylistUtils.getPlaylistSize(context, n.toLong())
-//        val bc = PlaylistUtils.getMusicsRelatedToSpecificPlaylist(context, n.toLong())
-
-
     }
 
 
