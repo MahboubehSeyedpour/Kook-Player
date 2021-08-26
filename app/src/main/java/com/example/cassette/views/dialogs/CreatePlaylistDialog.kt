@@ -48,13 +48,10 @@ class CreatePlaylistDialog : DialogFragment() {
         super.onResume()
 
         btnPositive.setOnClickListener {
+
             val targetFragment = targetFragment
             val passData : PassData = targetFragment as PassData
             targetFragment.passDataToInvokingFragment(binding.textField.playlist_name.text.toString())
-
-
-
-
 
             this.dismiss()
         }

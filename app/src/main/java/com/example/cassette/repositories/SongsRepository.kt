@@ -1,10 +1,8 @@
 package com.example.cassette.repositories
 
-import android.content.ContentUris
 import android.content.Context
 import android.database.Cursor
 import android.media.MediaMetadataRetriever
-import android.provider.MediaStore
 import android.provider.MediaStore.Audio.AudioColumns
 import com.example.cassette.extensions.getInt
 import com.example.cassette.extensions.getLong
@@ -29,21 +27,24 @@ class SongsRepository(val context: Context) {
         val artistName = cursor.getString(AudioColumns.ARTIST)
 //        val composer = cursor.getString(AudioColumns.COMPOSER)
 //        val albumArtist = cursor.getString(AudioColumns.ALBUM_ARTIST)
-        val uri = ContentUris
-            .withAppendedId(
-                MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                cursor.getLong(cursor.getColumnIndex(MediaStore.Images.ImageColumns._ID))
-            )
+//        val uri = ContentUris
+//            .withAppendedId(
+//                MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+//                cursor.getLong(cursor.getColumnIndex(MediaStore.Images.ImageColumns._ID))
+//            )
         val albumId = cursor.getLong(AudioColumns.ALBUM_ID)
         val size = cursor.getString(AudioColumns.SIZE)
 
         val image = ImageUtils.albumArtUriToBitmap(context, albumId.toLong())
             ?: ImageUtils.getDefaultAlbumArt(context)
 
+        var bitrate = ""
+        if (data != "") {
+            val metadata = MediaMetadataRetriever()
+            metadata.setDataSource(data)
+            val bitrate = metadata?.extractMetadata(MediaMetadataRetriever.METADATA_KEY_BITRATE)
 
-        val metadata = MediaMetadataRetriever()
-        metadata.setDataSource(data)
-        val bitrate = metadata.extractMetadata(MediaMetadataRetriever.METADATA_KEY_BITRATE)
+        }
 
         return SongModel(
             title,
@@ -52,7 +53,7 @@ class SongsRepository(val context: Context) {
             dateAdded,
             artist,
             id,
-            uri,
+            null,
             albumId,
             size,
             bitrate,

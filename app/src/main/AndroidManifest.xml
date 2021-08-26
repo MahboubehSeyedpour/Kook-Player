@@ -39,7 +39,6 @@
         <activity
             android:name="com.example.cassette.views.MainActivity"
             android:theme="@style/Theme.MusicPlayer" />
-        <service android:name=".services.NotificationPlayerService"/>
     </application>
 
 </manifest>

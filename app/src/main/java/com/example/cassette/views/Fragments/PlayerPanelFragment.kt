@@ -1,5 +1,6 @@
 package com.example.cassette.views.Fragments
 
+import android.app.NotificationManager
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -17,7 +18,6 @@ import com.example.cassette.player.Enums.PanelState
 import com.example.cassette.player.Enums.PanelState.COLLAPSED
 import com.example.cassette.player.Enums.PanelState.EXPANDED
 import com.example.cassette.player.PlayerStateRepository
-import com.example.cassette.services.NotificationPlayerService
 import com.example.cassette.utlis.ImageUtils
 import com.example.cassette.utlis.TimeUtils
 import com.frolo.waveformseekbar.WaveformSeekBar
@@ -33,6 +33,8 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
     var previouslyLiked: Boolean = false
 
 
+    lateinit var notificationManager: NotificationManager
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,7 +42,7 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
     ): View? {
         val view = inflater.inflate(R.layout.fragment_player_panel, container, false)
 
-        setBinding(view)
+        initBinding(view)
 
         updatePanelBasedOnState(COLLAPSED)
 
@@ -48,16 +50,24 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
     }
 
 
+
     override fun onResume() {
         super.onResume()
 
-        createNotifService()
+//        createNotifService()
 
         activity?.baseContext?.let {
             Coordinator.setup(
                 it
             )
         }
+
+//        activity?.baseContext?.let {
+//            notificationSetup(
+//                it
+//            )
+//        }
+
 
         binding.header.onExpand.like_iv.setOnClickListener(this)
         binding.header.onCollapse.play_btn_on_header.setOnClickListener(this)
@@ -127,7 +137,7 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
 //                    Toast.LENGTH_SHORT
 //                ).show()
 
-                Coordinator.seekTo((waveform_seek_bar.progressPercent * Coordinator.getCurrentPlayingSong().duration).toInt())
+                Coordinator.seekTo((waveform_seek_bar.progressPercent * Coordinator.getCurrentPlayingSong().duration!!).toInt())
             }
 
         })
@@ -204,12 +214,15 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
 //                    binding.playerRemote.seekBar.progress = mCurrentPosition
 
                     binding.playerRemote.waveformSeekBar.setProgressInPercentage(
-                        mCurrentPosition / (Coordinator.getCurrentPlayingSong().duration / 1000F)
+                        mCurrentPosition / (Coordinator.getCurrentPlayingSong().duration?.div(1000F)!!)
                     )
                     setRemainingTime(mCurrentPosition)
                     if (binding.header.onCollapse.visibility == View.VISIBLE) {
 
-                        updateWheelProgress((mCurrentPosition * 360) / (Coordinator.getCurrentPlayingSong().duration / 1000).toInt())
+                        updateWheelProgress((mCurrentPosition * 360) / ((Coordinator.getCurrentPlayingSong().duration?.div(
+                            1000
+                        ))?.toInt() ?: 0)
+                        )
 
                         binding.header.onCollapse.song_title_on_header.text =
                             if (Coordinator.isPlaying()) Coordinator.getCurrentPlayingSong().title else ""
@@ -265,7 +278,7 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
             binding.playerRemote.playOrPauseLayout -> {
                 if (!Coordinator.isPlaying()) Coordinator.resume() else Coordinator.pause()
                 switchPlayPauseButton()
-                startForegroundService()
+//                startForegroundService()
             }
 
             binding.playerRemote.shuffleBtn -> {
@@ -318,21 +331,30 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
         binding.header.onCollapse.wheelprogress.setPercentage(progressInPercentage)
     }
 
-    fun setBinding(view: View) {
+    fun initBinding(view: View) {
         binding = FragmentPlayerPanelBinding.bind(view)
     }
 
-    fun createNotifService() {
-        val notificationPlayerService = NotificationPlayerService()
-    }
 
-    fun startForegroundService() {
-        context?.let {
-            NotificationPlayerService.startNotification(
-                it,
-                "Foreground service is running"
-            )
-        }
-    }
+//    fun createNotifService() {
+//        val notificationPlayerService = NotificationPlayerService()
+//    }
+//
+//    fun startForegroundService() {
+//        context?.let {
+//            NotificationPlayerService.startNotification(
+//                it,
+//                "Foreground service is running"
+//            )
+//        }
+//    }
+//
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            notificationManager.cancelAll()
+//        }
+//        activity?.unregisterReceiver(broadcastReceiver)
+//    }
 
 }

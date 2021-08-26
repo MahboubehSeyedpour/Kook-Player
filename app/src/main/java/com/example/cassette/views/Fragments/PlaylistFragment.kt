@@ -1,5 +1,6 @@
 package com.example.cassette.views.Fragments
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +19,7 @@ import com.example.cassette.views.dialogs.CreatePlaylistDialog
 import kotlinx.android.synthetic.main.fragment_playlist.*
 
 
-class Playlist : Fragment(), PassData {
+class PlaylistFragment : Fragment(), PassData {
 
     var playlistAdapter: PlaylistAdapter? = null
 
@@ -46,6 +47,7 @@ class Playlist : Fragment(), PassData {
                 viewModel?.dataset?.value as ArrayList<PlaylistModel>
             )
         }
+
         return view
     }
 
@@ -73,6 +75,16 @@ class Playlist : Fragment(), PassData {
             this.fragmentManager?.let { it1 -> createPlaylist.show(it1, "pl") }
 
             }
+
+        playlistAdapter?.OnDataSend(
+            object : PlaylistAdapter.OnDataSend {
+                override fun onSend(context: Activity, id: String) {
+
+                    viewModel?.updateDataset()
+                }
+            }
+        )
+
         viewModel?.updateDataset()
 
     }
@@ -81,4 +93,5 @@ class Playlist : Fragment(), PassData {
         playlistAdapter?.dataset = dataset as ArrayList<PlaylistModel>
         playlist_rv.adapter = playlistAdapter
     }
+
 }

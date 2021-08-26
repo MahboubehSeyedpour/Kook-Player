@@ -3,25 +3,25 @@ package com.example.cassette.utlis
 import android.content.Context
 import android.widget.Toast
 import com.example.cassette.models.SongModel
-import com.example.cassette.views.Fragments.Library
+import com.example.cassette.views.Fragments.LibraryFragment
 
 object SortUtils {
 
     fun sortByDateAdded() {
-        Library.viewModel?.getDataSet().sortWith(compareByDescending { it.dateAdded })
-        var sortedList = Library.viewModel?.getDataSet()
+        LibraryFragment.viewModel?.getDataSet().sortWith(compareByDescending { it.dateAdded })
+        var sortedList = LibraryFragment.viewModel?.getDataSet()
         sortMusicList(sortedList)
     }
 
     fun sortByName() {
-        Library.viewModel?.getDataSet().sortWith(compareByDescending { it.title })
-        var sortedList = Library.viewModel?.getDataSet()
+        LibraryFragment.viewModel?.getDataSet().sortWith(compareByDescending { it.title })
+        var sortedList = LibraryFragment.viewModel?.getDataSet()
         sortMusicList(sortedList)
     }
 
     fun sortByArtist() {
-        Library.viewModel?.getDataSet().sortWith(compareByDescending { it.artist })
-        var sortedList = Library.viewModel?.getDataSet()
+        LibraryFragment.viewModel?.getDataSet().sortWith(compareByDescending { it.artist })
+        var sortedList = LibraryFragment.viewModel?.getDataSet()
         sortMusicList(sortedList)
     }
 
@@ -32,14 +32,14 @@ object SortUtils {
 //    }
 
     fun sortByDuration() {
-        Library.viewModel?.getDataSet().sortWith(compareByDescending { it.duration })
-        var sortedList = Library.viewModel?.getDataSet()
+        LibraryFragment.viewModel?.getDataSet().sortWith(compareByDescending { it.duration })
+        var sortedList = LibraryFragment.viewModel?.getDataSet()
         sortMusicList(sortedList)
     }
 
     fun sortMusicList(arrayList: ArrayList<SongModel>) {
-        Library.songsAdapter?.dataset = arrayList
-        Library.songsAdapter?.notifyDataSetChanged()
+        LibraryFragment.songsAdapter?.dataset = arrayList
+        LibraryFragment.songsAdapter?.notifyDataSetChanged()
     }
 
     fun changeSortingOrder(context: Context, item: String) {

@@ -66,7 +66,7 @@ class SongsAdapter(
 
         viewHolder.menuBtn.setOnClickListener { it ->
             val popUpMenu = PopupMenu(context, it)
-            popUpMenu.inflate(R.menu.popup_menu)
+            popUpMenu.inflate(R.menu.songs_popup_menu)
 
             popUpMenu.setOnMenuItemClickListener {
 //                updatePosition(viewHolder.adapterPosition)

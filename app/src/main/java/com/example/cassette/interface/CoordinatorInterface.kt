@@ -42,8 +42,10 @@ interface CoordinatorInterface {
     fun getPositionInPlayer(): Int
     fun hasNext(): Boolean
     fun hasPrev(): Boolean
-    fun getPrevSong(): String
-    fun getNextSong(): String
+    fun getPrevSongData(): String
+    fun getNextSongData(): String
+    fun getNextSong(): SongModel
+    fun getPrevSong(): SongModel
     fun getSongAtPosition(position: Int): String
 
 

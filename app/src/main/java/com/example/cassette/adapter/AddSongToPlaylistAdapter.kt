@@ -20,12 +20,17 @@ class AddSongToPlaylistAdapter(
 
     var dataset: ArrayList<PlaylistModel>
 
+    companion object {
+        var choices: ArrayList<PlaylistModel> = arrayListOf()
+    }
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): RecyclerView.ViewHolder {
         val rootView: View =
-            LayoutInflater.from(context).inflate(R.layout.add_song_to_playlist_dialog_item, parent, false)
+            LayoutInflater.from(context)
+                .inflate(R.layout.add_song_to_playlist_dialog_item, parent, false)
         return RecyclerViewViewHolder(rootView)
     }
 
@@ -38,9 +43,18 @@ class AddSongToPlaylistAdapter(
         viewHolder.name.text = playlist.name
         viewHolder.checkkox.setOnClickListener {
 
-            Toast.makeText(context, "playlist ${playlist.name} was clicked", Toast.LENGTH_SHORT)
-                .show()
+            if (viewHolder.checkkox.isChecked) {
+                Toast.makeText(context, "playlist ${playlist.name} selected", Toast.LENGTH_SHORT)
+                    .show()
+                choices?.add(playlist)
+            } else {
+                Toast.makeText(context, "playlist ${playlist.name} unselected", Toast.LENGTH_SHORT)
+                    .show()
+                choices?.remove(playlist)
+            }
+
         }
+
     }
 
     override fun getItemCount(): Int {

@@ -263,10 +263,10 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         val tabNames = resources.getStringArray(R.array.tabNames)
 
         val adapter = ViewPagerFragmentAdapter(supportFragmentManager, lifecycle)
-        adapter.addFragment(Library())
+        adapter.addFragment(LibraryFragment())
 //        adapter.addFragment(RecentlyAdded())
-        adapter.addFragment(Playlist())
-        adapter.addFragment(Favorite())
+        adapter.addFragment(PlaylistFragment())
+        adapter.addFragment(FavoriteFragment())
         viewpager_home.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         viewpager_home.adapter = adapter
 

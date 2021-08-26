@@ -5,7 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="200dp"
     android:layout_height="48dp"
-    android:layout_margin="16dp">
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:padding="5dp">
 
     <TextView
         android:id="@+id/textView2"

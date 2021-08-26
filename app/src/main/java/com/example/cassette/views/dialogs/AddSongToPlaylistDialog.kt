@@ -1,5 +1,6 @@
 package com.example.cassette.views.dialogs
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,14 +8,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cassette.R
+import com.example.cassette.`interface`.PassDataForSelectPlaylists
 import com.example.cassette.adapter.AddSongToPlaylistAdapter
 import com.example.cassette.databinding.AddSongToPlaylistBinding
 import com.example.cassette.models.PlaylistModel
+import com.example.cassette.models.SongModel
 
 class AddSongToPlaylistDialog(val array: ArrayList<PlaylistModel>) : DialogFragment() {
 
     lateinit var binding: AddSongToPlaylistBinding
     var playlistAdapter: AddSongToPlaylistAdapter? = null
+    lateinit var dataSend: OnDataSend
 
 
     override fun onCreateView(
@@ -49,6 +53,11 @@ class AddSongToPlaylistDialog(val array: ArrayList<PlaylistModel>) : DialogFragm
         super.onResume()
 
         binding.acceptSelectedPlaylistBtn.setOnClickListener {
+
+            val targetFragment = targetFragment
+            val passData : PassDataForSelectPlaylists = targetFragment as PassDataForSelectPlaylists
+            targetFragment.passDataToInvokingFragment(AddSongToPlaylistAdapter.choices)
+
             this.dismiss()
         }
 
@@ -58,6 +67,13 @@ class AddSongToPlaylistDialog(val array: ArrayList<PlaylistModel>) : DialogFragm
         binding = AddSongToPlaylistBinding.bind(view)
     }
 
+    interface OnDataSend {
+        fun onSend(context: Activity, songModel: SongModel)
+    }
+
+    fun OnDataSend(dataSend: OnDataSend) {
+        this.dataSend = dataSend
+    }
 
 }
 

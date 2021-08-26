@@ -7,9 +7,9 @@ import com.example.cassette.player.Enums
 import com.example.cassette.player.Enums.PlayingOrder.REPEAT_ALL
 import com.example.cassette.player.Enums.PlayingOrder.SHUFFLE
 import com.example.cassette.player.MediaPlayerAgent
-import com.example.cassette.views.Fragments.Library
-import com.example.cassette.views.Fragments.Library.Library.songsAdapter
-import com.example.cassette.views.Fragments.Library.Library.viewModel
+import com.example.cassette.views.Fragments.LibraryFragment
+import com.example.cassette.views.Fragments.LibraryFragment.Library.songsAdapter
+import com.example.cassette.views.Fragments.LibraryFragment.Library.viewModel
 
 object Coordinator : CoordinatorInterface {
     override lateinit var nowPlayingQueue: ArrayList<SongModel>
@@ -17,9 +17,48 @@ object Coordinator : CoordinatorInterface {
     override lateinit var mediaPlayerAgent: MediaPlayerAgent
     override var position: Int = songsAdapter?.getCurrentPosition() ?: -1
 
+//    lateinit var notificationManager: NotificationManager
+
     override fun setup(context: Context) {
         mediaPlayerAgent = MediaPlayerAgent(context)
     }
+
+
+//    fun notificationSetup(context: Context) {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            createChannel(context)
+//            context.registerReceiver(broadcastReceiver, IntentFilter("TRACKS_TRACKS"))
+//            context.startService(Intent(context, OnClearFromRecentService::class.java))
+//        }
+//    }
+
+//    private fun createChannel(context: Context) {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            val channel = NotificationChannel(
+//                context.getString(R.string.notification_channel_id),
+//                "KOD Dev", NotificationManager.IMPORTANCE_LOW
+//            )
+//            notificationManager = context.getSystemService(NotificationManager::class.java)!!
+//            if (notificationManager != null) {
+//                notificationManager.createNotificationChannel(channel)
+//            }
+//        }
+//    }
+
+//    var broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+//        override fun onReceive(context: Context, intent: Intent) {
+//            val action = intent.extras!!.getString("actionname")
+//            when (action) {
+//                context.getString(R.string.notification_action_previous) -> onTrackPrevious(context)
+//                context.getString(R.string.notification_action_play) -> if (isPlaying()) {
+//                    onTrackPause(context)
+//                } else {
+//                    onTrackPlay(context)
+//                }
+//                context.getString(R.string.notification_action_next) -> onTrackNext(context)
+//            }
+//        }
+//    }
 
     override fun initNowPlayingQueue() {
 //        TODO("check for last playing mode")
@@ -29,14 +68,14 @@ object Coordinator : CoordinatorInterface {
 
     override fun playNextSong() {
         if (hasNext())
-            play(getNextSong())
+            play(getNextSongData())
         else
             mediaPlayerAgent.stop()
     }
 
     override fun playPrevSong() {
         if (hasPrev())
-            play(getPrevSong())
+            play(getPrevSongData())
         else
             mediaPlayerAgent.stop()
     }
@@ -58,7 +97,7 @@ object Coordinator : CoordinatorInterface {
         when (playingOrder) {
 //            TODO(shuffle as an extension not a function)
             SHUFFLE -> nowPlayingQueue =
-                Library.viewModel.getDataSet().toList().shuffled() as ArrayList<SongModel>
+                LibraryFragment.viewModel.getDataSet().toList().shuffled() as ArrayList<SongModel>
             REPEAT_ALL -> nowPlayingQueue = viewModel.getDataSet()
         }
     }
@@ -77,7 +116,7 @@ object Coordinator : CoordinatorInterface {
     }
 
     override fun getCurrentPlayingSong(): SongModel {
-        return Library.viewModel.getDataSet()[position]
+        return LibraryFragment.viewModel.getDataSet()[position]
     }
 
     override fun getCurrentSongPosition(): Int {
@@ -85,7 +124,7 @@ object Coordinator : CoordinatorInterface {
     }
 
     override fun playSelectedSong() {
-        position = Library.songsAdapter?.getCurrentPosition() ?: -1
+        position = LibraryFragment.songsAdapter?.getCurrentPosition() ?: -1
         play(getSongAtPosition(position))
     }
 
@@ -94,7 +133,7 @@ object Coordinator : CoordinatorInterface {
     }
 
     override fun hasNext(): Boolean {
-        return position < Library.viewModel.getDataSet().size
+        return position < LibraryFragment.viewModel.getDataSet().size
     }
 
     override fun hasPrev(): Boolean {
@@ -102,12 +141,20 @@ object Coordinator : CoordinatorInterface {
     }
 
 
-    override fun getPrevSong(): String {
+    override fun getPrevSongData(): String {
         return nowPlayingQueue[--position].data
     }
 
-    override fun getNextSong(): String {
+    override fun getPrevSong(): SongModel {
+        return nowPlayingQueue[--position]
+    }
+
+    override fun getNextSongData(): String {
         return nowPlayingQueue[++position].data
+    }
+
+    override fun getNextSong(): SongModel {
+        return nowPlayingQueue[++position]
     }
 
     override fun getSongAtPosition(position: Int): String {

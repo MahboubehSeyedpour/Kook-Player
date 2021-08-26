@@ -13,21 +13,28 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cassette.R
+import com.example.cassette.`interface`.PassDataForSelectPlaylists
 import com.example.cassette.adapter.SongsAdapter
 import com.example.cassette.manager.Coordinator
+import com.example.cassette.models.PlaylistModel
 import com.example.cassette.models.SongModel
+import com.example.cassette.repositories.PlaylistRepository
+import com.example.cassette.utlis.PlaylistUtils
 import com.example.cassette.viewModel.PlaylistViewModel
 import com.example.cassette.viewModel.SongsViewModel
 import com.example.cassette.views.dialogs.AddSongToPlaylistDialog
 import kotlinx.android.synthetic.main.fragment_library.*
 
-class Library : Fragment() {
+class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
 
     companion object Library {
 
         var songsAdapter: SongsAdapter? = null
 
         lateinit var viewModel: SongsViewModel
+
+        lateinit var selectedSong: SongModel
+        lateinit var selectedPlaylists: ArrayList<PlaylistModel>
 
         const val DELETE_REQUEST_CODE = 2
 
@@ -89,6 +96,8 @@ class Library : Fragment() {
             object : SongsAdapter.OnDataSend {
                 override fun onSend(context: Activity, songModel: SongModel) {
 
+                    selectedSong = songModel
+
                     createDialogToSelectPlaylist()
 
 //                    PlaylistUtils.addToPlaylist(
@@ -104,7 +113,6 @@ class Library : Fragment() {
 //                    PlaylistUtils.addToPlaylist(context, n.toLong(), arrayListOf(songModel))
 //                    val ii = PlaylistUtils.getPlaylistSize(context, n.toLong())
 //                    val bc = PlaylistUtils.getMusicsRelatedToSpecificPlaylist(context, n.toLong())
-                    val b = 0
                 }
             }
         )
@@ -120,8 +128,7 @@ class Library : Fragment() {
         songs_rv.adapter = songsAdapter
     }
 
-    fun createDialogToSelectPlaylist()
-    {
+    fun createDialogToSelectPlaylist() {
 //        Playlist.viewModel?.updateDataset()
         val vm = PlaylistViewModel()
         context?.let { vm.setFragmentContext(it) }
@@ -130,6 +137,42 @@ class Library : Fragment() {
 
         addSongToPlaylistDialog?.setTargetFragment(this, 0)
         this.fragmentManager?.let { it1 -> addSongToPlaylistDialog?.show(it1, "pl") }
+
+    }
+
+    override fun passDataToInvokingFragment(playlists: ArrayList<PlaylistModel>) {
+
+        selectedPlaylists = playlists
+
+        addSongToSelectedPlaylist()
+
+    }
+
+    fun addSongToSelectedPlaylist() {
+
+        val playlistRepository = PlaylistRepository(context)
+        for (playlist in selectedPlaylists) {
+            val playlistId = playlistRepository.getPlaylistIdByName(playlist.name)
+            context?.let {
+                PlaylistUtils.addToPlaylist(
+                    it, playlistId.toLong(),
+                    arrayListOf(selectedSong)
+                )
+            }
+
+            val numOfSongs = playlist.songsId.size
+            val i = 0
+//            val numOfSongs =
+//                context?.let { PlaylistUtils.getMusicsRelatedToSpecificPlaylist(it, playlistId.toLong()) }
+
+//            playlist.countOfSongs = numOfSongs?.size ?: 0
+        }
+//        val n = playlistRepository.getPlaylistIdByName("car")
+//        val y = playlistRepository.getPlaylists()
+//        PlaylistUtils.addToPlaylist(context, n.toLong(), arrayListOf(songModel))
+//        val ii = PlaylistUtils.getPlaylistSize(context, n.toLong())
+//        val bc = PlaylistUtils.getMusicsRelatedToSpecificPlaylist(context, n.toLong())
+
 
     }
 

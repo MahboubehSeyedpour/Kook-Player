@@ -1,6 +1,6 @@
 package com.example.cassette.utlis
 
-import com.example.cassette.views.Fragments.Library
+import com.example.cassette.views.Fragments.LibraryFragment
 
 object TimeUtils
 {
@@ -20,7 +20,7 @@ object TimeUtils
     }
 
     fun getDurationOfCurrentMusic(): String {
-        return Library.songsAdapter?.dataset?.get(Library.songsAdapter!!.getCurrentPosition())?.duration.toString()
+        return LibraryFragment.songsAdapter?.dataset?.get(LibraryFragment.songsAdapter!!.getCurrentPosition())?.duration.toString()
             ?: "00:00"
     }
 }

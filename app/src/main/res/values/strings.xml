@@ -10,6 +10,8 @@
     <string name="action_set_as_ringtone">Set as ringtone</string>
     <string name="action_delete_from_device">Delete from device</string>
 
+    <string name="action_delete_playlist">Delete playlist</string>
+
     <!--    modal bottom sheet items -->
     <string name="first_item_modal_bottomsheet">Date modified</string>
     <string name="second_item_modal_bottomsheet">Name</string>
@@ -30,7 +32,11 @@
     <string name="fav_tab">Favorite</string>
 
     <!--    notification-->
-    <string name="notification_channel_name">Music channel</string>
-    <string name="notification_description">Shows the currently playing music</string>
+    <string name="notification_channel_id">channel1</string>
+    <string name="notification_description">The playing notification provides actions for play/pause etc.</string>
+    <string name="notification_action_previous">actionprevious</string>
+    <string name="notification_action_play">actionplay</string>
+    <string name="notification_action_next">actionnext</string>
+    <string name="extra_key">actionname</string>
 
 </resources>

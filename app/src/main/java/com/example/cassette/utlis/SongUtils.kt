@@ -10,7 +10,7 @@ import androidx.core.app.ActivityCompat
 import com.example.cassette.BuildConfig
 import com.example.cassette.models.SongModel
 import com.example.cassette.utlis.FileUtils
-import com.example.cassette.views.Fragments.Library
+import com.example.cassette.views.Fragments.LibraryFragment
 
 
 object SongUtils {
@@ -18,7 +18,7 @@ object SongUtils {
     lateinit var context: Context
 
     fun getSongPosition(song: SongModel): Int {
-        return Library.viewModel.getDataSet().indexOf(song)
+        return LibraryFragment.viewModel.getDataSet().indexOf(song)
     }
 
 
@@ -45,7 +45,7 @@ object SongUtils {
         ActivityCompat.startIntentSenderForResult(
             activity,
             deletePendingIntent.intentSender,
-            Library.DELETE_REQUEST_CODE,
+            LibraryFragment.DELETE_REQUEST_CODE,
             null,
             0,
             0,

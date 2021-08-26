@@ -1,7 +1,7 @@
 package com.example.cassette.player
 
 import com.example.cassette.models.SongModel
-import com.example.cassette.views.Fragments.Library
+import com.example.cassette.views.Fragments.LibraryFragment
 
 object PlayerStateRepository
 {
@@ -20,11 +20,11 @@ object PlayerStateRepository
     {
         when(currentPlayerMode)
         {
-            PlayerModes.REPEAT_ALL -> playingQueue = Library.songsAdapter?.dataset!!
-            PlayerModes.REPEAT_ONE -> playingQueue = arrayListOf(Library.songsAdapter?.dataset!![currentMusicPosition])
+            PlayerModes.REPEAT_ALL -> playingQueue = LibraryFragment.songsAdapter?.dataset!!
+            PlayerModes.REPEAT_ONE -> playingQueue = arrayListOf(LibraryFragment.songsAdapter?.dataset!![currentMusicPosition])
             PlayerModes.SHUFFLE ->
             {
-                val vv = Library.songsAdapter?.dataset!!.toList().shuffled()
+                val vv = LibraryFragment.songsAdapter?.dataset!!.toList().shuffled()
                 playingQueue = vv.toCollection(playingQueue)
 
             }

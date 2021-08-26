@@ -32,11 +32,11 @@ class PlaylistRepository(val context: Context?) {
                         cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Playlists._ID))
                             .toLong()
                     val name: String =
-                        cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Playlists.NAME))
+                        cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Playlists.NAME)) ?: ""
 
                     cursor.moveToNext()
 
-                    array.add(PlaylistModel(id, name, 0))
+                    array.add(PlaylistModel(id, name, arrayListOf()))
                 }
 
                 cursor.close()
@@ -48,6 +48,7 @@ class PlaylistRepository(val context: Context?) {
         }
 
         playlistArray = array
+
         return array
     }
 

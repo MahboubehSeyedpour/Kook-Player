@@ -9,6 +9,7 @@ import com.example.cassette.R
 import com.example.cassette.models.PlaylistModel
 import com.example.cassette.models.SongModel
 import com.example.cassette.repositories.SongsRepository
+import com.example.cassette.views.Fragments.PlaylistFragment
 
 object PlaylistUtils {
 
@@ -44,6 +45,7 @@ object PlaylistUtils {
 
 
     fun addToPlaylist(context: Context, id: Long, tracks: ArrayList<SongModel>) {
+//        add song to the playlist's file
         val count = getPlaylistSize(context, id)
         val values = arrayOfNulls<ContentValues>(tracks.size)
 
@@ -57,6 +59,21 @@ object PlaylistUtils {
         val resolver = context.contentResolver
         resolver.bulkInsert(uri, values)
         resolver.notifyChange(Uri.parse("content://media"), null)
+
+
+//        add song to the playlist's app array
+        for (playlist in PlaylistFragment.viewModel?.getDataSet()!!)
+        {
+            if (playlist.id == id)
+            {
+                for(song in tracks)
+                {
+                    playlist.songsId.add(song.id)
+                }
+
+            }
+        }
+
     }
 
 
