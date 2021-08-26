@@ -14,7 +14,7 @@ import com.example.cassette.R
 import com.example.cassette.adapter.ViewPagerFragmentAdapter
 import com.example.cassette.databinding.ActivityMainBinding
 import com.example.cassette.player.Enums
-import com.example.cassette.utlis.PermissionProvider
+import com.example.cassette.providers.PermissionProvider
 import com.example.cassette.views.Fragments.*
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
