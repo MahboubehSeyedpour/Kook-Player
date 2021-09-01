@@ -2,7 +2,7 @@ package com.example.cassette.viewModel
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
-import com.example.cassette.models.PlaylistModel
+import com.example.cassette.repositories.appdatabase.entities.PlaylistModel
 import com.example.cassette.repositories.PlaylistRepository
 
 class PlaylistViewModel : BaseViewModel() {

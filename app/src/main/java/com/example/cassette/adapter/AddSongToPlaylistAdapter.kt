@@ -9,7 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cassette.R
-import com.example.cassette.models.PlaylistModel
+import com.example.cassette.repositories.appdatabase.entities.PlaylistModel
 import com.google.android.material.checkbox.MaterialCheckBox
 import kotlinx.android.synthetic.main.add_song_to_playlist_dialog_item.view.*
 

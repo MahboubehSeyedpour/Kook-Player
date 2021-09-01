@@ -12,9 +12,10 @@ import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cassette.R
-import com.example.cassette.models.PlaylistModel
+import com.example.cassette.repositories.appdatabase.entities.PlaylistModel
 import com.example.cassette.repositories.PlaylistRepository
 import com.example.cassette.utlis.PlaylistUtils
+import com.example.cassette.views.Fragments.PlaylistFragment
 import kotlinx.android.synthetic.main.playlist_item.view.*
 
 class PlaylistAdapter(
@@ -43,7 +44,8 @@ class PlaylistAdapter(
             holder as PlaylistAdapter.RecyclerViewViewHolder
         viewHolder.name.text = playlist.name
         val playlistRepository = PlaylistRepository(context)
-        val playlistId = playlistRepository.getPlaylistIdByName(playlist.name)
+        val playlistId = playlistRepository.getIdByName(playlist.name)
+
         viewHolder.countOfSongs.text = "0"
 //            PlaylistUtils.getMusicsRelatedToSpecificPlaylist(context, playlistId.toLong()).size.toString()
         viewHolder.playlistItem.setOnClickListener {
@@ -56,10 +58,11 @@ class PlaylistAdapter(
             popUpMenu.inflate(R.menu.playlists_popup_menu)
 
             popUpMenu.setOnMenuItemClickListener {
+                val id = playlistRepository.cashedPlaylistArray[position].id
 //                updatePosition(viewHolder.adapterPosition)
                 return@setOnMenuItemClickListener handleMenuButtonClickListener(
                     it.itemId,
-                    playlistId
+                    id
                 )
             }
             popUpMenu.show()
@@ -76,10 +79,10 @@ class PlaylistAdapter(
     }
 
 
-    fun handleMenuButtonClickListener(itemId: Int, playlistId: String): Boolean {
+    fun handleMenuButtonClickListener(itemId: Int, playlistId: Long): Boolean {
         when (itemId) {
             R.id.deletePlaylist_menu_item -> {
-                context?.let { PlaylistUtils.deletePlaylist(it, playlistId.toLong()) }
+                PlaylistFragment.viewModel?.playlistRepository?.removePlaylist(playlistId)
                 dataSend.onSend(context, playlistId)
             }
             else -> return false
@@ -93,7 +96,7 @@ class PlaylistAdapter(
 
 
     interface OnDataSend {
-        fun onSend(context: Activity, id: String)
+        fun onSend(context: Activity, id: Long)
     }
 
     fun OnDataSend(dataSend: OnDataSend) {

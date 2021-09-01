@@ -1,4 +1,4 @@
-package com.example.cassette.`interface`
+package com.example.cassette.myInterface
 
 import com.example.cassette.player.Enums
 

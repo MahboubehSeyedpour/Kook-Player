@@ -6,7 +6,7 @@ import android.media.MediaPlayer
 import android.net.Uri
 import android.widget.ImageView
 import android.widget.TextView
-import com.example.cassette.models.SongModel
+import com.example.cassette.repositories.appdatabase.entities.SongModel
 import com.example.cassette.utlis.ImageUtils
 
 class MediaPlayerAgent(context: Context) {

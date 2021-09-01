@@ -1,8 +1,8 @@
 package com.example.cassette.manager
 
 import android.content.Context
-import com.example.cassette.`interface`.CoordinatorInterface
-import com.example.cassette.models.SongModel
+import com.example.cassette.myInterface.CoordinatorInterface
+import com.example.cassette.repositories.appdatabase.entities.SongModel
 import com.example.cassette.player.Enums
 import com.example.cassette.player.Enums.PlayingOrder.REPEAT_ALL
 import com.example.cassette.player.Enums.PlayingOrder.SHUFFLE
@@ -68,14 +68,14 @@ object Coordinator : CoordinatorInterface {
 
     override fun playNextSong() {
         if (hasNext())
-            play(getNextSongData())
+            getNextSongData()?.let { play(it) }
         else
             mediaPlayerAgent.stop()
     }
 
     override fun playPrevSong() {
         if (hasPrev())
-            play(getPrevSongData())
+            getPrevSongData()?.let { play(it) }
         else
             mediaPlayerAgent.stop()
     }
@@ -125,7 +125,7 @@ object Coordinator : CoordinatorInterface {
 
     override fun playSelectedSong() {
         position = LibraryFragment.songsAdapter?.getCurrentPosition() ?: -1
-        play(getSongAtPosition(position))
+        getSongAtPosition(position)?.let { play(it) }
     }
 
     override fun getPositionInPlayer(): Int {
@@ -141,23 +141,23 @@ object Coordinator : CoordinatorInterface {
     }
 
 
-    override fun getPrevSongData(): String {
-        return nowPlayingQueue[--position].data
+    override fun getPrevSongData(): String? {
+        return nowPlayingQueue[--position].data ?: ""
     }
 
     override fun getPrevSong(): SongModel {
         return nowPlayingQueue[--position]
     }
 
-    override fun getNextSongData(): String {
-        return nowPlayingQueue[++position].data
+    override fun getNextSongData(): String? {
+        return nowPlayingQueue[++position].data ?: ""
     }
 
     override fun getNextSong(): SongModel {
         return nowPlayingQueue[++position]
     }
 
-    override fun getSongAtPosition(position: Int): String {
+    override fun getSongAtPosition(position: Int): String? {
         return nowPlayingQueue[position].data
     }
 

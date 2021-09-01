@@ -1,6 +1,6 @@
 package com.example.cassette.player
 
-import com.example.cassette.models.SongModel
+import com.example.cassette.repositories.appdatabase.entities.SongModel
 import com.example.cassette.views.Fragments.LibraryFragment
 
 object PlayerStateRepository

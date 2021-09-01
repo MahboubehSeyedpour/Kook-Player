@@ -1,7 +1,7 @@
-package com.example.cassette.`interface`
+package com.example.cassette.myInterface
 
 import android.content.Context
-import com.example.cassette.models.SongModel
+import com.example.cassette.repositories.appdatabase.entities.SongModel
 import com.example.cassette.player.Enums
 import com.example.cassette.player.MediaPlayerAgent
 
@@ -42,11 +42,11 @@ interface CoordinatorInterface {
     fun getPositionInPlayer(): Int
     fun hasNext(): Boolean
     fun hasPrev(): Boolean
-    fun getPrevSongData(): String
-    fun getNextSongData(): String
+    fun getPrevSongData(): String?
+    fun getNextSongData(): String?
     fun getNextSong(): SongModel
     fun getPrevSong(): SongModel
-    fun getSongAtPosition(position: Int): String
+    fun getSongAtPosition(position: Int): String?
 
 
 //    seek bar

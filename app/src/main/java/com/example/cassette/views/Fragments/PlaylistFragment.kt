@@ -2,6 +2,7 @@ package com.example.cassette.views.Fragments
 
 import android.app.Activity
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,13 +11,16 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.cassette.R
-import com.example.cassette.`interface`.PassData
+import com.example.cassette.myInterface.PassData
 import com.example.cassette.adapter.PlaylistAdapter
-import com.example.cassette.models.PlaylistModel
+import com.example.cassette.manager.Coordinator
+import com.example.cassette.repositories.appdatabase.entities.PlaylistModel
 import com.example.cassette.utlis.PlaylistUtils
 import com.example.cassette.viewModel.PlaylistViewModel
 import com.example.cassette.views.dialogs.CreatePlaylistDialog
+import kotlinx.android.synthetic.main.fragment_player_panel.view.*
 import kotlinx.android.synthetic.main.fragment_playlist.*
+import kotlinx.android.synthetic.main.panel_header_on_collapsed.view.*
 
 
 class PlaylistFragment : Fragment(), PassData {
@@ -51,12 +55,20 @@ class PlaylistFragment : Fragment(), PassData {
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        playlist_rv.layoutManager = GridLayoutManager(context, 2)
+
+
+    }
+
 
     override fun passDataToInvokingFragment(str: String?) {
         newPlaylistName = str ?: ""
 
         context?.let { it ->
-            PlaylistUtils.createPlaylist(it, newPlaylistName)
+//            spr , storage
+//            val playlist = PlaylistUtils.createPlaylist(it, newPlaylistName)
+            viewModel?.playlistRepository?.createPlaylist(newPlaylistName)
 
             viewModel?.updateDataset()
         }
@@ -65,7 +77,7 @@ class PlaylistFragment : Fragment(), PassData {
     override fun onResume() {
         super.onResume()
 
-        playlist_rv.layoutManager = GridLayoutManager(context, 2)
+
 
         fab.setOnClickListener {
 
@@ -78,14 +90,22 @@ class PlaylistFragment : Fragment(), PassData {
 
         playlistAdapter?.OnDataSend(
             object : PlaylistAdapter.OnDataSend {
-                override fun onSend(context: Activity, id: String) {
+                override fun onSend(context: Activity, id: Long) {
 
                     viewModel?.updateDataset()
                 }
             }
         )
 
-        viewModel?.updateDataset()
+
+
+        val mHandler = Handler()
+        activity?.runOnUiThread(object : Runnable {
+            override fun run() {
+                viewModel?.updateDataset()
+                mHandler.postDelayed(this, 1000)
+            }
+        })
 
     }
 

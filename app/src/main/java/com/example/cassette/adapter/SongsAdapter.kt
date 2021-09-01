@@ -15,7 +15,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cassette.R
 import com.example.cassette.manager.Coordinator
-import com.example.cassette.models.SongModel
+import com.example.cassette.repositories.appdatabase.entities.SongModel
 import com.example.cassette.utlis.ImageUtils
 import com.example.cassette.utlis.TimeUtils
 import com.example.cassette.views.dialogs.SongDetailsDialog
@@ -147,7 +147,7 @@ class SongsAdapter(
         return dataset.size
     }
 
-    fun getCurrentSongTitle(): String {
+    fun getCurrentSongTitle(): String? {
         return dataset[position].title
     }
 
@@ -160,7 +160,7 @@ class SongsAdapter(
         return dataset[position].uri
     }
 
-    fun getSongData(position: Int): String {
+    fun getSongData(position: Int): String? {
         return dataset[position].data
     }
 

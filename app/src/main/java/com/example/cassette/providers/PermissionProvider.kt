@@ -18,7 +18,7 @@ class PermissionProvider: ActivityCompat.OnRequestPermissionsResultCallback {
     {
         this.activity = activity
         if (!hasPermissions(this.activity, *permissions)) {
-            ActivityCompat.requestPermissions(activity, permissions, PERMISSIONS_REQUEST_CODE)
+            ActivityCompat.requestPermissions(activity, permissions ,PERMISSIONS_REQUEST_CODE)
         }
     }
 

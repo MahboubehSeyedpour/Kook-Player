@@ -195,6 +195,14 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
             }
         })
 
+
+
+//        database = Room.databaseBuilder(
+//            applicationContext,
+//            AppDatabase::class.java,
+//            "database"
+//        ).build()
+
 /*
         //temp: a button to check if the absolute path is correct
         button.setOnClickListener {
@@ -356,5 +364,6 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         )
             .commit()
     }
+
 
 }

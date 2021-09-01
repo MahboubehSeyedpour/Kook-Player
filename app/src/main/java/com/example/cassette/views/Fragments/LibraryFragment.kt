@@ -13,17 +13,17 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cassette.R
-import com.example.cassette.`interface`.PassDataForSelectPlaylists
 import com.example.cassette.adapter.SongsAdapter
 import com.example.cassette.manager.Coordinator
-import com.example.cassette.models.PlaylistModel
-import com.example.cassette.models.SongModel
+import com.example.cassette.myInterface.PassDataForSelectPlaylists
 import com.example.cassette.repositories.PlaylistRepository
-import com.example.cassette.utlis.PlaylistUtils
+import com.example.cassette.repositories.appdatabase.entities.PlaylistModel
+import com.example.cassette.repositories.appdatabase.entities.SongModel
 import com.example.cassette.viewModel.PlaylistViewModel
 import com.example.cassette.viewModel.SongsViewModel
 import com.example.cassette.views.dialogs.AddSongToPlaylistDialog
 import kotlinx.android.synthetic.main.fragment_library.*
+import kotlinx.coroutines.GlobalScope
 
 class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
 
@@ -84,6 +84,8 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
 
 
         viewModel = ViewModelProvider(this).get(SongsViewModel::class.java)
+
+
         context?.let { viewModel.setFragmentContext(it) }
         viewModel.dataset.observe(viewLifecycleOwner, songListUpdateObserver)
 
@@ -138,17 +140,20 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
 
     fun addSongToSelectedPlaylist() {
 
-        val playlistRepository = PlaylistRepository(context)
-        for (playlist in selectedPlaylists) {
-            val playlistId = playlistRepository.getPlaylistIdByName(playlist.name)
-            context?.let {
-                PlaylistUtils.addToPlaylist(
-                    it, playlistId.toLong(),
-                    arrayListOf(selectedSong)
+        GlobalScope
+        run {
+            val playlistRepository = PlaylistRepository(context)
+            for (playlist in selectedPlaylists) {
+                val getSongsRelatedToPl =
+                    playlistRepository.getIdOfSongsStoredInPlaylist(playlist.id)
+                getSongsRelatedToPl.add(selectedSong.id.toString())
+
+                playlistRepository?.addSongsToPlaylist(
+                    playlist.name,
+                    getSongsRelatedToPl
                 )
             }
         }
+
     }
-
-
 }

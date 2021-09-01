@@ -4,8 +4,8 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import androidx.lifecycle.MutableLiveData
-import com.example.cassette.models.SongModel
 import com.example.cassette.repositories.SongsRepository
+import com.example.cassette.repositories.appdatabase.entities.SongModel
 
 class SongsViewModel : BaseViewModel() {
 

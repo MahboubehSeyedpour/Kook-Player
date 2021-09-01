@@ -7,17 +7,34 @@ import android.provider.MediaStore.Audio.AudioColumns
 import com.example.cassette.extensions.getInt
 import com.example.cassette.extensions.getLong
 import com.example.cassette.extensions.getString
-import com.example.cassette.models.SongModel
+import com.example.cassette.repositories.appdatabase.entities.SongModel
+import com.example.cassette.repositories.appdatabase.roomdb.MyDatabase
 import com.example.cassette.utlis.FileUtils
 import com.example.cassette.utlis.ImageUtils
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class SongsRepository(val context: Context) {
+
+//    private val database: AppDatabase by lazy { AppDatabase.getDatabase(context) }
+
+
+    init {
+//        val songsAreInDB: Flow<ArrayList<SongModel>> = database.dao().getSongs()
+//        create Database
+//        val database = Room.databaseBuilder(context, AppDatabase::class.java, "appDB").allowMainThreadQueries().build()
+//        database.songDao().addSongs(getSongsFromStorage())
+        GlobalScope.launch {
+
+        }
+    }
+
 
     fun createSongFromCursor(cursor: Cursor): SongModel {
         val title = cursor.getString(AudioColumns.TITLE)
         val duration = cursor.getLong(AudioColumns.DURATION)
         val data = cursor.getString(AudioColumns.DATA)
-        val id = cursor.getString(AudioColumns._ID)
+        val id = cursor.getLong(AudioColumns._ID)
         val dateAdded = cursor.getString(AudioColumns.DATE_ADDED)
         val artist = cursor.getString(AudioColumns.ARTIST)
 //        val trackNumber = cursor.getString(AudioColumns.TRACK)
@@ -35,7 +52,7 @@ class SongsRepository(val context: Context) {
         val albumId = cursor.getLong(AudioColumns.ALBUM_ID)
         val size = cursor.getString(AudioColumns.SIZE)
 
-        val image = ImageUtils.albumArtUriToBitmap(context, albumId.toLong())
+        val image = ImageUtils.albumArtUriToBitmap(context, albumId?.toLong())
             ?: ImageUtils.getDefaultAlbumArt(context)
 
         var bitrate = ""
@@ -47,30 +64,33 @@ class SongsRepository(val context: Context) {
         }
 
         return SongModel(
-            title,
-            duration,
-            data,
-            dateAdded,
-            artist,
-            id,
-            null,
-            albumId,
-            size,
-            bitrate,
-            image,
-            "",
-            year,
-            dateModified,
-            artistId,
-            artistName,
-            "",
-            ""
+            title = title,
+            duration = duration,
+            data = data,
+            dateAdded = dateAdded,
+            artist = artist,
+            id = id,
+            uri = null,
+            albumId = albumId,
+            size = size,
+            bitrate = bitrate,
+            image = image,
+            trackNumber = "",
+            year = year,
+            dateModified = dateModified,
+            artistId = artistId,
+            artistName = artistName,
+            composer = "",
+            albumArtist = ""
         )
     }
 
     fun getListOfSongs(): ArrayList<SongModel> {
+        return getSongsFromStorage()
+    }
 
-        val songs = ArrayList<SongModel>()
+    private fun getSongsFromStorage(): ArrayList<SongModel> {
+        val songsAreInStorage = ArrayList<SongModel>()
         val cursor = FileUtils.fetchFiles(
             fileType = FileUtils.FILE_TYPES.MUSIC,
             context = context
@@ -79,14 +99,15 @@ class SongsRepository(val context: Context) {
             do {
                 cursor.moveToNext()
                 val i = cursor.getLong(AudioColumns.DURATION)
-                if (cursor.getLong(AudioColumns.DURATION) > 60000)
-                    songs.add(createSongFromCursor(cursor))
+                if (cursor.getLong(AudioColumns.DURATION)!! > 60000)
+                    songsAreInStorage.add(createSongFromCursor(cursor))
             } while (!cursor.isLast)
         } else {
 //                TODO(handle null cursor)
         }
         cursor?.close()
-        return songs
+        return songsAreInStorage
     }
+
 }
 

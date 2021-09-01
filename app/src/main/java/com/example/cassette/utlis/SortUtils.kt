@@ -2,7 +2,7 @@ package com.example.cassette.utlis
 
 import android.content.Context
 import android.widget.Toast
-import com.example.cassette.models.SongModel
+import com.example.cassette.repositories.appdatabase.entities.SongModel
 import com.example.cassette.views.Fragments.LibraryFragment
 
 object SortUtils {

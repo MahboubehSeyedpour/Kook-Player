@@ -8,7 +8,7 @@ import android.provider.MediaStore
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import com.example.cassette.BuildConfig
-import com.example.cassette.models.SongModel
+import com.example.cassette.repositories.appdatabase.entities.SongModel
 import com.example.cassette.utlis.FileUtils
 import com.example.cassette.views.Fragments.LibraryFragment
 
@@ -24,13 +24,15 @@ object SongUtils {
 
     fun shareMusic(context: Context, song: SongModel) {
 
-        val fileToBeShared = FileUtils.convertSongToFile(song.data)
+        val fileToBeShared = song.data?.let { FileUtils.convertSongToFile(it) }
 
-        val fileUri: Uri? = FileUtils.getUriForFile(
-            context,
-            "${BuildConfig.APPLICATION_ID}.FileProvider",
-            fileToBeShared
-        )
+        val fileUri: Uri? = fileToBeShared?.let {
+            FileUtils.getUriForFile(
+                context,
+                "${BuildConfig.APPLICATION_ID}.FileProvider",
+                it
+            )
+        }
 
         fileUri?.let { FileUtils.shareFile(context, it) }
     }

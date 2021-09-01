@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.example.cassette.R
-import com.example.cassette.`interface`.PassData
+import com.example.cassette.myInterface.PassData
 import com.example.cassette.databinding.CreatePlaylistDialogBinding
 import kotlinx.android.synthetic.main.create_playlist_dialog.*
 import kotlinx.android.synthetic.main.create_playlist_dialog.view.*

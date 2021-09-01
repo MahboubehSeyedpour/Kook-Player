@@ -1,10 +1,13 @@
 package com.example.cassette.extensions
 
 import android.database.Cursor
+import androidx.core.database.getIntOrNull
+import androidx.core.database.getLongOrNull
+import androidx.core.database.getStringOrNull
 
-fun Cursor.getLong(columnName: String): Long{
+fun Cursor.getLong(columnName: String): Long?{
     try {
-       return this.getLong(this.getColumnIndexOrThrow(columnName))
+       return this.getLongOrNull(this.getColumnIndexOrThrow(columnName))
     }
     catch (exception : Exception)
     {
@@ -13,9 +16,9 @@ fun Cursor.getLong(columnName: String): Long{
     }
 }
 
-fun Cursor.getString(columnName: String): String{
+fun Cursor.getString(columnName: String): String?{
     try {
-        return this.getString(this.getColumnIndexOrThrow(columnName))
+        return this.getStringOrNull(this.getColumnIndexOrThrow(columnName))
     }
     catch (exception : Exception)
     {
@@ -24,9 +27,9 @@ fun Cursor.getString(columnName: String): String{
     }
 }
 
-fun Cursor.getInt(columnName: String): Int{
+fun Cursor.getInt(columnName: String): Int?{
     try {
-        return this.getInt(this.getColumnIndexOrThrow(columnName))
+        return this.getIntOrNull(this.getColumnIndexOrThrow(columnName))
     }
     catch (exception : Exception)
     {
