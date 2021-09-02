@@ -59,7 +59,7 @@ class SongsRepository(val context: Context) {
         if (data != "") {
             val metadata = MediaMetadataRetriever()
             metadata.setDataSource(data)
-            val bitrate = metadata?.extractMetadata(MediaMetadataRetriever.METADATA_KEY_BITRATE)
+            bitrate = metadata?.extractMetadata(MediaMetadataRetriever.METADATA_KEY_BITRATE).toString()
 
         }
 

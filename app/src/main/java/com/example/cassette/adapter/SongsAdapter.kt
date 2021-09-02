@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.song_rv_item.view.*
 class SongsAdapter(
     val context: Activity,
     var dataset: ArrayList<SongModel>
-) : RVBaseAdapter(){
+) : RVBaseAdapter() {
 
     var position = 0
 
@@ -99,7 +99,7 @@ class SongsAdapter(
 //                val i = context.supportFragmentManager.fragments
 
 
-                dataSend.onSend(context,  getSong(position))
+                dataSend.onSend(context, getSong(position))
 
 
 //                addSongToPlaylist.setTargetFragment(context.supportFragmentManager.fragments[0], 0)
@@ -111,12 +111,19 @@ class SongsAdapter(
             }
             R.id.details_menu_item -> {
 
-                val songDetailsDialog = SongDetailsDialog(getSong(position))
+                if (position < 0) {
 
-                val manager: FragmentManager = (context as AppCompatActivity).supportFragmentManager
+                    Toast.makeText(context, "please try later!", Toast.LENGTH_SHORT).show()
 
-                manager?.beginTransaction()
-                    ?.let { it -> songDetailsDialog.show(it, "songDetails") }
+                } else {
+                    val songDetailsDialog = SongDetailsDialog(getSong(position))
+
+                    val manager: FragmentManager =
+                        (context as AppCompatActivity).supportFragmentManager
+
+                    manager?.beginTransaction()
+                        ?.let { it -> songDetailsDialog.show(it, "songDetails") }
+                }
 
             }
             R.id.share_menu_item -> {
