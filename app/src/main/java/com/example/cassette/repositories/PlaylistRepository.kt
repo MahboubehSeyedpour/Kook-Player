@@ -52,7 +52,8 @@ class PlaylistRepository(val context: Context?) :
 
         val countOfSongs = 0
         val songs = arrayListOf<String>()
-        val playlist = PlaylistModel(name, countOfSongs, DatabaseConverterUtils.arraylistToString(songs))
+        val playlist =
+            PlaylistModel(name, countOfSongs, DatabaseConverterUtils.arraylistToString(songs))
         return playlist
 
     }
@@ -103,13 +104,22 @@ class PlaylistRepository(val context: Context?) :
                         playlist.songs
                     )
                 }
+                addCountInDatabase(playlist)
             }
-
 //            TODO(Toast : operation failed! please try later)
-
         }
 
         return true
+    }
+
+    fun addCountInDatabase(playlist: PlaylistModel) {
+        val count = playlist.countOfSongs + 1
+        GlobalScope.launch {
+            localDatabase.playlistDao()
+                .setCountOfSongs(playlist.id, count)
+        }
+
+        playlist.countOfSongs = count
     }
 
 

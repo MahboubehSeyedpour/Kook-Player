@@ -11,16 +11,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.cassette.R
-import com.example.cassette.myInterface.PassData
 import com.example.cassette.adapter.PlaylistAdapter
-import com.example.cassette.manager.Coordinator
+import com.example.cassette.myInterface.PassData
 import com.example.cassette.repositories.appdatabase.entities.PlaylistModel
-import com.example.cassette.utlis.PlaylistUtils
 import com.example.cassette.viewModel.PlaylistViewModel
 import com.example.cassette.views.dialogs.CreatePlaylistDialog
-import kotlinx.android.synthetic.main.fragment_player_panel.view.*
 import kotlinx.android.synthetic.main.fragment_playlist.*
-import kotlinx.android.synthetic.main.panel_header_on_collapsed.view.*
 
 
 class PlaylistFragment : Fragment(), PassData {
@@ -86,7 +82,7 @@ class PlaylistFragment : Fragment(), PassData {
             createPlaylist.setTargetFragment(this, 0)
             this.fragmentManager?.let { it1 -> createPlaylist.show(it1, "pl") }
 
-            }
+        }
 
         playlistAdapter?.OnDataSend(
             object : PlaylistAdapter.OnDataSend {
@@ -96,7 +92,6 @@ class PlaylistFragment : Fragment(), PassData {
                 }
             }
         )
-
 
 
         val mHandler = Handler()

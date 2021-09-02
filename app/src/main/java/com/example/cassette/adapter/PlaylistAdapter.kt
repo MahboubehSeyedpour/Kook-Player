@@ -46,7 +46,7 @@ class PlaylistAdapter(
         val playlistRepository = PlaylistRepository(context)
         val playlistId = playlistRepository.getIdByName(playlist.name)
 
-        viewHolder.countOfSongs.text = "0"
+        viewHolder.countOfSongs.text = playlist.countOfSongs.toString()
 //            PlaylistUtils.getMusicsRelatedToSpecificPlaylist(context, playlistId.toLong()).size.toString()
         viewHolder.playlistItem.setOnClickListener {
 
