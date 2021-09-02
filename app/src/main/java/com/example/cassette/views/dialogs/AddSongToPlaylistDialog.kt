@@ -32,8 +32,6 @@ class AddSongToPlaylistDialog(val array: ArrayList<PlaylistModel>) : DialogFragm
         val view = inflater.inflate(R.layout.add_song_to_playlist, container, false)
         initBinding(view)
 
-//        viewModel.updateDataset()
-
         playlistAdapter = activity?.let {
             AddSongToPlaylistAdapter(
                 it,
@@ -56,11 +54,10 @@ class AddSongToPlaylistDialog(val array: ArrayList<PlaylistModel>) : DialogFragm
 
             val targetFragment = targetFragment
             val passData : PassDataForSelectPlaylists = targetFragment as PassDataForSelectPlaylists
-            targetFragment.passDataToInvokingFragment(AddSongToPlaylistAdapter.choices)
+            passData.passDataToInvokingFragment(AddSongToPlaylistAdapter.choices)
 
             this.dismiss()
         }
-
     }
 
     fun initBinding(view: View) {

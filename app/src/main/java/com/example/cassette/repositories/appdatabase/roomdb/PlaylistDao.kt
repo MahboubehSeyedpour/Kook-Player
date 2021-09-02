@@ -25,9 +25,9 @@ interface PlaylistDao {
     fun getPlaylists(): List<PlaylistModel>
 
 
-    @Query("UPDATE playlist_table SET songs = :songs & countOfSongs = :count WHERE id = :id")
-    suspend fun addSongToPlaylist(id: Long, songs: ArrayList<String>, count: Int)
+    @Query("UPDATE playlist_table SET songs=:songs WHERE id = :id")
+    suspend fun addSongToPlaylist(id: Long, songs: String)
 
     @Query("SELECT songs FROM playlist_table WHERE id = :id")
-    suspend fun getSongsOfPlaylist(id: Long): List<String>
+    suspend fun getSongsOfPlaylist(id: Long): String
 }

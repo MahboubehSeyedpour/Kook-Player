@@ -9,7 +9,7 @@ import com.example.cassette.repositories.appdatabase.roomdb.Converters
 @Entity(tableName = "playlist_table")
 data class PlaylistModel(@ColumnInfo var name: String = "",
                     @ColumnInfo var countOfSongs: Int = 0,
-                    @ColumnInfo var songs: ArrayList<String> = arrayListOf()
+                    @ColumnInfo var songs: String
 ) {
     @PrimaryKey(autoGenerate = true ) var id: Long = 0
 }

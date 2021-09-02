@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
     entities = [PlaylistModel::class],
     version = 1
 )
-@TypeConverters(Converters::class)
+//@TypeConverters(Converters::class)
 abstract class MyDatabase : RoomDatabase() {
     abstract fun playlistDao(): PlaylistDao
 

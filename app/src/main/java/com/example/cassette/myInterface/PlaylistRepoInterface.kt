@@ -10,10 +10,10 @@ interface PlaylistRepoInterface
 
 
     fun createPlaylist(name: String)
-    fun addSongsToPlaylist(playlist_name: String, songsId: ArrayList<String>): Boolean
+    fun addSongsToPlaylist(playlist_name: String, songsId: String): Boolean
 //    TODO(fun renamePlaylist())
     fun getPlaylists(): ArrayList<PlaylistModel>
-    fun getIdOfSongsStoredInPlaylist(plylist_id : Long): ArrayList<String>
+    fun getIdOfSongsStoredInPlaylist(plylist_id : Long): String
     fun getPlaylistId(name: String): Long
 //    fun updateDatabase(): Boolean
     fun removePlaylist(id: Long): Boolean

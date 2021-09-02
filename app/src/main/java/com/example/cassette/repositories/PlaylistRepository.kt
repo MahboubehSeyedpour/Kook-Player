@@ -6,6 +6,7 @@ import android.provider.MediaStore
 import com.example.cassette.myInterface.PlaylistRepoInterface
 import com.example.cassette.repositories.appdatabase.entities.PlaylistModel
 import com.example.cassette.repositories.appdatabase.roomdb.MyDatabase
+import com.example.cassette.utlis.DatabaseConverterUtils
 import com.example.cassette.utlis.FilePathUtlis
 import kotlinx.coroutines.*
 
@@ -26,7 +27,7 @@ class PlaylistRepository(val context: Context?) :
 
     //    ----------------------------------------------- Create Playlist ----------------------------------------------------
     override fun createPlaylist(name: String) {
-        val playlist = PlaylistModel(name, 0, arrayListOf())
+        val playlist = PlaylistModel(name, 0, "")
         createPlaylistInDatabase(playlist)
 //       TODO( createPlaylistInStorage())
     }
@@ -51,7 +52,7 @@ class PlaylistRepository(val context: Context?) :
 
         val countOfSongs = 0
         val songs = arrayListOf<String>()
-        val playlist = PlaylistModel(name, countOfSongs, songs)
+        val playlist = PlaylistModel(name, countOfSongs, DatabaseConverterUtils.arraylistToString(songs))
         return playlist
 
     }
@@ -91,7 +92,7 @@ class PlaylistRepository(val context: Context?) :
 
 
     //    ----------------------------------------------- Add song To Playlist ----------------------------------------------------
-    override fun addSongsToPlaylist(playlist_name: String, songsId: ArrayList<String>): Boolean {
+    override fun addSongsToPlaylist(playlist_name: String, songsId: String): Boolean {
         runBlocking {
             val playlist = getPlaylistById(getIdByName(playlist_name))
 
@@ -99,8 +100,7 @@ class PlaylistRepository(val context: Context?) :
                 for (song_id in songsId) {
                     localDatabase.playlistDao().addSongToPlaylist(
                         playlist.id,
-                        playlist.songs,
-                        playlist.songs.size
+                        playlist.songs
                     )
                 }
             }
@@ -202,7 +202,7 @@ class PlaylistRepository(val context: Context?) :
     override fun getIdOfSongsStoredInPlaylist(plylist_id: Long) =
         runBlocking {
             return@runBlocking localDatabase.playlistDao()
-                .getSongsOfPlaylist(plylist_id) as ArrayList<String>
+                .getSongsOfPlaylist(plylist_id)
         }
 
 

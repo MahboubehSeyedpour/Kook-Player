@@ -29,7 +29,7 @@ object PlaylistUtils {
 
         val countOfSongs = 0
         val songs = arrayListOf<String>()
-        val playlist = PlaylistModel(name, countOfSongs, songs)
+        val playlist = PlaylistModel(name, countOfSongs, DatabaseConverterUtils.arraylistToString(songs))
         return playlist
     }
 
@@ -82,7 +82,7 @@ object PlaylistUtils {
         for (playlist in PlaylistFragment.viewModel?.getDataSet()!!) {
             if (playlist.id == id) {
                 for (song in tracks) {
-                    playlist.songs.add(song.id.toString())
+                    playlist.songs += ",${song.id.toString()}"
                 }
 
             }

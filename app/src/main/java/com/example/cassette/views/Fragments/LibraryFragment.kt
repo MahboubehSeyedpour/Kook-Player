@@ -16,10 +16,8 @@ import com.example.cassette.R
 import com.example.cassette.adapter.SongsAdapter
 import com.example.cassette.manager.Coordinator
 import com.example.cassette.myInterface.PassDataForSelectPlaylists
-import com.example.cassette.repositories.PlaylistRepository
 import com.example.cassette.repositories.appdatabase.entities.PlaylistModel
 import com.example.cassette.repositories.appdatabase.entities.SongModel
-import com.example.cassette.viewModel.PlaylistViewModel
 import com.example.cassette.viewModel.SongsViewModel
 import com.example.cassette.views.dialogs.AddSongToPlaylistDialog
 import kotlinx.android.synthetic.main.fragment_library.*
@@ -119,41 +117,54 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
     }
 
     fun createDialogToSelectPlaylist() {
-//        Playlist.viewModel?.updateDataset()
-        val vm = PlaylistViewModel()
-        context?.let { vm.setFragmentContext(it) }
-        vm.updateDataset()
-        val addSongToPlaylistDialog = AddSongToPlaylistDialog(vm.getDataSet())
+
+
+        val addSongToPlaylistDialog = PlaylistFragment.viewModel?.getDataSet()?.let {
+            AddSongToPlaylistDialog(
+                it
+            )
+        }
+
 
         addSongToPlaylistDialog?.setTargetFragment(this, 0)
         this.fragmentManager?.let { it1 -> addSongToPlaylistDialog?.show(it1, "pl") }
+
 
     }
 
     override fun passDataToInvokingFragment(playlists: ArrayList<PlaylistModel>) {
 
+
+
         selectedPlaylists = playlists
 
         addSongToSelectedPlaylist()
 
+        selectedPlaylists.clear()
+
     }
 
-    fun addSongToSelectedPlaylist() {
+    private fun addSongToSelectedPlaylist() {
 
+        for (playlist in selectedPlaylists) {
+
+            updateSongsInEntity(playlist)
+            updateDatabase(playlist)
+        }
+    }
+
+    fun updateSongsInEntity(playlist: PlaylistModel) {
+        playlist.songs = playlist.songs + selectedSong.id + ","
+    }
+
+    fun updateDatabase(playlist: PlaylistModel) {
         GlobalScope
         run {
-            val playlistRepository = PlaylistRepository(context)
-            for (playlist in selectedPlaylists) {
-                val getSongsRelatedToPl =
-                    playlistRepository.getIdOfSongsStoredInPlaylist(playlist.id)
-                getSongsRelatedToPl.add(selectedSong.id.toString())
 
-                playlistRepository?.addSongsToPlaylist(
-                    playlist.name,
-                    getSongsRelatedToPl
-                )
-            }
+            PlaylistFragment.viewModel?.playlistRepository?.addSongsToPlaylist(
+                playlist.name,
+                playlist.songs
+            )
         }
-
     }
 }

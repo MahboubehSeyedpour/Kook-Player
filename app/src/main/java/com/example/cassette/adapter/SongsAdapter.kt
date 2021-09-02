@@ -88,22 +88,14 @@ class SongsAdapter(
 //            }
             R.id.addToPlayList_menu_item -> {
 
+                if(position>=0)
+                {
+                    dataSend.onSend(context, getSong(position))
+                }
 
-//                val addSongToPlaylist = AddSongToPlaylistDialog(getSong(position))
-//
-//                val manager: FragmentManager = (context as AppCompatActivity).supportFragmentManager
-
-//                manager?.beginTransaction()
-//                    ?.let { it -> addSongToPlaylist.show(it, "addSongToPlaylist") }
-
-//                val i = context.supportFragmentManager.fragments
-
-
-                dataSend.onSend(context, getSong(position))
-
-
-//                addSongToPlaylist.setTargetFragment(context.supportFragmentManager.fragments[0], 0)
-//                this.fragmentManager?.let { it1 -> createPlaylist.show(it1, "addSongToPlaylist") }
+                else{
+                    Toast.makeText(context, "please try again", Toast.LENGTH_SHORT).show()
+                }
 
             }
             R.id.deleteFromDevice_menu_item -> {
@@ -111,24 +103,19 @@ class SongsAdapter(
             }
             R.id.details_menu_item -> {
 
-                if (position < 0) {
 
-                    Toast.makeText(context, "please try later!", Toast.LENGTH_SHORT).show()
+                val songDetailsDialog = SongDetailsDialog(getSong(position))
 
-                } else {
-                    val songDetailsDialog = SongDetailsDialog(getSong(position))
+                val manager: FragmentManager =
+                    (context as AppCompatActivity).supportFragmentManager
 
-                    val manager: FragmentManager =
-                        (context as AppCompatActivity).supportFragmentManager
+                manager?.beginTransaction()
+                    ?.let { it -> songDetailsDialog.show(it, "songDetails") }
 
-                    manager?.beginTransaction()
-                        ?.let { it -> songDetailsDialog.show(it, "songDetails") }
-                }
 
             }
             R.id.share_menu_item -> {
                 SongUtils.shareMusic(context, getSong(position))
-
             }
 //            R.id.setAsRingtone_menu_item -> {
 //                Toast.makeText(
@@ -142,6 +129,7 @@ class SongsAdapter(
         return true
     }
 
+
     fun updatePosition(newIndex: Int) {
         position = newIndex
     }
@@ -154,25 +142,18 @@ class SongsAdapter(
         return dataset.size
     }
 
-    fun getCurrentSongTitle(): String? {
-        return dataset[position].title
-    }
-
-    fun getSongDuration(position: Int): String {
-        return dataset[position].duration.toString()
-    }
-
-
     fun getSongUri(position: Int): Uri? {
         return dataset[position].uri
     }
 
-    fun getSongData(position: Int): String? {
-        return dataset[position].data
-    }
-
     fun getSong(position: Int): SongModel {
-        return dataset[position]
+        if (position < 0) {
+
+            Toast.makeText(context, "please try later!", Toast.LENGTH_SHORT).show()
+            return SongModel()
+        } else {
+            return dataset[position]
+        }
     }
 
     open inner class RecyclerViewViewHolder(itemView: View) :
