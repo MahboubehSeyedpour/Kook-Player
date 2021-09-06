@@ -12,9 +12,8 @@ import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cassette.R
-import com.example.cassette.repositories.appdatabase.entities.PlaylistModel
 import com.example.cassette.repositories.PlaylistRepository
-import com.example.cassette.utlis.PlaylistUtils
+import com.example.cassette.repositories.appdatabase.entities.PlaylistModel
 import com.example.cassette.views.Fragments.PlaylistFragment
 import kotlinx.android.synthetic.main.playlist_item.view.*
 
@@ -23,8 +22,8 @@ class PlaylistAdapter(
     arrayList: ArrayList<PlaylistModel>
 ) : RVBaseAdapter() {
 
-    var dataset : ArrayList<PlaylistModel>
-    lateinit var viewHolder : PlaylistAdapter.RecyclerViewViewHolder
+    var dataset: ArrayList<PlaylistModel>
+    lateinit var viewHolder: PlaylistAdapter.RecyclerViewViewHolder
     lateinit var dataSend: PlaylistAdapter.OnDataSend
 
     override fun onCreateViewHolder(
@@ -50,7 +49,12 @@ class PlaylistAdapter(
 //            PlaylistUtils.getMusicsRelatedToSpecificPlaylist(context, playlistId.toLong()).size.toString()
         viewHolder.playlistItem.setOnClickListener {
 
-            Toast.makeText(context, "playlist ${playlist.name} was clicked", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "playlist ${playlist.name} was clicked", Toast.LENGTH_SHORT)
+                .show()
+
+//            open playlist
+            dataSend.openPlaylist(playlist.id)
+
         }
 
         viewHolder.menueBtn.setOnClickListener {
@@ -97,6 +101,7 @@ class PlaylistAdapter(
 
     interface OnDataSend {
         fun onSend(context: Activity, id: Long)
+        fun openPlaylist(id: Long)
     }
 
     fun OnDataSend(dataSend: OnDataSend) {
@@ -121,7 +126,7 @@ class PlaylistAdapter(
         val name: TextView = itemView.playlist_name
         val countOfSongs: TextView = itemView.songsCount
         val playlistItem: CardView = itemView.playlist_item
-        val menueBtn : ImageView = itemView.playlist_menu_btn
+        val menueBtn: ImageView = itemView.playlist_menu_btn
     }
 
     init {

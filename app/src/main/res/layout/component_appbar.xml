@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/toolbar"
+    android:id="@+id/toolbar_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
@@ -24,29 +24,29 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/sort_Iv"
-            android:layout_width="@dimen/icon_width"
-            android:layout_height="@dimen/icon_height"
-            android:layout_margin="@dimen/normal_margin"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/ic_menu_pic_foreground"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintLeft_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+<!--        <ImageView-->
+<!--            android:id="@+id/sort_Iv"-->
+<!--            android:layout_width="@dimen/icon_width"-->
+<!--            android:layout_height="@dimen/icon_height"-->
+<!--            android:layout_margin="@dimen/normal_margin"-->
+<!--            android:scaleType="centerCrop"-->
+<!--            android:src="@mipmap/ic_menu_pic_foreground"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintLeft_toRightOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <include
-        android:id="@+id/newToolbar"
+        android:id="@+id/expandableToolbar"
         layout="@layout/expandable_toolbar"/>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout_home"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp">
 
     </com.google.android.material.tabs.TabLayout>
 <!--    app:tabIndicatorColor="@color/blue_light"-->

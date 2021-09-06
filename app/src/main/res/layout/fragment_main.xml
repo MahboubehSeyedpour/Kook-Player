@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_layout"
     android:layout_width="match_parent"
-    android:id="@+id/base"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <include
-        android:id="@+id/include_toolbar"
+        android:id="@+id/toolbar"
         layout="@layout/component_appbar" />
 
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewpager_home"
+        android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"

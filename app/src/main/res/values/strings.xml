@@ -38,5 +38,7 @@
     <string name="notification_action_play">actionplay</string>
     <string name="notification_action_next">actionnext</string>
     <string name="extra_key">actionname</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 
 </resources>

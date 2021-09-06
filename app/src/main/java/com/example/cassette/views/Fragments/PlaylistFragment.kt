@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -15,6 +16,7 @@ import com.example.cassette.adapter.PlaylistAdapter
 import com.example.cassette.myInterface.PassData
 import com.example.cassette.repositories.appdatabase.entities.PlaylistModel
 import com.example.cassette.viewModel.PlaylistViewModel
+import com.example.cassette.views.MainActivity
 import com.example.cassette.views.dialogs.CreatePlaylistDialog
 import kotlinx.android.synthetic.main.fragment_playlist.*
 
@@ -62,8 +64,6 @@ class PlaylistFragment : Fragment(), PassData {
         newPlaylistName = str ?: ""
 
         context?.let { it ->
-//            spr , storage
-//            val playlist = PlaylistUtils.createPlaylist(it, newPlaylistName)
             viewModel?.playlistRepository?.createPlaylist(newPlaylistName)
 
             viewModel?.updateDataset()
@@ -72,8 +72,6 @@ class PlaylistFragment : Fragment(), PassData {
 
     override fun onResume() {
         super.onResume()
-
-
 
         fab.setOnClickListener {
 
@@ -89,6 +87,21 @@ class PlaylistFragment : Fragment(), PassData {
                 override fun onSend(context: Activity, id: Long) {
 
                     viewModel?.updateDataset()
+                }
+
+                override fun openPlaylist(id: Long) {
+
+                    val mainFragment = PlaylistPageFragment()
+                    val fragmentManager: FragmentManager = MainActivity.activity.supportFragmentManager
+                    val transaction = fragmentManager.beginTransaction()
+                    transaction.addToBackStack(null)
+                    transaction.add(
+                        R.id.fragment_base_container,
+                        mainFragment,
+                        "bottom sheet container"
+                    )
+                        .commit()
+
                 }
             }
         )
