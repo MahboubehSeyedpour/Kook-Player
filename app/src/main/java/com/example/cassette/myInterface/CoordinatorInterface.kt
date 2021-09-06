@@ -38,7 +38,7 @@ interface CoordinatorInterface {
 //    get Info
     fun getCurrentPlayingSong(): SongModel
     fun getCurrentSongPosition(): Int
-    fun playSelectedSong()
+    fun playSelectedSong(song: SongModel)
     fun getPositionInPlayer(): Int
     fun hasNext(): Boolean
     fun hasPrev(): Boolean

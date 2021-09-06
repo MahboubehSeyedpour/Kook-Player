@@ -20,6 +20,8 @@ abstract class RVBaseAdapter() :
         position: Int
     )
 
+    abstract fun getCurrentPosition(): Int
+
     abstract override fun getItemCount(): Int
     abstract inner class RecyclerViewViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView)

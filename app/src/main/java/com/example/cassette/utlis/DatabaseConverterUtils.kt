@@ -2,9 +2,12 @@ package com.example.cassette.utlis
 
 object DatabaseConverterUtils {
     fun stringToArraylist(songs: String): ArrayList<String> {
-        val arr = songs.trim().splitToSequence(',')
-            .filter { it.isNotEmpty() }
-            .toList()
+
+        var arr = listOf<String>()
+
+            arr += songs.trim().splitToSequence(',')
+                .filter { it.isNotEmpty() }
+                .toList()
 
         return arr as ArrayList<String>
     }

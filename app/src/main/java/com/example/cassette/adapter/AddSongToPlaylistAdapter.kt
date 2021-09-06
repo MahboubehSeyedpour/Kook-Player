@@ -57,6 +57,11 @@ class AddSongToPlaylistAdapter(
 
     }
 
+    override fun getCurrentPosition(): Int {
+//        Fake!
+        return -1
+    }
+
     override fun getItemCount(): Int {
         return dataset.size
     }

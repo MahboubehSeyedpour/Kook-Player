@@ -82,6 +82,11 @@ class PlaylistAdapter(
 //        countOfSongsRelatedToPlaylistss()
     }
 
+    override fun getCurrentPosition(): Int {
+//        Fake!
+        return -1
+    }
+
 
     fun handleMenuButtonClickListener(itemId: Int, playlistId: Long): Boolean {
         when (itemId) {

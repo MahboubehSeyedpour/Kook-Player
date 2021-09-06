@@ -91,7 +91,7 @@ class PlaylistFragment : Fragment(), PassData {
 
                 override fun openPlaylist(id: Long) {
 
-                    val mainFragment = PlaylistPageFragment()
+                    val mainFragment = PlaylistPageFragment(id)
                     val fragmentManager: FragmentManager = MainActivity.activity.supportFragmentManager
                     val transaction = fragmentManager.beginTransaction()
                     transaction.addToBackStack(null)

@@ -60,7 +60,7 @@ class SongsAdapter(
 
         viewHolder.recyclerItem.setOnClickListener {
             updatePosition(newIndex = viewHolder.adapterPosition)
-            Coordinator.playSelectedSong()
+            Coordinator.playSelectedSong(dataset[position])
         }
 
 
@@ -134,7 +134,7 @@ class SongsAdapter(
         position = newIndex
     }
 
-    fun getCurrentPosition(): Int {
+    override fun getCurrentPosition(): Int {
         return position
     }
 

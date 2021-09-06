@@ -17,11 +17,16 @@ class PlaylistRepository(val context: Context?) :
     var cashedPlaylistArray = ArrayList<PlaylistModel>()
     override val localDatabase = MyDatabase.getDatabase(context!!, applicationScope)
 
+    companion object
+    {
+        lateinit var db: MyDatabase
+    }
 
     init {
         applicationScope.launch {
             cashedPlaylistArray =
                 localDatabase.playlistDao().getPlaylists() as ArrayList<PlaylistModel>
+            db = localDatabase
         }
     }
 

@@ -2,11 +2,11 @@ package com.example.cassette.manager
 
 import android.content.Context
 import com.example.cassette.myInterface.CoordinatorInterface
-import com.example.cassette.repositories.appdatabase.entities.SongModel
 import com.example.cassette.player.Enums
 import com.example.cassette.player.Enums.PlayingOrder.REPEAT_ALL
 import com.example.cassette.player.Enums.PlayingOrder.SHUFFLE
 import com.example.cassette.player.MediaPlayerAgent
+import com.example.cassette.repositories.appdatabase.entities.SongModel
 import com.example.cassette.views.Fragments.LibraryFragment
 import com.example.cassette.views.Fragments.LibraryFragment.Library.songsAdapter
 import com.example.cassette.views.Fragments.LibraryFragment.Library.viewModel
@@ -15,6 +15,8 @@ object Coordinator : CoordinatorInterface {
     override lateinit var nowPlayingQueue: ArrayList<SongModel>
     override lateinit var playingOrder: Enums.PlayingOrder
     override lateinit var mediaPlayerAgent: MediaPlayerAgent
+
+    lateinit var currentPlayligSong: SongModel
     override var position: Int = songsAdapter?.getCurrentPosition() ?: -1
 
 //    lateinit var notificationManager: NotificationManager
@@ -116,16 +118,19 @@ object Coordinator : CoordinatorInterface {
     }
 
     override fun getCurrentPlayingSong(): SongModel {
-        return LibraryFragment.viewModel.getDataSet()[position]
+//        return LibraryFragment.viewModel.getDataSet()[position]
+        return currentPlayligSong
     }
 
     override fun getCurrentSongPosition(): Int {
         return position
     }
 
-    override fun playSelectedSong() {
-        position = LibraryFragment.songsAdapter?.getCurrentPosition() ?: -1
-        getSongAtPosition(position)?.let { play(it) }
+    override fun playSelectedSong(song: SongModel) {
+//        position = songAdapater.getCurrentPosition() ?: -1
+//        getSongAtPosition(position)?.let { play(it) }
+        song.data?.let { play(it) }
+        currentPlayligSong = song
     }
 
     override fun getPositionInPlayer(): Int {
