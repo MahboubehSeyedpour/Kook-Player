@@ -10,9 +10,9 @@ import android.widget.SeekBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.cassette.R
-import com.example.cassette.myInterface.PlayerPanelInterface
 import com.example.cassette.databinding.FragmentPlayerPanelBinding
 import com.example.cassette.manager.Coordinator
+import com.example.cassette.myInterface.PlayerPanelInterface
 import com.example.cassette.player.Enums
 import com.example.cassette.player.Enums.PanelState
 import com.example.cassette.player.Enums.PanelState.COLLAPSED
@@ -21,11 +21,13 @@ import com.example.cassette.player.PlayerStateRepository
 import com.example.cassette.utlis.ImageUtils
 import com.example.cassette.utlis.TimeUtils
 import com.frolo.waveformseekbar.WaveformSeekBar
+import com.like.LikeButton
+import com.like.OnLikeListener
 import kotlinx.android.synthetic.main.fragment_player_panel.view.*
 import kotlinx.android.synthetic.main.panel_header_on_collapsed.view.*
-import kotlinx.android.synthetic.main.panel_header_on_expanded.view.*
 import kotlinx.android.synthetic.main.player_remote.*
 import kotlin.random.Random
+
 
 class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListener {
 
@@ -50,7 +52,6 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
     }
 
 
-
     override fun onResume() {
         super.onResume()
 
@@ -69,7 +70,7 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
 //        }
 
 
-        binding.header.onExpand.like_iv.setOnClickListener(this)
+//        binding.header.onExpand.like_iv.setOnClickListener(this)
         binding.header.onCollapse.play_btn_on_header.setOnClickListener(this)
         binding.playerRemote.nextBtn.setOnClickListener(this)
         binding.playerRemote.prevBtn.setOnClickListener(this)
@@ -142,6 +143,17 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
 
         })
         waveform_seek_bar.setWaveform(createWaveform(), true)
+
+
+        binding.onExpand.likeBtn.setOnLikeListener(object : OnLikeListener {
+            override fun liked(likeButton: LikeButton) {
+//                TODO(add song to favorites)
+            }
+
+            override fun unLiked(likeButton: LikeButton) {
+//                TODO(remove song from favorites)
+            }
+        })
 
 
 //        binding.playerRemote.seekBar.setOnSeekBarChangeListener(object :
@@ -219,9 +231,10 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
                     setRemainingTime(mCurrentPosition)
                     if (binding.header.onCollapse.visibility == View.VISIBLE) {
 
-                        updateWheelProgress((mCurrentPosition * 360) / ((Coordinator.getCurrentPlayingSong().duration?.div(
-                            1000
-                        ))?.toInt() ?: 0)
+                        updateWheelProgress(
+                            (mCurrentPosition * 360) / ((Coordinator.getCurrentPlayingSong().duration?.div(
+                                1000
+                            ))?.toInt() ?: 0)
                         )
 
                         binding.header.onCollapse.song_title_on_header.text =
@@ -262,14 +275,14 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
 
     override fun onClick(v: View?) {
         when (v) {
-            binding.header.onExpand.like_iv -> {
-                if (previouslyLiked) {
-                    binding.header.onExpand.like_iv.setImageResource(R.drawable.ic_heart)
-                } else {
-                    binding.header.onExpand.like_iv.setImageResource(R.drawable.ic_filled_heart)
-                }
-                previouslyLiked = !previouslyLiked
-            }
+//            binding.header.onExpand.like_iv -> {
+//                if (previouslyLiked) {
+//                    binding.header.onExpand.like_iv.setImageResource(R.drawable.ic_heart)
+//                } else {
+//                    binding.header.onExpand.like_iv.setImageResource(R.drawable.ic_filled_heart)
+//                }
+//                previouslyLiked = !previouslyLiked
+//            }
 
             binding.playerRemote.nextBtn -> Coordinator.playNextSong()
 

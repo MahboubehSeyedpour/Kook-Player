@@ -99,6 +99,8 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.6'
     implementation "androidx.room:room-ktx:$room_version"
 
+//  Like Button
+    compile 'com.github.jd-alexander:LikeButton:0.2.3'
 
 
 }
