@@ -1,11 +1,9 @@
 package com.example.cassette.repositories.appdatabase.roomdb
 
 import android.content.Context
-import android.widget.Toast
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.cassette.repositories.appdatabase.entities.PlaylistModel
 import kotlinx.coroutines.CoroutineScope

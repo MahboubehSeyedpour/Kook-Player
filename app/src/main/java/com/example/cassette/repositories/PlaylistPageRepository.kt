@@ -4,6 +4,9 @@ import com.example.cassette.myInterface.PlaylistPageRepositoryInterface
 import com.example.cassette.repositories.appdatabase.entities.SongModel
 import com.example.cassette.utlis.DatabaseConverterUtils
 import com.example.cassette.views.Fragments.LibraryFragment
+import com.example.cassette.views.Fragments.PlaylistFragment
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 class PlaylistPageRepository(private val playlistId: Long) : PlaylistPageRepositoryInterface {
@@ -32,12 +35,14 @@ class PlaylistPageRepository(private val playlistId: Long) : PlaylistPageReposit
         var songs: ArrayList<SongModel> = arrayListOf()
 
         val songsIdInString = getSongsIdFromDatabase()
-        val songsIdInArraylist = convertStringToArraylist(songsIdInString)
+        if (songsIdInString != null) {
+            val songsIdInArraylist = convertStringToArraylist(songsIdInString)
 
-        for (songId in songsIdInArraylist) {
-            val realSong = songsIdToSongModelConverter(songId)
-            if (realSong != null)
-                songs.add(realSong)
+            for (songId in songsIdInArraylist) {
+                val realSong = songsIdToSongModelConverter(songId)
+                if (realSong != null)
+                    songs.add(realSong)
+            }
         }
 
         return songs
@@ -46,4 +51,22 @@ class PlaylistPageRepository(private val playlistId: Long) : PlaylistPageReposit
     fun convertStringToArraylist(songs: String): ArrayList<String> {
         return DatabaseConverterUtils.stringToArraylist(songs)
     }
+
+    fun removeSongFromPlaylist(songId: String) {
+
+        PlaylistFragment.viewModel?.playlistRepository?.removeSongFromPlaylist(playlistId, songId)
+
+
+
+
+////          update playlist object
+//            for (playlist in PlaylistFragment.viewModel?.getDataSet()!!) {
+//                if (playlist.id == playlistId) {
+//                    playlist.songs = playlistSongsAfterRemoveItem
+//                    break
+//                }
+//            }
+//        }
+    }
+
 }

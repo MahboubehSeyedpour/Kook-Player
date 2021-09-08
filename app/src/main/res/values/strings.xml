@@ -9,6 +9,7 @@
     <string name="action_details">Details</string>
     <string name="action_set_as_ringtone">Set as ringtone</string>
     <string name="action_delete_from_device">Delete from device</string>
+    <string name="action_delete_song_from_playlist">Remove from playlist</string>
 
     <string name="action_delete_playlist">Delete playlist</string>
 

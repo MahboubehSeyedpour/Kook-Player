@@ -22,6 +22,7 @@ import com.example.cassette.viewModel.SongsViewModel
 import com.example.cassette.views.dialogs.AddSongToPlaylistDialog
 import kotlinx.android.synthetic.main.fragment_library.*
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
 
@@ -118,7 +119,6 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
 
     fun createDialogToSelectPlaylist() {
 
-
         val addSongToPlaylistDialog = PlaylistFragment.viewModel?.getDataSet()?.let {
             AddSongToPlaylistDialog(
                 it
@@ -129,12 +129,9 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
         addSongToPlaylistDialog?.setTargetFragment(this, 0)
         this.fragmentManager?.let { it1 -> addSongToPlaylistDialog?.show(it1, "pl") }
 
-
     }
 
     override fun passDataToInvokingFragment(playlists: ArrayList<PlaylistModel>) {
-
-
 
         selectedPlaylists = playlists
 
@@ -147,23 +144,16 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
     private fun addSongToSelectedPlaylist() {
 
         for (playlist in selectedPlaylists) {
-
-            updateSongsInEntity(playlist)
-            updateDatabase(playlist)
+            addSongToPlaylist(playlist)
         }
     }
 
-    fun updateSongsInEntity(playlist: PlaylistModel) {
-        playlist.songs = playlist.songs + selectedSong.id + ","
-    }
-
-    fun updateDatabase(playlist: PlaylistModel) {
-        GlobalScope
-        run {
+    fun addSongToPlaylist(playlist: PlaylistModel) {
+        GlobalScope.launch{
 
             PlaylistFragment.viewModel?.playlistRepository?.addSongsToPlaylist(
                 playlist.name,
-                playlist.songs
+                selectedSong.id.toString()
             )
         }
     }

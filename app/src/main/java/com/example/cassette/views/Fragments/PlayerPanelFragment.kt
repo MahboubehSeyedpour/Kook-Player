@@ -55,22 +55,12 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
     override fun onResume() {
         super.onResume()
 
-//        createNotifService()
-
         activity?.baseContext?.let {
             Coordinator.setup(
                 it
             )
         }
 
-//        activity?.baseContext?.let {
-//            notificationSetup(
-//                it
-//            )
-//        }
-
-
-//        binding.header.onExpand.like_iv.setOnClickListener(this)
         binding.header.onCollapse.play_btn_on_header.setOnClickListener(this)
         binding.playerRemote.nextBtn.setOnClickListener(this)
         binding.playerRemote.prevBtn.setOnClickListener(this)
@@ -84,28 +74,13 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
             SeekBar.OnSeekBarChangeListener,
             WaveformSeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-//                Toast.makeText(
-//                    context,
-//                    "onProgressChanged",
-//                    Toast.LENGTH_SHORT
-//                ).show()
 //                waveform_seek_bar.setProgressInPercentage(0.25F)
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
-//                Toast.makeText(
-//                    context,
-//                    "onStartTrackingTouch",
-//                    Toast.LENGTH_SHORT
-//                ).show()
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-//                Toast.makeText(
-//                    context,
-//                    "onStopTrackingTouch",
-//                    Toast.LENGTH_SHORT
-//                ).show()
             }
 
             override fun onProgressInPercentageChanged(
@@ -117,8 +92,6 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
 
                     setSongTitle()
                     setSongImage()
-
-//                    binding.musicTitleTv.startAnimation(inFromRightAnimation())
 
                     binding.playerRemote.musicMin.text = TimeUtils.milliSecToDuration(
                         (percent * TimeUtils.getDurationOfCurrentMusic().toLong()).toLong()
@@ -132,11 +105,6 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
             }
 
             override fun onStopTrackingTouch(seekBar: WaveformSeekBar?) {
-//                Toast.makeText(
-//                    context,
-//                    "Tracked: percent=" + waveform_seek_bar.progressPercent,
-//                    Toast.LENGTH_SHORT
-//                ).show()
 
                 Coordinator.seekTo((waveform_seek_bar.progressPercent * Coordinator.getCurrentPlayingSong().duration!!).toInt())
             }
@@ -347,27 +315,5 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
     fun initBinding(view: View) {
         binding = FragmentPlayerPanelBinding.bind(view)
     }
-
-
-//    fun createNotifService() {
-//        val notificationPlayerService = NotificationPlayerService()
-//    }
-//
-//    fun startForegroundService() {
-//        context?.let {
-//            NotificationPlayerService.startNotification(
-//                it,
-//                "Foreground service is running"
-//            )
-//        }
-//    }
-//
-//    override fun onDestroy() {
-//        super.onDestroy()
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            notificationManager.cancelAll()
-//        }
-//        activity?.unregisterReceiver(broadcastReceiver)
-//    }
 
 }

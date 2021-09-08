@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cassette.R
 import com.example.cassette.repositories.appdatabase.entities.PlaylistModel
@@ -44,12 +43,8 @@ class AddSongToPlaylistAdapter(
         viewHolder.checkkox.setOnClickListener {
 
             if (viewHolder.checkkox.isChecked) {
-                Toast.makeText(context, "playlist ${playlist.name} selected", Toast.LENGTH_SHORT)
-                    .show()
                 choices?.add(playlist)
             } else {
-                Toast.makeText(context, "playlist ${playlist.name} unselected", Toast.LENGTH_SHORT)
-                    .show()
                 choices?.remove(playlist)
             }
 

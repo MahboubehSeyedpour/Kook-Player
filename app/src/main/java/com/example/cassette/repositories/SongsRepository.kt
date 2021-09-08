@@ -8,25 +8,12 @@ import com.example.cassette.extensions.getInt
 import com.example.cassette.extensions.getLong
 import com.example.cassette.extensions.getString
 import com.example.cassette.repositories.appdatabase.entities.SongModel
-import com.example.cassette.repositories.appdatabase.roomdb.MyDatabase
 import com.example.cassette.utlis.FileUtils
 import com.example.cassette.utlis.ImageUtils
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class SongsRepository(val context: Context) {
 
-//    private val database: AppDatabase by lazy { AppDatabase.getDatabase(context) }
-
-
     init {
-//        val songsAreInDB: Flow<ArrayList<SongModel>> = database.dao().getSongs()
-//        create Database
-//        val database = Room.databaseBuilder(context, AppDatabase::class.java, "appDB").allowMainThreadQueries().build()
-//        database.songDao().addSongs(getSongsFromStorage())
-        GlobalScope.launch {
-
-        }
     }
 
 

@@ -118,11 +118,6 @@ class SongsAdapter(
                 SongUtils.shareMusic(context, getSong(position))
             }
 //            R.id.setAsRingtone_menu_item -> {
-//                Toast.makeText(
-//                    context,
-//                    "add to set as ringtone in item number {$position}",
-//                    Toast.LENGTH_SHORT
-//                ).show()
 //            }
             else -> return false
         }
@@ -149,7 +144,7 @@ class SongsAdapter(
     fun getSong(position: Int): SongModel {
         if (position < 0) {
 
-            Toast.makeText(context, "please try later!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "please try again!", Toast.LENGTH_SHORT).show()
             return SongModel()
         } else {
             return dataset[position]

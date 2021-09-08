@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.TextView
-import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cassette.R
@@ -49,9 +48,6 @@ class PlaylistAdapter(
 //            PlaylistUtils.getMusicsRelatedToSpecificPlaylist(context, playlistId.toLong()).size.toString()
         viewHolder.playlistItem.setOnClickListener {
 
-            Toast.makeText(context, "playlist ${playlist.name} was clicked", Toast.LENGTH_SHORT)
-                .show()
-
 //            open playlist
             dataSend.openPlaylist(playlist.id)
 
@@ -62,7 +58,7 @@ class PlaylistAdapter(
             popUpMenu.inflate(R.menu.playlists_popup_menu)
 
             popUpMenu.setOnMenuItemClickListener {
-                val id = playlistRepository.cashedPlaylistArray[position].id
+                val id = playlistRepository.getPlaylists()[position].id
 //                updatePosition(viewHolder.adapterPosition)
                 return@setOnMenuItemClickListener handleMenuButtonClickListener(
                     it.itemId,
@@ -88,7 +84,7 @@ class PlaylistAdapter(
     }
 
 
-    fun handleMenuButtonClickListener(itemId: Int, playlistId: Long): Boolean {
+    private fun handleMenuButtonClickListener(itemId: Int, playlistId: Long): Boolean {
         when (itemId) {
             R.id.deletePlaylist_menu_item -> {
                 PlaylistFragment.viewModel?.playlistRepository?.removePlaylist(playlistId)
@@ -112,19 +108,6 @@ class PlaylistAdapter(
     fun OnDataSend(dataSend: OnDataSend) {
         this.dataSend = dataSend
     }
-
-//    fun countOfSongsRelatedToPlaylistss()
-//    {
-//        for (playlist in dataset)
-//        {
-//            val playlistRepository = PlaylistRepository(context)
-//            val playlistId = playlistRepository.getPlaylistIdByName(playlist.name)
-//            val num = PlaylistUtils.getMusicsRelatedToSpecificPlaylist(context, playlistId.toLong())
-//            val i = 0
-//            viewHolder.countOfSongs.text = PlaylistUtils.getMusicsRelatedToSpecificPlaylist(context, playlistId.toLong()).size.toString()
-//        }
-//
-//    }
 
     open inner class RecyclerViewViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {

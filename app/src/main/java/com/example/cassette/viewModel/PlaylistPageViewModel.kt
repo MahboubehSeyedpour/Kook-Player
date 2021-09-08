@@ -7,10 +7,13 @@ import com.example.cassette.repositories.appdatabase.entities.SongModel
 class PlaylistPageViewModel() : BaseViewModel() {
 
     override var dataset: MutableLiveData<ArrayList<Any>> = MutableLiveData()
-    private var database : ArrayList<Any> = arrayListOf()
     lateinit var playlistPageRepository: PlaylistPageRepository
     private var playlistId: Long = -1L
 
+
+    init {
+        dataset.value = ArrayList()
+    }
 
     fun setPlayllistId(pId: Long)
     {
@@ -20,15 +23,16 @@ class PlaylistPageViewModel() : BaseViewModel() {
     }
 
     override fun fillRecyclerView() {
-        database = playlistPageRepository.getSongs() as ArrayList<Any>
+        updateDataset()
+
     }
 
     override fun updateDataset() {
-
+        dataset.value = playlistPageRepository.getSongs() as ArrayList<Any>
     }
 
     fun getDataset(): ArrayList<SongModel>
     {
-        return database as ArrayList<SongModel>
+        return dataset.value as ArrayList<SongModel>
     }
 }

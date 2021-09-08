@@ -1,6 +1,5 @@
 package com.example.cassette.repositories.appdatabase.roomdb
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -37,4 +36,8 @@ interface PlaylistDao {
 
     @Query("UPDATE playlist_table SET countOfSongs = :count WHERE id = :id")
     fun setCountOfSongs(id: Long, count: Int)
+
+    @Query("UPDATE playlist_table SET songs = :songs WHERE id = :id")
+    fun updateSongs(id: Long, songs: String)
+
 }
