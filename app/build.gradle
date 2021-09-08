@@ -16,6 +16,9 @@ android {
         versionCode 1
         versionName "1.0"
 
+        renderscriptTargetApi 31
+        renderscriptSupportModeEnabled true
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -101,6 +104,10 @@ dependencies {
 
 //  Like Button
     compile 'com.github.jd-alexander:LikeButton:0.2.3'
+
+//    ColoredShadowImageView
+    implementation 'com.github.armcha:ColoredShadowImageView:1.1.0'
+
 
 
 }

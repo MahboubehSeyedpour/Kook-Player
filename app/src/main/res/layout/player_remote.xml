@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginTop="5dp">
+    android:layout_height="match_parent">
 
 
     <!--    <LinearLayout-->
@@ -32,7 +30,8 @@
         android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
         android:layout_height="75dp"
-        android:layout_margin="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -79,15 +78,17 @@
         android:id="@+id/constraintLayout3"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_margin="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
 
         <ImageView
             android:id="@+id/prev_btn"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:padding="10dp"
             android:layout_weight="1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -95,7 +96,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.49"
-            app:srcCompat="@drawable/ic_previous_track" />
+            app:srcCompat="@drawable/ic_previous_track"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/playOrPause_layout"
@@ -111,6 +114,7 @@
                 android:id="@+id/play_btn"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
+                android:padding="10dp"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
@@ -118,12 +122,15 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"/>
 
             <ImageView
                 android:id="@+id/pause_btn"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
+                android:padding="10dp"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
@@ -133,15 +140,18 @@
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <ImageView
             android:id="@+id/next_btn"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:padding="10dp"
             android:layout_weight="1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -149,7 +159,9 @@
             app:layout_constraintStart_toEndOf="@+id/prev_btn"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.49"
-            app:srcCompat="@drawable/ic_next_track" />
+            app:srcCompat="@drawable/ic_next_track"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -158,7 +170,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="72dp"
-        android:layout_margin="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
@@ -166,15 +179,18 @@
 
         <ImageView
             android:id="@+id/shuffle_btn"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
             android:layout_weight="1"
+            android:padding="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.343"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.49"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
             app:srcCompat="@drawable/ic_shuffle" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -190,14 +206,17 @@
 
             <ImageView
                 android:id="@+id/repeat_btn"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
                 android:layout_weight="1"
+                android:padding="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_repeat" />
+                app:srcCompat="@drawable/ic_repeat"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"/>
 
             <TextView
                 android:id="@+id/playOneSongLabel_tv"
@@ -215,7 +234,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
     <!--    <androidx.constraintlayout.widget.Guideline-->

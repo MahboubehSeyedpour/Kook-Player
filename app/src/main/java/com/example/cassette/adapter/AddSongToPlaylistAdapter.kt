@@ -39,15 +39,16 @@ class AddSongToPlaylistAdapter(
         val playlist: PlaylistModel = dataset[position]
         val viewHolder =
             holder as AddSongToPlaylistAdapter.RecyclerViewViewHolder
-        viewHolder.name.text = playlist.name
-        viewHolder.checkkox.setOnClickListener {
 
-            if (viewHolder.checkkox.isChecked) {
+        viewHolder.name.text = playlist.name
+
+        viewHolder.checkbox.setOnClickListener {
+
+            if (viewHolder.checkbox.isChecked) {
                 choices?.add(playlist)
             } else {
                 choices?.remove(playlist)
             }
-
         }
 
     }
@@ -64,7 +65,7 @@ class AddSongToPlaylistAdapter(
     open inner class RecyclerViewViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
         val name: TextView = itemView.textView2
-        val checkkox: MaterialCheckBox = itemView.materialCheckBox
+        val checkbox: MaterialCheckBox = itemView.materialCheckBox
     }
 
     init {

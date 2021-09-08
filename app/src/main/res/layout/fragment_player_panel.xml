@@ -24,30 +24,36 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
+<!--    <androidx.cardview.widget.CardView-->
+<!--        android:id="@+id/cardView"-->
+<!--        android:layout_width="242dp"-->
+<!--        android:layout_height="242dp"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:layout_margin="10dp"-->
+<!--        android:elevation="4dp"-->
+<!--        android:translationZ="10dp"-->
+<!--        app:cardCornerRadius="170dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.496"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.27">-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/music_album_image"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            app:srcCompat="@mipmap/ic_music_foreground" />-->
+
+
+<!--    </androidx.cardview.widget.CardView>-->
+
+    <io.github.armcha.coloredshadow.ShadowImageView
+        android:id="@+id/music_album_image"
         android:layout_width="242dp"
         android:layout_height="242dp"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        android:elevation="4dp"
-        android:translationZ="10dp"
-        app:cardCornerRadius="170dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.27">
-
-        <ImageView
-            android:id="@+id/music_album_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:srcCompat="@mipmap/ic_music_foreground" />
-
-
-    </androidx.cardview.widget.CardView>
+        android:src="@drawable/ic_music_background"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -60,7 +66,7 @@
             android:id="@+id/music_title_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/normal_margin"
+            android:layout_margin="5dp"
             android:ellipsize="end"
             android:gravity="center"
             android:singleLine="true"
