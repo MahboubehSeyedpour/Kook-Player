@@ -2,6 +2,7 @@
 
     <!--    app-->
     <string name="app_name">cassette</string>
+    <string name="preference_file_key">GLOBAL_STATE</string>
 
     <string name="action_play_next">play next</string>
     <string name="action_add_to_playing_queue">Add to playlist</string>
@@ -41,5 +42,14 @@
     <string name="extra_key">actionname</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <!--   SharedPreferences-->
+    <string name="preference_shuffle_is_on">SHUFFLE_IS_ON</string>
+    <string name="preference_shuffle_default">SHUFFLE_IS_NONE</string>
+    <string name="preference_repeat_one">REPEAT_ONE</string>
+    <string name="preference_last_song_id">LAST_SONG_ID</string>
+    <string name="preference_last_song_position">LAST_SONG_POSITION</string>
+
+
 
 </resources>

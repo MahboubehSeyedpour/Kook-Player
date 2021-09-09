@@ -2,6 +2,8 @@ package com.example.cassette.views
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -12,6 +14,7 @@ import androidx.lifecycle.LifecycleOwner
 import com.example.cassette.databinding.ActivityMainBinding
 import com.example.cassette.player.Enums
 import com.example.cassette.providers.PermissionProvider
+import com.example.cassette.utlis.SharedPrefUtils
 import com.example.cassette.views.Fragments.MainFragment
 import com.example.cassette.views.Fragments.PlayerPanelFragment
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
@@ -23,6 +26,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         var permissionsGranted: Boolean = false
         lateinit var playerPanelFragment: PlayerPanelFragment
         lateinit var activity: MainActivity
+        lateinit var sharedPreferences: SharedPreferences
     }
 
     private val permissions = arrayOf(
@@ -32,11 +36,25 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
     lateinit var binding: ActivityMainBinding
 
 
+    override fun onStop() {
+        super.onStop()
+        saveSettings()
+    }
+
+    fun saveSettings() {
+
+        SharedPrefUtils.saveState()
+    }
+
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("ResourceAsColor", "WrongConstant")
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
+        sharedPreferences = getPreferences(Context.MODE_PRIVATE) ?: return
+
+
+
         activity = this
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -47,6 +65,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         initMainFragment()
 
         initBottomSheet()
+
 
 //        TODO( "implement hideStatusBar() function");
 

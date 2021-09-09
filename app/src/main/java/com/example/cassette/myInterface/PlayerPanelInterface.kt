@@ -14,7 +14,7 @@ interface PlayerPanelInterface {
 
 
     //    for seekbar
-    fun seekTo()
+    fun seekTo(mCurrentPosition: Int)
     fun seekbarHandler()
     fun setRemainingTime(remainingTime: Int)
 

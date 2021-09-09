@@ -1,6 +1,8 @@
 package com.example.cassette.manager
 
 import android.content.Context
+import android.support.v4.media.session.PlaybackStateCompat
+import com.example.cassette.R
 import com.example.cassette.myInterface.CoordinatorInterface
 import com.example.cassette.player.Enums
 import com.example.cassette.player.Enums.PlayingOrder.REPEAT_ALL
@@ -10,11 +12,16 @@ import com.example.cassette.repositories.appdatabase.entities.SongModel
 import com.example.cassette.views.Fragments.LibraryFragment
 import com.example.cassette.views.Fragments.LibraryFragment.Library.songsAdapter
 import com.example.cassette.views.Fragments.LibraryFragment.Library.viewModel
+import com.example.cassette.views.MainActivity
 
 object Coordinator : CoordinatorInterface {
     override lateinit var nowPlayingQueue: ArrayList<SongModel>
     override lateinit var playingOrder: Enums.PlayingOrder
     override lateinit var mediaPlayerAgent: MediaPlayerAgent
+
+    private var shuffleMode = PlaybackStateCompat.SHUFFLE_MODE_NONE
+    private var repeatMode = PlaybackStateCompat.REPEAT_MODE_NONE
+
 
     lateinit var currentPlayligSong: SongModel
     override var position: Int = songsAdapter?.getCurrentPosition() ?: -1
@@ -23,6 +30,57 @@ object Coordinator : CoordinatorInterface {
 
     override fun setup(context: Context) {
         mediaPlayerAgent = MediaPlayerAgent(context)
+    }
+
+//    fun saveSettings(activity: Activity) {
+//
+//        sharedPreferences = activity.getPreferences(Context.MODE_PRIVATE) ?: return
+//        with(sharedPreferences.edit())
+//        {
+//            putInt(
+//                activity.resources.getString(R.string.preference_shuffle_is_on), getShuffleStatus()
+//            )
+//            putInt(
+//                activity.resources.getString(R.string.preference_repeat_one),
+//                getRepeatOnestatus()
+//            )
+//            putLong(
+//                activity.resources.getString(R.string.preference_last_song_id),
+//                getCurrentPlayingSong().id ?: -1
+//            )
+//            putInt(
+//                activity.resources.getString(R.string.preference_last_song_position),
+//                getCurrentSongPosition()
+//            )
+//            apply()
+//        }
+//    }
+//
+//    fun getSettings(activity: Activity) {
+//        sharedPreferences.getInt(
+//            activity.resources.getString(R.string.preference_shuffle_is_on),
+//            -1
+//        )
+//        sharedPreferences.getInt(
+//            activity.resources.getString(R.string.preference_repeat_one),
+//            -1
+//        )
+//        sharedPreferences.getLong(
+//            activity.resources.getString(R.string.preference_last_song_id),
+//            -1
+//        )
+//        sharedPreferences.getInt(
+//            activity.resources.getString(R.string.preference_last_song_position),
+//            -1
+//        )
+//    }
+
+    fun getShuffleStatus(): Int {
+        return shuffleMode
+    }
+
+    fun getRepeatOnestatus(): Int {
+        return repeatMode
     }
 
 
@@ -90,6 +148,7 @@ object Coordinator : CoordinatorInterface {
         mediaPlayerAgent.playMusic(song)
     }
 
+
     fun onSongCompletion() {
         mediaPlayerAgent.reset()
         playNextSong()
@@ -119,6 +178,7 @@ object Coordinator : CoordinatorInterface {
 
     override fun getCurrentPlayingSong(): SongModel {
 //        return LibraryFragment.viewModel.getDataSet()[position]
+
         return currentPlayligSong
     }
 

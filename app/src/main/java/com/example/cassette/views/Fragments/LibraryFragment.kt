@@ -18,6 +18,7 @@ import com.example.cassette.manager.Coordinator
 import com.example.cassette.myInterface.PassDataForSelectPlaylists
 import com.example.cassette.repositories.appdatabase.entities.PlaylistModel
 import com.example.cassette.repositories.appdatabase.entities.SongModel
+import com.example.cassette.utlis.SharedPrefUtils
 import com.example.cassette.viewModel.SongsViewModel
 import com.example.cassette.views.dialogs.AddSongToPlaylistDialog
 import kotlinx.android.synthetic.main.fragment_library.*
@@ -68,7 +69,10 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
 
         viewModel.updateDataset()
 
+        SharedPrefUtils.loadLastState()
+
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -149,7 +153,7 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
     }
 
     fun addSongToPlaylist(playlist: PlaylistModel) {
-        GlobalScope.launch{
+        GlobalScope.launch {
 
             PlaylistFragment.viewModel?.playlistRepository?.addSongsToPlaylist(
                 playlist.name,

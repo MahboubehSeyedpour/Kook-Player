@@ -145,12 +145,12 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
 
     }
 
-
     override fun setDefaultVisibilities() {
         TODO("Not yet implemented")
     }
 
     override fun setSongImage() {
+
         context?.let {
             ImageUtils.loadImageToImageView(
                 it,
@@ -176,8 +176,26 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
         TODO("Not yet implemented")
     }
 
-    override fun seekTo() {
-        TODO("Not yet implemented")
+    override fun seekTo(mCurrentPosition: Int) {
+        binding.playerRemote.waveformSeekBar.setProgressInPercentage(
+            mCurrentPosition / (Coordinator.getCurrentPlayingSong().duration?.div(
+                1000F
+            )!!)
+        )
+
+
+        if (binding.header.onCollapse.visibility == View.VISIBLE) {
+
+            updateWheelProgress(
+                (mCurrentPosition * 360) / ((Coordinator.getCurrentPlayingSong().duration?.div(
+                    1000
+                ))?.toInt() ?: 0)
+            )
+
+            binding.header.onCollapse.song_title_on_header.text =
+                if (Coordinator.isPlaying()) Coordinator.getCurrentPlayingSong().title else ""
+        }
+
     }
 
     override fun seekbarHandler() {
@@ -188,26 +206,9 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
 
                     val mCurrentPosition = Coordinator.getPositionInPlayer() / 1000
 
-//                    binding.playerRemote.seekBar.max =
-//                        (Coordinator.getCurrentPlayingSong().duration / 1000).toInt()
-
-//                    binding.playerRemote.seekBar.progress = mCurrentPosition
-
-                    binding.playerRemote.waveformSeekBar.setProgressInPercentage(
-                        mCurrentPosition / (Coordinator.getCurrentPlayingSong().duration?.div(1000F)!!)
-                    )
+                    seekTo(mCurrentPosition)
                     setRemainingTime(mCurrentPosition)
-                    if (binding.header.onCollapse.visibility == View.VISIBLE) {
 
-                        updateWheelProgress(
-                            (mCurrentPosition * 360) / ((Coordinator.getCurrentPlayingSong().duration?.div(
-                                1000
-                            ))?.toInt() ?: 0)
-                        )
-
-                        binding.header.onCollapse.song_title_on_header.text =
-                            if (Coordinator.isPlaying()) Coordinator.getCurrentPlayingSong().title else ""
-                    }
                 }
                 mHandler.postDelayed(this, 1000)
             }

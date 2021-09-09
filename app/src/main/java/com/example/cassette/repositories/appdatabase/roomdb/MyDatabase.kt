@@ -17,23 +17,32 @@ import kotlinx.coroutines.launch
 //@TypeConverters(Converters::class)
 abstract class MyDatabase : RoomDatabase() {
     abstract fun playlistDao(): PlaylistDao
-
+//    abstract fun globalValueDao(): GlobalValueDao
 
     private class MyDatabaseCallback(private val scope: CoroutineScope) : RoomDatabase.Callback() {
         override fun onCreate(db: SupportSQLiteDatabase) {
             super.onCreate(db)
             INSTANCE?.let { database ->
                 scope.launch {
-                    populateDatabase(database.playlistDao())
+
+                    populatePlaylistDatabase(database.playlistDao())
+//                    populateGlobalDatabase(database.globalValueDao())
+
                 }
             }
         }
 
-        suspend fun populateDatabase(playlistDao: PlaylistDao) {
+        suspend fun populatePlaylistDatabase(playlistDao: PlaylistDao) {
             // Delete all content here.
             playlistDao.deleteAll()
 
         }
+
+//        suspend fun populateGlobalDatabase(globalValueDao: GlobalValueDao) {
+//            // Delete all content here.
+//            globalValueDao.deleteExpiredValues()
+//
+//        }
     }
 
     companion object {
