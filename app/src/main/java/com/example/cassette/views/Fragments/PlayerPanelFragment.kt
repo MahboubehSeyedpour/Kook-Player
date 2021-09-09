@@ -68,7 +68,7 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
         binding.playerRemote.prevBtn.setOnClickListener(this)
         binding.playerRemote.playOrPauseLayout.setOnClickListener(this)
         binding.playerRemote.shuffleContainer.setOnClickListener(this)
-        binding.playerRemote.repeatLayout.setOnClickListener(this)
+        binding.playerRemote.repeatContainer.setOnClickListener(this)
 
         seekbarHandler()
 
@@ -281,11 +281,26 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
                 }
             }
 
-            binding.playerRemote.repeatLayout -> {
-                if (PlayerStateRepository.currentPlayerMode == PlayerStateRepository.PlayerModes.REPEAT_ALL) {
-                    Coordinator.changePlayingMode(Enums.PlayingOrder.REPEAT_ONE)
-                } else {
-                    Coordinator.changePlayingMode(Enums.PlayingOrder.REPEAT_ALL)
+            binding.playerRemote.repeatContainer -> {
+                if (Coordinator.repeatMode == PlaybackStateCompat.REPEAT_MODE_NONE) {
+
+                    Coordinator.repeatMode = PlaybackStateCompat.REPEAT_MODE_ALL
+                    Toast.makeText(context, "repeat all", Toast.LENGTH_SHORT).show()
+                    binding.playerPanel.repeatContainer.displayedChild = 1
+
+                } else if (Coordinator.repeatMode == PlaybackStateCompat.REPEAT_MODE_ALL){
+
+                    Coordinator.repeatMode = PlaybackStateCompat.REPEAT_MODE_ONE
+                    Toast.makeText(context, "repeat one", Toast.LENGTH_SHORT).show()
+                    binding.playerPanel.repeatContainer.displayedChild = 2
+
+                }
+                else if (Coordinator.repeatMode == PlaybackStateCompat.REPEAT_MODE_ONE){
+
+                    Coordinator.repeatMode = PlaybackStateCompat.REPEAT_MODE_NONE
+                    Toast.makeText(context, "no repeat", Toast.LENGTH_SHORT).show()
+                    binding.playerPanel.repeatContainer.displayedChild = 3
+
                 }
             }
 
