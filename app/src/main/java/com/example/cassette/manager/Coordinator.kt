@@ -19,8 +19,8 @@ object Coordinator : CoordinatorInterface {
     override lateinit var playingOrder: Enums.PlayingOrder
     override lateinit var mediaPlayerAgent: MediaPlayerAgent
 
-    private var shuffleMode = PlaybackStateCompat.SHUFFLE_MODE_NONE
-    private var repeatMode = PlaybackStateCompat.REPEAT_MODE_NONE
+    var shuffleMode = PlaybackStateCompat.SHUFFLE_MODE_NONE
+    var repeatMode = PlaybackStateCompat.REPEAT_MODE_NONE
 
 
     lateinit var currentPlayligSong: SongModel

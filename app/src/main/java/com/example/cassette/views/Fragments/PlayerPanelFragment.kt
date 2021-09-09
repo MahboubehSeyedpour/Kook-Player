@@ -3,6 +3,7 @@ package com.example.cassette.views.Fragments
 import android.app.NotificationManager
 import android.os.Bundle
 import android.os.Handler
+import android.support.v4.media.session.PlaybackStateCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,6 +27,7 @@ import com.like.OnLikeListener
 import kotlinx.android.synthetic.main.fragment_player_panel.view.*
 import kotlinx.android.synthetic.main.panel_header_on_collapsed.view.*
 import kotlinx.android.synthetic.main.player_remote.*
+import kotlinx.android.synthetic.main.player_remote.view.*
 import kotlin.random.Random
 
 
@@ -65,7 +67,7 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
         binding.playerRemote.nextBtn.setOnClickListener(this)
         binding.playerRemote.prevBtn.setOnClickListener(this)
         binding.playerRemote.playOrPauseLayout.setOnClickListener(this)
-        binding.playerRemote.shuffleBtn.setOnClickListener(this)
+        binding.playerRemote.shuffleContainer.setOnClickListener(this)
         binding.playerRemote.repeatLayout.setOnClickListener(this)
 
         seekbarHandler()
@@ -263,9 +265,20 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
 //                startForegroundService()
             }
 
-            binding.playerRemote.shuffleBtn -> {
-                Coordinator.changePlayingMode(Enums.PlayingOrder.SHUFFLE)
-                Toast.makeText(context, "shuffle is ON", Toast.LENGTH_SHORT).show()
+            binding.playerPanel.shuffle_container -> {
+                if (Coordinator.shuffleMode == PlaybackStateCompat.SHUFFLE_MODE_NONE) {
+
+                    Coordinator.shuffleMode = PlaybackStateCompat.SHUFFLE_MODE_ALL
+                    Toast.makeText(context, "shuffle is ON", Toast.LENGTH_SHORT).show()
+                    binding.playerPanel.shuffle_container.displayedChild = 1
+
+                } else {
+
+                    Coordinator.shuffleMode = PlaybackStateCompat.SHUFFLE_MODE_NONE
+                    Toast.makeText(context, "shuffle is OFF", Toast.LENGTH_SHORT).show()
+                    binding.playerPanel.shuffle_container.displayedChild = 2
+
+                }
             }
 
             binding.playerRemote.repeatLayout -> {
