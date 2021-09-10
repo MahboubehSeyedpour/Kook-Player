@@ -11,7 +11,7 @@ object SharedPrefUtils {
     fun getLastSongId(): Long {
         return MainActivity.sharedPreferences.getLong(
             activity.resources.getString(R.string.preference_last_song_id),
-            -1
+            -1L
         )
     }
 
@@ -45,11 +45,15 @@ object SharedPrefUtils {
             )
             putInt(
                 activity.resources.getString(R.string.preference_repeat_one),
-                Coordinator.getRepeatOnestatus()
+                Coordinator.getRepeatOneStatus()
             )
+//            putLong(
+//                activity.resources.getString(R.string.preference_last_song_id),
+//                Coordinator.getCurrentPlayingSong().id ?: -1
+//            )
             putLong(
                 activity.resources.getString(R.string.preference_last_song_id),
-                Coordinator.getCurrentPlayingSong().id ?: -1
+                Coordinator.currentPlayingSong?.id ?: -1L
             )
             putInt(
                 activity.resources.getString(R.string.preference_last_song_position),

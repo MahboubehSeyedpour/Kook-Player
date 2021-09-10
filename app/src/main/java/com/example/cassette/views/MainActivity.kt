@@ -66,7 +66,6 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
         initBottomSheet()
 
-
 //        TODO( "implement hideStatusBar() function");
 
         binding.slidingLayout.addPanelSlideListener(object :
@@ -111,9 +110,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         permissionProvider.askForPermission(this, permissions)
 
         if (permissionProvider.permissionIsGranted) {
-//            initTabs()
             initBottomSheet()
-
         }
 
     }

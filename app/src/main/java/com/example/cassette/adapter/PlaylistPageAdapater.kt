@@ -27,6 +27,7 @@ class PlaylistPageAdapater(var dataset: ArrayList<SongModel>,val context: Activi
 
     var position = 0
     lateinit var dataSend: OnDataSend
+    lateinit var playlist_name : String
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val rootView: View =
@@ -53,6 +54,7 @@ class PlaylistPageAdapater(var dataset: ArrayList<SongModel>,val context: Activi
         viewHolder.recyclerItem.setOnClickListener {
             updatePosition(newIndex = viewHolder.adapterPosition)
             Coordinator.playSelectedSong(dataset[position])
+            Coordinator.SourceOfSelectedSong = playlist_name
         }
 
         viewHolder.menuBtn.setOnClickListener {

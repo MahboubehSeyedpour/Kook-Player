@@ -4,6 +4,7 @@ import SongUtils
 import android.app.Activity
 import android.net.Uri
 import android.os.Build
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cassette.R
@@ -18,6 +20,8 @@ import com.example.cassette.manager.Coordinator
 import com.example.cassette.repositories.appdatabase.entities.SongModel
 import com.example.cassette.utlis.ImageUtils
 import com.example.cassette.utlis.TimeUtils
+import com.example.cassette.views.Fragments.LibraryFragment
+import com.example.cassette.views.MainActivity
 import com.example.cassette.views.dialogs.SongDetailsDialog
 import kotlinx.android.synthetic.main.song_rv_item.view.*
 
@@ -61,6 +65,7 @@ class SongsAdapter(
         viewHolder.recyclerItem.setOnClickListener {
             updatePosition(newIndex = viewHolder.adapterPosition)
             Coordinator.playSelectedSong(dataset[position])
+            Coordinator.SourceOfSelectedSong = "library"
         }
 
 
@@ -99,7 +104,23 @@ class SongsAdapter(
 
             }
             R.id.deleteFromDevice_menu_item -> {
-                getSongUri(position)?.let { SongUtils.deletMusic(context, it) }
+                SongUtils.context = LibraryFragment.mactivity.baseContext
+
+
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R)
+                {
+                    getSongUri(position)?.let { SongUtils.deletMusic(LibraryFragment.mactivity, it) }
+                }
+                else{
+//                    val urisToModify = getSongUri(position)?.let {
+//                        MediaStore.getDocumentUri(context,
+//                            it
+//                        )
+//                    }
+//                    urisToModify?.let { SongUtils.deletMusic(LibraryFragment.mactivity, it) }
+                    getSongUri(position)?.let { SongUtils.del(getSong(position).id.toString(), it) }
+                }
+
             }
             R.id.details_menu_item -> {
 
@@ -123,7 +144,6 @@ class SongsAdapter(
         }
         return true
     }
-
 
     fun updatePosition(newIndex: Int) {
         position = newIndex

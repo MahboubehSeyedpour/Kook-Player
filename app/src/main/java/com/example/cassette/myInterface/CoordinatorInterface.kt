@@ -7,7 +7,7 @@ import com.example.cassette.player.MediaPlayerAgent
 
 interface CoordinatorInterface {
 
-    var playingOrder: Enums.PlayingOrder
+//    var playingOrder: Enums.PlayingOrder
     var nowPlayingQueue: ArrayList<SongModel>
     var mediaPlayerAgent: MediaPlayerAgent
     var position: Int
@@ -16,7 +16,6 @@ interface CoordinatorInterface {
 
 
 //    player
-    fun initNowPlayingQueue() //logic for shuffle , repeat all or repeat one
     fun playNextSong()
     fun playPrevSong()
     fun pause() //pause current playing song
@@ -36,7 +35,7 @@ interface CoordinatorInterface {
 
 
 //    get Info
-    fun getCurrentPlayingSong(): SongModel
+//    fun getCurrentPlayingSong(): SongModel
     fun getCurrentSongPosition(): Int
     fun playSelectedSong(song: SongModel)
     fun getPositionInPlayer(): Int

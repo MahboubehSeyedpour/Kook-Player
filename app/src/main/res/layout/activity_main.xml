@@ -21,16 +21,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-<!--            <include-->
-<!--                android:id="@+id/include_base"-->
-<!--                layout="@layout/base"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent" />-->
+            <!--            <include-->
+            <!--                android:id="@+id/include_base"-->
+            <!--                layout="@layout/base"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="match_parent" />-->
         </FrameLayout>
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/bbb"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center|top">

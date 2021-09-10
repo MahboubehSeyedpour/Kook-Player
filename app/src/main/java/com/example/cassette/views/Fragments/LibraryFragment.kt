@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,6 +33,8 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
         var songsAdapter: SongsAdapter? = null
 
         lateinit var viewModel: SongsViewModel
+
+        lateinit var mactivity: FragmentActivity
 
         lateinit var selectedSong: SongModel
         lateinit var selectedPlaylists: ArrayList<PlaylistModel>
@@ -63,11 +66,12 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
             pullToRefresh.isRefreshing = false
         }
 
-        Coordinator.initNowPlayingQueue()
-
         songs_rv.layoutManager = LinearLayoutManager(context)
 
         viewModel.updateDataset()
+
+        mactivity = requireActivity()
+
 
         SharedPrefUtils.loadLastState()
 
@@ -111,6 +115,8 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
         )
 
         notifyDataSetChanges()
+
+
 
         return view
     }
@@ -160,5 +166,10 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
                 selectedSong.id.toString()
             )
         }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        Coordinator.updateNowPlayingQueue()
+
     }
 }

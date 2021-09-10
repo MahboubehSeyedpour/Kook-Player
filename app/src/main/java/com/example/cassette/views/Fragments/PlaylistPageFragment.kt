@@ -47,6 +47,8 @@ class PlaylistPageFragment(val playlistId: Long) : Fragment() {
             )
         }!!
 
+        playlistSongsAdapter.playlist_name = getPlaylistName(playlistId)
+
         return binding.root
     }
 
@@ -95,6 +97,15 @@ class PlaylistPageFragment(val playlistId: Long) : Fragment() {
     private val playlistSongsObserer = Observer<ArrayList<Any>> { dataset ->
         playlistSongsAdapter?.dataset = dataset as ArrayList<SongModel>
         binding.playlistsSongsRv.adapter = playlistSongsAdapter
+    }
+
+    fun getPlaylistName(id: Long): String {
+        for (playlist in PlaylistFragment.viewModel?.getDataSet()!!) {
+            if (playlist.id == id) {
+                return playlist.name
+            }
+        }
+        return ""
     }
 
 }

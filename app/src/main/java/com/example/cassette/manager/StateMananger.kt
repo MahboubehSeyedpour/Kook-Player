@@ -23,7 +23,7 @@ object StateMananger {
         for (steper in LibraryFragment.viewModel.songsRepository.getListOfSongs()) {
             if (steper.id == SharedPrefUtils.getLastSongId()) {
                 song = steper
-                Coordinator.currentPlayligSong = song
+                Coordinator.currentPlayingSong =song
                 song.data?.let { Coordinator.play(it) }
             }
         }

@@ -14,11 +14,9 @@ import com.example.cassette.R
 import com.example.cassette.databinding.FragmentPlayerPanelBinding
 import com.example.cassette.manager.Coordinator
 import com.example.cassette.myInterface.PlayerPanelInterface
-import com.example.cassette.player.Enums
 import com.example.cassette.player.Enums.PanelState
 import com.example.cassette.player.Enums.PanelState.COLLAPSED
 import com.example.cassette.player.Enums.PanelState.EXPANDED
-import com.example.cassette.player.PlayerStateRepository
 import com.example.cassette.utlis.ImageUtils
 import com.example.cassette.utlis.TimeUtils
 import com.frolo.waveformseekbar.WaveformSeekBar
@@ -92,14 +90,19 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
             ) {
                 if (Coordinator.isPlaying()) {
 
-                    setSongTitle()
-                    setSongImage()
+//                    setSongTitle()
+//                    setSongImage()
 
                     binding.playerRemote.musicMin.text = TimeUtils.milliSecToDuration(
                         (percent * TimeUtils.getDurationOfCurrentMusic().toLong()).toLong()
                     )
-                    binding.playerRemote.musicMax.text =
-                        TimeUtils.milliSecToDuration(TimeUtils.getDurationOfCurrentMusic().toLong())
+
+//                  binding.playerRemote.musicMax.text =
+//                        Coordinator.currentPlayligSong.duration?.let {
+//                            TimeUtils.milliSecToDuration(
+//                                it
+//                            )
+//                        }
                 }
             }
 
@@ -108,7 +111,7 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
 
             override fun onStopTrackingTouch(seekBar: WaveformSeekBar?) {
 
-                Coordinator.seekTo((waveform_seek_bar.progressPercent * Coordinator.getCurrentPlayingSong().duration!!).toInt())
+                Coordinator.seekTo((waveform_seek_bar.progressPercent * Coordinator.currentPlayingSong?.duration!!).toInt())
             }
 
         })
@@ -157,13 +160,24 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
             ImageUtils.loadImageToImageView(
                 it,
                 binding.musicAlbumImage,
-                Coordinator.getCurrentPlayingSong().image!!
+                Coordinator.currentPlayingSong?.image!!
             )
         }
     }
 
+    fun updatePanel() {
+        setSongTitle()
+        setSongImage()
+        binding.playerRemote.musicMax.text =
+            Coordinator.currentPlayingSong?.duration?.let {
+                TimeUtils.milliSecToDuration(
+                    it
+                )
+            }
+    }
+
     override fun setSongTitle() {
-        binding.musicTitleTv.text = Coordinator.getCurrentPlayingSong().title
+        binding.musicTitleTv.text = Coordinator.currentPlayingSong?.title
     }
 
     override fun getPanelState() {
@@ -179,8 +193,9 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
     }
 
     override fun seekTo(mCurrentPosition: Int) {
+
         binding.playerRemote.waveformSeekBar.setProgressInPercentage(
-            mCurrentPosition / (Coordinator.getCurrentPlayingSong().duration?.div(
+            mCurrentPosition / (Coordinator.currentPlayingSong?.duration?.div(
                 1000F
             )!!)
         )
@@ -189,13 +204,13 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
         if (binding.header.onCollapse.visibility == View.VISIBLE) {
 
             updateWheelProgress(
-                (mCurrentPosition * 360) / ((Coordinator.getCurrentPlayingSong().duration?.div(
+                (mCurrentPosition * 360) / ((Coordinator.currentPlayingSong?.duration?.div(
                     1000
                 ))?.toInt() ?: 0)
             )
 
             binding.header.onCollapse.song_title_on_header.text =
-                if (Coordinator.isPlaying()) Coordinator.getCurrentPlayingSong().title else ""
+                if (Coordinator.isPlaying()) Coordinator.currentPlayingSong?.title else ""
         }
 
     }
@@ -207,9 +222,19 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
                 if (Coordinator != null && Coordinator.isPlaying()) {
 
                     val mCurrentPosition = Coordinator.getPositionInPlayer() / 1000
+                    val duration = Coordinator.currentPlayingSong?.duration?.div(1000)
 
                     seekTo(mCurrentPosition)
                     setRemainingTime(mCurrentPosition)
+
+//                    if(Coordinator.getCurrentSongPosition().toLong() == Coordinator.currentPlayligSong.duration)
+//                    {
+//                        Coordinator.onSongCompletion()
+//                    }
+//
+                    if (mCurrentPosition == duration?.toInt()?.minus(1) ?: 0) {
+                        Coordinator.onSongCompletion()
+                    }
 
                 }
                 mHandler.postDelayed(this, 1000)
@@ -271,13 +296,14 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
                     Coordinator.shuffleMode = PlaybackStateCompat.SHUFFLE_MODE_ALL
                     Toast.makeText(context, "shuffle is ON", Toast.LENGTH_SHORT).show()
                     binding.playerPanel.shuffle_container.displayedChild = 1
+                    Coordinator.updateNowPlayingQueue()
 
                 } else {
 
                     Coordinator.shuffleMode = PlaybackStateCompat.SHUFFLE_MODE_NONE
                     Toast.makeText(context, "shuffle is OFF", Toast.LENGTH_SHORT).show()
                     binding.playerPanel.shuffle_container.displayedChild = 2
-
+                    Coordinator.updateNowPlayingQueue()
                 }
             }
 
@@ -287,20 +313,21 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
                     Coordinator.repeatMode = PlaybackStateCompat.REPEAT_MODE_ALL
                     Toast.makeText(context, "repeat all", Toast.LENGTH_SHORT).show()
                     binding.playerPanel.repeatContainer.displayedChild = 1
+                    Coordinator.updateNowPlayingQueue()
 
-                } else if (Coordinator.repeatMode == PlaybackStateCompat.REPEAT_MODE_ALL){
+                } else if (Coordinator.repeatMode == PlaybackStateCompat.REPEAT_MODE_ALL) {
 
                     Coordinator.repeatMode = PlaybackStateCompat.REPEAT_MODE_ONE
                     Toast.makeText(context, "repeat one", Toast.LENGTH_SHORT).show()
                     binding.playerPanel.repeatContainer.displayedChild = 2
+                    Coordinator.updateNowPlayingQueue()
 
-                }
-                else if (Coordinator.repeatMode == PlaybackStateCompat.REPEAT_MODE_ONE){
+                } else if (Coordinator.repeatMode == PlaybackStateCompat.REPEAT_MODE_ONE) {
 
                     Coordinator.repeatMode = PlaybackStateCompat.REPEAT_MODE_NONE
                     Toast.makeText(context, "no repeat", Toast.LENGTH_SHORT).show()
                     binding.playerPanel.repeatContainer.displayedChild = 3
-
+                    Coordinator.updateNowPlayingQueue()
                 }
             }
 

@@ -1,8 +1,11 @@
 package com.example.cassette.repositories
 
+import android.annotation.SuppressLint
+import android.content.ContentUris
 import android.content.Context
 import android.database.Cursor
 import android.media.MediaMetadataRetriever
+import android.provider.MediaStore
 import android.provider.MediaStore.Audio.AudioColumns
 import com.example.cassette.extensions.getInt
 import com.example.cassette.extensions.getLong
@@ -13,10 +16,8 @@ import com.example.cassette.utlis.ImageUtils
 
 class SongsRepository(val context: Context) {
 
-    init {
-    }
 
-
+    @SuppressLint("Range")
     fun createSongFromCursor(cursor: Cursor): SongModel {
         val title = cursor.getString(AudioColumns.TITLE)
         val duration = cursor.getLong(AudioColumns.DURATION)
@@ -31,11 +32,11 @@ class SongsRepository(val context: Context) {
         val artistName = cursor.getString(AudioColumns.ARTIST)
 //        val composer = cursor.getString(AudioColumns.COMPOSER)
 //        val albumArtist = cursor.getString(AudioColumns.ALBUM_ARTIST)
-//        val uri = ContentUris
-//            .withAppendedId(
-//                MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-//                cursor.getLong(cursor.getColumnIndex(MediaStore.Images.ImageColumns._ID))
-//            )
+        val uri = ContentUris
+            .withAppendedId(
+                MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                cursor.getLong(cursor.getColumnIndex(MediaStore.Images.ImageColumns._ID))
+            )
         val albumId = cursor.getLong(AudioColumns.ALBUM_ID)
         val size = cursor.getString(AudioColumns.SIZE)
 
@@ -57,7 +58,7 @@ class SongsRepository(val context: Context) {
             dateAdded = dateAdded,
             artist = artist,
             id = id,
-            uri = null,
+            uri = uri,
             albumId = albumId,
             size = size,
             bitrate = bitrate,
