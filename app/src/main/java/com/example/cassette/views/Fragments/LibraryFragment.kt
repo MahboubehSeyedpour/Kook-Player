@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -109,7 +110,19 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
 
                     selectedSong = songModel
 
-                    createDialogToSelectPlaylist()
+                    if (PlaylistFragment.viewModel?.getDataSet() != null)
+                    {
+                        if( PlaylistFragment.viewModel?.getDataSet()?.size!! > 0)
+                        {
+                            createDialogToSelectPlaylist()
+                        }
+                        else{
+                            Toast.makeText(requireActivity().baseContext, "Please create a playlist first!", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    else{
+                        Toast.makeText(requireActivity().baseContext, "Please create a playlist first!", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         )
