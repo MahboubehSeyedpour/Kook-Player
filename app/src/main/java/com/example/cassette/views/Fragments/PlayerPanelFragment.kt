@@ -219,7 +219,7 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
                     setRemainingTime(mCurrentPosition)
 
                     if (mCurrentPosition == duration?.toInt()?.minus(1) ?: 0) {
-                        Coordinator.onSongCompletion()
+                        Coordinator.playNextSong()
                     }
                 }
                 mHandler.postDelayed(this, 1000)
