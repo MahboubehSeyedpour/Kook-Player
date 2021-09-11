@@ -90,6 +90,9 @@ class PlaylistAdapter(
                 PlaylistFragment.viewModel?.playlistRepository?.removePlaylist(playlistId)
                 dataSend.onSend(context, playlistId)
             }
+            R.id.renamePlaylist_menu_item -> {
+//                TODO
+            }
             else -> return false
         }
         return true

@@ -3,4 +3,9 @@
     <item
         android:id="@+id/deletePlaylist_menu_item"
         android:title="@string/action_delete_playlist" />
+
+    <item
+        android:id="@+id/renamePlaylist_menu_item"
+        android:title="@string/action_rename_playlist" />
+
 </menu>

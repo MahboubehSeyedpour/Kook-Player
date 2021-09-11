@@ -13,6 +13,7 @@
     <string name="action_delete_song_from_playlist">Remove from playlist</string>
 
     <string name="action_delete_playlist">Delete playlist</string>
+    <string name="action_rename_playlist">Rename</string>
 
     <!--    modal bottom sheet items -->
     <string name="first_item_modal_bottomsheet">Date modified</string>
