@@ -91,13 +91,13 @@ class PlaylistFragment : Fragment(), PassData {
 
                 override fun openPlaylist(id: Long) {
 
-                    val mainFragment = PlaylistPageFragment(id)
+                    val playlistPageFragment = PlaylistPageFragment(id)
                     val fragmentManager: FragmentManager = MainActivity.activity.supportFragmentManager
                     val transaction = fragmentManager.beginTransaction()
                     transaction.addToBackStack(null)
                     transaction.add(
                         R.id.fragment_base_container,
-                        mainFragment,
+                        playlistPageFragment,
                         "bottom sheet container"
                     )
                         .commit()

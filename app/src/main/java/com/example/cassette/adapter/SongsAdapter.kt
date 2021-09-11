@@ -64,8 +64,10 @@ class SongsAdapter(
 
         viewHolder.recyclerItem.setOnClickListener {
             updatePosition(newIndex = viewHolder.adapterPosition)
-            Coordinator.playSelectedSong(dataset[position])
             Coordinator.SourceOfSelectedSong = "library"
+            Coordinator.currentDataSource = dataset
+            Coordinator.playSelectedSong(dataset[position])
+
         }
 
 

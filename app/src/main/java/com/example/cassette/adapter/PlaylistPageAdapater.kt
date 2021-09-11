@@ -53,8 +53,10 @@ class PlaylistPageAdapater(var dataset: ArrayList<SongModel>,val context: Activi
 
         viewHolder.recyclerItem.setOnClickListener {
             updatePosition(newIndex = viewHolder.adapterPosition)
-            Coordinator.playSelectedSong(dataset[position])
             Coordinator.SourceOfSelectedSong = playlist_name
+            Coordinator.currentDataSource = dataset
+            Coordinator.playSelectedSong(dataset[position])
+
         }
 
         viewHolder.menuBtn.setOnClickListener {

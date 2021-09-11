@@ -7,16 +7,15 @@ import com.example.cassette.player.Enums
 import com.example.cassette.player.MediaPlayerAgent
 import com.example.cassette.repositories.appdatabase.entities.SongModel
 import com.example.cassette.views.Fragments.LibraryFragment.Library.songsAdapter
-import com.example.cassette.views.Fragments.LibraryFragment.Library.viewModel
 import com.example.cassette.views.MainActivity
 
 object Coordinator : CoordinatorInterface {
     override lateinit var nowPlayingQueue: ArrayList<SongModel>
 
-    //    override lateinit var playingOrder: Enums.PlayingOrder
     override lateinit var mediaPlayerAgent: MediaPlayerAgent
 
     var SourceOfSelectedSong = "library" // or «playlist-name»
+    var currentDataSource = arrayListOf<SongModel>()
 
     var shuffleMode = PlaybackStateCompat.SHUFFLE_MODE_NONE
     var repeatMode = PlaybackStateCompat.REPEAT_MODE_NONE
@@ -57,8 +56,9 @@ object Coordinator : CoordinatorInterface {
 
         if (hasNext() && repeatMode != PlaybackStateCompat.REPEAT_MODE_ONE) {
 
+            updatePlayerVar(nowPlayingQueue[position + 1])
             getNextSong().data?.let { play(it) }
-            updatePlayerVar(nowPlayingQueue[position])
+
 
         } else {
 
@@ -71,8 +71,9 @@ object Coordinator : CoordinatorInterface {
 
         if (hasPrev() && repeatMode != PlaybackStateCompat.REPEAT_MODE_ONE) {
 
+            updatePlayerVar(nowPlayingQueue[position -1])
             getPrevSong().data?.let { play(it) }
-            updatePlayerVar(nowPlayingQueue[position])
+
 
         } else {
 
@@ -90,6 +91,10 @@ object Coordinator : CoordinatorInterface {
     override fun play(song: String) {
 
         mediaPlayerAgent.playMusic(song)
+
+
+
+        position = getCurrentSongPosition()
 
     }
 
@@ -128,7 +133,7 @@ object Coordinator : CoordinatorInterface {
                     position = -1
                     getNextSong().data?.let { play(it) }
                 }
-
+                updatePlayerVar(nowPlayingQueue[position])
             }
             PlaybackStateCompat.REPEAT_MODE_NONE -> {
 
@@ -149,26 +154,29 @@ object Coordinator : CoordinatorInterface {
     override fun updateNowPlayingQueue() {
 
 //      TODO(shuffle as an extension not a function)
-
+//
+//        viewModel.getDataSet()
         when (repeatMode) {
             PlaybackStateCompat.REPEAT_MODE_ONE -> nowPlayingQueue =
                 arrayListOf(currentPlayingSong!!)
-            PlaybackStateCompat.REPEAT_MODE_ALL -> nowPlayingQueue = viewModel.getDataSet()
-            PlaybackStateCompat.REPEAT_MODE_NONE -> nowPlayingQueue = viewModel.getDataSet()
+            PlaybackStateCompat.REPEAT_MODE_ALL -> nowPlayingQueue = currentDataSource
+            PlaybackStateCompat.REPEAT_MODE_NONE -> nowPlayingQueue = currentDataSource
 
         }
 
         when (shuffleMode) {
-            PlaybackStateCompat.SHUFFLE_MODE_NONE -> nowPlayingQueue = viewModel.getDataSet()
+            PlaybackStateCompat.SHUFFLE_MODE_NONE -> nowPlayingQueue = currentDataSource
             PlaybackStateCompat.SHUFFLE_MODE_ALL -> {
 
-                val lst = viewModel.getDataSet().toList()
+                val lst = currentDataSource.toList()
                 val sh_lst = lst.shuffled()
                 val p = sh_lst as ArrayList<SongModel>
 
                 nowPlayingQueue = p
             }
         }
+
+        val i = 0
     }
 
     override fun getCurrentSongPosition(): Int {
@@ -176,11 +184,16 @@ object Coordinator : CoordinatorInterface {
     }
 
     override fun playSelectedSong(song: SongModel) {
-        song.data?.let { play(it) }
-
-        position = songsAdapter?.getCurrentPosition() ?: -1
 
         updatePlayerVar(song)
+
+        updateNowPlayingQueue()
+
+        song.data?.let { play(it) }
+
+        position = getPositionInNowPlayingQueue() ?: -1
+
+        val i = 0
     }
 
     fun updatePlayerVar(song: SongModel) {
@@ -193,11 +206,11 @@ object Coordinator : CoordinatorInterface {
     }
 
     override fun hasNext(): Boolean {
-        return position + 1 < viewModel.getDataSet().size
+        return position + 1 < nowPlayingQueue.size
     }
 
     override fun hasPrev(): Boolean {
-        return position  > 0
+        return position > 0
     }
 
 
@@ -208,7 +221,7 @@ object Coordinator : CoordinatorInterface {
 
     override fun getPrevSong(): SongModel {
         position -= 1
-        val p = songsAdapter?.getCurrentPosition()
+        val p = getPositionInNowPlayingQueue()
         return nowPlayingQueue[position]
     }
 
@@ -218,7 +231,7 @@ object Coordinator : CoordinatorInterface {
 
     override fun getNextSong(): SongModel {
         position += 1
-        val p = songsAdapter?.getCurrentPosition()
+        val p = getPositionInNowPlayingQueue()
         return nowPlayingQueue[position]
     }
 
@@ -226,5 +239,17 @@ object Coordinator : CoordinatorInterface {
         return nowPlayingQueue[position].data
     }
 
-
+    fun getPositionInNowPlayingQueue(): Int {
+        for (song in nowPlayingQueue) {
+            val s_id = song.id
+            val c_id = currentPlayingSong?.id
+            val s = song
+            val cur = currentPlayingSong
+            val i = 0
+            if (song.id == currentPlayingSong?.id) {
+                return nowPlayingQueue.indexOf(song)
+            }
+        }
+        return -1
+    }
 }

@@ -20,10 +20,11 @@ class PlaylistPageFragment(val playlistId: Long) : Fragment() {
 
     lateinit var binding: FragmentPlaylistPageBinding
 
-    lateinit var playlistSongsAdapter: PlaylistPageAdapater
+
 
     companion object {
         lateinit var viewModel: PlaylistPageViewModel
+        lateinit var playlistSongsAdapter: PlaylistPageAdapater
     }
 
 
@@ -66,6 +67,11 @@ class PlaylistPageFragment(val playlistId: Long) : Fragment() {
 
 //        binding.playlistsSongsRv.adapter = playlistSongsAdapter
 
+    }
+
+    fun getViewModel(): PlaylistPageViewModel
+    {
+        return viewModel
     }
 
 
