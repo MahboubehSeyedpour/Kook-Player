@@ -41,30 +41,31 @@
 <!--        app:srcCompat="@drawable/ic_heart" />-->
     <!--    </LinearLayout>-->
 
-    <LinearLayout
-        android:layout_width="100dp"
-        android:layout_height="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:gravity="right"
+        android:padding="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.982"
+        app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintStart_toEndOf="@+id/back_btn"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5">
 
         <com.like.LikeButton
             android:id="@+id/like_btn"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:icon_type="heart"
-            app:icon_size="9dp"
             app:circle_end_color="@color/red"
+            app:icon_size="12dp"
+            app:icon_type="heart"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.953"
-            app:layout_constraintStart_toEndOf="@+id/back_btn"
             app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

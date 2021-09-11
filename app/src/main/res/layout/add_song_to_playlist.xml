@@ -1,30 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="350dp"
-    android:layout_height="450dp"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="300dp"
+    app:cardCornerRadius="20dp"
+    android:background="@drawable/round_corner_bg">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/playlists"
-        android:layout_width="match_parent"
+
+    <!--        <androidx.recyclerview.widget.RecyclerView-->
+    <!--            -->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:maxHeight="500dp"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toTopOf="parent"-->
+    <!--            tools:listitem="@layout/add_song_to_playlist_dialog_item" />-->
+    <LinearLayout
+        android:layout_width="350dp"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toTopOf="@id/acceptSelectedPlaylist_btn"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:listitem="@layout/add_song_to_playlist_dialog_item"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/acceptSelectedPlaylist_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
-        android:text="OK"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.913"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/playlists"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/add_song_to_playlist_dialog_item" />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/acceptSelectedPlaylist_btn"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center"
+            android:text="Ok"
+            android:layout_weight="3"
+            android:textColor="@color/confirm_btn_txt"
+            android:backgroundTint="@color/confirm_btn_bgColor"
+            android:textAllCaps="false"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"/>
+
+    </LinearLayout>
+
+
+</com.google.android.material.card.MaterialCardView>

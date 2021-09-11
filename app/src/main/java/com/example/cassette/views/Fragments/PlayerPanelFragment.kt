@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.cassette.R
 import com.example.cassette.databinding.FragmentPlayerPanelBinding
@@ -62,15 +61,17 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
         }
 
         binding.header.onCollapse.play_btn_on_header.setOnClickListener(this)
-        binding.playerRemote.nextBtn.setOnClickListener(this)
-        binding.playerRemote.prevBtn.setOnClickListener(this)
-        binding.playerRemote.playOrPauseLayout.setOnClickListener(this)
-        binding.playerRemote.shuffleContainer.setOnClickListener(this)
-        binding.playerRemote.repeatContainer.setOnClickListener(this)
+        binding.header.onCollapse.pause_btn_on_header.setOnClickListener(this)
+        binding.playerRemote.nextBtn?.setOnClickListener(this)
+        binding.playerRemote.prevBtn?.setOnClickListener(this)
+        binding.playerRemote.playOrPauseLayout?.setOnClickListener(this)
+        binding.playerRemote.shuffleContainer?.setOnClickListener(this)
+        binding.playerRemote.repeatContainer?.setOnClickListener(this)
+
 
         seekbarHandler()
 
-        binding.playerRemote.waveformSeekBar.setOnSeekBarChangeListener(object :
+        binding.playerRemote.waveformSeekBar?.setOnSeekBarChangeListener(object :
             SeekBar.OnSeekBarChangeListener,
             WaveformSeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -90,19 +91,9 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
             ) {
                 if (Coordinator.isPlaying()) {
 
-//                    setSongTitle()
-//                    setSongImage()
-
-                    binding.playerRemote.musicMin.text = TimeUtils.milliSecToDuration(
+                    binding.playerRemote.musicMin?.text = TimeUtils.milliSecToDuration(
                         (percent * TimeUtils.getDurationOfCurrentMusic().toLong()).toLong()
                     )
-
-//                  binding.playerRemote.musicMax.text =
-//                        Coordinator.currentPlayligSong.duration?.let {
-//                            TimeUtils.milliSecToDuration(
-//                                it
-//                            )
-//                        }
                 }
             }
 
@@ -168,7 +159,7 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
     fun updatePanel() {
         setSongTitle()
         setSongImage()
-        binding.playerRemote.musicMax.text =
+        binding.playerRemote.musicMax?.text =
             Coordinator.currentPlayingSong?.duration?.let {
                 TimeUtils.milliSecToDuration(
                     it
@@ -194,7 +185,7 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
 
     override fun seekTo(mCurrentPosition: Int) {
 
-        binding.playerRemote.waveformSeekBar.setProgressInPercentage(
+        binding.playerRemote.waveformSeekBar?.setProgressInPercentage(
             mCurrentPosition / (Coordinator.currentPlayingSong?.duration?.div(
                 1000F
             )!!)
@@ -227,15 +218,9 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
                     seekTo(mCurrentPosition)
                     setRemainingTime(mCurrentPosition)
 
-//                    if(Coordinator.getCurrentSongPosition().toLong() == Coordinator.currentPlayligSong.duration)
-//                    {
-//                        Coordinator.onSongCompletion()
-//                    }
-//
                     if (mCurrentPosition == duration?.toInt()?.minus(1) ?: 0) {
                         Coordinator.onSongCompletion()
                     }
-
                 }
                 mHandler.postDelayed(this, 1000)
             }
@@ -244,11 +229,11 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
 
     override fun switchPlayPauseButton() {
         if (Coordinator.isPlaying()) {
-            binding.playerRemote.pauseBtn.visibility = View.VISIBLE
-            binding.playerRemote.playBtn.visibility = View.GONE
+            binding.playerRemote.playOrPauseLayout.pause_btn.visibility = View.VISIBLE
+            binding.playerRemote.playOrPauseLayout.play_btn.visibility = View.GONE
         } else {
-            binding.playerRemote.pauseBtn.visibility = View.GONE
-            binding.playerRemote.playBtn.visibility = View.VISIBLE
+            binding.playerRemote.playOrPauseLayout.pause_btn.visibility = View.GONE
+            binding.playerRemote.playOrPauseLayout.play_btn.visibility = View.VISIBLE
         }
     }
 
@@ -285,24 +270,31 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
             binding.playerRemote.prevBtn -> Coordinator.playPrevSong()
 
             binding.playerRemote.playOrPauseLayout -> {
-                if (!Coordinator.isPlaying()) Coordinator.resume() else Coordinator.pause()
-                switchPlayPauseButton()
+
 //                startForegroundService()
+                if (Coordinator.isPlaying()) {
+                    Coordinator.pause()
+                } else {
+                    Coordinator.resume()
+                }
+                switchPlayPauseButton()
             }
 
             binding.playerPanel.shuffle_container -> {
                 if (Coordinator.shuffleMode == PlaybackStateCompat.SHUFFLE_MODE_NONE) {
 
                     Coordinator.shuffleMode = PlaybackStateCompat.SHUFFLE_MODE_ALL
-                    Toast.makeText(context, "shuffle is ON", Toast.LENGTH_SHORT).show()
+
                     binding.playerPanel.shuffle_container.displayedChild = 1
+
                     Coordinator.updateNowPlayingQueue()
 
                 } else {
 
                     Coordinator.shuffleMode = PlaybackStateCompat.SHUFFLE_MODE_NONE
-                    Toast.makeText(context, "shuffle is OFF", Toast.LENGTH_SHORT).show()
+
                     binding.playerPanel.shuffle_container.displayedChild = 2
+
                     Coordinator.updateNowPlayingQueue()
                 }
             }
@@ -311,35 +303,40 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
                 if (Coordinator.repeatMode == PlaybackStateCompat.REPEAT_MODE_NONE) {
 
                     Coordinator.repeatMode = PlaybackStateCompat.REPEAT_MODE_ALL
-                    Toast.makeText(context, "repeat all", Toast.LENGTH_SHORT).show()
+
                     binding.playerPanel.repeatContainer.displayedChild = 1
+
                     Coordinator.updateNowPlayingQueue()
 
                 } else if (Coordinator.repeatMode == PlaybackStateCompat.REPEAT_MODE_ALL) {
 
                     Coordinator.repeatMode = PlaybackStateCompat.REPEAT_MODE_ONE
-                    Toast.makeText(context, "repeat one", Toast.LENGTH_SHORT).show()
+
                     binding.playerPanel.repeatContainer.displayedChild = 2
+
                     Coordinator.updateNowPlayingQueue()
 
                 } else if (Coordinator.repeatMode == PlaybackStateCompat.REPEAT_MODE_ONE) {
 
                     Coordinator.repeatMode = PlaybackStateCompat.REPEAT_MODE_NONE
-                    Toast.makeText(context, "no repeat", Toast.LENGTH_SHORT).show()
+
                     binding.playerPanel.repeatContainer.displayedChild = 3
+
                     Coordinator.updateNowPlayingQueue()
                 }
             }
 
             binding.header.onCollapse.play_btn_on_header -> {
-                if (Coordinator.isPlaying()) {
-                    Coordinator.pause()
-                } else {
-                    Coordinator.resume()
-                }
 
-//                binding.header.onCollapse.song_title_on_header.text =
-//                    if (Coordinator.isPlaying()) Coordinator.getCurrentPlayingSong().title else ""
+                Coordinator.resume()
+                binding.header.onCollapse.play_btn_on_header.visibility = View.GONE
+                binding.header.onCollapse.pause_btn_on_header.visibility = View.VISIBLE
+            }
+
+            binding.header.onCollapse.pause_btn_on_header -> {
+                Coordinator.pause()
+                binding.header.onCollapse.play_btn_on_header.visibility = View.VISIBLE
+                binding.header.onCollapse.pause_btn_on_header.visibility = View.GONE
             }
         }
     }
@@ -360,7 +357,7 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
     }
 
     override fun setRemainingTime(remainingTimeInPercentage: Int) {
-        binding.playerRemote.musicMin.text =
+        binding.playerRemote.musicMin?.text =
             TimeUtils.milliSecToDuration((remainingTimeInPercentage * 1000).toLong())
     }
 
@@ -370,6 +367,12 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
 
     fun initBinding(view: View) {
         binding = FragmentPlayerPanelBinding.bind(view)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        binding.header.onCollapse.pause_btn_on_header.visibility = View.GONE
+
     }
 
 }
