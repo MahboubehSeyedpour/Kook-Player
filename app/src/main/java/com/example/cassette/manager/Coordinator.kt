@@ -193,7 +193,6 @@ object Coordinator : CoordinatorInterface {
 
         position = getPositionInNowPlayingQueue() ?: -1
 
-        val i = 0
     }
 
     fun updatePlayerVar(song: SongModel) {
@@ -241,11 +240,6 @@ object Coordinator : CoordinatorInterface {
 
     fun getPositionInNowPlayingQueue(): Int {
         for (song in nowPlayingQueue) {
-            val s_id = song.id
-            val c_id = currentPlayingSong?.id
-            val s = song
-            val cur = currentPlayingSong
-            val i = 0
             if (song.id == currentPlayingSong?.id) {
                 return nowPlayingQueue.indexOf(song)
             }
