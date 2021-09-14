@@ -74,7 +74,7 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
         mactivity = requireActivity()
 
 
-        SharedPrefUtils.loadLastState()
+//        SharedPrefUtils.loadLastState()
 
     }
 

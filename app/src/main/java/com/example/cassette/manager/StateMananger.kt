@@ -20,13 +20,13 @@ object StateMananger {
 
     fun loadSong() {
 
-        for (steper in LibraryFragment.viewModel.songsRepository.getListOfSongs()) {
-            if (steper.id == SharedPrefUtils.getLastSongId()) {
-                song = steper
-                Coordinator.currentPlayingSong =song
-                song.data?.let { Coordinator.play(it) }
-            }
-        }
+//        for (steper in LibraryFragment.viewModel.songsRepository.getListOfSongs()) {
+//            if (steper.id == SharedPrefUtils.getLastSongId()) {
+//                song = steper
+//                Coordinator.currentPlayingSong =song
+//                song.data?.let { Coordinator.play(it) }
+//            }
+//        }
     }
 
     fun loadShuffleMode() {

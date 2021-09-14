@@ -11,12 +11,14 @@ import android.telephony.TelephonyManager
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ServiceCompat.stopForeground
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
 import com.example.cassette.databinding.ActivityMainBinding
 import com.example.cassette.manager.Coordinator
 import com.example.cassette.player.Enums
 import com.example.cassette.providers.PermissionProvider
+import com.example.cassette.services.NotificationPlayerService
 import com.example.cassette.utlis.SharedPrefUtils
 import com.example.cassette.views.Fragments.MainFragment
 import com.example.cassette.views.Fragments.PlayerPanelFragment
@@ -29,7 +31,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         var permissionsGranted: Boolean = false
         lateinit var playerPanelFragment: PlayerPanelFragment
         lateinit var activity: MainActivity
-        lateinit var sharedPreferences: SharedPreferences
+//        lateinit var sharedPreferences: SharedPreferences
     }
 
     private val permissions = arrayOf(
@@ -46,11 +48,18 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
         val mgr = getSystemService(TELEPHONY_SERVICE) as TelephonyManager
         mgr?.listen(phoneStateListener, PhoneStateListener.LISTEN_NONE)
+
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        NotificationPlayerService.stopNotification(baseContext)
     }
 
     fun saveSettings() {
 
-        SharedPrefUtils.saveState()
+//        SharedPrefUtils.saveState()
     }
 
 
@@ -81,6 +90,12 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         val mgr = getSystemService(TELEPHONY_SERVICE) as TelephonyManager
         mgr?.listen(phoneStateListener, PhoneStateListener.LISTEN_CALL_STATE)
 
+
+//        if(SharedPrefUtils.getLastSongId() != null)
+//        {
+//            startPlayerForegroundService()
+//        }
+
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -88,7 +103,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        sharedPreferences = getPreferences(Context.MODE_PRIVATE) ?: return
+//        sharedPreferences = getPreferences(Context.MODE_PRIVATE) ?: return
 
 
 
@@ -141,6 +156,11 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 //
 
     }
+
+//    fun startPlayerForegroundService()
+//    {
+//        Coordinator.mediaPlayerAgent.playAsService()
+//    }
 
     fun checkForPermissions() {
         val permissionProvider = PermissionProvider()

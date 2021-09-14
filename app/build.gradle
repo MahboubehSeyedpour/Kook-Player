@@ -108,6 +108,7 @@ dependencies {
 //    ColoredShadowImageView
     implementation 'com.github.armcha:ColoredShadowImageView:1.1.0'
 
-
+//  Media controller
+    implementation "androidx.media:media:1.4.1"
 
 }

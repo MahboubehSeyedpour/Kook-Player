@@ -37,9 +37,13 @@
     <!--    notification-->
     <string name="notification_channel_id">channel1</string>
     <string name="notification_description">The playing notification provides actions for play/pause etc.</string>
-    <string name="notification_action_previous">actionprevious</string>
-    <string name="notification_action_play">actionplay</string>
-    <string name="notification_action_next">actionnext</string>
+    <string name="notification_action_previous">action_previous</string>
+    <string name="notification_action_play">action_play</string>
+    <string name="notification_action_next">action_next</string>
+    <string name="notification_action_rewind">action_rewind</string>
+    <string name="notification_action_fast_forward">action_fast_forward</string>
+    <string name="notification_action_stop">action_stop</string>
+    <string name="notification_action_pause">action_pause</string>
     <string name="extra_key">actionname</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>

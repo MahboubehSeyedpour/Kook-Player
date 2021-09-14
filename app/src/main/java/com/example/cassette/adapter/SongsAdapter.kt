@@ -35,6 +35,8 @@ class SongsAdapter(
 
     lateinit var dataSend: OnDataSend
 
+    lateinit var viewHolder: RecyclerViewViewHolder
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -49,7 +51,7 @@ class SongsAdapter(
 
         val song: SongModel = dataset[position]
         this.position = position
-        val viewHolder = holder as RecyclerViewViewHolder
+        viewHolder = holder as RecyclerViewViewHolder
         viewHolder.title.text = song.title
         viewHolder.duration.text = song.duration?.let { TimeUtils.milliSecToDuration(it) }
         viewHolder.artist.text = song.artist
@@ -189,5 +191,9 @@ class SongsAdapter(
 
     fun OnDataSend(dataSend: OnDataSend) {
         this.dataSend = dataSend
+    }
+
+    fun getView(): View{
+        return viewHolder.imageView
     }
 }

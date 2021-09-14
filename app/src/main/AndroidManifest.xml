@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.cassette">
 
-<!--    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
-<!--    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />-->
-<!--    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />-->
-<!--    <uses-permission android:name="android.permission.MANAGE_MEDIA" />-->
-<!--    <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION"/>-->
+    <!--    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
+    <!--    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />-->
+    <!--    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />-->
+    <!--    <uses-permission android:name="android.permission.MANAGE_MEDIA" />-->
+    <!--    <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION"/>-->
 
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <permission android:name="android.permission.MEDIA_CONTENT_CONTROL" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+
+
 
     <!--    android:maxSdkVersion="28"-->
     <!--    tools:ignore="ScopedStorage"-->
@@ -36,8 +40,8 @@
 
         <activity
             android:name=".views.SplashScreen"
-            android:theme="@style/Theme.noActionBar"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.noActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -46,8 +50,12 @@
         </activity>
         <activity
             android:name=".views.MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.MusicPlayer"
-            android:screenOrientation="portrait"/>
+            android:launchMode="singleTop" />
+
+        <service android:name=".services.NotificationPlayerService" />
+
     </application>
 
 </manifest>
