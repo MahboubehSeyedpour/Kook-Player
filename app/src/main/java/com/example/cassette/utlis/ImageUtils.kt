@@ -43,7 +43,7 @@ object ImageUtils {
     fun getDefaultAlbumArt(context: Context): Bitmap {
         return BitmapFactory.decodeResource(
             context.resources,
-            R.mipmap.ic_music_foreground
+            R.mipmap.ic_play_button_2_foreground
         )
     }
 }
