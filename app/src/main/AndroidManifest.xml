@@ -55,6 +55,7 @@
             android:launchMode="singleTop" />
 
         <service android:name=".services.NotificationPlayerService" />
+        <receiver android:name=".services.NotificationBroadcastReceiver"/>
 
     </application>
 

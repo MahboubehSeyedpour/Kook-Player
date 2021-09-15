@@ -2,17 +2,19 @@ package com.example.cassette.services
 
 import android.annotation.SuppressLint
 import android.app.*
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Build
 import android.os.IBinder
-import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.example.cassette.R
 import com.example.cassette.manager.Coordinator
 import com.example.cassette.views.MainActivity
+import com.google.android.exoplayer2.ui.PlayerNotificationManager.ACTION_NEXT
 
 
 private const val CHANNEL_ID = "player_channel_id"
@@ -39,25 +41,27 @@ class NotificationPlayerService : Service() {
 //        super.onStartCommand(intent, flags, startId)
 
 
-
-        val input = intent?.getStringExtra("inputExtra")
         createNotificationChannel()
+        registerReceiver(broadcastNotificationReceiver, IntentFilter("Songs"))
+
+
         val notificationIntent = Intent(this, MainActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(
             this,
             0, notificationIntent, 0
         )
-        notificationIntent.putExtra("play", R.string.notification_action_play)
 
         val mediaSession = android.support.v4.media.session.MediaSessionCompat(
-            baseContext,
-            "notiff"
+            this,
+            "notif"
         )
 
 
         val style = androidx.media.app.NotificationCompat.MediaStyle()
             .setMediaSession(mediaSession.sessionToken)
             .setShowCancelButton(false)
+
+
 
 //        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
 //            .setContentTitle(Coordinator.currentPlayingSong?.title)
@@ -88,6 +92,20 @@ class NotificationPlayerService : Service() {
 //        notificationBuilder.setContentIntent(pendingIntent)
 
 
+       val intentNext = Intent(this, NotificationBroadcastReceiver::class.java)
+           .setAction(getString(R.string.notification_action_next))
+        val nextPendingIntent = PendingIntent.getBroadcast(this, 0, intentNext, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val intentPlay = Intent(this, NotificationBroadcastReceiver::class.java)
+           .setAction(getString(R.string.notification_action_play))
+        val playPendingIntent = PendingIntent.getBroadcast(this, 0, intentPlay, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val intentPrev = Intent(this, NotificationBroadcastReceiver::class.java)
+           .setAction(getString(R.string.notification_action_previous))
+        val prevPendingIntent = PendingIntent.getBroadcast(this, 0, intentPrev, PendingIntent.FLAG_UPDATE_CURRENT)
+
+
+
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle(Coordinator.currentPlayingSong?.title)
             .setNotificationSilent()
@@ -107,9 +125,9 @@ class NotificationPlayerService : Service() {
             .setSmallIcon(R.drawable.ic_play__2_)
             .setLargeIcon(Coordinator.currentPlayingSong?.image)
             .setContentIntent(pendingIntent)
-            .addAction(R.drawable.exo_icon_previous, "previous", null)
-            .addAction(R.drawable.exo_icon_play, "play", null)
-            .addAction(R.drawable.exo_icon_next, "next", null)
+            .addAction(R.drawable.exo_icon_previous, "previous", prevPendingIntent)
+            .addAction(R.drawable.exo_icon_play, "play", playPendingIntent)
+            .addAction(R.drawable.exo_icon_next, "next", nextPendingIntent)
             .build()
 
 
@@ -131,8 +149,33 @@ class NotificationPlayerService : Service() {
         }
     }
 
+    override fun onTaskRemoved(rootIntent: Intent?) {
+        stopSelf()
+    }
+
 
     override fun onBind(intent: Intent?): IBinder? {
         return null
+    }
+
+
+    private val broadcastNotificationReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            val action = intent.extras!!.getString("actionname")
+            when(action)
+            {
+                getString(R.string.notification_action_next) -> Coordinator.playNextSong()
+                getString(R.string.notification_action_play) -> {
+                    if (Coordinator.isPlaying()) {
+                        Coordinator.pause()
+                    }
+                    else{
+                        Coordinator.resume()
+                    }
+                }
+                getString(R.string.notification_action_previous) -> Coordinator.playPrevSong()
+            }
+
+        }
     }
 }
