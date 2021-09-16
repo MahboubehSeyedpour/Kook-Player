@@ -1,10 +1,7 @@
 package com.example.cassette.services
 
 import android.annotation.SuppressLint
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.app.Service
+import android.app.*
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -18,7 +15,6 @@ import androidx.core.content.ContextCompat
 import com.example.cassette.R
 import com.example.cassette.manager.Coordinator
 import com.example.cassette.views.MainActivity
-import java.lang.Exception
 
 
 private const val CHANNEL_ID = "player_channel_id"
@@ -26,6 +22,8 @@ private const val CHANNEL_ID = "player_channel_id"
 
 class NotificationPlayerService : Service() {
 
+
+    lateinit var notification: Notification
 
     companion object {
 
@@ -50,12 +48,9 @@ class NotificationPlayerService : Service() {
 
         try {
             registerReceiver(broadcastNotificationReceiver, IntentFilter("Songs"))
-        }
-        catch (e: Exception)
-        {
+        } catch (e: Exception) {
 
         }
-
 
 
         val notificationIntent = Intent(this, MainActivity::class.java)
@@ -85,13 +80,18 @@ class NotificationPlayerService : Service() {
         val playPendingIntent =
             PendingIntent.getBroadcast(this, 0, intentPlay, PendingIntent.FLAG_UPDATE_CURRENT)
 
+        val intentPause = Intent(this, NotificationBroadcastReceiver::class.java)
+            .setAction(getString(R.string.notification_action_pause))
+        val pausePendingIntent =
+            PendingIntent.getBroadcast(this, 0, intentPause, PendingIntent.FLAG_UPDATE_CURRENT)
+
         val intentPrev = Intent(this, NotificationBroadcastReceiver::class.java)
             .setAction(getString(R.string.notification_action_previous))
         val prevPendingIntent =
             PendingIntent.getBroadcast(this, 0, intentPrev, PendingIntent.FLAG_UPDATE_CURRENT)
 
 
-        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
+        notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle(Coordinator.currentPlayingSong?.title)
             .setNotificationSilent()
             .setContentText(Coordinator.currentPlayingSong?.artistName ?: "")
@@ -103,7 +103,8 @@ class NotificationPlayerService : Service() {
                     0,
                     1,
                     2,
-                    3
+                    3,
+                    4
                 )
             )
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -111,6 +112,7 @@ class NotificationPlayerService : Service() {
             .setLargeIcon(Coordinator.currentPlayingSong?.image)
             .addAction(R.drawable.exo_icon_previous, "previous", prevPendingIntent)
             .addAction(R.drawable.exo_icon_play, "play", playPendingIntent)
+            .addAction(R.drawable.exo_icon_pause, "pause", pausePendingIntent)
             .addAction(R.drawable.exo_icon_next, "next", nextPendingIntent)
             .build()
 //            .setContentIntent(pendingIntent)
@@ -119,6 +121,7 @@ class NotificationPlayerService : Service() {
 
         return START_NOT_STICKY
     }
+
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -143,8 +146,7 @@ class NotificationPlayerService : Service() {
 //        unregisterReceiver()
     }
 
-    fun unregisterReceiver()
-    {
+    fun unregisterReceiver() {
         unregisterReceiver(broadcastNotificationReceiver)
     }
 
@@ -160,11 +162,10 @@ class NotificationPlayerService : Service() {
             when (action) {
                 getString(R.string.notification_action_next) -> Coordinator.playNextSong()
                 getString(R.string.notification_action_play) -> {
-                    if (Coordinator.isPlaying()) {
-                        Coordinator.pause()
-                    } else {
                         Coordinator.resume()
-                    }
+                }
+                getString(R.string.notification_action_pause) -> {
+                        Coordinator.pause()
                 }
                 getString(R.string.notification_action_previous) -> Coordinator.playPrevSong()
             }
