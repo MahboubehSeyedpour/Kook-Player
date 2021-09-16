@@ -16,9 +16,7 @@ import com.example.cassette.player.Enums.PanelState
 import com.example.cassette.player.Enums.PanelState.COLLAPSED
 import com.example.cassette.player.Enums.PanelState.EXPANDED
 import com.example.cassette.utlis.ImageUtils
-import com.example.cassette.utlis.SharedPrefUtils
 import com.example.cassette.utlis.TimeUtils
-import com.example.cassette.views.MainActivity
 import com.frolo.waveformseekbar.WaveformSeekBar
 import com.like.LikeButton
 import com.like.OnLikeListener
@@ -26,8 +24,6 @@ import kotlinx.android.synthetic.main.fragment_player_panel.view.*
 import kotlinx.android.synthetic.main.panel_header_on_collapsed.view.*
 import kotlinx.android.synthetic.main.player_remote.*
 import kotlinx.android.synthetic.main.player_remote.view.*
-import java.util.*
-import kotlin.concurrent.schedule
 import kotlin.random.Random
 
 
@@ -53,9 +49,6 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
 
     override fun onResume() {
         super.onResume()
-
-
-
     }
 
     override fun setDefaultVisibilities() {

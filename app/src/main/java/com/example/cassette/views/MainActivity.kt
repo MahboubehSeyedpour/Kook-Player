@@ -96,26 +96,6 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
         super.onCreate(savedInstanceState)
 
-
-//        sharedPreferences = getPreferences(Context.MODE_PRIVATE) ?: return
-
-
-
-//        runOnUiThread(Runnable {
-//            val timer = Timer("schedule", true)
-//            timer.schedule(2000) {
-//                val lastSongId = SharedPrefUtils.getLastSongId()
-//                if (lastSongId > -1) {
-//                    for (song in LibraryFragment.viewModel.getDataSet()) {
-//                        if (song.id == lastSongId) {
-//                            Coordinator.updatePlayerVar(song)
-//                        }
-//                    }
-//                }
-//            }
-//        })
-
-
         activity = this
 
         binding = ActivityMainBinding.inflate(layoutInflater)
