@@ -11,7 +11,6 @@ import android.telephony.PhoneStateListener
 import android.telephony.TelephonyManager
 import android.view.KeyEvent
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
@@ -22,12 +21,13 @@ import com.example.cassette.player.Enums
 import com.example.cassette.providers.PermissionProvider
 import com.example.cassette.services.NotificationPlayerService
 import com.example.cassette.utlis.SharedPrefUtils
+import com.example.cassette.views.Fragments.LibraryFragment
 import com.example.cassette.views.Fragments.MainFragment
 import com.example.cassette.views.Fragments.PlayerPanelFragment
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
-import kotlinx.android.synthetic.main.activity_main.view.*
-import kotlinx.android.synthetic.main.fragment_player_panel.*
 import java.util.*
+import kotlin.concurrent.schedule
+import kotlin.system.exitProcess
 
 
 class MainActivity : AppCompatActivity(), LifecycleOwner {
@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         var permissionsGranted: Boolean = false
         lateinit var playerPanelFragment: PlayerPanelFragment
         lateinit var activity: MainActivity
-        lateinit var sharedPreferences: SharedPreferences
+//        lateinit var sharedPreferences: SharedPreferences
     }
 
     private val permissions = arrayOf(
@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
     override fun onStop() {
         super.onStop()
-        saveSettings()
+//        saveSettings()
 
         val mgr = getSystemService(TELEPHONY_SERVICE) as TelephonyManager
         mgr?.listen(phoneStateListener, PhoneStateListener.LISTEN_NONE)
@@ -61,6 +61,8 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         super.onDestroy()
 
         NotificationPlayerService.stopNotification(baseContext)
+
+        Coordinator.mediaPlayerAgent.stop()
     }
 
     fun saveSettings() {
@@ -70,44 +72,21 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
 
-//            if (binding.slidingLayout.panelState == SlidingUpPanelLayout.PanelState.EXPANDED) {
-//
-//                binding.slidingLayout.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
-//
-//            } else {
-                finish()
-//            }
+
+            /*
+            * finish() kills all processes related to an activity such as foreground services and etc.
+            * moveTaskToBack(true) minimizes the activity not kill
+            * */
+            moveTaskToBack(true)
+
         }
         return super.onKeyDown(keyCode, event)
     }
 
 
-
     override fun onResume() {
         super.onResume()
 
-
-        phoneStateListener = object : PhoneStateListener() {
-            override fun onCallStateChanged(state: Int, incomingNumber: String) {
-                if (state == TelephonyManager.CALL_STATE_RINGING) {
-                    //Incoming call: Pause music
-                    if (Coordinator.isPlaying())
-                        Coordinator.pause()
-                } else if (state == TelephonyManager.CALL_STATE_IDLE) {
-                    //Not in call: Play music
-                    if (Coordinator.currentPlayingSong != null) {
-                        Coordinator.currentPlayingSong!!.data?.let { Coordinator.play(it) }
-                    }
-                } else if (state == TelephonyManager.CALL_STATE_OFFHOOK) {
-                    //A call is dialing, active or on hold
-                    if (Coordinator.isPlaying())
-                        Coordinator.pause()
-                }
-                super.onCallStateChanged(state, incomingNumber)
-            }
-        }
-        val mgr = getSystemService(TELEPHONY_SERVICE) as TelephonyManager
-        mgr?.listen(phoneStateListener, PhoneStateListener.LISTEN_CALL_STATE)
 
     }
 
@@ -118,7 +97,23 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         super.onCreate(savedInstanceState)
 
 
-        sharedPreferences = getPreferences(Context.MODE_PRIVATE) ?: return
+//        sharedPreferences = getPreferences(Context.MODE_PRIVATE) ?: return
+
+
+
+//        runOnUiThread(Runnable {
+//            val timer = Timer("schedule", true)
+//            timer.schedule(2000) {
+//                val lastSongId = SharedPrefUtils.getLastSongId()
+//                if (lastSongId > -1) {
+//                    for (song in LibraryFragment.viewModel.getDataSet()) {
+//                        if (song.id == lastSongId) {
+//                            Coordinator.updatePlayerVar(song)
+//                        }
+//                    }
+//                }
+//            }
+//        })
 
 
         activity = this
@@ -161,6 +156,32 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
                 }
             }
         })
+
+
+
+
+        phoneStateListener = object : PhoneStateListener() {
+            override fun onCallStateChanged(state: Int, incomingNumber: String) {
+                if (state == TelephonyManager.CALL_STATE_RINGING) {
+                    //Incoming call: Pause music
+                    if (Coordinator.isPlaying())
+                        Coordinator.pause()
+                } else if (state == TelephonyManager.CALL_STATE_IDLE) {
+                    //Not in call: Play music
+                    if (Coordinator.currentPlayingSong != null) {
+                        Coordinator.currentPlayingSong!!.data?.let { Coordinator.play(it) }
+                    }
+                } else if (state == TelephonyManager.CALL_STATE_OFFHOOK) {
+                    //A call is dialing, active or on hold
+                    if (Coordinator.isPlaying())
+                        Coordinator.pause()
+                }
+                super.onCallStateChanged(state, incomingNumber)
+            }
+        }
+        val mgr = getSystemService(TELEPHONY_SERVICE) as TelephonyManager
+        mgr?.listen(phoneStateListener, PhoneStateListener.LISTEN_CALL_STATE)
+
 
 
 //        binding.includeToolbar.sortIv.setOnClickListener {

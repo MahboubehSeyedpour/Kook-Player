@@ -67,16 +67,6 @@ class PlaylistPageFragment(val playlistId: Long) : Fragment() {
 
 //        binding.playlistsSongsRv.adapter = playlistSongsAdapter
 
-    }
-
-    fun getViewModel(): PlaylistPageViewModel
-    {
-        return viewModel
-    }
-
-
-    override fun onResume() {
-        super.onResume()
 
         binding.playlistBackBtn.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
@@ -97,6 +87,19 @@ class PlaylistPageFragment(val playlistId: Long) : Fragment() {
                 mHandler.postDelayed(this, 1000)
             }
         })
+
+    }
+
+    fun getViewModel(): PlaylistPageViewModel
+    {
+        return viewModel
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+
+
     }
 
 

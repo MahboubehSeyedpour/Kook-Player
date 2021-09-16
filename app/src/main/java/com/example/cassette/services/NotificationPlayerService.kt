@@ -18,6 +18,7 @@ import androidx.core.content.ContextCompat
 import com.example.cassette.R
 import com.example.cassette.manager.Coordinator
 import com.example.cassette.views.MainActivity
+import java.lang.Exception
 
 
 private const val CHANNEL_ID = "player_channel_id"
@@ -46,7 +47,15 @@ class NotificationPlayerService : Service() {
         super.onStartCommand(intent, flags, startId)
 
         createNotificationChannel()
-        registerReceiver(broadcastNotificationReceiver, IntentFilter("Songs"))
+
+        try {
+            registerReceiver(broadcastNotificationReceiver, IntentFilter("Songs"))
+        }
+        catch (e: Exception)
+        {
+
+        }
+
 
 
         val notificationIntent = Intent(this, MainActivity::class.java)

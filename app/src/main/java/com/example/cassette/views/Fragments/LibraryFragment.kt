@@ -73,11 +73,7 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
 
         mactivity = requireActivity()
 
-
-//        SharedPrefUtils.loadLastState()
-
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -110,18 +106,22 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
 
                     selectedSong = songModel
 
-                    if (PlaylistFragment.viewModel?.getDataSet() != null)
-                    {
-                        if( PlaylistFragment.viewModel?.getDataSet()?.size!! > 0)
-                        {
+                    if (PlaylistFragment.viewModel?.getDataSet() != null) {
+                        if (PlaylistFragment.viewModel?.getDataSet()?.size!! > 0) {
                             createDialogToSelectPlaylist()
+                        } else {
+                            Toast.makeText(
+                                requireActivity().baseContext,
+                                "Please create a playlist first!",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
-                        else{
-                            Toast.makeText(requireActivity().baseContext, "Please create a playlist first!", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                    else{
-                        Toast.makeText(requireActivity().baseContext, "Please create a playlist first!", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(
+                            requireActivity().baseContext,
+                            "Please create a playlist first!",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }

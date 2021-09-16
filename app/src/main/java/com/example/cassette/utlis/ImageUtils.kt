@@ -7,13 +7,27 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.example.cassette.R
+import com.example.cassette.views.MainActivity
 import java.io.FileDescriptor
+
 
 object ImageUtils {
 
     fun loadImageToImageView(context: Context, imageView: ImageView, image: Bitmap){
-        Glide.with(context).load(image).circleCrop().into(imageView)
+//        Glide.with(context).load(image).circleCrop().into(imageView)
+
+        Glide.with(MainActivity.activity.baseContext)
+            .asBitmap()
+            .load(image)
+            .into(object : BitmapImageViewTarget(imageView) {
+                override fun setResource(resource: Bitmap?) {
+                    //Play with bitmap
+                    super.setResource(resource)
+                }
+            })
+
     }
 
     fun albumArtUriToBitmap(context: Context, album_id: Long?): Bitmap? {

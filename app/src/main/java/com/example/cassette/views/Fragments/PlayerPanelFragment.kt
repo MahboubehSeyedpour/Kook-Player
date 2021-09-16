@@ -3,7 +3,6 @@ package com.example.cassette.views.Fragments
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.media.session.PlaybackStateCompat
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,12 +12,13 @@ import com.example.cassette.R
 import com.example.cassette.databinding.FragmentPlayerPanelBinding
 import com.example.cassette.manager.Coordinator
 import com.example.cassette.myInterface.PlayerPanelInterface
-import com.example.cassette.player.Enums
 import com.example.cassette.player.Enums.PanelState
 import com.example.cassette.player.Enums.PanelState.COLLAPSED
 import com.example.cassette.player.Enums.PanelState.EXPANDED
 import com.example.cassette.utlis.ImageUtils
+import com.example.cassette.utlis.SharedPrefUtils
 import com.example.cassette.utlis.TimeUtils
+import com.example.cassette.views.MainActivity
 import com.frolo.waveformseekbar.WaveformSeekBar
 import com.like.LikeButton
 import com.like.OnLikeListener
@@ -26,6 +26,8 @@ import kotlinx.android.synthetic.main.fragment_player_panel.view.*
 import kotlinx.android.synthetic.main.panel_header_on_collapsed.view.*
 import kotlinx.android.synthetic.main.player_remote.*
 import kotlinx.android.synthetic.main.player_remote.view.*
+import java.util.*
+import kotlin.concurrent.schedule
 import kotlin.random.Random
 
 
@@ -49,100 +51,10 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
         return view
     }
 
-
-    fun refresh()
-    {
-        Coordinator.currentPlayingSong?.let { Coordinator.updatePlayerVar(it) }
-    }
-
-
     override fun onResume() {
         super.onResume()
 
-        activity?.baseContext?.let {
-            Coordinator.setup(
-                it
-            )
-        }
 
-        binding.header.onCollapse.play_btn_on_header.setOnClickListener(this)
-        binding.header.onCollapse.pause_btn_on_header.setOnClickListener(this)
-        binding.playerRemote.nextBtn?.setOnClickListener(this)
-        binding.playerRemote.prevBtn?.setOnClickListener(this)
-        binding.playerRemote.playOrPauseLayout?.setOnClickListener(this)
-        binding.playerRemote.shuffleContainer?.setOnClickListener(this)
-        binding.playerRemote.repeatContainer?.setOnClickListener(this)
-
-
-        seekbarHandler()
-
-        binding.playerRemote.waveformSeekBar?.setOnSeekBarChangeListener(object :
-            SeekBar.OnSeekBarChangeListener,
-            WaveformSeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-//                waveform_seek_bar.setProgressInPercentage(0.25F)
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-            }
-
-            override fun onProgressInPercentageChanged(
-                seekBar: WaveformSeekBar?,
-                percent: Float,
-                fromUser: Boolean
-            ) {
-                if (Coordinator.isPlaying()) {
-
-                    binding.playerRemote.musicMin?.text = TimeUtils.milliSecToDuration(
-                        (percent * TimeUtils.getDurationOfCurrentMusic().toLong()).toLong()
-                    )
-                }
-            }
-
-            override fun onStartTrackingTouch(seekBar: WaveformSeekBar?) {
-            }
-
-            override fun onStopTrackingTouch(seekBar: WaveformSeekBar?) {
-
-                Coordinator.seekTo((waveform_seek_bar.progressPercent * Coordinator.currentPlayingSong?.duration!!).toInt())
-            }
-
-        })
-        waveform_seek_bar.setWaveform(createWaveform(), true)
-
-
-        binding.onExpand.likeBtn.setOnLikeListener(object : OnLikeListener {
-            override fun liked(likeButton: LikeButton) {
-//                TODO(add song to favorites)
-            }
-
-            override fun unLiked(likeButton: LikeButton) {
-//                TODO(remove song from favorites)
-            }
-        })
-
-
-//        binding.playerRemote.seekBar.setOnSeekBarChangeListener(object :
-//            SeekBar.OnSeekBarChangeListener {
-//
-//            override fun onProgressChanged(
-//                seekBar: SeekBar,
-//                progress: Int,
-//                fromUser: Boolean
-//            ) {
-//                seekBar.progress = progress
-//                if (seekBar.max - progress <= 0) {
-//                    Coordinator.playNextSong()
-//                }
-//            }
-//
-//            override fun onStartTrackingTouch(seekBar: SeekBar) {}
-//            override fun onStopTrackingTouch(seekBar: SeekBar) {}
-//
-//        })
 
     }
 
@@ -376,6 +288,92 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         binding.header.onCollapse.pause_btn_on_header.visibility = View.GONE
+
+
+        activity?.baseContext?.let {
+            Coordinator.setup(
+                it
+            )
+        }
+
+        binding.header.onCollapse.play_btn_on_header.setOnClickListener(this)
+        binding.header.onCollapse.pause_btn_on_header.setOnClickListener(this)
+        binding.playerRemote.nextBtn?.setOnClickListener(this)
+        binding.playerRemote.prevBtn?.setOnClickListener(this)
+        binding.playerRemote.playOrPauseLayout?.setOnClickListener(this)
+        binding.playerRemote.shuffleContainer?.setOnClickListener(this)
+        binding.playerRemote.repeatContainer?.setOnClickListener(this)
+
+
+        seekbarHandler()
+
+        binding.playerRemote.waveformSeekBar?.setOnSeekBarChangeListener(object :
+            SeekBar.OnSeekBarChangeListener,
+            WaveformSeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+//                waveform_seek_bar.setProgressInPercentage(0.25F)
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+            }
+
+            override fun onProgressInPercentageChanged(
+                seekBar: WaveformSeekBar?,
+                percent: Float,
+                fromUser: Boolean
+            ) {
+                if (Coordinator.isPlaying()) {
+
+                    binding.playerRemote.musicMin?.text = TimeUtils.milliSecToDuration(
+                        (percent * TimeUtils.getDurationOfCurrentMusic().toLong()).toLong()
+                    )
+                }
+            }
+
+            override fun onStartTrackingTouch(seekBar: WaveformSeekBar?) {
+            }
+
+            override fun onStopTrackingTouch(seekBar: WaveformSeekBar?) {
+
+                Coordinator.seekTo((waveform_seek_bar.progressPercent * Coordinator.currentPlayingSong?.duration!!).toInt())
+            }
+
+        })
+        waveform_seek_bar.setWaveform(createWaveform(), true)
+
+
+        binding.onExpand.likeBtn.setOnLikeListener(object : OnLikeListener {
+            override fun liked(likeButton: LikeButton) {
+//                TODO(add song to favorites)
+            }
+
+            override fun unLiked(likeButton: LikeButton) {
+//                TODO(remove song from favorites)
+            }
+        })
+
+
+//        binding.playerRemote.seekBar.setOnSeekBarChangeListener(object :
+//            SeekBar.OnSeekBarChangeListener {
+//
+//            override fun onProgressChanged(
+//                seekBar: SeekBar,
+//                progress: Int,
+//                fromUser: Boolean
+//            ) {
+//                seekBar.progress = progress
+//                if (seekBar.max - progress <= 0) {
+//                    Coordinator.playNextSong()
+//                }
+//            }
+//
+//            override fun onStartTrackingTouch(seekBar: SeekBar) {}
+//            override fun onStopTrackingTouch(seekBar: SeekBar) {}
+//
+//        })
 
     }
 
