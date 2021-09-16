@@ -1,9 +1,9 @@
 package com.example.cassette.views.Fragments
 
-import android.app.NotificationManager
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.media.session.PlaybackStateCompat
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +13,7 @@ import com.example.cassette.R
 import com.example.cassette.databinding.FragmentPlayerPanelBinding
 import com.example.cassette.manager.Coordinator
 import com.example.cassette.myInterface.PlayerPanelInterface
+import com.example.cassette.player.Enums
 import com.example.cassette.player.Enums.PanelState
 import com.example.cassette.player.Enums.PanelState.COLLAPSED
 import com.example.cassette.player.Enums.PanelState.EXPANDED
@@ -34,8 +35,6 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
     var previouslyLiked: Boolean = false
 
 
-    lateinit var notificationManager: NotificationManager
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -48,6 +47,12 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
         updatePanelBasedOnState(COLLAPSED)
 
         return view
+    }
+
+
+    fun refresh()
+    {
+        Coordinator.currentPlayingSong?.let { Coordinator.updatePlayerVar(it) }
     }
 
 
@@ -271,7 +276,6 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
 
             binding.playerRemote.playOrPauseLayout -> {
 
-//                startForegroundService()
                 if (Coordinator.isPlaying()) {
                     Coordinator.pause()
                 } else {

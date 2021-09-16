@@ -13,8 +13,6 @@ object StateMananger {
     fun loadPreviousStates() {
         loadSong()
 //        TODO(loadSongPositionInMediaPlayer())
-        loadShuffleMode()
-        loadRepeatOneMode()
     }
 
 
@@ -29,11 +27,6 @@ object StateMananger {
 //        }
     }
 
-    fun loadShuffleMode() {
-
-    }
-
-    fun loadRepeatOneMode() {
-
-    }
+//TODO(loadRepeatOneMode)
+//TODO(loadShuffleMode)
 }

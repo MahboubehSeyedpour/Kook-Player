@@ -4,14 +4,16 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Point
 import android.os.Build
 import android.os.Bundle
 import android.telephony.PhoneStateListener
 import android.telephony.TelephonyManager
+import android.view.KeyEvent
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ServiceCompat.stopForeground
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
 import com.example.cassette.databinding.ActivityMainBinding
@@ -23,6 +25,9 @@ import com.example.cassette.utlis.SharedPrefUtils
 import com.example.cassette.views.Fragments.MainFragment
 import com.example.cassette.views.Fragments.PlayerPanelFragment
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
+import kotlinx.android.synthetic.main.activity_main.view.*
+import kotlinx.android.synthetic.main.fragment_player_panel.*
+import java.util.*
 
 
 class MainActivity : AppCompatActivity(), LifecycleOwner {
@@ -31,7 +36,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         var permissionsGranted: Boolean = false
         lateinit var playerPanelFragment: PlayerPanelFragment
         lateinit var activity: MainActivity
-//        lateinit var sharedPreferences: SharedPreferences
+        lateinit var sharedPreferences: SharedPreferences
     }
 
     private val permissions = arrayOf(
@@ -54,13 +59,28 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
     override fun onDestroy() {
         super.onDestroy()
+
         NotificationPlayerService.stopNotification(baseContext)
     }
 
     fun saveSettings() {
-
-//        SharedPrefUtils.saveState()
+        SharedPrefUtils.saveState()
     }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+//            if (binding.slidingLayout.panelState == SlidingUpPanelLayout.PanelState.EXPANDED) {
+//
+//                binding.slidingLayout.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+//
+//            } else {
+                finish()
+//            }
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
 
 
     override fun onResume() {
@@ -71,17 +91,16 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
             override fun onCallStateChanged(state: Int, incomingNumber: String) {
                 if (state == TelephonyManager.CALL_STATE_RINGING) {
                     //Incoming call: Pause music
-                    if(Coordinator.isPlaying())
+                    if (Coordinator.isPlaying())
                         Coordinator.pause()
                 } else if (state == TelephonyManager.CALL_STATE_IDLE) {
                     //Not in call: Play music
-                    if(Coordinator.currentPlayingSong != null)
-                    {
+                    if (Coordinator.currentPlayingSong != null) {
                         Coordinator.currentPlayingSong!!.data?.let { Coordinator.play(it) }
                     }
                 } else if (state == TelephonyManager.CALL_STATE_OFFHOOK) {
                     //A call is dialing, active or on hold
-                    if(Coordinator.isPlaying())
+                    if (Coordinator.isPlaying())
                         Coordinator.pause()
                 }
                 super.onCallStateChanged(state, incomingNumber)
@@ -90,12 +109,6 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         val mgr = getSystemService(TELEPHONY_SERVICE) as TelephonyManager
         mgr?.listen(phoneStateListener, PhoneStateListener.LISTEN_CALL_STATE)
 
-
-//        if(SharedPrefUtils.getLastSongId() != null)
-//        {
-//            startPlayerForegroundService()
-//        }
-
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -103,8 +116,9 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-//        sharedPreferences = getPreferences(Context.MODE_PRIVATE) ?: return
 
+
+        sharedPreferences = getPreferences(Context.MODE_PRIVATE) ?: return
 
 
         activity = this
@@ -123,6 +137,12 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         binding.slidingLayout.addPanelSlideListener(object :
             SlidingUpPanelLayout.PanelSlideListener {
             override fun onPanelSlide(panel: View?, slideOffset: Float) {
+                val display = windowManager.defaultDisplay
+                val size = Point()
+                display.getSize(size)
+                val width: Int = size.x
+                val height: Int = size.y
+
             }
 
             override fun onPanelStateChanged(
@@ -133,7 +153,6 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
                 when (binding.slidingLayout.panelState) {
                     SlidingUpPanelLayout.PanelState.EXPANDED -> {
                         playerPanelFragment.updatePanelBasedOnState(Enums.PanelState.EXPANDED)
-
                     }
                     SlidingUpPanelLayout.PanelState.COLLAPSED -> {
                         playerPanelFragment.updatePanelBasedOnState(Enums.PanelState.COLLAPSED)
@@ -157,10 +176,6 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
     }
 
-//    fun startPlayerForegroundService()
-//    {
-//        Coordinator.mediaPlayerAgent.playAsService()
-//    }
 
     fun checkForPermissions() {
         val permissionProvider = PermissionProvider()

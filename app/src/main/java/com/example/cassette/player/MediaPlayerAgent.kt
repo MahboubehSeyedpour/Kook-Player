@@ -84,7 +84,7 @@ class MediaPlayerAgent(context: Context) {
 //        startForeground(ONGOING_NOTIFICATION_ID, notification)
 
 
-        NotificationPlayerService.startNotification(context, "start notif")
+        NotificationPlayerService.startNotification(MainActivity.activity.baseContext, "start notif")
 
     }
 

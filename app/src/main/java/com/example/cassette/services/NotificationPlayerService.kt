@@ -40,7 +40,6 @@ class NotificationPlayerService : Service() {
         }
     }
 
-
     @SuppressLint("ResourceAsColor")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -127,6 +126,17 @@ class NotificationPlayerService : Service() {
 
     override fun onTaskRemoved(rootIntent: Intent?) {
         stopSelf()
+        unregisterReceiver()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+//        unregisterReceiver()
+    }
+
+    fun unregisterReceiver()
+    {
+        unregisterReceiver(broadcastNotificationReceiver)
     }
 
 
