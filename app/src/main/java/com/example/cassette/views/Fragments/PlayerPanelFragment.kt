@@ -6,7 +6,6 @@ import android.support.v4.media.session.PlaybackStateCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SeekBar
 import androidx.fragment.app.Fragment
 import com.example.cassette.R
 import com.example.cassette.databinding.FragmentPlayerPanelBinding
@@ -27,7 +26,8 @@ import kotlinx.android.synthetic.main.player_remote.view.*
 import kotlin.random.Random
 
 
-class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListener, WaveformSeekBar.OnSeekBarChangeListener {
+class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListener,
+    WaveformSeekBar.OnSeekBarChangeListener {
 
     lateinit var binding: FragmentPlayerPanelBinding
     var previouslyLiked: Boolean = false
@@ -40,19 +40,15 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
     ): View? {
         val view = inflater.inflate(R.layout.fragment_player_panel, container, false)
 
-
-
         initBinding(view)
 
         updatePanelBasedOnState(COLLAPSED)
-
 
         return view
     }
 
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?)
-    {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         activity?.baseContext?.let {
             Coordinator.setup(
@@ -79,26 +75,6 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
             }
         })
 
-
-//        binding.playerRemote.seekBar.setOnSeekBarChangeListener(object :
-//            SeekBar.OnSeekBarChangeListener {
-//
-//            override fun onProgressChanged(
-//                seekBar: SeekBar,
-//                progress: Int,
-//                fromUser: Boolean
-//            ) {
-//                seekBar.progress = progress
-//                if (seekBar.max - progress <= 0) {
-//                    Coordinator.playNextSong()
-//                }
-//            }
-//
-//            override fun onStartTrackingTouch(seekBar: SeekBar) {}
-//            override fun onStopTrackingTouch(seekBar: SeekBar) {}
-//
-//        })
-
     }
 
     override fun setDefaultVisibilities() {
@@ -106,8 +82,7 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
         binding.header.onCollapse.pause_btn_on_header.visibility = View.GONE
     }
 
-    fun setOnEventListeners()
-    {
+    fun setOnEventListeners() {
         binding.header.onCollapse.play_btn_on_header.setOnClickListener(this)
         binding.header.onCollapse.pause_btn_on_header.setOnClickListener(this)
         binding.playerRemote.nextBtn?.setOnClickListener(this)
@@ -347,12 +322,12 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
         fromUser: Boolean
     ) {
 
-            if (Coordinator.isPlaying()) {
+        if (Coordinator.isPlaying()) {
 
-                binding.playerRemote.musicMin?.text = TimeUtils.milliSecToDuration(
-                    (percent * TimeUtils.getDurationOfCurrentMusic().toLong()).toLong()
-                )
-            }
+            binding.playerRemote.musicMin?.text = TimeUtils.milliSecToDuration(
+                (percent * TimeUtils.getDurationOfCurrentMusic().toLong()).toLong()
+            )
+        }
     }
 
     override fun onStartTrackingTouch(seekBar: WaveformSeekBar?) {
