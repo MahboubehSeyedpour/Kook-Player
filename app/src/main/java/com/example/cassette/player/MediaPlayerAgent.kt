@@ -55,7 +55,6 @@ class MediaPlayerAgent(context: Context) {
 
 //        currentPlayingSong = song
 
-
         playAsService()
 
 
@@ -83,7 +82,7 @@ class MediaPlayerAgent(context: Context) {
 
 //        startForeground(ONGOING_NOTIFICATION_ID, notification)
 
-
+        NotificationPlayerService.stopNotification(MainActivity.activity.baseContext)
         NotificationPlayerService.startNotification(MainActivity.activity.baseContext, "start notif")
 
     }

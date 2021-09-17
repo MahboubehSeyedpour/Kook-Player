@@ -8,6 +8,7 @@ import com.example.cassette.myInterface.CoordinatorInterface
 import com.example.cassette.player.Enums
 import com.example.cassette.player.MediaPlayerAgent
 import com.example.cassette.repositories.appdatabase.entities.SongModel
+import com.example.cassette.services.NotificationPlayerService
 import com.example.cassette.views.Fragments.LibraryFragment.Library.songsAdapter
 import com.example.cassette.views.MainActivity
 
@@ -54,6 +55,7 @@ object Coordinator : CoordinatorInterface {
 
 
     // -------------------------------------- Commands from buttons in UI --------------------------------------
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun playNextSong() {
 
         if (hasNext() && repeatMode != PlaybackStateCompat.REPEAT_MODE_ONE) {
@@ -69,6 +71,7 @@ object Coordinator : CoordinatorInterface {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun playPrevSong() {
 
         if (hasPrev() && repeatMode != PlaybackStateCompat.REPEAT_MODE_ONE) {
@@ -91,11 +94,10 @@ object Coordinator : CoordinatorInterface {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun play(song: String) {
 
         mediaPlayerAgent.playMusic(song)
-
-
 
         position = getCurrentSongPosition()
 

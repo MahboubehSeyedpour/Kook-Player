@@ -2,13 +2,16 @@ package com.example.cassette.views
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.SharedPreferences
 import android.graphics.Point
 import android.os.Build
 import android.os.Bundle
 import android.telephony.PhoneStateListener
 import android.telephony.TelephonyManager
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
@@ -18,7 +21,6 @@ import com.example.cassette.manager.Coordinator
 import com.example.cassette.player.Enums
 import com.example.cassette.providers.PermissionProvider
 import com.example.cassette.services.NotificationPlayerService
-import com.example.cassette.utlis.SharedPrefUtils
 import com.example.cassette.views.Fragments.MainFragment
 import com.example.cassette.views.Fragments.PlayerPanelFragment
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
@@ -33,6 +35,8 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 //        lateinit var sharedPreferences: SharedPreferences
 
     }
+
+    var prefs: SharedPreferences? = null
 
 
     private val permissions = arrayOf(
@@ -57,31 +61,31 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
     override fun onDestroy() {
         super.onDestroy()
 
+        Toast.makeText(baseContext, "onDestroy From MainActivity", Toast.LENGTH_SHORT).show()
+
         NotificationPlayerService.stopNotification(baseContext)
 
         Coordinator.mediaPlayerAgent.stop()
     }
 
-    fun saveSettings() {
-        SharedPrefUtils.saveState()
+//    fun saveSettings() {
+//        SharedPrefUtils.saveState()
+//    }
+
+//    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+//        if (keyCode == KeyEvent.KEYCODE_BACK) {
+//            moveTaskToBack(true)
+//        }
+//        return super.onKeyDown(keyCode, event)
+//    }
+
+    override fun onBackPressed() {
+        onStop()
+        moveTaskToBack(true)
     }
 
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
 
-
-            /*
-            * finish() kills all processes related to an activity such as foreground services and etc.
-            * moveTaskToBack(true) minimizes the activity not kill
-            * */
-            moveTaskToBack(true)
-
-        }
-        return super.onKeyDown(keyCode, event)
-    }
-
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    @SuppressLint("ResourceAsColor", "WrongConstant")
+    @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -91,18 +95,18 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        prefs = getSharedPreferences("AppName", MODE_PRIVATE)
+
         checkForPermissions()
 
         initMainFragment()
 
         initBottomSheet()
 
-
-
         binding.slidingLayout.panelHeight = 0
 
-//        binding.bbb.visibility = View.GONE
-//        binding.bbb.requestLayout()
+        binding.slidingLayout.requestLayout()
+
 
 //        TODO( "implement hideStatusBar() function");
 
@@ -129,7 +133,6 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
             }
         })
 
-
         phoneStateListener = object : PhoneStateListener() {
             override fun onCallStateChanged(state: Int, incomingNumber: String) {
                 if (state == TelephonyManager.CALL_STATE_RINGING) {
@@ -139,7 +142,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
                 } else if (state == TelephonyManager.CALL_STATE_IDLE) {
                     //Not in call: Play music
                     if (Coordinator.currentPlayingSong != null) {
-                        Coordinator.currentPlayingSong!!.data?.let { Coordinator.play(it) }
+//                        Coordinator.currentPlayingSong!!.data?.let { Coordinator.play(it) }
                     }
                 } else if (state == TelephonyManager.CALL_STATE_OFFHOOK) {
                     //A call is dialing, active or on hold
@@ -166,9 +169,22 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
     }
 
+//    override fun onResume() {
+//        super.onResume()
+//
+//        if (prefs?.getBoolean("firstrun", true)!!) {
+//
+//
+//            binding.slidingLayout.panelHeight = 0
+//
+//
+//            prefs!!.edit().putBoolean("firstrun", false).commit();
+//        }
+//    }
+
 
     fun updateVisibility() {
-        binding.slidingLayout.panelHeight = getScreenHeight()*11/100
+        binding.slidingLayout.panelHeight = getScreenHeight() * 10 / 100
     }
 
 
@@ -198,12 +214,36 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
     }
 
 
+    fun replace() {
+        playerPanelFragment = PlayerPanelFragment()
+        val fragmentManager: FragmentManager = supportFragmentManager
+        val transaction = fragmentManager.beginTransaction()
+//        transaction.addToBackStack("playerPanel")
+        transaction.replace(
+            binding.bottomSheetContainer.id,
+            playerPanelFragment,
+            "bottom sheet container"
+        )
+            .commit()
+
+
+        val mainFragment = MainFragment()
+//        transaction.addToBackStack(null)
+        transaction.replace(
+            binding.fragmentBaseContainer.id,
+            mainFragment,
+            "bottom sheet container"
+        )
+            .commit()
+    }
+
+
     fun initBottomSheet() {
 
         playerPanelFragment = PlayerPanelFragment()
         val fragmentManager: FragmentManager = supportFragmentManager
         val transaction = fragmentManager.beginTransaction()
-        transaction.addToBackStack(null)
+//        transaction.addToBackStack("playerPanel")
         transaction.add(
             binding.bottomSheetContainer.id,
             playerPanelFragment,
@@ -216,7 +256,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         val mainFragment = MainFragment()
         val fragmentManager: FragmentManager = supportFragmentManager
         val transaction = fragmentManager.beginTransaction()
-        transaction.addToBackStack(null)
+//        transaction.addToBackStack(null)
         transaction.add(
             binding.fragmentBaseContainer.id,
             mainFragment,

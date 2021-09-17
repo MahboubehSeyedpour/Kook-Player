@@ -9,6 +9,7 @@ import android.content.IntentFilter
 import android.graphics.Color
 import android.os.Build
 import android.os.IBinder
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
@@ -36,6 +37,12 @@ class NotificationPlayerService : Service() {
         fun stopNotification(context: Context) {
             val intent = Intent(context, NotificationPlayerService::class.java)
             context.stopService(intent)
+            Toast.makeText(
+                MainActivity.activity.baseContext,
+                "stop notification from NotificationPlayerService",
+                Toast.LENGTH_SHORT
+            ).show()
+
         }
     }
 
@@ -47,9 +54,9 @@ class NotificationPlayerService : Service() {
         createNotificationChannel()
 
         try {
+//            unregisterReceiver(broadcastNotificationReceiver)
             registerReceiver(broadcastNotificationReceiver, IntentFilter("Songs"))
         } catch (e: Exception) {
-
         }
 
 
@@ -139,11 +146,12 @@ class NotificationPlayerService : Service() {
     override fun onTaskRemoved(rootIntent: Intent?) {
         stopSelf()
         unregisterReceiver()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-//        unregisterReceiver()
+        onDestroy()
+        Toast.makeText(
+            MainActivity.activity.baseContext,
+            "onTaskRemoved from NotificationPlayerService",
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     fun unregisterReceiver() {
@@ -157,15 +165,16 @@ class NotificationPlayerService : Service() {
 
 
     private val broadcastNotificationReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        @RequiresApi(Build.VERSION_CODES.O)
         override fun onReceive(context: Context, intent: Intent) {
             val action = intent.extras!!.getString("actionname")
             when (action) {
                 getString(R.string.notification_action_next) -> Coordinator.playNextSong()
                 getString(R.string.notification_action_play) -> {
-                        Coordinator.resume()
+                    Coordinator.resume()
                 }
                 getString(R.string.notification_action_pause) -> {
-                        Coordinator.pause()
+                    Coordinator.pause()
                 }
                 getString(R.string.notification_action_previous) -> Coordinator.playPrevSong()
             }
