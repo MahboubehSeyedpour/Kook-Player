@@ -16,17 +16,17 @@ import java.io.FileDescriptor
 object ImageUtils {
 
     fun loadImageToImageView(context: Context, imageView: ImageView, image: Bitmap){
-//        Glide.with(context).load(image).circleCrop().into(imageView)
+        Glide.with(context).load(image).circleCrop().into(imageView)
 
-        Glide.with(MainActivity.activity.baseContext)
-            .asBitmap()
-            .load(image)
-            .into(object : BitmapImageViewTarget(imageView) {
-                override fun setResource(resource: Bitmap?) {
-                    //Play with bitmap
-                    super.setResource(resource)
-                }
-            })
+//        Glide.with(MainActivity.activity.baseContext)
+//            .asBitmap()
+//            .load(image)
+//            .into(object : BitmapImageViewTarget(imageView) {
+//                override fun setResource(resource: Bitmap?) {
+//                    //Play with bitmap
+//                    super.setResource(resource)
+//                }
+//            })
 
     }
 
