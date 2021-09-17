@@ -9,7 +9,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/playlist_rv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:padding="5dp"/>
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

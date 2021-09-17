@@ -1,8 +1,10 @@
 package com.example.cassette.views.Fragments
 
 import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,11 +56,21 @@ class PlaylistFragment : Fragment(), PassData {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        playlist_rv.layoutManager = GridLayoutManager(context, 2)
 
-
+        val mNoOfColumns: Int =
+            calculateNoOfColumns(MainActivity.activity.getApplicationContext(), 150F)
+        playlist_rv.layoutManager = GridLayoutManager(context, mNoOfColumns)
     }
 
+
+    fun calculateNoOfColumns(
+        context: Context,
+        columnWidthDp: Float
+    ): Int { // For example columnWidthdp=180
+        val displayMetrics: DisplayMetrics = context.getResources().getDisplayMetrics()
+        val screenWidthDp = displayMetrics.widthPixels / displayMetrics.density
+        return (screenWidthDp / columnWidthDp + 0.5).toInt()
+    }
 
     override fun passDataToInvokingFragment(str: String?) {
         newPlaylistName = str ?: ""
@@ -92,7 +104,8 @@ class PlaylistFragment : Fragment(), PassData {
                 override fun openPlaylist(id: Long) {
 
                     val playlistPageFragment = PlaylistPageFragment(id)
-                    val fragmentManager: FragmentManager = MainActivity.activity.supportFragmentManager
+                    val fragmentManager: FragmentManager =
+                        MainActivity.activity.supportFragmentManager
                     val transaction = fragmentManager.beginTransaction()
                     transaction.addToBackStack(null)
                     transaction.add(
