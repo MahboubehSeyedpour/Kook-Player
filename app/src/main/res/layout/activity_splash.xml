@@ -35,6 +35,21 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="276dp"
+            android:fontFamily="sans-serif"
+            android:gravity="center"
+            android:text="Kook Player"
+            android:textSize="38dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/splash_iv" />
+
         <ImageView
             android:id="@+id/splash_iv"
             android:layout_width="@dimen/splash_screen_icon_width"
@@ -43,23 +58,11 @@
             android:src="@drawable/ic_launcher_1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.747"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.482" />
+            app:layout_constraintVertical_bias="0.381" />
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/normal_margin"
-            android:gravity="center"
-            android:text="کوک پلیر"
-            android:textSize="38dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/splash_iv"
-            app:layout_constraintTop_toTopOf="@+id/imageView"
-            app:layout_constraintVertical_bias="0.485" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

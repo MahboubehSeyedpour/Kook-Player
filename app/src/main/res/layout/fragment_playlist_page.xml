@@ -18,6 +18,7 @@
         <ImageView
             android:id="@+id/playlist_back_btn"
             android:layout_width="24dp"
+            android:layout_margin="10dp"
             android:layout_height="match_parent"
             app:srcCompat="?attr/homeAsUpIndicator" />
 
@@ -26,6 +27,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="16dp"
+            android:textSize="18dp"
+            android:fontFamily="sans-serif"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
