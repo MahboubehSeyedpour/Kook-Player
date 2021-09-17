@@ -66,7 +66,7 @@ class MainFragment : Fragment() {
         binding.toolbar.expandableToolbar.expandableToolbarComponent.onItemSelectedListener =
             { view, menuItem, b ->
                 when (menuItem.text) {
-                    "songs" -> {
+                    "Songs" -> {
 //                        Toast.makeText( baseContext, "Songs clicked", Toast.LENGTH_SHORT ).show()
 
                         binding.viewpager.setCurrentItem(0, true)
