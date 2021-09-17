@@ -18,6 +18,7 @@ import com.example.cassette.utlis.ImageUtils
 import com.example.cassette.utlis.TimeUtils
 import com.example.cassette.views.Fragments.PlaylistFragment
 import com.example.cassette.views.Fragments.PlaylistPageFragment
+import com.example.cassette.views.MainActivity
 import kotlinx.android.synthetic.main.playlist_song_rv_item.view.*
 import kotlinx.android.synthetic.main.song_rv_item.view.music_iv
 import kotlinx.android.synthetic.main.song_rv_item.view.music_menu_btn
@@ -55,6 +56,9 @@ class PlaylistPageAdapater(var dataset: ArrayList<SongModel>,val context: Activi
             updatePosition(newIndex = viewHolder.adapterPosition)
             Coordinator.SourceOfSelectedSong = playlist_name
             Coordinator.currentDataSource = dataset
+
+            MainActivity.activity.updateVisibility()
+
             Coordinator.playSelectedSong(dataset[position])
 
         }
