@@ -2,8 +2,6 @@ package com.example.cassette.views
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Context
-import android.content.SharedPreferences
 import android.graphics.Point
 import android.os.Build
 import android.os.Bundle
@@ -21,13 +19,9 @@ import com.example.cassette.player.Enums
 import com.example.cassette.providers.PermissionProvider
 import com.example.cassette.services.NotificationPlayerService
 import com.example.cassette.utlis.SharedPrefUtils
-import com.example.cassette.views.Fragments.LibraryFragment
 import com.example.cassette.views.Fragments.MainFragment
 import com.example.cassette.views.Fragments.PlayerPanelFragment
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
-import java.util.*
-import kotlin.concurrent.schedule
-import kotlin.system.exitProcess
 
 
 class MainActivity : AppCompatActivity(), LifecycleOwner {
@@ -37,11 +31,14 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         lateinit var playerPanelFragment: PlayerPanelFragment
         lateinit var activity: MainActivity
 //        lateinit var sharedPreferences: SharedPreferences
+
     }
+
 
     private val permissions = arrayOf(
         Manifest.permission.READ_EXTERNAL_STORAGE
     )
+
 
     lateinit var binding: ActivityMainBinding
     lateinit var phoneStateListener: PhoneStateListener
@@ -83,13 +80,6 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         return super.onKeyDown(keyCode, event)
     }
 
-
-    override fun onResume() {
-        super.onResume()
-
-
-    }
-
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("ResourceAsColor", "WrongConstant")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -107,16 +97,18 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
         initBottomSheet()
 
+
+
+        binding.slidingLayout.panelHeight = 0
+
+//        binding.bbb.visibility = View.GONE
+//        binding.bbb.requestLayout()
+
 //        TODO( "implement hideStatusBar() function");
 
         binding.slidingLayout.addPanelSlideListener(object :
             SlidingUpPanelLayout.PanelSlideListener {
             override fun onPanelSlide(panel: View?, slideOffset: Float) {
-                val display = windowManager.defaultDisplay
-                val size = Point()
-                display.getSize(size)
-                val width: Int = size.x
-                val height: Int = size.y
 
             }
 
@@ -136,8 +128,6 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
                 }
             }
         })
-
-
 
 
         phoneStateListener = object : PhoneStateListener() {
@@ -163,7 +153,6 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         mgr?.listen(phoneStateListener, PhoneStateListener.LISTEN_CALL_STATE)
 
 
-
 //        binding.includeToolbar.sortIv.setOnClickListener {
 //
 //            val bottomSheetDialog = Custom_BottomSheetDialogFragment.newInstance()
@@ -178,18 +167,39 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
     }
 
 
+    fun updateVisibility() {
+        binding.slidingLayout.panelHeight = getScreenHeight()*11/100
+    }
+
+
+    fun getScreenHeight(): Int {
+        val display = windowManager.defaultDisplay
+        val size = Point()
+        display.getSize(size)
+        return size.y
+    }
+
+    fun getScreenWidth(): Int {
+        val display = windowManager.defaultDisplay
+        val size = Point()
+        display.getSize(size)
+        return size.x
+    }
+
+
     fun checkForPermissions() {
         val permissionProvider = PermissionProvider()
         permissionProvider.askForPermission(this, permissions)
 
         if (permissionProvider.permissionIsGranted) {
-            initBottomSheet()
+//            initBottomSheet()
         }
 
     }
 
 
-    private fun initBottomSheet() {
+    fun initBottomSheet() {
+
         playerPanelFragment = PlayerPanelFragment()
         val fragmentManager: FragmentManager = supportFragmentManager
         val transaction = fragmentManager.beginTransaction()

@@ -68,6 +68,9 @@ class SongsAdapter(
             updatePosition(newIndex = viewHolder.adapterPosition)
             Coordinator.SourceOfSelectedSong = "library"
             Coordinator.currentDataSource = dataset
+
+
+            MainActivity.activity.updateVisibility()
             Coordinator.playSelectedSong(dataset[position])
 
         }
