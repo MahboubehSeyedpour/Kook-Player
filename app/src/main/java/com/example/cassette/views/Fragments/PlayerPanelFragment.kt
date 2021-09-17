@@ -150,6 +150,14 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
 
             binding.header.onCollapse.song_title_on_header.text =
                 if (Coordinator.isPlaying()) Coordinator.currentPlayingSong?.title else ""
+
+            context?.let {
+                ImageUtils.loadImageToImageView(
+                    it,
+                    binding.header.onCollapse.song_image_on_header,
+                    Coordinator.currentPlayingSong?.image!!
+                )
+            }
         }
 
     }

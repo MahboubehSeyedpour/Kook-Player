@@ -19,16 +19,30 @@
     <!--            android:layout_height="wrap_content"-->
     <!--            android:layout_weight="2" />-->
 
+    <ImageView
+        android:id="@+id/song_image_on_header"
+        android:layout_width="48dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:scaleType="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@mipmap/ic_launcher_1_foreground" />
+
     <TextView
         android:id="@+id/song_title_on_header"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/normal_margin"
-        android:textSize="15dp"
+        android:textSize="12dp"
+        android:lines="2"
+        android:textStyle="bold"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/constraintLayout"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/song_image_on_header"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="song title" />
 
