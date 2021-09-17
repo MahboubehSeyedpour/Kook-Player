@@ -81,10 +81,11 @@ class SongsAdapter(
             popUpMenu.inflate(R.menu.songs_popup_menu)
 
             popUpMenu.setOnMenuItemClickListener {
-//                updatePosition(viewHolder.adapterPosition)
+//                updatePosition(position)
+
                 return@setOnMenuItemClickListener handleMenuButtonClickListener(
                     it.itemId,
-                    viewHolder.adapterPosition
+                    position
                 )
             }
             popUpMenu.show()
