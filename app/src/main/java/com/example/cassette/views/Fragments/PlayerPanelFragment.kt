@@ -64,44 +64,8 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
 
         setOnEventListeners()
 
-
         seekbarHandler()
-//
-//        binding.playerRemote.waveformSeekBar?.setOnSeekBarChangeListener(object :
-//            SeekBar.OnSeekBarChangeListener,
-//            WaveformSeekBar.OnSeekBarChangeListener {
-//            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-////                waveform_seek_bar.setProgressInPercentage(0.25F)
-//            }
-//
-//            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-//            }
-//
-//            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-//            }
 
-//            override fun onProgressInPercentageChanged(
-//                seekBar: WaveformSeekBar?,
-//                percent: Float,
-//                fromUser: Boolean
-//            ) {
-//                if (Coordinator.isPlaying()) {
-//
-//                    binding.playerRemote.musicMin?.text = TimeUtils.milliSecToDuration(
-//                        (percent * TimeUtils.getDurationOfCurrentMusic().toLong()).toLong()
-//                    )
-//                }
-//            }
-
-//            override fun onStartTrackingTouch(seekBar: WaveformSeekBar?) {
-//            }
-//
-//            override fun onStopTrackingTouch(seekBar: WaveformSeekBar?) {
-
-//                Coordinator.seekTo((waveform_seek_bar.progressPercent * Coordinator.currentPlayingSong?.duration!!).toInt())
-//            }
-
-//        })
         waveform_seek_bar.setWaveform(createWaveform(), true)
 
 
