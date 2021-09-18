@@ -44,21 +44,13 @@ class CreatePlaylistDialog : DialogFragment() {
             {
                 val shake: Animation = AnimationUtils.loadAnimation(this@CreatePlaylistDialog.context, R.anim.shake)
                 binding.addPlaylistLayout.startAnimation(shake)
-                Toast.makeText(
-                    context,
-                    "Please enter a name",
-                    Toast.LENGTH_SHORT
-                ).show()
+                binding.textField.error = "Please enter a name"
             }
             else if(isUnique(binding.textField.playlist_name.text.toString()))
             {
                 val shake: Animation = AnimationUtils.loadAnimation(this@CreatePlaylistDialog.context, R.anim.shake)
                 binding.addPlaylistLayout.startAnimation(shake)
-                Toast.makeText(
-                    context,
-                    "Duplicate name",
-                    Toast.LENGTH_SHORT
-                ).show()
+                binding.textField.error = "Duplicate name"
             }
             else
             {
