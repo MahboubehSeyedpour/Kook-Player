@@ -2,19 +2,19 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/add_playlist_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="12dp"
-    android:id="@+id/add_playlist_layout">
+    android:padding="12dp">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="create playlist"
+        android:textColor="#3C3C3C"
         android:textSize="@dimen/title_size"
         android:textStyle="bold"
-        android:textColor="#3C3C3C"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,6 +26,7 @@
         android:layout_marginTop="@dimen/normal_margin"
         android:hint="Name"
         android:textSize="16dp"
+        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvTitle">
@@ -40,42 +41,43 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/normal_margin"
+        android:layout_marginEnd="@dimen/normal_margin"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/textField"
-        tools:layout_editor_absoluteX="12dp"
-        android:layout_margin="@dimen/normal_margin">
+        tools:layout_editor_absoluteX="12dp">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnNegative"
             android:layout_width="100dp"
             android:layout_height="48dp"
-            android:text="Cancel"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="10dp"
             android:layout_weight="1"
-            android:textAllCaps="false"
             android:backgroundTint="#D1D2D3"
+            android:elevation="10dp"
             android:shadowColor="@color/new_blue"
             android:shadowDy="20"
-            android:elevation="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="10dp"/>
+            android:text="Cancel"
+            android:textAllCaps="false" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnPositive"
             android:layout_width="220dp"
             android:layout_height="48dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="3"
+            android:backgroundTint="#3C3C3C"
             android:gravity="center"
             android:text="Ok"
-            android:layout_weight="3"
-            android:textColor="@color/confirm_btn_txt"
-            android:backgroundTint="#3C3C3C"
             android:textAllCaps="false"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"/>
+            android:textColor="@color/confirm_btn_txt" />
 
 
     </LinearLayout>
