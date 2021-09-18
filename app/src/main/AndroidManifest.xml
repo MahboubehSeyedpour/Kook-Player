@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.cassette">
 
-    <!--    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
-    <!--    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />-->
-    <!--    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />-->
-    <!--    <uses-permission android:name="android.permission.MANAGE_MEDIA" />-->
-    <!--    <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION"/>-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.MANAGE_MEDIA" />
+    <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <permission android:name="android.permission.MEDIA_CONTENT_CONTROL" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />-->
+    <!--    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-
 
 
     <!--    android:maxSdkVersion="28"-->
@@ -50,12 +51,12 @@
         </activity>
         <activity
             android:name=".views.MainActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.MusicPlayer"
-            android:launchMode="singleTop" />
+            android:theme="@style/Theme.MusicPlayer" />
 
         <service android:name=".services.NotificationPlayerService" />
-        <receiver android:name=".services.NotificationBroadcastReceiver"/>
+        <receiver android:name=".services.NotificationBroadcastReceiver" />
 
     </application>
 

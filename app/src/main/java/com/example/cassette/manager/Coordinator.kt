@@ -63,7 +63,6 @@ object Coordinator : CoordinatorInterface {
             updatePlayerVar(nowPlayingQueue[position + 1])
             getNextSong().data?.let { play(it) }
 
-
         } else {
 
             takeActionBasedOnRepeateMode()
@@ -122,6 +121,7 @@ object Coordinator : CoordinatorInterface {
 
     // -------------------------------------- event based functions --------------------------------------
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun takeActionBasedOnRepeateMode() {
 
         when (repeatMode) {
@@ -180,8 +180,6 @@ object Coordinator : CoordinatorInterface {
                 nowPlayingQueue = p
             }
         }
-
-        val i = 0
     }
 
     override fun getCurrentSongPosition(): Int {

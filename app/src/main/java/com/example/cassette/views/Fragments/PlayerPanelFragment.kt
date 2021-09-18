@@ -1,11 +1,13 @@
 package com.example.cassette.views.Fragments
 
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.media.session.PlaybackStateCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.example.cassette.R
 import com.example.cassette.databinding.FragmentPlayerPanelBinding
@@ -15,12 +17,14 @@ import com.example.cassette.player.Enums.PanelState
 import com.example.cassette.player.Enums.PanelState.COLLAPSED
 import com.example.cassette.player.Enums.PanelState.EXPANDED
 import com.example.cassette.utlis.ImageUtils
+import com.example.cassette.utlis.ScreenSizeUtils
 import com.example.cassette.utlis.TimeUtils
 import com.frolo.waveformseekbar.WaveformSeekBar
 import com.like.LikeButton
 import com.like.OnLikeListener
 import kotlinx.android.synthetic.main.fragment_player_panel.view.*
 import kotlinx.android.synthetic.main.panel_header_on_collapsed.view.*
+import kotlinx.android.synthetic.main.panel_header_on_expanded.view.*
 import kotlinx.android.synthetic.main.player_remote.*
 import kotlinx.android.synthetic.main.player_remote.view.*
 import kotlin.random.Random
@@ -65,15 +69,55 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
         waveform_seek_bar.setWaveform(createWaveform(), true)
 
 
-        binding.onExpand.likeBtn.setOnLikeListener(object : OnLikeListener {
-            override fun liked(likeButton: LikeButton) {
-//                TODO(add song to favorites)
-            }
+//        binding.onExpand.likeBtn.setOnLikeListener(object : OnLikeListener {
+//            override fun liked(likeButton: LikeButton) {
+////                TODO(add song to favorites)
+//            }
+//
+//            override fun unLiked(likeButton: LikeButton) {
+////                TODO(remove song from favorites)
+//            }
+//        })
 
-            override fun unLiked(likeButton: LikeButton) {
-//                TODO(remove song from favorites)
-            }
-        })
+
+        binding.musicAlbumImage.layoutParams.height = (ScreenSizeUtils.getScreenHeight()*5.1/10).toInt()
+        binding.musicAlbumImage.layoutParams.width = ScreenSizeUtils.getScreenWidth()*10/10
+        binding.musicAlbumImage.requestLayout()
+
+
+        binding.header.layoutParams.height = (ScreenSizeUtils.getScreenHeight()*0.8/10).toInt()
+        binding.header.requestLayout()
+
+        binding.musicTitleTv.layoutParams.height = (ScreenSizeUtils.getScreenHeight()*0.4/10).toInt()
+        binding.header.requestLayout()
+
+
+        binding.playerRemote.constraintLayout2.layoutParams.height = (ScreenSizeUtils.getScreenHeight()*0.4/10).toInt()
+        binding.header.requestLayout()
+
+
+        binding.playerRemote.constraintLayout3.layoutParams.height = (ScreenSizeUtils.getScreenHeight()*2/10)
+        binding.header.requestLayout()
+
+        binding.playerRemote.shuffleRepeatLayout.layoutParams.height = (ScreenSizeUtils.getScreenHeight()*1/10).toInt()
+        binding.header.requestLayout()
+
+        binding.header.onCollapse.song_image_on_header.layoutParams.height = (ScreenSizeUtils.getScreenHeight()*3/10).toInt()
+        binding.header.onCollapse.song_image_on_header.layoutParams.width = (ScreenSizeUtils.getScreenWidth()*1.1/10).toInt()
+        binding.header.onCollapse.song_image_on_header.requestLayout()
+
+        binding.header.onCollapse.wheelprogress.layoutParams.height = (ScreenSizeUtils.getScreenHeight()*3/10).toInt()
+        binding.header.onCollapse.wheelprogress.layoutParams.width = (ScreenSizeUtils.getScreenWidth()*1.1/10).toInt()
+        binding.header.onCollapse.wheelprogress.requestLayout()
+
+
+//        binding.header.onExpand.back_btn.layoutParams.height = (ScreenSizeUtils.getScreenHeight()*0.6/10).toInt()
+//        binding.header.onExpand.back_btn.layoutParams.width = (ScreenSizeUtils.getScreenWidth()*0.6/10).toInt()
+//        binding.header.onExpand.back_btn.requestLayout()
+
+        binding.onExpand.likeIv.layoutParams.height = (ScreenSizeUtils.getScreenHeight()*0.7/10).toInt()
+        binding.onExpand.likeIv.layoutParams.width = (ScreenSizeUtils.getScreenWidth()*0.7/10).toInt()
+        binding.onExpand.likeIv.requestLayout()
 
     }
 
@@ -91,6 +135,7 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
         binding.playerRemote.shuffleContainer?.setOnClickListener(this)
         binding.playerRemote.repeatContainer?.setOnClickListener(this)
         binding.playerRemote.waveformSeekBar?.setOnSeekBarChangeListener(this)
+        binding.onExpand.likeIv?.setOnClickListener(this)
     }
 
     override fun setSongImage() {
@@ -165,6 +210,7 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
     override fun seekbarHandler() {
         val mHandler = Handler()
         activity?.runOnUiThread(object : Runnable {
+            @RequiresApi(Build.VERSION_CODES.O)
             override fun run() {
                 if (Coordinator != null && Coordinator.isPlaying()) {
 
@@ -185,11 +231,11 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
 
     override fun switchPlayPauseButton() {
         if (Coordinator.isPlaying()) {
-            binding.playerRemote.playOrPauseLayout.pause_btn.visibility = View.VISIBLE
-            binding.playerRemote.playOrPauseLayout.play_btn.visibility = View.GONE
+            binding.playerRemote.pauseBtn.visibility = View.VISIBLE
+            binding.playerRemote.playBtn.visibility = View.GONE
         } else {
-            binding.playerRemote.playOrPauseLayout.pause_btn.visibility = View.GONE
-            binding.playerRemote.playOrPauseLayout.play_btn.visibility = View.VISIBLE
+            binding.playerRemote.pauseBtn.visibility = View.GONE
+            binding.playerRemote.playBtn.visibility = View.VISIBLE
         }
     }
 
@@ -210,16 +256,17 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onClick(v: View?) {
         when (v) {
-//            binding.header.onExpand.like_iv -> {
-//                if (previouslyLiked) {
-//                    binding.header.onExpand.like_iv.setImageResource(R.drawable.ic_heart)
-//                } else {
-//                    binding.header.onExpand.like_iv.setImageResource(R.drawable.ic_filled_heart)
-//                }
-//                previouslyLiked = !previouslyLiked
-//            }
+            binding.onExpand.likeIv -> {
+                if (previouslyLiked) {
+                    binding.onExpand.likeIv.setImageResource(R.drawable.ic_heart)
+                } else {
+                    binding.onExpand.likeIv.setImageResource(R.drawable.ic_filled_heart)
+                }
+                previouslyLiked = !previouslyLiked
+            }
 
             binding.playerRemote.nextBtn -> Coordinator.playNextSong()
 

@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.MusicPlayer" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.MusicPlayer" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="android:windowActionBarOverlay">true</item>
         <item name="colorPrimary">@color/white</item>
@@ -17,7 +17,7 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.noActionBar" parent="Theme.AppCompat.Light.NoActionBar" />
+    <style name="Theme.noActionBar" parent="Theme.MaterialComponents.Light.NoActionBar" />
 
     <style name="Theme.Toolbar" parent="Theme.MusicPlayer">
         <!--        <item name="android:background">@color/blue_dark</item>-->

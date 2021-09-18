@@ -22,8 +22,9 @@
     <ImageView
         android:id="@+id/song_image_on_header"
         android:layout_width="48dp"
-        android:layout_height="match_parent"
+        android:layout_height="48dp"
         android:layout_marginStart="5dp"
+        android:layout_marginBottom="5dp"
         android:scaleType="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +39,7 @@
         android:gravity="center_vertical"
         android:lines="2"
         android:paddingLeft="10dp"
-        android:textSize="12dp"
+        android:textSize="14dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/constraintLayout"
@@ -57,6 +58,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/normal_margin"
+        android:layout_marginBottom="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -73,10 +75,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.466"
             app:marginBtwText="15dp"
             app:percentage="0"
-            app:progressColor="@color/blue_dark" />
+            app:progressColor="#3c3c3c" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
@@ -88,23 +89,24 @@
 
             <ImageView
                 android:id="@+id/play_btn_on_header"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_play" />
+                app:srcCompat="@drawable/ic_play_black" />
 
             <ImageView
                 android:id="@+id/pause_btn_on_header"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_pause" />
+                app:srcCompat="@drawable/ic_pause_black" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

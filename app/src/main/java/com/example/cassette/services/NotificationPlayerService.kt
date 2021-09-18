@@ -9,7 +9,6 @@ import android.content.IntentFilter
 import android.graphics.Color
 import android.os.Build
 import android.os.IBinder
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
@@ -37,12 +36,6 @@ class NotificationPlayerService : Service() {
         fun stopNotification(context: Context) {
             val intent = Intent(context, NotificationPlayerService::class.java)
             context.stopService(intent)
-            Toast.makeText(
-                MainActivity.activity.baseContext,
-                "stop notification from NotificationPlayerService",
-                Toast.LENGTH_SHORT
-            ).show()
-
         }
     }
 
@@ -147,11 +140,6 @@ class NotificationPlayerService : Service() {
         stopSelf()
         unregisterReceiver()
         onDestroy()
-        Toast.makeText(
-            MainActivity.activity.baseContext,
-            "onTaskRemoved from NotificationPlayerService",
-            Toast.LENGTH_SHORT
-        ).show()
     }
 
     fun unregisterReceiver() {

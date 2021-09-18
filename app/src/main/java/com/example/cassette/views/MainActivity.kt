@@ -3,16 +3,10 @@ package com.example.cassette.views
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
-import android.graphics.Point
-import android.os.Build
 import android.os.Bundle
 import android.telephony.PhoneStateListener
 import android.telephony.TelephonyManager
-import android.util.Log
-import android.view.KeyEvent
 import android.view.View
-import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
@@ -21,9 +15,11 @@ import com.example.cassette.manager.Coordinator
 import com.example.cassette.player.Enums
 import com.example.cassette.providers.PermissionProvider
 import com.example.cassette.services.NotificationPlayerService
+import com.example.cassette.utlis.ScreenSizeUtils.getScreenHeight
 import com.example.cassette.views.Fragments.MainFragment
 import com.example.cassette.views.Fragments.PlayerPanelFragment
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
+import kotlinx.android.synthetic.main.activity_main.view.*
 
 
 class MainActivity : AppCompatActivity(), LifecycleOwner {
@@ -60,8 +56,6 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
     override fun onDestroy() {
         super.onDestroy()
-
-        Toast.makeText(baseContext, "onDestroy From MainActivity", Toast.LENGTH_SHORT).show()
 
         NotificationPlayerService.stopNotification(baseContext)
 
@@ -110,10 +104,10 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
 //        TODO( "implement hideStatusBar() function");
 
+
         binding.slidingLayout.addPanelSlideListener(object :
             SlidingUpPanelLayout.PanelSlideListener {
             override fun onPanelSlide(panel: View?, slideOffset: Float) {
-
             }
 
             override fun onPanelStateChanged(
@@ -184,22 +178,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
 
     fun updateVisibility() {
-        binding.slidingLayout.panelHeight = getScreenHeight() * 10 / 100
-    }
-
-
-    fun getScreenHeight(): Int {
-        val display = windowManager.defaultDisplay
-        val size = Point()
-        display.getSize(size)
-        return size.y
-    }
-
-    fun getScreenWidth(): Int {
-        val display = windowManager.defaultDisplay
-        val size = Point()
-        display.getSize(size)
-        return size.x
+        binding.slidingLayout.panelHeight = getScreenHeight() * 1 / 10
     }
 
 
