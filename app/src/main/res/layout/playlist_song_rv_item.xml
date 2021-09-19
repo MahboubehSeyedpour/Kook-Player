@@ -15,7 +15,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@mipmap/ic_music_foreground" />
+        tools:srcCompat="@mipmap/ic_launcher_2_foreground" />
 
     <LinearLayout
         android:id="@+id/music_info"

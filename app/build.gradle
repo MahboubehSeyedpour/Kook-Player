@@ -28,7 +28,8 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -103,7 +104,7 @@ dependencies {
     implementation "androidx.room:room-ktx:$room_version"
 
 //  Like Button
-    compile 'com.github.jd-alexander:LikeButton:0.2.3'
+//    compile 'com.github.jd-alexander:LikeButton:0.2.3'
 
 //    ColoredShadowImageView
     implementation 'com.github.armcha:ColoredShadowImageView:1.1.0'

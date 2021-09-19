@@ -4,177 +4,177 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+<!--    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:orientation="vertical">-->
 
-        <LinearLayout
-            android:id="@+id/ascendingOrder"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:orientation="horizontal"
-            android:padding="8dp">
+<!--        <LinearLayout-->
+<!--            android:id="@+id/ascendingOrder"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="?android:attr/selectableItemBackground"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:padding="8dp">-->
 
-            <ImageView
-                android:id="@+id/first_item_iv"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_margin="8dp"
-                android:src="@drawable/ic_arrows" />
+<!--            <ImageView-->
+<!--                android:id="@+id/first_item_iv"-->
+<!--                android:layout_width="18dp"-->
+<!--                android:layout_height="18dp"-->
+<!--                android:layout_margin="8dp"-->
+<!--                android:src="@drawable/ic_arrows" />-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:padding="8dp"
-                android:text="@string/first_item_modal_bottomsheet" />
-        </LinearLayout>
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center_vertical"-->
+<!--                android:padding="8dp"-->
+<!--                android:text="@string/first_item_modal_bottomsheet" />-->
+<!--        </LinearLayout>-->
 
-        <LinearLayout
-            android:id="@+id/sortByName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:orientation="horizontal"
-            android:padding="8dp">
+<!--        <LinearLayout-->
+<!--            android:id="@+id/sortByName"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="?android:attr/selectableItemBackground"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:padding="8dp">-->
 
-            <ImageView
-                android:id="@+id/second_item_iv"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_margin="8dp"
-                android:src="@drawable/ic_arrows" />
+<!--            <ImageView-->
+<!--                android:id="@+id/second_item_iv"-->
+<!--                android:layout_width="18dp"-->
+<!--                android:layout_height="18dp"-->
+<!--                android:layout_margin="8dp"-->
+<!--                android:src="@drawable/ic_arrows" />-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:padding="8dp"
-                android:text="@string/second_item_modal_bottomsheet" />
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center_vertical"-->
+<!--                android:padding="8dp"-->
+<!--                android:text="@string/second_item_modal_bottomsheet" />-->
 
-        </LinearLayout>
+<!--        </LinearLayout>-->
 
-        <LinearLayout
-            android:id="@+id/sortByArtist"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:orientation="horizontal"
-            android:padding="8dp">
+<!--        <LinearLayout-->
+<!--            android:id="@+id/sortByArtist"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="?android:attr/selectableItemBackground"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:padding="8dp">-->
 
-            <ImageView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_margin="8dp" />
+<!--            <ImageView-->
+<!--                android:layout_width="18dp"-->
+<!--                android:layout_height="18dp"-->
+<!--                android:layout_margin="8dp" />-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:padding="8dp"
-                android:text="@string/third_item_modal_bottomsheet" />
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center_vertical"-->
+<!--                android:padding="8dp"-->
+<!--                android:text="@string/third_item_modal_bottomsheet" />-->
 
-        </LinearLayout>
+<!--        </LinearLayout>-->
 
-        <LinearLayout
-            android:id="@+id/sortByYear"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:orientation="horizontal"
-            android:padding="8dp">
+<!--        <LinearLayout-->
+<!--            android:id="@+id/sortByYear"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="?android:attr/selectableItemBackground"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:padding="8dp">-->
 
-            <ImageView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_margin="8dp" />
+<!--            <ImageView-->
+<!--                android:layout_width="18dp"-->
+<!--                android:layout_height="18dp"-->
+<!--                android:layout_margin="8dp" />-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:padding="8dp"
-                android:text="@string/forth_item_modal_bottomsheet" />
-        </LinearLayout>
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center_vertical"-->
+<!--                android:padding="8dp"-->
+<!--                android:text="@string/forth_item_modal_bottomsheet" />-->
+<!--        </LinearLayout>-->
 
-        <LinearLayout
-            android:id="@+id/fifth_item"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:orientation="horizontal"
-            android:padding="8dp">
+<!--        <LinearLayout-->
+<!--            android:id="@+id/fifth_item"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="?android:attr/selectableItemBackground"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:padding="8dp">-->
 
-            <ImageView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_margin="8dp"
-                android:src="@drawable/ic_sort"
-                android:layout_gravity="center"/>
+<!--            <ImageView-->
+<!--                android:layout_width="18dp"-->
+<!--                android:layout_height="18dp"-->
+<!--                android:layout_margin="8dp"-->
+<!--                android:src="@drawable/ic_sort"-->
+<!--                android:layout_gravity="center"/>-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:padding="8dp"
-                android:text="@string/fifth_item_modal_bottomsheet" />
-        </LinearLayout>
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center_vertical"-->
+<!--                android:padding="8dp"-->
+<!--                android:text="@string/fifth_item_modal_bottomsheet" />-->
+<!--        </LinearLayout>-->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical">-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="5dp"
-                android:layout_marginLeft="10dp">
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:padding="5dp"-->
+<!--                android:layout_marginLeft="10dp">-->
 
-                <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:src="@drawable/ic_sort_in_ascending_order"
-                    android:layout_gravity="center_vertical"/>
+<!--                <ImageView-->
+<!--                    android:layout_width="18dp"-->
+<!--                    android:layout_height="18dp"-->
+<!--                    android:src="@drawable/ic_sort_in_ascending_order"-->
+<!--                    android:layout_gravity="center_vertical"/>-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:padding="8dp"
-                    android:text="new section _ if needed" />
-            </LinearLayout>
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="center_vertical"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:text="new section _ if needed" />-->
+<!--            </LinearLayout>-->
 
-            <View
-                android:layout_width="300dp"
-                android:layout_height="1dp"
-                android:layout_gravity="right"
-                android:layout_marginBottom="8dp"
-                android:background="@color/light_grey" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:orientation="horizontal"
-            android:padding="8dp">
+<!--            <View-->
+<!--                android:layout_width="300dp"-->
+<!--                android:layout_height="1dp"-->
+<!--                android:layout_gravity="right"-->
+<!--                android:layout_marginBottom="8dp"-->
+<!--                android:background="@color/light_grey" />-->
+<!--        </LinearLayout>-->
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="?android:attr/selectableItemBackground"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:padding="8dp">-->
 
-            <ImageView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_margin="8dp" />
+<!--            <ImageView-->
+<!--                android:layout_width="18dp"-->
+<!--                android:layout_height="18dp"-->
+<!--                android:layout_margin="8dp" />-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:padding="8dp"
-                android:text="new item _ if needed" />
-        </LinearLayout>
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center_vertical"-->
+<!--                android:padding="8dp"-->
+<!--                android:text="new item _ if needed" />-->
+<!--        </LinearLayout>-->
 
-    </LinearLayout>
+<!--    </LinearLayout>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
