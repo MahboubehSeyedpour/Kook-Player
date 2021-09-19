@@ -4,22 +4,30 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.telephony.PhoneStateListener
 import android.telephony.TelephonyManager
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import com.example.cassette.databinding.ActivityMainBinding
 import com.example.cassette.manager.Coordinator
 import com.example.cassette.player.Enums
 import com.example.cassette.providers.PermissionProvider
+import com.example.cassette.repositories.PlaylistRepository
+import com.example.cassette.repositories.appdatabase.entities.PlaylistModel
+import com.example.cassette.repositories.appdatabase.roomdb.DatabaseRepository
+import com.example.cassette.repositories.appdatabase.roomdb.MyDatabase
 import com.example.cassette.services.NotificationPlayerService
 import com.example.cassette.utlis.ScreenSizeUtils.getScreenHeight
 import com.example.cassette.views.Fragments.MainFragment
 import com.example.cassette.views.Fragments.PlayerPanelFragment
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
-import kotlinx.android.synthetic.main.activity_main.view.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity(), LifecycleOwner {
@@ -28,9 +36,12 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         var permissionsGranted: Boolean = false
         lateinit var playerPanelFragment: PlayerPanelFragment
         lateinit var activity: MainActivity
-//        lateinit var sharedPreferences: SharedPreferences
+
+        //        lateinit var sharedPreferences: SharedPreferences
 
     }
+
+
 
     var prefs: SharedPreferences? = null
 
@@ -85,6 +96,8 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         super.onCreate(savedInstanceState)
 
         activity = this
+
+        DatabaseRepository.createDatabse()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -175,7 +188,6 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 //            prefs!!.edit().putBoolean("firstrun", false).commit();
 //        }
 //    }
-
 
     fun updateVisibility() {
         binding.slidingLayout.panelHeight = getScreenHeight() * 1 / 10

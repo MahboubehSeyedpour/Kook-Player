@@ -34,6 +34,7 @@ class PlaylistViewModel : BaseViewModel() {
     }
 
     fun getDataSet(): ArrayList<PlaylistModel> {
+        updateDataset()
         return dataset.value as ArrayList<PlaylistModel>
     }
 

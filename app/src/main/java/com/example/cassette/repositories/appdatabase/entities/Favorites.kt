@@ -4,9 +4,10 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-//@Entity(tableName = "favorites_table")
-//data class Favorites(
-//    @PrimaryKey(autoGenerate = false)
-//    @ColumnInfo val songId: Long
-//) {
-//}
+@Entity(tableName = "favorites_table")
+data class Favorites(
+    @PrimaryKey(autoGenerate = false)
+    @ColumnInfo val fId: Long,
+    @ColumnInfo val songId: Long
+) {
+}

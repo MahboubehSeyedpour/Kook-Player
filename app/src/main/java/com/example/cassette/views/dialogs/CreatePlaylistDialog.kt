@@ -11,6 +11,7 @@ import androidx.fragment.app.DialogFragment
 import com.example.cassette.R
 import com.example.cassette.databinding.CreatePlaylistDialogBinding
 import com.example.cassette.myInterface.PassData
+import com.example.cassette.repositories.PlaylistRepository
 import com.example.cassette.views.Fragments.PlaylistFragment
 import com.example.cassette.views.Fragments.PlaylistPageFragment
 import com.example.cassette.views.MainActivity
@@ -69,7 +70,7 @@ class CreatePlaylistDialog : DialogFragment() {
 
     private fun isUnique(name: String): Boolean
     {
-        for (playlist in PlaylistFragment.viewModel?.playlistRepository?.cashedPlaylistArray!!)
+        for (playlist in PlaylistRepository.cashedPlaylistArray!!)
         {
             if(playlist.name == name)
                 return true

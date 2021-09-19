@@ -5,18 +5,20 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.cassette.repositories.appdatabase.entities.Favorites
 import com.example.cassette.repositories.appdatabase.entities.PlaylistModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 
 @Database(
-    entities = [PlaylistModel::class],
+    entities = [PlaylistModel::class, Favorites::class],
     version = 1
 )
 //@TypeConverters(Converters::class)
 abstract class MyDatabase : RoomDatabase() {
     abstract fun playlistDao(): PlaylistDao
+    abstract fun favoriteDao(): FavoriteDao
 //    abstract fun globalValueDao(): GlobalValueDao
 
     private class MyDatabaseCallback(private val scope: CoroutineScope) : RoomDatabase.Callback() {
@@ -26,8 +28,7 @@ abstract class MyDatabase : RoomDatabase() {
                 scope.launch {
 
                     populatePlaylistDatabase(database.playlistDao())
-//                    populateGlobalDatabase(database.globalValueDao())
-
+                    populateFavoriteDatabase(database.favoriteDao())
                 }
             }
         }
@@ -38,11 +39,11 @@ abstract class MyDatabase : RoomDatabase() {
 
         }
 
-//        suspend fun populateGlobalDatabase(globalValueDao: GlobalValueDao) {
-//            // Delete all content here.
-//            globalValueDao.deleteExpiredValues()
-//
-//        }
+        suspend fun populateFavoriteDatabase(favoriteDao: FavoriteDao) {
+            // Delete all content here.
+            favoriteDao.deleteAll()
+
+        }
     }
 
     companion object {
@@ -54,7 +55,7 @@ abstract class MyDatabase : RoomDatabase() {
             {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    MyDatabase::class.java, "playlist-_database"
+                    MyDatabase::class.java, "_database"
                 )
                     .addCallback(MyDatabaseCallback(scope))
                     .build()

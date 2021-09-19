@@ -5,11 +5,11 @@ import com.example.cassette.repositories.appdatabase.roomdb.MyDatabase
 
 interface PlaylistRepoInterface {
 
-    val localDatabase: MyDatabase
+//    val localDatabase: MyDatabase
 
 
     fun createPlaylist(name: String)
-    fun addSongsToPlaylist(playlist_name: String, songsId: String): Boolean
+//    fun addSongsToPlaylist(playlist_name: String, songsId: String): Boolean
 
 
     //    TODO(fun renamePlaylist())
@@ -21,7 +21,7 @@ interface PlaylistRepoInterface {
     fun removePlaylist(id: Long): Boolean
 
     //    fun getPlaylistFromStorage(): ArrayList<PlaylistModel>
-    fun getPlaylistFromDatabase(): ArrayList<PlaylistModel>
+//    fun getPlaylistFromDatabase(): ArrayList<PlaylistModel>
 
     //    utils
     fun getIdByName(name: String): Long

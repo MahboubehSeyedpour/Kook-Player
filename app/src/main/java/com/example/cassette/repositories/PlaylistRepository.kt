@@ -5,6 +5,8 @@ import android.content.Context
 import android.provider.MediaStore
 import com.example.cassette.myInterface.PlaylistRepoInterface
 import com.example.cassette.repositories.appdatabase.entities.PlaylistModel
+import com.example.cassette.repositories.appdatabase.roomdb.DatabaseRepository
+import com.example.cassette.repositories.appdatabase.roomdb.DatabaseRepository.localDatabase
 import com.example.cassette.repositories.appdatabase.roomdb.MyDatabase
 import com.example.cassette.utlis.DatabaseConverterUtils
 import com.example.cassette.utlis.FilePathUtlis
@@ -14,11 +16,12 @@ class PlaylistRepository(val context: Context?) :
     PlaylistRepoInterface {
 
     val applicationScope = CoroutineScope(SupervisorJob())
-    var cashedPlaylistArray = ArrayList<PlaylistModel>()
-    override val localDatabase = MyDatabase.getDatabase(context!!, applicationScope)
+
+//    val localDatabase = MyDatabase.getDatabase(context!!, applicationScope)
 
     companion object {
         lateinit var db: MyDatabase
+        var cashedPlaylistArray = DatabaseRepository.cashedPlaylistArray
     }
 
     init {
@@ -97,25 +100,25 @@ class PlaylistRepository(val context: Context?) :
 
 
     //    ----------------------------------------------- Add song To Playlist ----------------------------------------------------
-    override fun addSongsToPlaylist(playlist_name: String, songsId: String): Boolean {
-
-        val playlist = getPlaylistById(getIdByName(playlist_name))
-
-//        add song to playlist object
-        if (playlist != null) {
-
-            val position = findPlaylistPositionInCachedArray(playlist)
-
-            if (position >= 0) {
-                addSongsToPlaylistInObject(cashedPlaylistArray[position], songsId)
-            }
-
-            addSongsToPlaylistInDatabse(playlist, songsId)
-
-        }
-
-        return true
-    }
+//    override fun addSongsToPlaylist(playlist_name: String, songsId: String): Boolean {
+//
+//        val playlist = getPlaylistById(getIdByName(playlist_name))
+//
+////        add song to playlist object
+//        if (playlist != null) {
+//
+//            val position = findPlaylistPositionInCachedArray(playlist)
+//
+//            if (position >= 0) {
+//                addSongsToPlaylistInObject(cashedPlaylistArray[position], songsId)
+//            }
+//
+//            addSongsToPlaylistInDatabse(playlist, songsId)
+//
+//        }
+//
+//        return true
+//    }
 
     fun findPlaylistPositionInCachedArray(playlist: PlaylistModel): Int {
         var position: Int = -1
@@ -127,38 +130,38 @@ class PlaylistRepository(val context: Context?) :
         return position
     }
 
-    fun addSongsToPlaylistInDatabse(playlist: PlaylistModel, songsId: String) {
+//    fun addSongsToPlaylistInDatabse(playlist: PlaylistModel, songsId: String) {
+//
+//        runBlocking {
+//
+//            if (playlist != null) {
+//                for (song_id in songsId) {
+//                    localDatabase.playlistDao().addSongToPlaylist(
+//                        playlist.id,
+//                        playlist.songs
+//                    )
+//                }
+//                addCountInDatabase(playlist)
+//            }
+////            TODO(Toast : operation failed! please try later)
+//        }
+//    }
 
-        runBlocking {
+//    fun addSongsToPlaylistInObject(playlist: PlaylistModel, songsId: String) {
+//
+//        val position = findPlaylistPositionInCachedArray(playlist)
+//
+//        cashedPlaylistArray[position].songs = cashedPlaylistArray[position].songs + songsId + ","
+//
+//        addCountInPlaylistObject(cashedPlaylistArray[position])
+//    }
 
-            if (playlist != null) {
-                for (song_id in songsId) {
-                    localDatabase.playlistDao().addSongToPlaylist(
-                        playlist.id,
-                        playlist.songs
-                    )
-                }
-                addCountInDatabase(playlist)
-            }
-//            TODO(Toast : operation failed! please try later)
-        }
-    }
-
-    fun addSongsToPlaylistInObject(playlist: PlaylistModel, songsId: String) {
-
-        val position = findPlaylistPositionInCachedArray(playlist)
-
-        cashedPlaylistArray[position].songs = cashedPlaylistArray[position].songs + songsId + ","
-
-        addCountInPlaylistObject(cashedPlaylistArray[position])
-    }
-
-    fun addCountInDatabase(playlist: PlaylistModel) {
-        GlobalScope.launch {
-            localDatabase.playlistDao()
-                .setCountOfSongs(playlist.id, playlist.countOfSongs)
-        }
-    }
+//    fun addCountInDatabase(playlist: PlaylistModel) {
+//        GlobalScope.launch {
+//            localDatabase.playlistDao()
+//                .setCountOfSongs(playlist.id, playlist.countOfSongs)
+//        }
+//    }
 
     fun addCountInPlaylistObject(playlist: PlaylistModel) {
         playlist.countOfSongs = playlist.countOfSongs + 1
@@ -270,15 +273,15 @@ class PlaylistRepository(val context: Context?) :
         return cashedPlaylistArray
     }
 
-    override fun getPlaylistFromDatabase(): ArrayList<PlaylistModel> =
-        runBlocking {
-            val playlistsList = localDatabase.playlistDao().getPlaylists()
-            val arrayList = arrayListOf<PlaylistModel>()
-            for (playlist in playlistsList) {
-                arrayList.add(playlist)
-            }
-            return@runBlocking arrayList
-        }
+//    override fun getPlaylistFromDatabase(): ArrayList<PlaylistModel> =
+//        runBlocking {
+//            val playlistsList = localDatabase.playlistDao().getPlaylists()
+//            val arrayList = arrayListOf<PlaylistModel>()
+//            for (playlist in playlistsList) {
+//                arrayList.add(playlist)
+//            }
+//            return@runBlocking arrayList
+//        }
 
 
     override fun getIdOfSongsStoredInPlaylist(plylist_id: Long) =

@@ -18,8 +18,10 @@ import com.example.cassette.R
 import com.example.cassette.adapter.SongsAdapter
 import com.example.cassette.manager.Coordinator
 import com.example.cassette.myInterface.PassDataForSelectPlaylists
+import com.example.cassette.repositories.PlaylistRepository
 import com.example.cassette.repositories.appdatabase.entities.PlaylistModel
 import com.example.cassette.repositories.appdatabase.entities.SongModel
+import com.example.cassette.repositories.appdatabase.roomdb.DatabaseRepository
 import com.example.cassette.utlis.SharedPrefUtils
 import com.example.cassette.viewModel.SongsViewModel
 import com.example.cassette.views.dialogs.AddSongToPlaylistDialog
@@ -106,10 +108,11 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
 
                     selectedSong = songModel
 
-                    if (PlaylistFragment.viewModel?.getDataSet() != null) {
-                        if (PlaylistFragment.viewModel?.getDataSet()?.size!! > 0) {
+                    if (DatabaseRepository.cashedPlaylistArray != null) {
+                        if (DatabaseRepository.cashedPlaylistArray.size!! > 0) {
                             createDialogToSelectPlaylist()
                         } else {
+                            val i = PlaylistRepository.cashedPlaylistArray
                             Toast.makeText(
                                 requireActivity().baseContext,
                                 "Please create a playlist first!",
@@ -142,7 +145,7 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
 
     fun createDialogToSelectPlaylist() {
 
-        val addSongToPlaylistDialog = PlaylistFragment.viewModel?.getDataSet()?.let {
+        val addSongToPlaylistDialog = DatabaseRepository.cashedPlaylistArray?.let {
             AddSongToPlaylistDialog(
                 it
             )
@@ -174,7 +177,7 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
     fun addSongToPlaylist(playlist: PlaylistModel) {
         GlobalScope.launch {
 
-            PlaylistFragment.viewModel?.playlistRepository?.addSongsToPlaylist(
+            DatabaseRepository.addSongsToPlaylist(
                 playlist.name,
                 selectedSong.id.toString()
             )
