@@ -2,13 +2,14 @@ package com.example.cassette.repositories.appdatabase.roomdb
 
 import androidx.lifecycle.lifecycleScope
 import com.example.cassette.repositories.PlaylistRepository
+import com.example.cassette.repositories.appdatabase.entities.Favorites
 import com.example.cassette.repositories.appdatabase.entities.PlaylistModel
 import com.example.cassette.views.MainActivity
 import kotlinx.coroutines.*
 
 object DatabaseRepository {
 
-    val applicationScope = CoroutineScope(SupervisorJob())
+    private val applicationScope = CoroutineScope(SupervisorJob())
     lateinit var localDatabase: MyDatabase
     var cashedPlaylistArray = ArrayList<PlaylistModel>()
 
@@ -118,8 +119,19 @@ object DatabaseRepository {
             return@runBlocking arrayList
         }
 
+    fun addSongAsFav(songsId: Long)
+    {
+        val fav = Favorites(songsId)
+        applicationScope.launch {
+            localDatabase.favoriteDao().addSong(fav)
+        }
+    }
 
-    fun getFavorites() {
-
+    fun deleteSongFromFav(songsId: Long)
+    {
+        val fav = Favorites(songsId)
+        applicationScope.launch {
+            localDatabase.favoriteDao().deleteSong(fav)
+        }
     }
 }

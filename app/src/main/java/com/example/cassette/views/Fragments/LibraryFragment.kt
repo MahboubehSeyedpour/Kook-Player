@@ -22,7 +22,6 @@ import com.example.cassette.repositories.PlaylistRepository
 import com.example.cassette.repositories.appdatabase.entities.PlaylistModel
 import com.example.cassette.repositories.appdatabase.entities.SongModel
 import com.example.cassette.repositories.appdatabase.roomdb.DatabaseRepository
-import com.example.cassette.utlis.SharedPrefUtils
 import com.example.cassette.viewModel.SongsViewModel
 import com.example.cassette.views.dialogs.AddSongToPlaylistDialog
 import kotlinx.android.synthetic.main.fragment_library.*

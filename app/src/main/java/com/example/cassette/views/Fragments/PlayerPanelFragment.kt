@@ -16,15 +16,13 @@ import com.example.cassette.myInterface.PlayerPanelInterface
 import com.example.cassette.player.Enums.PanelState
 import com.example.cassette.player.Enums.PanelState.COLLAPSED
 import com.example.cassette.player.Enums.PanelState.EXPANDED
+import com.example.cassette.repositories.appdatabase.roomdb.DatabaseRepository
 import com.example.cassette.utlis.ImageUtils
 import com.example.cassette.utlis.ScreenSizeUtils
 import com.example.cassette.utlis.TimeUtils
 import com.frolo.waveformseekbar.WaveformSeekBar
-import com.like.LikeButton
-import com.like.OnLikeListener
 import kotlinx.android.synthetic.main.fragment_player_panel.view.*
 import kotlinx.android.synthetic.main.panel_header_on_collapsed.view.*
-import kotlinx.android.synthetic.main.panel_header_on_expanded.view.*
 import kotlinx.android.synthetic.main.player_remote.*
 import kotlinx.android.synthetic.main.player_remote.view.*
 import kotlin.random.Random
@@ -80,34 +78,43 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
 //        })
 
 
-        binding.musicAlbumImage.layoutParams.height = (ScreenSizeUtils.getScreenHeight()*5.1/10).toInt()
-        binding.musicAlbumImage.layoutParams.width = ScreenSizeUtils.getScreenWidth()*10/10
+        binding.musicAlbumImage.layoutParams.height =
+            (ScreenSizeUtils.getScreenHeight() * 5.1 / 10).toInt()
+        binding.musicAlbumImage.layoutParams.width = ScreenSizeUtils.getScreenWidth() * 10 / 10
         binding.musicAlbumImage.requestLayout()
 
 
-        binding.header.layoutParams.height = (ScreenSizeUtils.getScreenHeight()*0.8/10).toInt()
+        binding.header.layoutParams.height = (ScreenSizeUtils.getScreenHeight() * 0.8 / 10).toInt()
         binding.header.requestLayout()
 
-        binding.musicTitleTv.layoutParams.height = (ScreenSizeUtils.getScreenHeight()*0.4/10).toInt()
-        binding.header.requestLayout()
-
-
-        binding.playerRemote.constraintLayout2.layoutParams.height = (ScreenSizeUtils.getScreenHeight()*0.4/10).toInt()
+        binding.musicTitleTv.layoutParams.height =
+            (ScreenSizeUtils.getScreenHeight() * 0.4 / 10).toInt()
         binding.header.requestLayout()
 
 
-        binding.playerRemote.constraintLayout3.layoutParams.height = (ScreenSizeUtils.getScreenHeight()*2/10)
+        binding.playerRemote.constraintLayout2.layoutParams.height =
+            (ScreenSizeUtils.getScreenHeight() * 0.4 / 10).toInt()
         binding.header.requestLayout()
 
-        binding.playerRemote.shuffleRepeatLayout.layoutParams.height = (ScreenSizeUtils.getScreenHeight()*1/10).toInt()
+
+        binding.playerRemote.constraintLayout3.layoutParams.height =
+            (ScreenSizeUtils.getScreenHeight() * 2 / 10)
         binding.header.requestLayout()
 
-        binding.header.onCollapse.song_image_on_header.layoutParams.height = (ScreenSizeUtils.getScreenHeight()*3/10).toInt()
-        binding.header.onCollapse.song_image_on_header.layoutParams.width = (ScreenSizeUtils.getScreenWidth()*1.1/10).toInt()
+        binding.playerRemote.shuffleRepeatLayout.layoutParams.height =
+            (ScreenSizeUtils.getScreenHeight() * 1 / 10).toInt()
+        binding.header.requestLayout()
+
+        binding.header.onCollapse.song_image_on_header.layoutParams.height =
+            (ScreenSizeUtils.getScreenHeight() * 3 / 10).toInt()
+        binding.header.onCollapse.song_image_on_header.layoutParams.width =
+            (ScreenSizeUtils.getScreenWidth() * 1.1 / 10).toInt()
         binding.header.onCollapse.song_image_on_header.requestLayout()
 
-        binding.header.onCollapse.wheelprogress.layoutParams.height = (ScreenSizeUtils.getScreenHeight()*3/10).toInt()
-        binding.header.onCollapse.wheelprogress.layoutParams.width = (ScreenSizeUtils.getScreenWidth()*1.1/10).toInt()
+        binding.header.onCollapse.wheelprogress.layoutParams.height =
+            (ScreenSizeUtils.getScreenHeight() * 3 / 10).toInt()
+        binding.header.onCollapse.wheelprogress.layoutParams.width =
+            (ScreenSizeUtils.getScreenWidth() * 1.1 / 10).toInt()
         binding.header.onCollapse.wheelprogress.requestLayout()
 
 
@@ -115,8 +122,10 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
 //        binding.header.onExpand.back_btn.layoutParams.width = (ScreenSizeUtils.getScreenWidth()*0.6/10).toInt()
 //        binding.header.onExpand.back_btn.requestLayout()
 
-        binding.onExpand.likeIv.layoutParams.height = (ScreenSizeUtils.getScreenHeight()*0.7/10).toInt()
-        binding.onExpand.likeIv.layoutParams.width = (ScreenSizeUtils.getScreenWidth()*0.7/10).toInt()
+        binding.onExpand.likeIv.layoutParams.height =
+            (ScreenSizeUtils.getScreenHeight() * 0.7 / 10).toInt()
+        binding.onExpand.likeIv.layoutParams.width =
+            (ScreenSizeUtils.getScreenWidth() * 0.7 / 10).toInt()
         binding.onExpand.likeIv.requestLayout()
 
     }
@@ -262,8 +271,13 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
             binding.onExpand.likeIv -> {
                 if (previouslyLiked) {
                     binding.onExpand.likeIv.setImageResource(R.drawable.ic_heart)
+                    DatabaseRepository.deleteSongFromFav(Coordinator.currentPlayingSong!!.id ?: -1)
+
+
                 } else {
                     binding.onExpand.likeIv.setImageResource(R.drawable.ic_filled_heart)
+
+                    DatabaseRepository.addSongAsFav(Coordinator.currentPlayingSong!!.id ?: -1)
                 }
                 previouslyLiked = !previouslyLiked
             }
