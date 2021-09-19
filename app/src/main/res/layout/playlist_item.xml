@@ -38,7 +38,9 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif"
                 android:textStyle="bold"
-                tools:text="Car playlist" />
+                android:maxLines="1"
+                tools:text="Car playlist"
+                android:ellipsize="end"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
