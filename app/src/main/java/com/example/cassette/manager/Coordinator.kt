@@ -17,7 +17,7 @@ object Coordinator : CoordinatorInterface {
 
     override lateinit var mediaPlayerAgent: MediaPlayerAgent
 
-    var SourceOfSelectedSong = "library" // or «playlist-name»
+    var SourceOfSelectedSong = "library" // or «playlist-name» or "fav"
     var currentDataSource = arrayListOf<SongModel>()
 
     var shuffleMode = PlaybackStateCompat.SHUFFLE_MODE_NONE

@@ -1,10 +1,15 @@
 package com.example.cassette.repositories.appdatabase.roomdb
 
 import androidx.lifecycle.lifecycleScope
+import com.example.cassette.manager.Coordinator
 import com.example.cassette.repositories.PlaylistRepository
 import com.example.cassette.repositories.appdatabase.entities.Favorites
 import com.example.cassette.repositories.appdatabase.entities.PlaylistModel
+import com.example.cassette.repositories.appdatabase.entities.SongModel
+import com.example.cassette.views.Fragments.FavoriteFragment
+import com.example.cassette.views.Fragments.LibraryFragment
 import com.example.cassette.views.MainActivity
+import kotlinx.android.synthetic.*
 import kotlinx.coroutines.*
 
 object DatabaseRepository {
@@ -12,6 +17,8 @@ object DatabaseRepository {
     private val applicationScope = CoroutineScope(SupervisorJob())
     lateinit var localDatabase: MyDatabase
     var cashedPlaylistArray = ArrayList<PlaylistModel>()
+     var cashedFavArray_Favorites = ArrayList<Favorites>()
+    var cashedFavArray = ArrayList<SongModel>()
 
     fun createDatabse() {
         localDatabase = MyDatabase.getDatabase(
@@ -20,6 +27,7 @@ object DatabaseRepository {
         )
         applicationScope.launch {
             cashedPlaylistArray = getPlaylistFromDatabase()
+            cashedFavArray_Favorites = getFavFromDatabase()
         }
     }
 
@@ -33,7 +41,10 @@ object DatabaseRepository {
             val position = findPlaylistPositionInCachedArray(playlist)
 
             if (position >= 0) {
-                addSongsToPlaylistInObject(PlaylistRepository.cashedPlaylistArray[position], songsId)
+                addSongsToPlaylistInObject(
+                    PlaylistRepository.cashedPlaylistArray[position],
+                    songsId
+                )
             }
 
             addSongsToPlaylistInDatabse(playlist, songsId)
@@ -47,7 +58,8 @@ object DatabaseRepository {
 
         val position = findPlaylistPositionInCachedArray(playlist)
 
-        PlaylistRepository.cashedPlaylistArray[position].songs = PlaylistRepository.cashedPlaylistArray[position].songs + songsId + ","
+        PlaylistRepository.cashedPlaylistArray[position].songs =
+            PlaylistRepository.cashedPlaylistArray[position].songs + songsId + ","
 
         addCountInPlaylistObject(PlaylistRepository.cashedPlaylistArray[position])
     }
@@ -119,19 +131,73 @@ object DatabaseRepository {
             return@runBlocking arrayList
         }
 
-    fun addSongAsFav(songsId: Long)
-    {
+    fun addSongAsFav(songsId: Long) {
         val fav = Favorites(songsId)
         applicationScope.launch {
             localDatabase.favoriteDao().addSong(fav)
         }
+
+        SongUtils.getSongById(songsId)?.let { cashedFavArray.add(it) }
     }
 
-    fun deleteSongFromFav(songsId: Long)
-    {
-        val fav = Favorites(songsId)
+    fun deleteSongFromFav(song: SongModel) {
+        val fav = Favorites(song.id!!)
         applicationScope.launch {
             localDatabase.favoriteDao().deleteSong(fav)
         }
+
+        for (favSongs in cashedFavArray)
+        {
+            if(favSongs.id!! == song!!.id)
+            {
+                cashedFavArray.remove(favSongs)
+            }
+        }
+    }
+
+    fun songIsAlreadyLiked(song: SongModel): Boolean
+    {
+        for (favSongs in cashedFavArray) {
+            if (favSongs.id!!.equals(song.id)) {
+                return true
+            }
+        }
+        return false
+    }
+
+    fun getFavFromDatabase(): ArrayList<Favorites> =
+        runBlocking {
+            val favSongs = localDatabase.favoriteDao().getFavs()
+
+            val arr = arrayListOf<Favorites>()
+            arr.addAll(favSongs)
+            return@runBlocking arr
+        }
+
+    fun convertFavSongsToRealSongs(): ArrayList<SongModel>
+    {
+
+        val arrayList = arrayListOf<SongModel>()
+        for (favSong in cashedFavArray_Favorites) {
+
+            val realSong = songsIdToSongModelConverter(favSong)
+            if (realSong != null)
+                arrayList.add(realSong)
+        }
+
+        cashedFavArray = arrayList
+        return arrayList
+
+    }
+
+    private fun songsIdToSongModelConverter(favSong: Favorites): SongModel? {
+        val allSongsInStorage = LibraryFragment.viewModel.getDataSet()
+
+        for (song in allSongsInStorage) {
+            if (song.id == favSong.songId) {
+                return song
+            }
+        }
+        return null
     }
 }

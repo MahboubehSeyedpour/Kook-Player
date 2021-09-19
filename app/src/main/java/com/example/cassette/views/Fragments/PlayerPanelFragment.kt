@@ -3,6 +3,7 @@ package com.example.cassette.views.Fragments
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.provider.ContactsContract
 import android.support.v4.media.session.PlaybackStateCompat
 import android.view.LayoutInflater
 import android.view.View
@@ -17,12 +18,15 @@ import com.example.cassette.player.Enums.PanelState
 import com.example.cassette.player.Enums.PanelState.COLLAPSED
 import com.example.cassette.player.Enums.PanelState.EXPANDED
 import com.example.cassette.repositories.appdatabase.roomdb.DatabaseRepository
+import com.example.cassette.repositories.appdatabase.roomdb.DatabaseRepository.cashedFavArray
+import com.example.cassette.repositories.appdatabase.roomdb.DatabaseRepository.songIsAlreadyLiked
 import com.example.cassette.utlis.ImageUtils
 import com.example.cassette.utlis.ScreenSizeUtils
 import com.example.cassette.utlis.TimeUtils
 import com.frolo.waveformseekbar.WaveformSeekBar
 import kotlinx.android.synthetic.main.fragment_player_panel.view.*
 import kotlinx.android.synthetic.main.panel_header_on_collapsed.view.*
+import kotlinx.android.synthetic.main.panel_header_on_expanded.view.*
 import kotlinx.android.synthetic.main.player_remote.*
 import kotlinx.android.synthetic.main.player_remote.view.*
 import kotlin.random.Random
@@ -161,6 +165,13 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
     fun updatePanel() {
         setSongTitle()
         setSongImage()
+
+        if (songIsAlreadyLiked(Coordinator.currentPlayingSong!!)) {
+            binding.header.onExpand.like_iv.setImageResource(R.drawable.ic_filled_heart)
+        } else {
+            binding.header.onExpand.like_iv.setImageResource(R.drawable.ic_heart)
+        }
+
         binding.playerRemote.musicMax?.text =
             Coordinator.currentPlayingSong?.duration?.let {
                 TimeUtils.milliSecToDuration(
@@ -269,17 +280,18 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
     override fun onClick(v: View?) {
         when (v) {
             binding.onExpand.likeIv -> {
-                if (previouslyLiked) {
+                if (songIsAlreadyLiked(Coordinator.currentPlayingSong!!)) {
+
                     binding.onExpand.likeIv.setImageResource(R.drawable.ic_heart)
-                    DatabaseRepository.deleteSongFromFav(Coordinator.currentPlayingSong!!.id ?: -1)
+                    DatabaseRepository.deleteSongFromFav(Coordinator.currentPlayingSong!!)
 
 
                 } else {
                     binding.onExpand.likeIv.setImageResource(R.drawable.ic_filled_heart)
 
                     DatabaseRepository.addSongAsFav(Coordinator.currentPlayingSong!!.id ?: -1)
+
                 }
-                previouslyLiked = !previouslyLiked
             }
 
             binding.playerRemote.nextBtn -> Coordinator.playNextSong()

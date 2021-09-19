@@ -131,7 +131,7 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
 
         notifyDataSetChanges()
 
-
+        DatabaseRepository.convertFavSongsToRealSongs()
 
         return view
     }

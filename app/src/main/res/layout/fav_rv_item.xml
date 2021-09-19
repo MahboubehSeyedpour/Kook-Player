@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fav_song_container"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:padding="5dp">
+
+    <ImageView
+        android:id="@+id/fav_music_iv"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:scaleType="fitCenter"
+        tools:srcCompat="@mipmap/ic_music_foreground" />
+
+    <LinearLayout
+        android:id="@+id/music_info"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/song_duration"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/music_iv"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/fav_song_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif"
+            android:gravity="left"
+            android:paddingRight="10dp"
+            android:singleLine="true"
+            android:textColor="@color/dark_grey"
+            android:textSize="15dp"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/song_duration"
+            app:layout_constraintStart_toEndOf="@+id/music_iv"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="songer name" />
+
+        <TextView
+            android:id="@+id/fav_song_artist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif"
+            android:paddingRight="10dp"
+            android:singleLine="true"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/song_duration"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/music_iv"
+            app:layout_constraintTop_toBottomOf="@+id/song_title"
+            tools:text="singer" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/like_btn"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:scaleType="centerCrop"
+        android:layout_marginEnd="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_filled_heart" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

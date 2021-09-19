@@ -1,18 +1,81 @@
 package com.example.cassette.views.Fragments
 
+import android.app.Activity
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cassette.R
+import com.example.cassette.adapter.FavAdapter
+import com.example.cassette.adapter.PlaylistPageAdapater
+import com.example.cassette.databinding.FragmentFavoriteBinding
+import com.example.cassette.databinding.FragmentPlaylistPageBinding
+import com.example.cassette.repositories.appdatabase.entities.SongModel
+import com.example.cassette.repositories.appdatabase.roomdb.DatabaseRepository
+import com.example.cassette.viewModel.FavViewModel
+import com.example.cassette.viewModel.PlaylistPageViewModel
 
 class FavoriteFragment : Fragment() {
+
+    lateinit var binding: FragmentFavoriteBinding
+
+    companion object {
+        lateinit var viewModel: FavViewModel
+        lateinit var favSongsAdapter: FavAdapter
+    }
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_favorite, container, false)
+        binding = FragmentFavoriteBinding.inflate(inflater, container, false)
+
+
+        viewModel = ViewModelProvider(this).get(FavViewModel::class.java)
+        viewModel!!.dataset.observe(viewLifecycleOwner, favSongsObserver)
+
+        favSongsAdapter = context?.let {
+            FavAdapter(
+                it as Activity,
+                viewModel.getDataset()
+            )
+        }!!
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        binding.favRv.layoutManager = LinearLayoutManager(context)
+
+        viewModel.updateDataset()
+
+        val mHandler = Handler()
+        activity?.runOnUiThread(object : Runnable {
+            override fun run() {
+                viewModel?.updateDataset()
+                mHandler.postDelayed(this, 1000)
+            }
+        })
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        viewModel.updateDataset()
+
+    }
+
+    private val favSongsObserver = Observer<ArrayList<Any>> { dataset ->
+        favSongsAdapter?.dataset = dataset as ArrayList<SongModel>
+        binding.favRv.adapter = favSongsAdapter
     }
 }
