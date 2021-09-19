@@ -41,7 +41,7 @@ class CreatePlaylistDialog : DialogFragment() {
 
         btnPositive.setOnClickListener {
 
-            if(binding.textField.playlist_name.text.toString().isEmpty())
+            if(binding.textField.playlist_name.text.toString().trim().isEmpty())
             {
                 val shake: Animation = AnimationUtils.loadAnimation(this@CreatePlaylistDialog.context, R.anim.shake)
                 binding.addPlaylistLayout.startAnimation(shake)
