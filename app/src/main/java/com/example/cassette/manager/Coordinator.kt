@@ -8,7 +8,6 @@ import com.example.cassette.myInterface.CoordinatorInterface
 import com.example.cassette.player.Enums
 import com.example.cassette.player.MediaPlayerAgent
 import com.example.cassette.repositories.appdatabase.entities.SongModel
-import com.example.cassette.services.NotificationPlayerService
 import com.example.cassette.views.Fragments.LibraryFragment.Library.songsAdapter
 import com.example.cassette.views.MainActivity
 

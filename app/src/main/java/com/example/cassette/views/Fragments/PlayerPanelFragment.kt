@@ -3,7 +3,6 @@ package com.example.cassette.views.Fragments
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.provider.ContactsContract
 import android.support.v4.media.session.PlaybackStateCompat
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +17,6 @@ import com.example.cassette.player.Enums.PanelState
 import com.example.cassette.player.Enums.PanelState.COLLAPSED
 import com.example.cassette.player.Enums.PanelState.EXPANDED
 import com.example.cassette.repositories.appdatabase.roomdb.DatabaseRepository
-import com.example.cassette.repositories.appdatabase.roomdb.DatabaseRepository.cashedFavArray
 import com.example.cassette.repositories.appdatabase.roomdb.DatabaseRepository.songIsAlreadyLiked
 import com.example.cassette.utlis.ImageUtils
 import com.example.cassette.utlis.ScreenSizeUtils

@@ -1,9 +1,9 @@
 package com.example.cassette.myInterface
 
 import android.content.Context
-import com.example.cassette.repositories.appdatabase.entities.SongModel
 import com.example.cassette.player.Enums
 import com.example.cassette.player.MediaPlayerAgent
+import com.example.cassette.repositories.appdatabase.entities.SongModel
 
 interface CoordinatorInterface {
 

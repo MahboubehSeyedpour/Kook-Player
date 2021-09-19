@@ -5,8 +5,6 @@ import com.example.cassette.repositories.appdatabase.entities.SongModel
 import com.example.cassette.utlis.DatabaseConverterUtils
 import com.example.cassette.views.Fragments.LibraryFragment
 import com.example.cassette.views.Fragments.PlaylistFragment
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 class PlaylistPageRepository(private val playlistId: Long) : PlaylistPageRepositoryInterface {

@@ -1,10 +1,6 @@
 package com.example.cassette.utlis
 
-import com.example.cassette.R
-import com.example.cassette.manager.Coordinator
 import com.example.cassette.manager.StateMananger
-import com.example.cassette.views.MainActivity
-import com.example.cassette.views.MainActivity.Companion.activity
 
 object SharedPrefUtils {
 

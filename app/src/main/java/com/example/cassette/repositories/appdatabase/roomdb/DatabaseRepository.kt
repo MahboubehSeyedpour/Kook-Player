@@ -1,12 +1,11 @@
 package com.example.cassette.repositories.appdatabase.roomdb
 
+import SongUtils
 import androidx.lifecycle.lifecycleScope
-import com.example.cassette.manager.Coordinator
 import com.example.cassette.repositories.PlaylistRepository
 import com.example.cassette.repositories.appdatabase.entities.Favorites
 import com.example.cassette.repositories.appdatabase.entities.PlaylistModel
 import com.example.cassette.repositories.appdatabase.entities.SongModel
-import com.example.cassette.views.Fragments.FavoriteFragment
 import com.example.cassette.views.Fragments.LibraryFragment
 import com.example.cassette.views.MainActivity
 import kotlinx.android.synthetic.*

@@ -9,11 +9,9 @@ import android.widget.ImageView
 import android.widget.MediaController
 import android.widget.TextView
 import androidx.annotation.RequiresApi
-import com.example.cassette.manager.Coordinator
 import com.example.cassette.repositories.appdatabase.entities.SongModel
 import com.example.cassette.services.NotificationPlayerService
 import com.example.cassette.utlis.ImageUtils
-import com.example.cassette.views.Fragments.LibraryFragment
 import com.example.cassette.views.MainActivity
 
 class MediaPlayerAgent(context: Context) {

@@ -6,15 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.example.cassette.R
 import com.example.cassette.databinding.CreatePlaylistDialogBinding
 import com.example.cassette.myInterface.PassData
 import com.example.cassette.repositories.PlaylistRepository
-import com.example.cassette.views.Fragments.PlaylistFragment
-import com.example.cassette.views.Fragments.PlaylistPageFragment
-import com.example.cassette.views.MainActivity
 import kotlinx.android.synthetic.main.create_playlist_dialog.*
 import kotlinx.android.synthetic.main.create_playlist_dialog.view.*
 

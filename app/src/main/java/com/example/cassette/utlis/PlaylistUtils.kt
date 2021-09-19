@@ -8,7 +8,6 @@ import com.example.cassette.R
 import com.example.cassette.repositories.SongsRepository
 import com.example.cassette.repositories.appdatabase.entities.PlaylistModel
 import com.example.cassette.repositories.appdatabase.entities.SongModel
-import com.example.cassette.views.Fragments.PlaylistFragment
 
 
 object PlaylistUtils {

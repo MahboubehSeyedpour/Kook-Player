@@ -1,7 +1,6 @@
 package com.example.cassette.myInterface
 
 import com.example.cassette.repositories.appdatabase.entities.PlaylistModel
-import com.example.cassette.repositories.appdatabase.roomdb.MyDatabase
 
 interface PlaylistRepoInterface {
 

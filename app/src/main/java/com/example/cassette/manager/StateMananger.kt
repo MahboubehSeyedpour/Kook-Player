@@ -1,8 +1,6 @@
 package com.example.cassette.manager
 
 import com.example.cassette.repositories.appdatabase.entities.SongModel
-import com.example.cassette.utlis.SharedPrefUtils
-import com.example.cassette.views.Fragments.LibraryFragment
 
 object StateMananger {
 

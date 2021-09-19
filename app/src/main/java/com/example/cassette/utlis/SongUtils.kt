@@ -1,13 +1,10 @@
 //package com.example.cassette.utlis
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.net.Uri
 import android.os.Build
-import android.os.Environment
 import android.provider.MediaStore
-import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import com.example.cassette.BuildConfig
 import com.example.cassette.repositories.appdatabase.entities.SongModel
@@ -15,7 +12,6 @@ import com.example.cassette.utlis.FilePathUtlis
 import com.example.cassette.utlis.FileUtils
 import com.example.cassette.views.Fragments.LibraryFragment
 import com.example.cassette.views.MainActivity
-import java.io.File
 
 
 object SongUtils {

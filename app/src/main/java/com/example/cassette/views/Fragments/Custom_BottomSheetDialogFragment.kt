@@ -1,13 +1,6 @@
 package com.example.cassette.views.Fragments
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import com.example.cassette.R
-import com.example.cassette.utlis.SortUtils
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.android.synthetic.main.modal_bottom_sheet.*
 
 class Custom_BottomSheetDialogFragment : BottomSheetDialogFragment() {
 

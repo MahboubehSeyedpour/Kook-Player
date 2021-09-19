@@ -10,15 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.cassette.R
 import com.example.cassette.adapter.FavAdapter
-import com.example.cassette.adapter.PlaylistPageAdapater
 import com.example.cassette.databinding.FragmentFavoriteBinding
-import com.example.cassette.databinding.FragmentPlaylistPageBinding
 import com.example.cassette.repositories.appdatabase.entities.SongModel
-import com.example.cassette.repositories.appdatabase.roomdb.DatabaseRepository
 import com.example.cassette.viewModel.FavViewModel
-import com.example.cassette.viewModel.PlaylistPageViewModel
 
 class FavoriteFragment : Fragment() {
 

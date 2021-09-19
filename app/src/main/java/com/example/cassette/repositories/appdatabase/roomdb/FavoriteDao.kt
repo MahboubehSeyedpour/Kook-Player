@@ -2,7 +2,6 @@ package com.example.cassette.repositories.appdatabase.roomdb
 
 import androidx.room.*
 import com.example.cassette.repositories.appdatabase.entities.Favorites
-import com.example.cassette.repositories.appdatabase.entities.PlaylistModel
 
 @Dao
 interface FavoriteDao {

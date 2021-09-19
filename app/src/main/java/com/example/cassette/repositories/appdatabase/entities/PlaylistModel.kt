@@ -1,7 +1,8 @@
 package com.example.cassette.repositories.appdatabase.entities
 
-import androidx.room.*
-import com.example.cassette.repositories.appdatabase.roomdb.Converters
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 @Entity(tableName = "playlist_table")
 data class PlaylistModel(@ColumnInfo var name: String = "",

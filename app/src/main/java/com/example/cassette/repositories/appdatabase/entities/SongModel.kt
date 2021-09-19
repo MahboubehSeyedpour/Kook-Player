@@ -2,9 +2,6 @@ package com.example.cassette.repositories.appdatabase.entities
 
 import android.graphics.Bitmap
 import android.net.Uri
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 
 data class SongModel(
     val id : Long? = -1,
