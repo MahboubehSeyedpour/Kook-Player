@@ -31,6 +31,14 @@ object DatabaseRepository {
         }
     }
 
+    fun updateCashedPlaylistArray()
+    {
+        GlobalScope.launch {
+            cashedPlaylistArray = getPlaylistFromDatabase()
+        }
+
+    }
+
     fun addSongsToPlaylist(playlist_name: String, songsId: String): Boolean {
 
         val playlist = getPlaylistById(getIdByName(playlist_name))

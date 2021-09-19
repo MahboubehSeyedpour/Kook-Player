@@ -144,6 +144,8 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
 
     fun createDialogToSelectPlaylist() {
 
+        DatabaseRepository.updateCashedPlaylistArray()
+
         val addSongToPlaylistDialog = DatabaseRepository.cashedPlaylistArray?.let {
             AddSongToPlaylistDialog(
                 it
