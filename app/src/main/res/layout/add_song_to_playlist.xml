@@ -23,7 +23,8 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="right">
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -36,20 +37,24 @@
             tools:listitem="@layout/add_song_to_playlist_dialog_item" />
 
 
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/acceptSelectedPlaylist_btn"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
             android:gravity="center"
             android:text="Ok"
             android:layout_weight="3"
-            android:textColor="@color/confirm_btn_txt"
-            android:backgroundTint="@color/confirm_btn_bgColor"
+            android:shadowDy="20"
+            android:elevation="10dp"
+            android:shadowColor="@color/new_blue"
             android:textAllCaps="false"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="#3C3C3C"
+            android:textColor="@color/confirm_btn_txt" />
 
     </LinearLayout>
 
