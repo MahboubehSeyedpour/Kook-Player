@@ -24,12 +24,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:orientation="vertical"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/song_duration"
+        app:layout_constraintEnd_toStartOf="@+id/like_btn"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/music_iv"
+        app:layout_constraintStart_toEndOf="@+id/fav_music_iv"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView

@@ -95,12 +95,12 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
 
 
         binding.playerRemote.constraintLayout2.layoutParams.height =
-            (ScreenSizeUtils.getScreenHeight() * 0.4 / 10).toInt()
+            (ScreenSizeUtils.getScreenHeight() * 0.5 / 10).toInt()
         binding.header.requestLayout()
 
 
         binding.playerRemote.constraintLayout3.layoutParams.height =
-            (ScreenSizeUtils.getScreenHeight() * 2 / 10)
+            (ScreenSizeUtils.getScreenHeight() * 1.4 / 10).toInt()
         binding.header.requestLayout()
 
         binding.playerRemote.shuffleRepeatLayout.layoutParams.height =
@@ -108,13 +108,13 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
         binding.header.requestLayout()
 
         binding.header.onCollapse.song_image_on_header.layoutParams.height =
-            (ScreenSizeUtils.getScreenHeight() * 3 / 10).toInt()
+            ( (ScreenSizeUtils.getScreenHeight() * 1 / 10) * 8 / 10).toInt()
         binding.header.onCollapse.song_image_on_header.layoutParams.width =
-            (ScreenSizeUtils.getScreenWidth() * 1.1 / 10).toInt()
+            (ScreenSizeUtils.getScreenWidth() * 2 / 10).toInt()
         binding.header.onCollapse.song_image_on_header.requestLayout()
 
         binding.header.onCollapse.wheelprogress.layoutParams.height =
-            (ScreenSizeUtils.getScreenHeight() * 3 / 10).toInt()
+            ((ScreenSizeUtils.getScreenHeight() * 1 / 10) * 7 / 10).toInt()
         binding.header.onCollapse.wheelprogress.layoutParams.width =
             (ScreenSizeUtils.getScreenWidth() * 1.1 / 10).toInt()
         binding.header.onCollapse.wheelprogress.requestLayout()
@@ -125,9 +125,9 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
 //        binding.header.onExpand.back_btn.requestLayout()
 
         binding.onExpand.likeIv.layoutParams.height =
-            (ScreenSizeUtils.getScreenHeight() * 0.7 / 10).toInt()
+            (ScreenSizeUtils.getScreenHeight() * 0.6 / 10).toInt()
         binding.onExpand.likeIv.layoutParams.width =
-            (ScreenSizeUtils.getScreenWidth() * 0.7 / 10).toInt()
+            (ScreenSizeUtils.getScreenWidth() * 0.6 / 10).toInt()
         binding.onExpand.likeIv.requestLayout()
 
     }
@@ -238,7 +238,8 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
                     seekTo(mCurrentPosition)
                     setRemainingTime(mCurrentPosition)
 
-                    if (mCurrentPosition == duration?.toInt()?.minus(1) ?: 0) {
+
+                    if (mCurrentPosition == duration?.toInt()?.minus(3) ?: 0) {
                         Coordinator.playNextSong()
                     }
                 }

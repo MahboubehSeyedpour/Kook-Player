@@ -13,6 +13,8 @@ import com.example.cassette.databinding.AddSongToPlaylistBinding
 import com.example.cassette.myInterface.PassDataForSelectPlaylists
 import com.example.cassette.repositories.appdatabase.entities.PlaylistModel
 import com.example.cassette.repositories.appdatabase.entities.SongModel
+import com.example.cassette.utlis.ScreenSizeUtils
+import kotlinx.android.synthetic.main.add_song_to_playlist.view.*
 
 class AddSongToPlaylistDialog(val array: ArrayList<PlaylistModel>) : DialogFragment() {
 
@@ -47,13 +49,35 @@ class AddSongToPlaylistDialog(val array: ArrayList<PlaylistModel>) : DialogFragm
 
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        binding.addSongToPlaylistLayout.layoutParams.width =
+            ScreenSizeUtils.getScreenWidth() * 6 / 10
+        binding.addSongToPlaylistLayout.layoutParams.height =
+            ScreenSizeUtils.getScreenHeight() * 6 / 10
+        binding.addSongToPlaylistLayout.requestLayout()
+
+        binding.addSongToPlaylistLayout.playlists.layoutParams.width =
+            binding.addSongToPlaylistLayout.layoutParams.width * 10 / 10
+        binding.addSongToPlaylistLayout.playlists.layoutParams.height =
+            (binding.addSongToPlaylistLayout.layoutParams.height* 6.5 / 10).toInt()
+        binding.addSongToPlaylistLayout.playlists.requestLayout()
+
+        binding.addSongToPlaylistLayout.acceptSelectedPlaylist_btn.layoutParams.width =
+            binding.addSongToPlaylistLayout.layoutParams.width * 4 / 10
+        binding.addSongToPlaylistLayout.acceptSelectedPlaylist_btn.layoutParams.height =
+            (binding.addSongToPlaylistLayout.layoutParams.height* 1.2 / 10).toInt()
+        binding.addSongToPlaylistLayout.acceptSelectedPlaylist_btn.requestLayout()
+
+    }
+
     override fun onResume() {
         super.onResume()
 
         binding.acceptSelectedPlaylistBtn.setOnClickListener {
 
             val targetFragment = targetFragment
-            val passData : PassDataForSelectPlaylists = targetFragment as PassDataForSelectPlaylists
+            val passData: PassDataForSelectPlaylists = targetFragment as PassDataForSelectPlaylists
             passData.passDataToInvokingFragment(AddSongToPlaylistAdapter.choices)
 
             this.dismiss()

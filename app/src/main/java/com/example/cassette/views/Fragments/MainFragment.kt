@@ -30,6 +30,9 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initTabs(view)
+
+//        binding.toolbar.appName.layoutParams.height = (ScreenSizeUtils.getScreenHeight()*0.5/10).toInt()
+//        binding.toolbar.appName.requestLayout()
     }
 
     private fun initTabs(fragment: View) {

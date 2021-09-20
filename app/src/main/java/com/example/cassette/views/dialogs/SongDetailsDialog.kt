@@ -8,6 +8,7 @@ import androidx.fragment.app.DialogFragment
 import com.example.cassette.R
 import com.example.cassette.databinding.SongDetailsDialogBinding
 import com.example.cassette.repositories.appdatabase.entities.SongModel
+import com.example.cassette.utlis.ScreenSizeUtils
 import com.example.cassette.utlis.TimeUtils
 
 class SongDetailsDialog(val song: SongModel) : DialogFragment() {
@@ -40,6 +41,13 @@ class SongDetailsDialog(val song: SongModel) : DialogFragment() {
 
 
         return view
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        binding.songDetails.layoutParams.width = (ScreenSizeUtils.getScreenWidth()*8.5/10).toInt()
+        binding.songDetails.requestLayout()
 
     }
 

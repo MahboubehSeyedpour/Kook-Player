@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/songDetails"
-    android:layout_width="400dp"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:padding="16dp">
 
@@ -99,7 +99,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/details_file_name_title"
-            tools:text="aroosi" />
+            tools:text="harchi" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -154,7 +154,7 @@
             android:layout_height="wrap_content"
             app:fontFamily="sans-serif"
             android:layout_marginStart="16dp"
-            android:text="06:22"
+            tools:text="06:22"
             android:textColor="@color/grey"
             android:textSize="@dimen/article_size"
             app:layout_constraintBottom_toBottomOf="parent"
