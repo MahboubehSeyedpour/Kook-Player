@@ -127,6 +127,8 @@ class SongsAdapter(
                         MyDatabaseUtils.removeSongFromPlaylist(playlistId, songid.toString())
                     }
 
+                    MyDatabaseUtils.deleteSongFromFav(dataset[position])
+
                     getSongUri(position)?.let { SongUtils.deletMusic(LibraryFragment.mactivity, it) }
 
                 }
