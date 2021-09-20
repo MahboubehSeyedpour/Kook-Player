@@ -18,10 +18,9 @@ import com.example.cassette.R
 import com.example.cassette.adapter.SongsAdapter
 import com.example.cassette.manager.Coordinator
 import com.example.cassette.myInterface.PassDataForSelectPlaylists
-import com.example.cassette.repositories.PlaylistRepository
 import com.example.cassette.repositories.appdatabase.entities.PlaylistModel
 import com.example.cassette.repositories.appdatabase.entities.SongModel
-import com.example.cassette.repositories.appdatabase.roomdb.DatabaseRepository
+import com.example.cassette.repositories.appdatabase.roomdb.MyDatabaseUtils
 import com.example.cassette.viewModel.SongsViewModel
 import com.example.cassette.views.dialogs.AddSongToPlaylistDialog
 import kotlinx.android.synthetic.main.fragment_library.*
@@ -107,11 +106,11 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
 
                     selectedSong = songModel
 
-                    if (DatabaseRepository.cashedPlaylistArray != null) {
-                        if (DatabaseRepository.cashedPlaylistArray.size!! > 0) {
+                    if (MyDatabaseUtils.cashedPlaylistArray != null) {
+                        if (MyDatabaseUtils.cashedPlaylistArray.size!! > 0) {
                             createDialogToSelectPlaylist()
                         } else {
-                            val i = PlaylistRepository.cashedPlaylistArray
+                            val i = MyDatabaseUtils.cashedPlaylistArray
                             Toast.makeText(
                                 requireActivity().baseContext,
                                 "Please create a playlist first!",
@@ -131,7 +130,7 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
 
         notifyDataSetChanges()
 
-        DatabaseRepository.convertFavSongsToRealSongs()
+        MyDatabaseUtils.convertFavSongsToRealSongs()
 
         return view
     }
@@ -144,9 +143,9 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
 
     fun createDialogToSelectPlaylist() {
 
-        DatabaseRepository.updateCashedPlaylistArray()
+        MyDatabaseUtils.updateCashedPlaylistArray()
 
-        val addSongToPlaylistDialog = DatabaseRepository.cashedPlaylistArray?.let {
+        val addSongToPlaylistDialog = MyDatabaseUtils.cashedPlaylistArray?.let {
             AddSongToPlaylistDialog(
                 it
             )
@@ -178,7 +177,7 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
     fun addSongToPlaylist(playlist: PlaylistModel) {
         GlobalScope.launch {
 
-            DatabaseRepository.addSongsToPlaylist(
+            MyDatabaseUtils.addSongsToPlaylist(
                 playlist.name,
                 selectedSong.id.toString()
             )

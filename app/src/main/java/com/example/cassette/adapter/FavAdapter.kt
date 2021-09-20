@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.cassette.R
 import com.example.cassette.manager.Coordinator
 import com.example.cassette.repositories.appdatabase.entities.SongModel
-import com.example.cassette.repositories.appdatabase.roomdb.DatabaseRepository
+import com.example.cassette.repositories.appdatabase.roomdb.MyDatabaseUtils
 import com.example.cassette.utlis.ImageUtils
 import com.example.cassette.views.MainActivity
 import kotlinx.android.synthetic.main.fav_rv_item.view.*
@@ -69,7 +69,7 @@ class FavAdapter(
 
         viewHolder.likeButton.setOnClickListener { it ->
             viewHolder.likeButton.setImageResource(R.drawable.ic_heart)
-            DatabaseRepository.deleteSongFromFav(dataset[position])
+            MyDatabaseUtils.deleteSongFromFav(dataset[position])
         }
     }
 

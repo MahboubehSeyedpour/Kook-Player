@@ -10,7 +10,7 @@ import androidx.fragment.app.DialogFragment
 import com.example.cassette.R
 import com.example.cassette.databinding.CreatePlaylistDialogBinding
 import com.example.cassette.myInterface.PassData
-import com.example.cassette.repositories.PlaylistRepository
+import com.example.cassette.repositories.appdatabase.roomdb.MyDatabaseUtils
 import kotlinx.android.synthetic.main.create_playlist_dialog.*
 import kotlinx.android.synthetic.main.create_playlist_dialog.view.*
 
@@ -66,7 +66,7 @@ class CreatePlaylistDialog : DialogFragment() {
 
     private fun isUnique(name: String): Boolean
     {
-        for (playlist in PlaylistRepository.cashedPlaylistArray!!)
+        for (playlist in MyDatabaseUtils.cashedPlaylistArray!!)
         {
             if(playlist.name == name)
                 return true

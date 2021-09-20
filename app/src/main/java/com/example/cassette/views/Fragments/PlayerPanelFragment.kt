@@ -16,8 +16,8 @@ import com.example.cassette.myInterface.PlayerPanelInterface
 import com.example.cassette.player.Enums.PanelState
 import com.example.cassette.player.Enums.PanelState.COLLAPSED
 import com.example.cassette.player.Enums.PanelState.EXPANDED
-import com.example.cassette.repositories.appdatabase.roomdb.DatabaseRepository
-import com.example.cassette.repositories.appdatabase.roomdb.DatabaseRepository.songIsAlreadyLiked
+import com.example.cassette.repositories.appdatabase.roomdb.MyDatabaseUtils
+import com.example.cassette.repositories.appdatabase.roomdb.MyDatabaseUtils.songIsAlreadyLiked
 import com.example.cassette.utlis.ImageUtils
 import com.example.cassette.utlis.ScreenSizeUtils
 import com.example.cassette.utlis.TimeUtils
@@ -281,13 +281,13 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
                 if (songIsAlreadyLiked(Coordinator.currentPlayingSong!!)) {
 
                     binding.onExpand.likeIv.setImageResource(R.drawable.ic_heart)
-                    DatabaseRepository.deleteSongFromFav(Coordinator.currentPlayingSong!!)
+                    MyDatabaseUtils.deleteSongFromFav(Coordinator.currentPlayingSong!!)
 
 
                 } else {
                     binding.onExpand.likeIv.setImageResource(R.drawable.ic_filled_heart)
 
-                    DatabaseRepository.addSongAsFav(Coordinator.currentPlayingSong!!.id ?: -1)
+                    MyDatabaseUtils.addSongAsFav(Coordinator.currentPlayingSong!!.id ?: -1)
 
                 }
             }

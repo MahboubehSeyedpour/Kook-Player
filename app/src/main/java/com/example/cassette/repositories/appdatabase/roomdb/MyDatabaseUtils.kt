@@ -2,22 +2,25 @@ package com.example.cassette.repositories.appdatabase.roomdb
 
 import SongUtils
 import androidx.lifecycle.lifecycleScope
-import com.example.cassette.repositories.PlaylistRepository
 import com.example.cassette.repositories.appdatabase.entities.Favorites
 import com.example.cassette.repositories.appdatabase.entities.PlaylistModel
 import com.example.cassette.repositories.appdatabase.entities.SongModel
+import com.example.cassette.utlis.DatabaseConverterUtils
 import com.example.cassette.views.Fragments.LibraryFragment
 import com.example.cassette.views.MainActivity
 import kotlinx.android.synthetic.*
 import kotlinx.coroutines.*
 
-object DatabaseRepository {
+object MyDatabaseUtils {
 
     private val applicationScope = CoroutineScope(SupervisorJob())
     lateinit var localDatabase: MyDatabase
     var cashedPlaylistArray = ArrayList<PlaylistModel>()
-     var cashedFavArray_Favorites = ArrayList<Favorites>()
+    private var cashedFavArray_Favorites = ArrayList<Favorites>()
     var cashedFavArray = ArrayList<SongModel>()
+
+
+    //    ----------------------------------------------- Database ----------------------------------------------------
 
     fun createDatabse() {
         localDatabase = MyDatabase.getDatabase(
@@ -30,13 +33,89 @@ object DatabaseRepository {
         }
     }
 
+
+    //    ----------------------------------------------- Playlist ----------------------------------------------------
+
     fun updateCashedPlaylistArray()
     {
         GlobalScope.launch {
             cashedPlaylistArray = getPlaylistFromDatabase()
         }
-
     }
+
+    fun removeSongFromPlaylist(playlistId: Long, songsId: String) {
+
+        val playlist = getPlaylistById(playlistId)
+
+
+        if (playlist != null) {
+
+            val position = findPlaylistPositionInCachedArray(playlist)
+
+            if (position >= 0) {
+                //remove song from playlist object
+                removeSongFromPlaylistObject(cashedPlaylistArray[position], songsId)
+
+                //decrease count of song in playlist object
+                cashedPlaylistArray[position].countOfSongs--
+
+            }
+
+            GlobalScope.launch {
+                //update songs in database
+                localDatabase.playlistDao().updateSongs(playlistId, playlist.songs)
+
+                //update count of songs in database
+                decreaseCountInDatabase(playlistId, playlist.countOfSongs)
+            }
+
+        }
+    }
+
+    fun listOfPlaylistsContainSpecificSong(songId: Long): ArrayList<Long>
+    {
+        var pls = arrayListOf<Long>()
+
+        for(playlist in cashedPlaylistArray)
+        {
+            val ids = DatabaseConverterUtils.stringToArraylist(playlist.songs)
+            for(id in ids)
+            {
+                if (id.toLong() == songId)
+                {
+                    pls.add(playlist.id)
+                }
+            }
+        }
+
+        return pls
+    }
+
+    fun removeSongFromPlaylistObject(playlist: PlaylistModel, songsId: String) {
+        val songsInAray = DatabaseConverterUtils.stringToArraylist(playlist.songs)
+        songsInAray.remove(songsId)
+        val songsInString = DatabaseConverterUtils.arraylistToString(songsInAray)
+        playlist.songs = songsInString
+    }
+
+    fun decreaseCountInDatabase(playlistId: Long, countOfSongs: Int) {
+
+        GlobalScope.launch {
+            localDatabase.playlistDao()
+                .setCountOfSongs(playlistId, countOfSongs)
+
+        }
+    }
+
+
+    fun createPlaylist(playlist: PlaylistModel)
+    {
+        applicationScope.launch {
+            localDatabase.playlistDao().addPlaylist(playlist)
+        }
+        cashedPlaylistArray.add(playlist)
+    }
+
 
     fun addSongsToPlaylist(playlist_name: String, songsId: String): Boolean {
 
@@ -49,7 +128,7 @@ object DatabaseRepository {
 
             if (position >= 0) {
                 addSongsToPlaylistInObject(
-                    PlaylistRepository.cashedPlaylistArray[position],
+                    cashedPlaylistArray[position],
                     songsId
                 )
             }
@@ -61,21 +140,17 @@ object DatabaseRepository {
         return true
     }
 
-    fun addSongsToPlaylistInObject(playlist: PlaylistModel, songsId: String) {
+    private fun addSongsToPlaylistInObject(playlist: PlaylistModel, songsId: String) {
 
         val position = findPlaylistPositionInCachedArray(playlist)
 
-        PlaylistRepository.cashedPlaylistArray[position].songs =
-            PlaylistRepository.cashedPlaylistArray[position].songs + songsId + ","
+        cashedPlaylistArray[position].songs =
+            cashedPlaylistArray[position].songs + songsId + ","
 
-        addCountInPlaylistObject(PlaylistRepository.cashedPlaylistArray[position])
+        IncreaseCountInPlaylistObject(cashedPlaylistArray[position])
     }
 
-    fun addCountInPlaylistObject(playlist: PlaylistModel) {
-        playlist.countOfSongs = playlist.countOfSongs + 1
-    }
-
-    fun addSongsToPlaylistInDatabse(playlist: PlaylistModel, songsId: String) {
+    private fun addSongsToPlaylistInDatabse(playlist: PlaylistModel, songsId: String) {
 
         runBlocking {
 
@@ -86,32 +161,36 @@ object DatabaseRepository {
                         playlist.songs
                     )
                 }
-                addCountInDatabase(playlist)
+                IncreaseCountInDatabase(playlist)
             }
 //            TODO(Toast : operation failed! please try later)
         }
     }
 
-    fun addCountInDatabase(playlist: PlaylistModel) {
+    private fun IncreaseCountInPlaylistObject(playlist: PlaylistModel) {
+        playlist.countOfSongs = playlist.countOfSongs + 1
+    }
+
+    private fun IncreaseCountInDatabase(playlist: PlaylistModel) {
         GlobalScope.launch {
             localDatabase.playlistDao()
                 .setCountOfSongs(playlist.id, playlist.countOfSongs)
         }
     }
 
-    fun findPlaylistPositionInCachedArray(playlist: PlaylistModel): Int {
+    private fun findPlaylistPositionInCachedArray(playlist: PlaylistModel): Int {
         var position: Int = -1
-        while (++position < PlaylistRepository.cashedPlaylistArray.size) {
-            if (PlaylistRepository.cashedPlaylistArray[position].id == playlist.id) {
+        while (++position < cashedPlaylistArray.size) {
+            if (cashedPlaylistArray[position].id == playlist.id) {
                 return position
             }
         }
         return position
     }
 
-    fun getIdByName(name: String): Long {
+    private fun getIdByName(name: String): Long {
 
-        for (playlist in PlaylistRepository.cashedPlaylistArray) {
+        for (playlist in cashedPlaylistArray) {
             if (playlist.name == name) {
                 return playlist.id
             }
@@ -119,8 +198,8 @@ object DatabaseRepository {
         return -1L
     }
 
-    fun getPlaylistById(id: Long): PlaylistModel? {
-        for (playlist in PlaylistRepository.cashedPlaylistArray) {
+    private fun getPlaylistById(id: Long): PlaylistModel? {
+        for (playlist in cashedPlaylistArray) {
             if (playlist.id == id) {
                 return playlist
             }
@@ -128,7 +207,7 @@ object DatabaseRepository {
         return null
     }
 
-    fun getPlaylistFromDatabase(): ArrayList<PlaylistModel> =
+    private fun getPlaylistFromDatabase(): ArrayList<PlaylistModel> =
         runBlocking {
             val playlistsList = localDatabase.playlistDao().getPlaylists()
             val arrayList = arrayListOf<PlaylistModel>()
@@ -137,6 +216,22 @@ object DatabaseRepository {
             }
             return@runBlocking arrayList
         }
+
+
+    fun removePlaylist(id: Long): Boolean
+    {
+        applicationScope.launch {
+            localDatabase.playlistDao().deletePlaylist(id)
+
+            cashedPlaylistArray =
+                localDatabase.playlistDao().getPlaylists() as ArrayList<PlaylistModel>
+        }
+
+        return true
+    }
+
+
+    //    ----------------------------------------------- Favorites ----------------------------------------------------
 
     fun addSongAsFav(songsId: Long) {
         val fav = Favorites(songsId)

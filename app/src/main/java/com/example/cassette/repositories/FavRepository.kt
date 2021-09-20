@@ -2,7 +2,7 @@ package com.example.cassette.repositories
 
 import com.example.cassette.repositories.appdatabase.entities.Favorites
 import com.example.cassette.repositories.appdatabase.entities.SongModel
-import com.example.cassette.repositories.appdatabase.roomdb.DatabaseRepository
+import com.example.cassette.repositories.appdatabase.roomdb.MyDatabaseUtils
 import com.example.cassette.views.Fragments.LibraryFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
@@ -13,13 +13,13 @@ class FavRepository {
     val applicationScope = CoroutineScope(SupervisorJob())
 
     companion object {
-        var cashedFavArray = DatabaseRepository.cashedFavArray
+        var cashedFavArray = MyDatabaseUtils.cashedFavArray
     }
 
     init {
         applicationScope.launch {
             cashedFavArray =
-                DatabaseRepository.cashedFavArray
+                MyDatabaseUtils.cashedFavArray
         }
     }
 
@@ -35,7 +35,7 @@ class FavRepository {
 
     fun getFavSongs(): ArrayList<SongModel> {
 
-        return DatabaseRepository.cashedFavArray
+        return MyDatabaseUtils.cashedFavArray
 
     }
 

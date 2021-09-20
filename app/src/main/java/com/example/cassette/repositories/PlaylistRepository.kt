@@ -5,9 +5,9 @@ import android.content.Context
 import android.provider.MediaStore
 import com.example.cassette.myInterface.PlaylistRepoInterface
 import com.example.cassette.repositories.appdatabase.entities.PlaylistModel
-import com.example.cassette.repositories.appdatabase.roomdb.DatabaseRepository
-import com.example.cassette.repositories.appdatabase.roomdb.DatabaseRepository.localDatabase
-import com.example.cassette.repositories.appdatabase.roomdb.MyDatabase
+import com.example.cassette.repositories.appdatabase.roomdb.MyDatabaseUtils
+import com.example.cassette.repositories.appdatabase.roomdb.MyDatabaseUtils.cashedPlaylistArray
+import com.example.cassette.repositories.appdatabase.roomdb.MyDatabaseUtils.localDatabase
 import com.example.cassette.utlis.DatabaseConverterUtils
 import com.example.cassette.utlis.FilePathUtlis
 import kotlinx.coroutines.*
@@ -20,32 +20,21 @@ class PlaylistRepository(val context: Context?) :
 //    val localDatabase = MyDatabase.getDatabase(context!!, applicationScope)
 
     companion object {
-        lateinit var db: MyDatabase
-        var cashedPlaylistArray = DatabaseRepository.cashedPlaylistArray
+//        var cashedPlaylistArray = MyDatabaseUtils.cashedPlaylistArray
     }
 
     init {
-        applicationScope.launch {
-            cashedPlaylistArray =
-                localDatabase.playlistDao().getPlaylists() as ArrayList<PlaylistModel>
-            db = localDatabase
-        }
+//        applicationScope.launch {
+//            cashedPlaylistArray =
+//                MyDatabaseUtils.cashedPlaylistArray
+//        }
     }
 
     //    ----------------------------------------------- Create Playlist ----------------------------------------------------
     override fun createPlaylist(name: String) {
         val playlist = PlaylistModel(name, 0, "")
-        createPlaylistInDatabase(playlist)
+        MyDatabaseUtils.createPlaylist(playlist)
 //       TODO( createPlaylistInStorage())
-    }
-
-    private fun createPlaylistInDatabase(playlist: PlaylistModel) {
-        applicationScope.launch {
-            localDatabase.playlistDao().addPlaylist(playlist)
-
-            cashedPlaylistArray =
-                localDatabase.playlistDao().getPlaylists() as ArrayList<PlaylistModel>
-        }
     }
 
     private fun createPlaylistInStorage(name: String): PlaylistModel {
@@ -68,8 +57,10 @@ class PlaylistRepository(val context: Context?) :
 
     //    ----------------------------------------------- Remove Playlist ----------------------------------------------------
     override fun removePlaylist(id: Long): Boolean {
-        removePlaylistFromDatabase(id)
+//        removePlaylistFromDatabase(id)
 //        removePlaylistFromStorage(id)
+
+        MyDatabaseUtils.removePlaylist(id)
 
         return true
     }
@@ -89,14 +80,14 @@ class PlaylistRepository(val context: Context?) :
         }
     }
 
-    private fun removePlaylistFromDatabase(playlist_Id: Long) {
-        applicationScope.launch {
-            localDatabase.playlistDao().deletePlaylist(playlist_Id)
-
-            cashedPlaylistArray =
-                localDatabase.playlistDao().getPlaylists() as ArrayList<PlaylistModel>
-        }
-    }
+//    private fun removePlaylistFromDatabase(playlist_Id: Long) {
+//        applicationScope.launch {
+//            localDatabase.playlistDao().deletePlaylist(playlist_Id)
+//
+//            cashedPlaylistArray =
+//                localDatabase.playlistDao().getPlaylists() as ArrayList<PlaylistModel>
+//        }
+//    }
 
 
     //    ----------------------------------------------- Add song To Playlist ----------------------------------------------------
@@ -170,31 +161,33 @@ class PlaylistRepository(val context: Context?) :
 
     fun removeSongFromPlaylist(playlistId: Long, songsId: String) {
 
-        val playlist = getPlaylistById(playlistId)
+//        val playlist = getPlaylistById(playlistId)
+//
+//
+//        if (playlist != null) {
+//
+//            val position = findPlaylistPositionInCachedArray(playlist)
+//
+//            if (position >= 0) {
+//                //remove song from playlist object
+//                removeSongFromPlaylistObject(cashedPlaylistArray[position], songsId)
+//
+//                //decrease count of song in playlist object
+//                cashedPlaylistArray[position].countOfSongs--
+//
+//            }
+//
+//            GlobalScope.launch {
+//                //update songs in database
+//                localDatabase.playlistDao().updateSongs(playlistId, playlist.songs)
+//
+//                //update count of songs in database
+//                decreaseCountInDatabase(playlistId, playlist.countOfSongs)
+//            }
+//
+//        }
 
-
-        if (playlist != null) {
-
-            val position = findPlaylistPositionInCachedArray(playlist)
-
-            if (position >= 0) {
-                //remove song from playlist object
-                removeSongFromPlaylistObject(cashedPlaylistArray[position], songsId)
-
-                //decrease count of song in playlist object
-                cashedPlaylistArray[position].countOfSongs--
-
-            }
-
-            GlobalScope.launch {
-                //update songs in database
-                localDatabase.playlistDao().updateSongs(playlistId, playlist.songs)
-
-                //update count of songs in database
-                decreaseCountInDatabase(playlistId, playlist.countOfSongs)
-            }
-
-        }
+        MyDatabaseUtils.removeSongFromPlaylist(playlistId, songsId)
     }
 
     fun removeSongFromPlaylistObject(playlist: PlaylistModel, songsId: String) {
@@ -213,6 +206,10 @@ class PlaylistRepository(val context: Context?) :
         }
     }
 
+
+    fun updateLocalChashe() {
+        cashedPlaylistArray = MyDatabaseUtils.cashedPlaylistArray
+    }
 
     //    ----------------------------------------------- Synchronize Database and Storage ----------------------------------------------------
 //    override fun updateDatabase(): Boolean {
@@ -270,7 +267,7 @@ class PlaylistRepository(val context: Context?) :
 
     //    ----------------------------------------------- Utils ----------------------------------------------------
     override fun getPlaylists(): ArrayList<PlaylistModel> {
-        return cashedPlaylistArray
+        return MyDatabaseUtils.cashedPlaylistArray
     }
 
 //    override fun getPlaylistFromDatabase(): ArrayList<PlaylistModel> =
@@ -298,7 +295,7 @@ class PlaylistRepository(val context: Context?) :
 
     override fun getIdByName(name: String): Long {
 
-        for (playlist in cashedPlaylistArray) {
+        for (playlist in MyDatabaseUtils.cashedPlaylistArray) {
             if (playlist.name == name) {
                 return playlist.id
             }
@@ -308,7 +305,7 @@ class PlaylistRepository(val context: Context?) :
 
 
     override fun getPlaylistById(id: Long): PlaylistModel? {
-        for (playlist in cashedPlaylistArray) {
+        for (playlist in MyDatabaseUtils.cashedPlaylistArray) {
             if (playlist.id == id) {
                 return playlist
             }

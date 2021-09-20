@@ -2,6 +2,7 @@ package com.example.cassette.repositories
 
 import com.example.cassette.myInterface.PlaylistPageRepositoryInterface
 import com.example.cassette.repositories.appdatabase.entities.SongModel
+import com.example.cassette.repositories.appdatabase.roomdb.MyDatabaseUtils
 import com.example.cassette.utlis.DatabaseConverterUtils
 import com.example.cassette.views.Fragments.LibraryFragment
 import com.example.cassette.views.Fragments.PlaylistFragment
@@ -12,7 +13,7 @@ class PlaylistPageRepository(private val playlistId: Long) : PlaylistPageReposit
     override fun getSongsIdFromDatabase(): String {
         var songsOfPlaylist: String = ""
         runBlocking {
-            songsOfPlaylist = PlaylistRepository.db.playlistDao().getSongsOfPlaylist(playlistId)
+            songsOfPlaylist = MyDatabaseUtils.localDatabase.playlistDao().getSongsOfPlaylist(playlistId)
         }
         return songsOfPlaylist
     }

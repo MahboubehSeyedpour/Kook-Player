@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.cassette.R
 import com.example.cassette.manager.Coordinator
 import com.example.cassette.repositories.appdatabase.entities.SongModel
+import com.example.cassette.repositories.appdatabase.roomdb.MyDatabaseUtils
 import com.example.cassette.utlis.ImageUtils
 import com.example.cassette.utlis.TimeUtils
 import com.example.cassette.views.Fragments.LibraryFragment
@@ -115,7 +116,19 @@ class SongsAdapter(
 
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R)
                 {
+                    val songid = dataset[position].id
+
+                    for (playlistId in songid?.let {
+                        MyDatabaseUtils.listOfPlaylistsContainSpecificSong(
+                            it
+                        )
+                    }!!)
+                    {
+                        MyDatabaseUtils.removeSongFromPlaylist(playlistId, songid.toString())
+                    }
+
                     getSongUri(position)?.let { SongUtils.deletMusic(LibraryFragment.mactivity, it) }
+
                 }
                 else{
 //                    val urisToModify = getSongUri(position)?.let {

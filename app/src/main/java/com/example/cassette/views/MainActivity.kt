@@ -14,7 +14,7 @@ import com.example.cassette.databinding.ActivityMainBinding
 import com.example.cassette.manager.Coordinator
 import com.example.cassette.player.Enums
 import com.example.cassette.providers.PermissionProvider
-import com.example.cassette.repositories.appdatabase.roomdb.DatabaseRepository
+import com.example.cassette.repositories.appdatabase.roomdb.MyDatabaseUtils
 import com.example.cassette.services.NotificationPlayerService
 import com.example.cassette.utlis.ScreenSizeUtils.getScreenHeight
 import com.example.cassette.views.Fragments.MainFragment
@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
         activity = this
 
-        DatabaseRepository.createDatabse()
+        MyDatabaseUtils.createDatabse()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
