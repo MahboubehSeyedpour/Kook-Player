@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.cassette">
+    package="com.example.kookplayer"
+    >
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission
@@ -31,7 +32,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.example.musicplayer.FileProvider"
+            android:authorities="com.example.kookplayer.FileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -40,7 +41,7 @@
         </provider>
 
         <activity
-            android:name=".views.SplashScreen"
+            android:name="com.example.kookplayer.views.SplashScreen"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.noActionBar">
             <intent-filter>
@@ -50,13 +51,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".views.MainActivity"
+            android:name="com.example.kookplayer.views.MainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.MusicPlayer" />
 
-        <service android:name=".services.NotificationPlayerService" />
-        <receiver android:name=".services.NotificationBroadcastReceiver" />
+        <service android:name="com.example.kookplayer.services.NotificationPlayerService" />
+        <receiver android:name="com.example.kookplayer.services.NotificationBroadcastReceiver" />
 
     </application>
 

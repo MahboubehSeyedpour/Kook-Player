@@ -1,0 +1,54 @@
+package com.example.kookplayer.player
+
+import com.example.kookplayer.repositories.appdatabase.entities.SongModel
+import com.example.kookplayer.views.Fragments.LibraryFragment
+
+object PlayerStateRepository
+{
+    var currentPlayerMode: PlayerModes = PlayerModes.REPEAT_ALL
+    lateinit var playingQueue : ArrayList<SongModel>
+    var mediaPlayerState : Boolean = false
+    var currentMusicPosition : Int = -1
+
+    enum class PlayerModes(mode: String) {
+        SHUFFLE("shuffle"),
+        REPEAT_ONE("repeat_one"),
+        REPEAT_ALL("repeat_all")
+    }
+
+    fun updatePlayingQueue()
+    {
+        when(currentPlayerMode)
+        {
+            PlayerModes.REPEAT_ALL -> playingQueue = LibraryFragment.songsAdapter?.dataset!!
+            PlayerModes.REPEAT_ONE -> playingQueue = arrayListOf(LibraryFragment.songsAdapter?.dataset!![currentMusicPosition])
+            PlayerModes.SHUFFLE ->
+            {
+                val vv = LibraryFragment.songsAdapter?.dataset!!.toList().shuffled()
+                playingQueue = vv.toCollection(playingQueue)
+
+            }
+
+        }
+    }
+
+
+    fun getNextMusic() : SongModel
+    {
+        return when(currentPlayerMode)
+        {
+            PlayerModes.REPEAT_ONE -> playingQueue[currentMusicPosition]
+            else -> playingQueue[++currentMusicPosition]
+        }
+    }
+
+    fun getPrevMusic() : SongModel
+    {
+        return when(currentPlayerMode)
+        {
+            PlayerModes.REPEAT_ONE -> playingQueue[currentMusicPosition]
+            else -> playingQueue[--currentMusicPosition]
+        }
+    }
+
+}
