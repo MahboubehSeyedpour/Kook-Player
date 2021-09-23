@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
 
-//supert type for recyclerviews
+//super type for recyclerviews
 
 abstract class RVBaseAdapter() :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {

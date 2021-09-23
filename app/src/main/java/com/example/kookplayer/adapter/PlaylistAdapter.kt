@@ -45,21 +45,20 @@ class PlaylistAdapter(
         val playlistId = playlistRepository.getIdByName(playlist.name)
 
         viewHolder.countOfSongs.text = playlist.countOfSongs.toString()
-//            PlaylistUtils.getMusicsRelatedToSpecificPlaylist(context, playlistId.toLong()).size.toString()
+
         viewHolder.playlistItem.setOnClickListener {
 
-//            open playlist
             dataSend.openPlaylist(playlist.id)
 
         }
 
-        viewHolder.menueBtn.setOnClickListener {
+        viewHolder.menueBtn.setOnClickListener { it ->
             val popUpMenu = PopupMenu(context, it)
             popUpMenu.inflate(R.menu.playlists_popup_menu)
 
             popUpMenu.setOnMenuItemClickListener {
                 val id = playlistRepository.getPlaylists()[position].id
-//                updatePosition(viewHolder.adapterPosition)
+
                 return@setOnMenuItemClickListener handleMenuButtonClickListener(
                     it.itemId,
                     id

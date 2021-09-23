@@ -1,7 +1,6 @@
 package com.example.kookplayer.adapter
 
 import android.app.Activity
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -91,18 +90,6 @@ class PlaylistPageAdapater(var dataset: ArrayList<SongModel>,val context: Activi
 
     override fun getCurrentPosition(): Int {
         return position
-    }
-
-    fun getSongUri(position: Int): Uri? {
-        return dataset[position].uri
-    }
-
-    fun getSong(position: Int): SongModel {
-        if (position < 0) {
-            return SongModel()
-        } else {
-            return dataset[position]
-        }
     }
 
     override fun getItemCount(): Int {

@@ -80,7 +80,6 @@ class SongsAdapter(
             popUpMenu.inflate(R.menu.songs_popup_menu)
 
             popUpMenu.setOnMenuItemClickListener {
-//                updatePosition(position)
 
                 return@setOnMenuItemClickListener handleMenuButtonClickListener(
                     it.itemId,
@@ -133,12 +132,6 @@ class SongsAdapter(
 
                 }
                 else{
-//                    val urisToModify = getSongUri(position)?.let {
-//                        MediaStore.getDocumentUri(context,
-//                            it
-//                        )
-//                    }
-//                    urisToModify?.let { SongUtils.deletMusic(LibraryFragment.mactivity, it) }
                     getSongUri(position)?.let { SongUtils.del(getSong(position).id.toString(), it) }
                 }
 
