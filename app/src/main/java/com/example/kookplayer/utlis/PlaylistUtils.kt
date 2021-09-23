@@ -13,11 +13,11 @@ import com.example.kookplayer.repositories.appdatabase.entities.SongModel
 object PlaylistUtils {
 
     var playlists = ArrayList<PlaylistModel>()
-    lateinit var context: Context
+//    lateinit var context: Context
 
     fun createPlaylist(context: Context, name: String): PlaylistModel {
 
-        this.context = context
+//        this.context = context
 
         val resolver = context?.contentResolver
         val values = ContentValues()

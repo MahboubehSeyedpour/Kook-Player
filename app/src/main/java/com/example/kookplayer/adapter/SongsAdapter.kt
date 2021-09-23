@@ -110,7 +110,7 @@ class SongsAdapter(
 
             }
             R.id.deleteFromDevice_menu_item -> {
-                SongUtils.context = LibraryFragment.mactivity.baseContext
+//                SongUtils.context = LibraryFragment.mactivity.baseContext
 
 
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R)
@@ -128,7 +128,7 @@ class SongsAdapter(
 
                     MyDatabaseUtils.deleteSongFromFav(dataset[position])
 
-                    getSongUri(position)?.let { SongUtils.deletMusic(LibraryFragment.mactivity, it) }
+                    getSongUri(position)?.let { SongUtils.deleteMusic(LibraryFragment.mactivity.baseContext, LibraryFragment.mactivity, it) }
 
                 }
                 else{

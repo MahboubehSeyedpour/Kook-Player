@@ -16,7 +16,7 @@ import com.example.kookplayer.views.MainActivity
 
 object SongUtils {
 
-    lateinit var context: Context
+//    lateinit var context: Context
 
     fun getSongPosition(song: SongModel): Int {
         return LibraryFragment.viewModel.getDataSet().indexOf(song)
@@ -40,7 +40,7 @@ object SongUtils {
 
 
 
-    fun deletMusic(activity: Activity, uri: Uri) {
+    fun deleteMusic(context: Context, activity: Activity, uri: Uri) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             val urisToModify = mutableListOf(uri)

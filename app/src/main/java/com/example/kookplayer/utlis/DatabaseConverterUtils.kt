@@ -13,7 +13,7 @@ object DatabaseConverterUtils {
     }
 
     fun arraylistToString(songs: ArrayList<String>): String {
-        var str: String = ""
+        var str = ""
         for (songId in songs) {
             str += "$songId,"
         }
