@@ -1,6 +1,6 @@
 package com.example.kookplayer.utlis
 
-import com.example.kookplayer.manager.StateMananger
+import com.example.kookplayer.helper.StateMananger
 
 object SharedPrefUtils {
 

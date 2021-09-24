@@ -1,4 +1,4 @@
-package com.example.kookplayer.manager
+package com.example.kookplayer.helper
 
 import android.content.Context
 import android.os.Build
@@ -6,10 +6,9 @@ import android.support.v4.media.session.PlaybackStateCompat
 import androidx.annotation.RequiresApi
 import com.example.kookplayer.myInterface.CoordinatorInterface
 import com.example.kookplayer.player.Enums
-import com.example.kookplayer.player.MediaPlayerAgent
-import com.example.kookplayer.repositories.appdatabase.entities.SongModel
+import com.example.kookplayer.db.entities.SongModel
 import com.example.kookplayer.views.Fragments.LibraryFragment.Library.songsAdapter
-import com.example.kookplayer.views.MainActivity
+import com.example.kookplayer.views.activities.MainActivity
 
 object Coordinator : CoordinatorInterface {
     override lateinit var nowPlayingQueue: ArrayList<SongModel>

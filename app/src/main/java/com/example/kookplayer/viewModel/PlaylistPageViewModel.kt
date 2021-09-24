@@ -1,8 +1,8 @@
 package com.example.kookplayer.viewModel
 
 import androidx.lifecycle.MutableLiveData
+import com.example.kookplayer.db.entities.SongModel
 import com.example.kookplayer.repositories.PlaylistPageRepository
-import com.example.kookplayer.repositories.appdatabase.entities.SongModel
 
 class PlaylistPageViewModel() : BaseViewModel() {
 

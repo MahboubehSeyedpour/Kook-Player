@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kookplayer.R
-import com.example.kookplayer.repositories.appdatabase.entities.PlaylistModel
+import com.example.kookplayer.db.entities.PlaylistModel
 import com.google.android.material.checkbox.MaterialCheckBox
 import kotlinx.android.synthetic.main.add_song_to_playlist_dialog_item.view.*
 

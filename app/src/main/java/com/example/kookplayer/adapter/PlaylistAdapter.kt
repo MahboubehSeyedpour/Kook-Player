@@ -12,7 +12,7 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kookplayer.R
 import com.example.kookplayer.repositories.PlaylistRepository
-import com.example.kookplayer.repositories.appdatabase.entities.PlaylistModel
+import com.example.kookplayer.db.entities.PlaylistModel
 import com.example.kookplayer.views.Fragments.PlaylistFragment
 import kotlinx.android.synthetic.main.playlist_item.view.*
 

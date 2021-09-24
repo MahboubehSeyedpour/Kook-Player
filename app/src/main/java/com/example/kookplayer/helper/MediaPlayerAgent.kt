@@ -1,4 +1,4 @@
-package com.example.kookplayer.player
+package com.example.kookplayer.helper
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -9,10 +9,10 @@ import android.widget.ImageView
 import android.widget.MediaController
 import android.widget.TextView
 import androidx.annotation.RequiresApi
-import com.example.kookplayer.repositories.appdatabase.entities.SongModel
+import com.example.kookplayer.db.entities.SongModel
 import com.example.kookplayer.services.NotificationPlayerService
 import com.example.kookplayer.utlis.ImageUtils
-import com.example.kookplayer.views.MainActivity
+import com.example.kookplayer.views.activities.MainActivity
 
 class MediaPlayerAgent(context: Context) {
 

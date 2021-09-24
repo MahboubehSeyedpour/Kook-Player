@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kookplayer.adapter.FavAdapter
 import com.example.kookplayer.databinding.FragmentFavoriteBinding
-import com.example.kookplayer.repositories.appdatabase.entities.SongModel
+import com.example.kookplayer.db.entities.SongModel
 import com.example.kookplayer.viewModel.FavViewModel
 
 class FavoriteFragment : Fragment() {

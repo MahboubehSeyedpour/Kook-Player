@@ -10,7 +10,7 @@ import android.provider.MediaStore.Audio.AudioColumns
 import com.example.kookplayer.extensions.getInt
 import com.example.kookplayer.extensions.getLong
 import com.example.kookplayer.extensions.getString
-import com.example.kookplayer.repositories.appdatabase.entities.SongModel
+import com.example.kookplayer.db.entities.SongModel
 import com.example.kookplayer.utlis.FileUtils
 import com.example.kookplayer.utlis.ImageUtils
 

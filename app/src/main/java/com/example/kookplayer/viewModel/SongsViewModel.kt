@@ -4,14 +4,13 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import androidx.lifecycle.MutableLiveData
+import com.example.kookplayer.db.entities.SongModel
 import com.example.kookplayer.repositories.SongsRepository
-import com.example.kookplayer.repositories.appdatabase.entities.SongModel
 
 class SongsViewModel : BaseViewModel() {
 
 
     override var dataset: MutableLiveData<ArrayList<Any>> = MutableLiveData()
-    lateinit var context: Context
     lateinit var songsRepository: SongsRepository
 
 
@@ -20,7 +19,6 @@ class SongsViewModel : BaseViewModel() {
     }
 
     fun setFragmentContext(context: Context) {
-        this.context = context
         songsRepository = SongsRepository(context)
         fillRecyclerView()
     }

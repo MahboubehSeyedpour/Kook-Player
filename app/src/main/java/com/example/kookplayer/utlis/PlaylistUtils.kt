@@ -6,8 +6,8 @@ import android.database.Cursor
 import android.provider.MediaStore
 import com.example.kookplayer.R
 import com.example.kookplayer.repositories.SongsRepository
-import com.example.kookplayer.repositories.appdatabase.entities.PlaylistModel
-import com.example.kookplayer.repositories.appdatabase.entities.SongModel
+import com.example.kookplayer.db.entities.PlaylistModel
+import com.example.kookplayer.db.entities.SongModel
 
 
 object PlaylistUtils {

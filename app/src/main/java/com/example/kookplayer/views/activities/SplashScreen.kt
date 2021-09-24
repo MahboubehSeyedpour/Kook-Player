@@ -1,4 +1,4 @@
-package com.example.kookplayer.views
+package com.example.kookplayer.views.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -20,7 +20,7 @@ class SplashScreen : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
 
-        // we used the postDelayed(Runnable, time) method
+        // used the postDelayed(Runnable, time) method
         // to send a message with a delayed time.
         Handler().postDelayed({
             val intent = Intent(this, MainActivity::class.java)

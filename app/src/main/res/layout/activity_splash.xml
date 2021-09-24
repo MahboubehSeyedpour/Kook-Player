@@ -70,7 +70,7 @@
             android:layout_width="@dimen/splash_screen_icon_width"
             android:layout_height="@dimen/splash_screen_icon_height"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_launcher_1"
+            android:src="@drawable/ic_app_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

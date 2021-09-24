@@ -12,14 +12,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kookplayer.adapter.PlaylistPageAdapater
 import com.example.kookplayer.databinding.FragmentPlaylistPageBinding
-import com.example.kookplayer.repositories.appdatabase.entities.SongModel
+import com.example.kookplayer.db.entities.SongModel
 import com.example.kookplayer.viewModel.PlaylistPageViewModel
 
 
 class PlaylistPageFragment(val playlistId: Long) : Fragment() {
 
     lateinit var binding: FragmentPlaylistPageBinding
-
 
 
     companion object {
@@ -36,10 +35,7 @@ class PlaylistPageFragment(val playlistId: Long) : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentPlaylistPageBinding.inflate(inflater, container, false)
 
-
-        viewModel = ViewModelProvider(this).get(PlaylistPageViewModel::class.java)
-        viewModel.setPlayllistId(playlistId)
-        viewModel!!.dataset.observe(viewLifecycleOwner, playlistSongsObserer)
+        setupViewModel()
 
         playlistSongsAdapter = context?.let {
             PlaylistPageAdapater(
@@ -51,6 +47,14 @@ class PlaylistPageFragment(val playlistId: Long) : Fragment() {
         playlistSongsAdapter.playlist_name = getPlaylistName(playlistId)
 
         return binding.root
+    }
+
+    private fun setupViewModel()
+    {
+        viewModel = ViewModelProvider(this).get(PlaylistPageViewModel::class.java)
+        viewModel.setPlayllistId(playlistId)
+        viewModel.dataset.observe(viewLifecycleOwner, playlistSongsObserver)
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -72,7 +76,7 @@ class PlaylistPageFragment(val playlistId: Long) : Fragment() {
             requireActivity().supportFragmentManager.popBackStack()
         }
 
-        playlistSongsAdapter?.OnDataSend(
+        playlistSongsAdapter.OnDataSend(
             object : PlaylistPageAdapater.OnDataSend {
                 override fun onSend(context: Activity, id: String) {
                     viewModel.updateDataset()
@@ -83,28 +87,16 @@ class PlaylistPageFragment(val playlistId: Long) : Fragment() {
         val mHandler = Handler()
         activity?.runOnUiThread(object : Runnable {
             override fun run() {
-                viewModel?.updateDataset()
+                viewModel.updateDataset()
                 mHandler.postDelayed(this, 1000)
             }
         })
 
     }
 
-    fun getViewModel(): PlaylistPageViewModel
-    {
-        return viewModel
-    }
 
-
-    override fun onResume() {
-        super.onResume()
-
-
-    }
-
-
-    private val playlistSongsObserer = Observer<ArrayList<Any>> { dataset ->
-        playlistSongsAdapter?.dataset = dataset as ArrayList<SongModel>
+    private val playlistSongsObserver = Observer<ArrayList<Any>> { dataset ->
+        playlistSongsAdapter.dataset = dataset as ArrayList<SongModel>
         binding.playlistsSongsRv.adapter = playlistSongsAdapter
     }
 

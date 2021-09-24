@@ -20,7 +20,7 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
         android:contentDescription="add playlist"
-        android:src="@drawable/add"
+        android:src="@drawable/fab_icon_add"
         app:tint="@color/white"
         app:backgroundTint="@color/fab_bgColor"
         app:layout_constraintBottom_toBottomOf="parent"

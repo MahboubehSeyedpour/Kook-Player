@@ -10,14 +10,14 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kookplayer.R
-import com.example.kookplayer.manager.Coordinator
-import com.example.kookplayer.repositories.appdatabase.entities.SongModel
+import com.example.kookplayer.helper.Coordinator
+import com.example.kookplayer.db.entities.SongModel
 import com.example.kookplayer.utlis.ImageUtils
 import com.example.kookplayer.views.Fragments.PlaylistPageFragment
-import com.example.kookplayer.views.MainActivity
+import com.example.kookplayer.views.activities.MainActivity
 import kotlinx.android.synthetic.main.playlist_song_rv_item.view.*
 
-class PlaylistPageAdapater(var dataset: ArrayList<SongModel>,val context: Activity): RVBaseAdapter() {
+class PlaylistPageAdapater(var dataset: ArrayList<SongModel>, val context: Activity): RVBaseAdapter() {
 
     var position = 0
     lateinit var dataSend: OnDataSend
@@ -58,7 +58,7 @@ class PlaylistPageAdapater(var dataset: ArrayList<SongModel>,val context: Activi
 
         viewHolder.menuBtn.setOnClickListener {
             val popUpMenu = PopupMenu(context, it)
-            popUpMenu.inflate(R.menu.songs_in_playlist_menu)
+            popUpMenu.inflate(R.menu.songs_in_playlist_popup_menu)
 
             popUpMenu.setOnMenuItemClickListener {
                 val id = dataset[position].id

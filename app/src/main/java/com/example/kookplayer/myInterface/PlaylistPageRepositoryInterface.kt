@@ -1,6 +1,6 @@
 package com.example.kookplayer.myInterface
 
-import com.example.kookplayer.repositories.appdatabase.entities.SongModel
+import com.example.kookplayer.db.entities.SongModel
 
 interface PlaylistPageRepositoryInterface
 {

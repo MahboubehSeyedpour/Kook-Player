@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="62dp"
             android:layout_marginTop="30dp"
-            android:src="@drawable/ic_playlist__3_" />
+            android:src="@drawable/ic_playlist_card" />
 
         <LinearLayout
             android:layout_width="match_parent"

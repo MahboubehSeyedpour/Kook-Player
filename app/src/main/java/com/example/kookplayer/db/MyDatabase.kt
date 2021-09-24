@@ -1,12 +1,12 @@
-package com.example.kookplayer.repositories.appdatabase.roomdb
+package com.example.kookplayer.db
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.example.kookplayer.repositories.appdatabase.entities.Favorites
-import com.example.kookplayer.repositories.appdatabase.entities.PlaylistModel
+import com.example.kookplayer.db.entities.Favorites
+import com.example.kookplayer.db.entities.PlaylistModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 

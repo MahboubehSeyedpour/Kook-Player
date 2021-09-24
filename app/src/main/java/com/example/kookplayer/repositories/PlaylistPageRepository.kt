@@ -1,8 +1,8 @@
 package com.example.kookplayer.repositories
 
 import com.example.kookplayer.myInterface.PlaylistPageRepositoryInterface
-import com.example.kookplayer.repositories.appdatabase.entities.SongModel
-import com.example.kookplayer.repositories.appdatabase.roomdb.MyDatabaseUtils
+import com.example.kookplayer.db.entities.SongModel
+import com.example.kookplayer.db.MyDatabaseUtils
 import com.example.kookplayer.utlis.DatabaseConverterUtils
 import com.example.kookplayer.views.Fragments.LibraryFragment
 import com.example.kookplayer.views.Fragments.PlaylistFragment

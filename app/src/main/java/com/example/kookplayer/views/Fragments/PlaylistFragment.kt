@@ -15,10 +15,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.kookplayer.R
 import com.example.kookplayer.adapter.PlaylistAdapter
+import com.example.kookplayer.db.entities.PlaylistModel
 import com.example.kookplayer.myInterface.PassData
-import com.example.kookplayer.repositories.appdatabase.entities.PlaylistModel
 import com.example.kookplayer.viewModel.PlaylistViewModel
-import com.example.kookplayer.views.MainActivity
+import com.example.kookplayer.views.activities.MainActivity
 import com.example.kookplayer.views.dialogs.CreatePlaylistDialog
 import kotlinx.android.synthetic.main.fragment_playlist.*
 
@@ -41,9 +41,8 @@ class PlaylistFragment : Fragment(), PassData {
 
         val view = inflater.inflate(R.layout.fragment_playlist, container, false)
 
-        viewModel = ViewModelProvider(this).get(PlaylistViewModel::class.java)
-        context?.let { viewModel?.setFragmentContext(it) }
-        viewModel!!.dataset.observe(viewLifecycleOwner, playlistUpdateObserver)
+
+        setupViewModel()
 
         playlistAdapter = activity?.let {
             PlaylistAdapter(
@@ -55,6 +54,13 @@ class PlaylistFragment : Fragment(), PassData {
         return view
     }
 
+    private fun setupViewModel()
+    {
+        viewModel = ViewModelProvider(this).get(PlaylistViewModel::class.java)
+        context?.let { viewModel?.setFragmentContext(it) }
+        viewModel!!.dataset.observe(viewLifecycleOwner, playlistUpdateObserver)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         val mNoOfColumns: Int =
@@ -63,11 +69,11 @@ class PlaylistFragment : Fragment(), PassData {
     }
 
 
-    fun calculateNoOfColumns(
+    private fun calculateNoOfColumns(
         context: Context,
         columnWidthDp: Float
     ): Int { // For example columnWidthdp=180
-        val displayMetrics: DisplayMetrics = context.getResources().getDisplayMetrics()
+        val displayMetrics: DisplayMetrics = context.resources.displayMetrics
         val screenWidthDp = displayMetrics.widthPixels / displayMetrics.density
         return (screenWidthDp / columnWidthDp + 0.5).toInt()
     }

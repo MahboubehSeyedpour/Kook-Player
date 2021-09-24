@@ -11,7 +11,6 @@ import com.example.kookplayer.adapter.ViewPagerFragmentAdapter
 import com.example.kookplayer.databinding.FragmentMainBinding
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import github.com.st235.lib_expandablebottombar.ExpandableBottomBar
 
 
 class MainFragment : Fragment() {
@@ -29,13 +28,13 @@ class MainFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        initTabs(view)
+        initTabs()
 
 //        binding.toolbar.appName.layoutParams.height = (ScreenSizeUtils.getScreenHeight()*0.5/10).toInt()
 //        binding.toolbar.appName.requestLayout()
     }
 
-    private fun initTabs(fragment: View) {
+    private fun initTabs() {
 
         val tabNames = resources.getStringArray(R.array.tabNames)
 
@@ -48,41 +47,29 @@ class MainFragment : Fragment() {
         binding.viewpager.adapter = adapter
 
 
-        val bottomBar: ExpandableBottomBar =
-            fragment.findViewById(R.id.expandable_toolbar_component)
-        val menu = bottomBar.menu
-
-
-        var selectedTab: TabLayout.Tab
-        var selectedPosition: Int
-
         binding.toolbar.tabLayoutHome.visibility = View.GONE
 
         TabLayoutMediator(binding.toolbar.tabLayoutHome, binding.viewpager)
         { tab, position ->
             tab.text = tabNames[position]
-            selectedTab = tab
-            selectedPosition = position
         }.attach()
 
 
         binding.toolbar.expandableToolbar.expandableToolbarComponent.onItemSelectedListener =
             { view, menuItem, b ->
                 when (menuItem.text) {
-                    "Songs" -> {
-//                        Toast.makeText( baseContext, "Songs clicked", Toast.LENGTH_SHORT ).show()
+                    getString(R.string.songs_tab) -> {
 
                         binding.viewpager.setCurrentItem(0, true)
                     }
 
-                    "Playlists" -> {
+                    getString(R.string.playlists_tab) -> {
 
                         binding.viewpager.setCurrentItem(1, true)
                     }
-                    "Favorite" -> {
+                    getString(R.string.favorites_tab) -> {
 
                         binding.viewpager.setCurrentItem(2, true)
-//                        binding.includeToolbar.tabLayoutHome.selectTab( binding.includeToolbar.tabLayoutHome.getTabAt( 3 ) )
                     }
                 }
             }

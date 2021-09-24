@@ -95,7 +95,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_play_black" />
+                app:srcCompat="@drawable/ic_notification_play" />
 
             <ImageView
                 android:id="@+id/pause_btn_on_header"
@@ -105,7 +105,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_pause_black" />
+                app:srcCompat="@drawable/ic_notification_pause" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

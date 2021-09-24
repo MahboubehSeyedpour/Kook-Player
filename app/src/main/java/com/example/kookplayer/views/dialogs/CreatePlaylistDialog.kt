@@ -9,8 +9,8 @@ import android.view.animation.AnimationUtils
 import androidx.fragment.app.DialogFragment
 import com.example.kookplayer.R
 import com.example.kookplayer.databinding.CreatePlaylistDialogBinding
+import com.example.kookplayer.db.MyDatabaseUtils
 import com.example.kookplayer.myInterface.PassData
-import com.example.kookplayer.repositories.appdatabase.roomdb.MyDatabaseUtils
 import com.example.kookplayer.utlis.ScreenSizeUtils
 import kotlinx.android.synthetic.main.create_playlist_dialog.*
 import kotlinx.android.synthetic.main.create_playlist_dialog.view.*
@@ -42,7 +42,7 @@ class CreatePlaylistDialog : DialogFragment() {
         binding.addPlaylistLayout.textField.requestLayout()
 
         binding.addPlaylistLayout.btnNegative.layoutParams.width =
-            (binding.addPlaylistLayout.layoutParams.width * 3 / 10).toInt()
+            (binding.addPlaylistLayout.layoutParams.width * 3 / 10)
         binding.addPlaylistLayout.btnNegative.requestLayout()
 
         binding.addPlaylistLayout.btnPositive.layoutParams.width =

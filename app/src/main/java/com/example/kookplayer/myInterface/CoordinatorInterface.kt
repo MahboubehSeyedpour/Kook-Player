@@ -2,8 +2,8 @@ package com.example.kookplayer.myInterface
 
 import android.content.Context
 import com.example.kookplayer.player.Enums
-import com.example.kookplayer.player.MediaPlayerAgent
-import com.example.kookplayer.repositories.appdatabase.entities.SongModel
+import com.example.kookplayer.helper.MediaPlayerAgent
+import com.example.kookplayer.db.entities.SongModel
 
 interface CoordinatorInterface {
 

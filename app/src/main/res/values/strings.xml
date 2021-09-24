@@ -1,6 +1,6 @@
 <resources>
 
-    <!--    app-->
+    <!-- App-->
     <string name="app_name">Kook Player</string>
     <string name="preference_file_key">GLOBAL_STATE</string>
 
@@ -15,26 +15,21 @@
     <string name="action_delete_playlist">Delete playlist</string>
     <string name="action_rename_playlist">Rename</string>
 
-    <!--    modal bottom sheet items -->
+    <!-- Modal bottom sheet items -->
     <string name="first_item_modal_bottomsheet">Date modified</string>
     <string name="second_item_modal_bottomsheet">Name</string>
     <string name="third_item_modal_bottomsheet">Artist</string>
     <string name="forth_item_modal_bottomsheet">Genre</string>
     <string name="fifth_item_modal_bottomsheet">Duration</string>
 
-    <!--   add playlist dialog -->
+    <!-- Add playlist dialog -->
     <string name="add_playlistDialog_positive_btn">Ok</string>
     <string name="add_playlistDialog_negative_btn">Cancel</string>
     <string name="add_playlistDialog_title">create playlist</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <!--    Toolbar -->
-    <string name="home_tab">Songs</string>
-    <string name="playlist_tab">Playlists</string>
-    <string name="fav_tab">Favorite</string>
-
-    <!--    notification-->
+    <!-- Notification-->
     <string name="notification_channel_id">channel1</string>
     <string name="notification_description">The playing notification provides actions for play/pause etc.</string>
     <string name="notification_action_previous">action_previous</string>
@@ -48,12 +43,20 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
-    <!--   SharedPreferences-->
+    <!-- SharedPreferences-->
     <string name="preference_shuffle_is_on">SHUFFLE_IS_ON</string>
     <string name="preference_shuffle_default">SHUFFLE_IS_NONE</string>
     <string name="preference_repeat_one">REPEAT_ONE</string>
     <string name="preference_last_song_id">LAST_SONG_ID</string>
     <string name="preference_last_song_position">LAST_SONG_POSITION</string>
+
+    <!-- Expandable toolbar-->
+    <string name="songs_tab">Songs</string>
+    <string name="playlists_tab">Playlists</string>
+    <string name="favorites_tab">Favorite</string>
+
+    <!-- suffixes-->
+    <string name="MB_suffixes">%1$d MB</string>
 
 
 

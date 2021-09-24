@@ -1,6 +1,5 @@
 package com.example.kookplayer.views.dialogs
 
-import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,9 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kookplayer.R
 import com.example.kookplayer.adapter.AddSongToPlaylistAdapter
 import com.example.kookplayer.databinding.AddSongToPlaylistBinding
+import com.example.kookplayer.db.entities.PlaylistModel
 import com.example.kookplayer.myInterface.PassDataForSelectPlaylists
-import com.example.kookplayer.repositories.appdatabase.entities.PlaylistModel
-import com.example.kookplayer.repositories.appdatabase.entities.SongModel
 import com.example.kookplayer.utlis.ScreenSizeUtils
 import kotlinx.android.synthetic.main.add_song_to_playlist.view.*
 
@@ -20,7 +18,6 @@ class AddSongToPlaylistDialog(val array: ArrayList<PlaylistModel>) : DialogFragm
 
     lateinit var binding: AddSongToPlaylistBinding
     var playlistAdapter: AddSongToPlaylistAdapter? = null
-    lateinit var dataSend: OnDataSend
 
 
     override fun onCreateView(
@@ -43,7 +40,6 @@ class AddSongToPlaylistDialog(val array: ArrayList<PlaylistModel>) : DialogFragm
 
         binding.playlists.layoutManager = LinearLayoutManager(context)
         binding.playlists.adapter = playlistAdapter
-
 
         return view
 
@@ -84,16 +80,8 @@ class AddSongToPlaylistDialog(val array: ArrayList<PlaylistModel>) : DialogFragm
         }
     }
 
-    fun initBinding(view: View) {
+    private fun initBinding(view: View) {
         binding = AddSongToPlaylistBinding.bind(view)
-    }
-
-    interface OnDataSend {
-        fun onSend(context: Activity, songModel: SongModel)
-    }
-
-    fun OnDataSend(dataSend: OnDataSend) {
-        this.dataSend = dataSend
     }
 
 }

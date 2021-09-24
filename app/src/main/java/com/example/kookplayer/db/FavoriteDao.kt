@@ -1,7 +1,7 @@
-package com.example.kookplayer.repositories.appdatabase.roomdb
+package com.example.kookplayer.db
 
 import androidx.room.*
-import com.example.kookplayer.repositories.appdatabase.entities.Favorites
+import com.example.kookplayer.db.entities.Favorites
 
 @Dao
 interface FavoriteDao {

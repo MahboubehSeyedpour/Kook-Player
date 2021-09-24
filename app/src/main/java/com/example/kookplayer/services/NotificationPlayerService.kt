@@ -13,8 +13,8 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.example.kookplayer.R
-import com.example.kookplayer.manager.Coordinator
-import com.example.kookplayer.views.MainActivity
+import com.example.kookplayer.helper.Coordinator
+import com.example.kookplayer.views.activities.MainActivity
 
 
 private const val CHANNEL_ID = "player_channel_id"
@@ -110,10 +110,10 @@ class NotificationPlayerService : Service() {
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setSmallIcon(R.drawable.ic_play__2_)
             .setLargeIcon(Coordinator.currentPlayingSong?.image)
-            .addAction(R.drawable.notification_icon_previous, "previous", prevPendingIntent)
-            .addAction(R.drawable.ic_play_black, "play", playPendingIntent)
-            .addAction(R.drawable.ic_pause_black, "pause", pausePendingIntent)
-            .addAction(R.drawable.notification_icon_next, "next", nextPendingIntent)
+            .addAction(R.drawable.ic_notification_previous, "previous", prevPendingIntent)
+            .addAction(R.drawable.ic_notification_play, "play", playPendingIntent)
+            .addAction(R.drawable.ic_notification_pause, "pause", pausePendingIntent)
+            .addAction(R.drawable.ic_notification_next, "next", nextPendingIntent)
             .build()
 //            .setContentIntent(pendingIntent)
 

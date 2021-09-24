@@ -1,4 +1,4 @@
-package com.example.kookplayer.providers
+package com.example.kookplayer.utlis
 
 import android.Manifest
 import android.app.Activity
@@ -6,7 +6,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.example.kookplayer.views.MainActivity
+import com.example.kookplayer.views.activities.MainActivity
 
 class PermissionProvider: ActivityCompat.OnRequestPermissionsResultCallback {
 

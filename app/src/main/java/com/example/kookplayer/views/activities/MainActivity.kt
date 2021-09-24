@@ -1,4 +1,4 @@
-package com.example.kookplayer.views
+package com.example.kookplayer.views.activities
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -11,15 +11,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
 import com.example.kookplayer.databinding.ActivityMainBinding
-import com.example.kookplayer.manager.Coordinator
+import com.example.kookplayer.db.MyDatabaseUtils
+import com.example.kookplayer.helper.Coordinator
 import com.example.kookplayer.player.Enums
-import com.example.kookplayer.providers.PermissionProvider
-import com.example.kookplayer.repositories.appdatabase.roomdb.MyDatabaseUtils
 import com.example.kookplayer.services.NotificationPlayerService
+import com.example.kookplayer.utlis.PermissionProvider
 import com.example.kookplayer.utlis.ScreenSizeUtils.getScreenHeight
 import com.example.kookplayer.views.Fragments.MainFragment
 import com.example.kookplayer.views.Fragments.PlayerPanelFragment
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
+
+
+
+//TODO( "implement hideStatusBar() function");
+//TODO( "use Shared Preferences to save previous state");
 
 
 class MainActivity : AppCompatActivity(), LifecycleOwner {
@@ -28,8 +33,6 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         var permissionsGranted: Boolean = false
         lateinit var playerPanelFragment: PlayerPanelFragment
         lateinit var activity: MainActivity
-
-        //        lateinit var sharedPreferences: SharedPreferences
 
     }
 
@@ -49,7 +52,6 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
     override fun onStop() {
         super.onStop()
-//        saveSettings()
 
         val mgr = getSystemService(TELEPHONY_SERVICE) as TelephonyManager
         mgr?.listen(phoneStateListener, PhoneStateListener.LISTEN_NONE)
@@ -64,17 +66,6 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
         Coordinator.mediaPlayerAgent.stop()
     }
-
-//    fun saveSettings() {
-//        SharedPrefUtils.saveState()
-//    }
-
-//    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-//        if (keyCode == KeyEvent.KEYCODE_BACK) {
-//            moveTaskToBack(true)
-//        }
-//        return super.onKeyDown(keyCode, event)
-//    }
 
     override fun onBackPressed() {
         onStop()
@@ -105,9 +96,6 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         binding.slidingLayout.panelHeight = 0
 
         binding.slidingLayout.requestLayout()
-
-
-//        TODO( "implement hideStatusBar() function");
 
 
         binding.slidingLayout.addPanelSlideListener(object :
@@ -141,7 +129,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
                 } else if (state == TelephonyManager.CALL_STATE_IDLE) {
                     //Not in call: Play music
                     if (Coordinator.currentPlayingSong != null) {
-//                        Coordinator.currentPlayingSong!!.data?.let { Coordinator.play(it) }
+
                     }
                 } else if (state == TelephonyManager.CALL_STATE_OFFHOOK) {
                     //A call is dialing, active or on hold
@@ -186,42 +174,18 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
     }
 
 
-    fun checkForPermissions() {
+    private fun checkForPermissions() {
         val permissionProvider = PermissionProvider()
         permissionProvider.askForPermission(this, permissions)
 
         if (permissionProvider.permissionIsGranted) {
-//            initBottomSheet()
+
         }
 
     }
 
 
-    fun replace() {
-        playerPanelFragment = PlayerPanelFragment()
-        val fragmentManager: FragmentManager = supportFragmentManager
-        val transaction = fragmentManager.beginTransaction()
-//        transaction.addToBackStack("playerPanel")
-        transaction.replace(
-            binding.bottomSheetContainer.id,
-            playerPanelFragment,
-            "bottom sheet container"
-        )
-            .commit()
-
-
-        val mainFragment = MainFragment()
-//        transaction.addToBackStack(null)
-        transaction.replace(
-            binding.fragmentBaseContainer.id,
-            mainFragment,
-            "bottom sheet container"
-        )
-            .commit()
-    }
-
-
-    fun initBottomSheet() {
+    private fun initBottomSheet() {
 
         playerPanelFragment = PlayerPanelFragment()
         val fragmentManager: FragmentManager = supportFragmentManager
@@ -243,7 +207,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         transaction.add(
             binding.fragmentBaseContainer.id,
             mainFragment,
-            "bottom sheet container"
+            "main fragment container"
         )
             .commit()
     }

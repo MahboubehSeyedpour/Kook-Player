@@ -11,13 +11,13 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.example.kookplayer.R
 import com.example.kookplayer.databinding.FragmentPlayerPanelBinding
-import com.example.kookplayer.manager.Coordinator
+import com.example.kookplayer.db.MyDatabaseUtils
+import com.example.kookplayer.db.MyDatabaseUtils.songIsAlreadyLiked
+import com.example.kookplayer.helper.Coordinator
 import com.example.kookplayer.myInterface.PlayerPanelInterface
 import com.example.kookplayer.player.Enums.PanelState
 import com.example.kookplayer.player.Enums.PanelState.COLLAPSED
 import com.example.kookplayer.player.Enums.PanelState.EXPANDED
-import com.example.kookplayer.repositories.appdatabase.roomdb.MyDatabaseUtils
-import com.example.kookplayer.repositories.appdatabase.roomdb.MyDatabaseUtils.songIsAlreadyLiked
 import com.example.kookplayer.utlis.ImageUtils
 import com.example.kookplayer.utlis.ScreenSizeUtils
 import com.example.kookplayer.utlis.TimeUtils
@@ -34,7 +34,6 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
     WaveformSeekBar.OnSeekBarChangeListener {
 
     lateinit var binding: FragmentPlayerPanelBinding
-    var previouslyLiked: Boolean = false
 
 
     override fun onCreateView(
@@ -68,17 +67,11 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
 
         waveform_seek_bar.setWaveform(createWaveform(), true)
 
+        setupLayoutParams()
 
-//        binding.onExpand.likeBtn.setOnLikeListener(object : OnLikeListener {
-//            override fun liked(likeButton: LikeButton) {
-////                TODO(add song to favorites)
-//            }
-//
-//            override fun unLiked(likeButton: LikeButton) {
-////                TODO(remove song from favorites)
-//            }
-//        })
+    }
 
+    private fun setupLayoutParams() {
 
         binding.musicAlbumImage.layoutParams.height =
             (ScreenSizeUtils.getScreenHeight() * 5.1 / 10).toInt()
@@ -88,6 +81,7 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
 
         binding.header.layoutParams.height = (ScreenSizeUtils.getScreenHeight() * 0.8 / 10).toInt()
         binding.header.requestLayout()
+
 
         binding.musicTitleTv.layoutParams.height =
             (ScreenSizeUtils.getScreenHeight() * 0.4 / 10).toInt()
@@ -103,33 +97,31 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
             (ScreenSizeUtils.getScreenHeight() * 1.4 / 10).toInt()
         binding.header.requestLayout()
 
+
         binding.playerRemote.shuffleRepeatLayout.layoutParams.height =
-            (ScreenSizeUtils.getScreenHeight() * 1 / 10).toInt()
+            (ScreenSizeUtils.getScreenHeight() * 1 / 10)
         binding.header.requestLayout()
 
+
         binding.header.onCollapse.song_image_on_header.layoutParams.height =
-            ( (ScreenSizeUtils.getScreenHeight() * 1 / 10) * 8 / 10).toInt()
+            ((ScreenSizeUtils.getScreenHeight() * 1 / 10) * 8 / 10)
         binding.header.onCollapse.song_image_on_header.layoutParams.width =
-            (ScreenSizeUtils.getScreenWidth() * 2 / 10).toInt()
+            (ScreenSizeUtils.getScreenWidth() * 2 / 10)
         binding.header.onCollapse.song_image_on_header.requestLayout()
 
+
         binding.header.onCollapse.wheelprogress.layoutParams.height =
-            ((ScreenSizeUtils.getScreenHeight() * 1 / 10) * 7 / 10).toInt()
+            ((ScreenSizeUtils.getScreenHeight() * 1 / 10) * 7 / 10)
         binding.header.onCollapse.wheelprogress.layoutParams.width =
             (ScreenSizeUtils.getScreenWidth() * 1.1 / 10).toInt()
         binding.header.onCollapse.wheelprogress.requestLayout()
 
-
-//        binding.header.onExpand.back_btn.layoutParams.height = (ScreenSizeUtils.getScreenHeight()*0.6/10).toInt()
-//        binding.header.onExpand.back_btn.layoutParams.width = (ScreenSizeUtils.getScreenWidth()*0.6/10).toInt()
-//        binding.header.onExpand.back_btn.requestLayout()
 
         binding.onExpand.likeIv.layoutParams.height =
             (ScreenSizeUtils.getScreenHeight() * 0.6 / 10).toInt()
         binding.onExpand.likeIv.layoutParams.width =
             (ScreenSizeUtils.getScreenWidth() * 0.6 / 10).toInt()
         binding.onExpand.likeIv.requestLayout()
-
     }
 
     override fun setDefaultVisibilities() {
@@ -140,13 +132,13 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
     fun setOnEventListeners() {
         binding.header.onCollapse.play_btn_on_header.setOnClickListener(this)
         binding.header.onCollapse.pause_btn_on_header.setOnClickListener(this)
-        binding.playerRemote.nextBtn?.setOnClickListener(this)
-        binding.playerRemote.prevBtn?.setOnClickListener(this)
-        binding.playerRemote.playOrPauseLayout?.setOnClickListener(this)
-        binding.playerRemote.shuffleContainer?.setOnClickListener(this)
-        binding.playerRemote.repeatContainer?.setOnClickListener(this)
-        binding.playerRemote.waveformSeekBar?.setOnSeekBarChangeListener(this)
-        binding.onExpand.likeIv?.setOnClickListener(this)
+        binding.playerRemote.nextBtn.setOnClickListener(this)
+        binding.playerRemote.prevBtn.setOnClickListener(this)
+        binding.playerRemote.playOrPauseLayout.setOnClickListener(this)
+        binding.playerRemote.shuffleContainer.setOnClickListener(this)
+        binding.playerRemote.repeatContainer.setOnClickListener(this)
+        binding.playerRemote.waveformSeekBar.setOnSeekBarChangeListener(this)
+        binding.onExpand.likeIv.setOnClickListener(this)
     }
 
     override fun setSongImage() {
@@ -165,12 +157,12 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
         setSongImage()
 
         if (songIsAlreadyLiked(Coordinator.currentPlayingSong!!)) {
-            binding.header.onExpand.like_iv.setImageResource(R.drawable.ic_filled_heart)
+            binding.header.onExpand.like_iv.setImageResource(R.drawable.ic_favored)
         } else {
-            binding.header.onExpand.like_iv.setImageResource(R.drawable.ic_heart)
+            binding.header.onExpand.like_iv.setImageResource(R.drawable.ic_unfavored)
         }
 
-        binding.playerRemote.musicMax?.text =
+        binding.playerRemote.musicMax.text =
             Coordinator.currentPlayingSong?.duration?.let {
                 TimeUtils.milliSecToDuration(
                     it
@@ -196,7 +188,7 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
 
     override fun seekTo(mCurrentPosition: Int) {
 
-        binding.playerRemote.waveformSeekBar?.setProgressInPercentage(
+        binding.playerRemote.waveformSeekBar.setProgressInPercentage(
             mCurrentPosition / (Coordinator.currentPlayingSong?.duration?.div(
                 1000F
             )!!)
@@ -230,7 +222,7 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
         activity?.runOnUiThread(object : Runnable {
             @RequiresApi(Build.VERSION_CODES.O)
             override fun run() {
-                if (Coordinator != null && Coordinator.isPlaying()) {
+                if (Coordinator.isPlaying()) {
 
                     val mCurrentPosition = Coordinator.getPositionInPlayer() / 1000
                     val duration = Coordinator.currentPlayingSong?.duration?.div(1000)
@@ -281,12 +273,12 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
             binding.onExpand.likeIv -> {
                 if (songIsAlreadyLiked(Coordinator.currentPlayingSong!!)) {
 
-                    binding.onExpand.likeIv.setImageResource(R.drawable.ic_heart)
+                    binding.onExpand.likeIv.setImageResource(R.drawable.ic_unfavored)
                     MyDatabaseUtils.deleteSongFromFav(Coordinator.currentPlayingSong!!)
 
 
                 } else {
-                    binding.onExpand.likeIv.setImageResource(R.drawable.ic_filled_heart)
+                    binding.onExpand.likeIv.setImageResource(R.drawable.ic_favored)
 
                     MyDatabaseUtils.addSongAsFav(Coordinator.currentPlayingSong!!.id ?: -1)
 
@@ -327,29 +319,30 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
             }
 
             binding.playerRemote.repeatContainer -> {
-                if (Coordinator.repeatMode == PlaybackStateCompat.REPEAT_MODE_NONE) {
+                when (Coordinator.repeatMode) {
+                    PlaybackStateCompat.REPEAT_MODE_NONE -> {
+                        Coordinator.repeatMode = PlaybackStateCompat.REPEAT_MODE_ALL
 
-                    Coordinator.repeatMode = PlaybackStateCompat.REPEAT_MODE_ALL
+                        binding.playerPanel.repeatContainer.displayedChild = 1
 
-                    binding.playerPanel.repeatContainer.displayedChild = 1
+                        Coordinator.updateNowPlayingQueue()
+                    }
 
-                    Coordinator.updateNowPlayingQueue()
+                    PlaybackStateCompat.REPEAT_MODE_ALL -> {
+                        Coordinator.repeatMode = PlaybackStateCompat.REPEAT_MODE_ONE
 
-                } else if (Coordinator.repeatMode == PlaybackStateCompat.REPEAT_MODE_ALL) {
+                        binding.playerPanel.repeatContainer.displayedChild = 2
 
-                    Coordinator.repeatMode = PlaybackStateCompat.REPEAT_MODE_ONE
+                        Coordinator.updateNowPlayingQueue()
+                    }
 
-                    binding.playerPanel.repeatContainer.displayedChild = 2
+                    PlaybackStateCompat.REPEAT_MODE_ONE -> {
+                        Coordinator.repeatMode = PlaybackStateCompat.REPEAT_MODE_NONE
 
-                    Coordinator.updateNowPlayingQueue()
+                        binding.playerPanel.repeatContainer.displayedChild = 3
 
-                } else if (Coordinator.repeatMode == PlaybackStateCompat.REPEAT_MODE_ONE) {
-
-                    Coordinator.repeatMode = PlaybackStateCompat.REPEAT_MODE_NONE
-
-                    binding.playerPanel.repeatContainer.displayedChild = 3
-
-                    Coordinator.updateNowPlayingQueue()
+                        Coordinator.updateNowPlayingQueue()
+                    }
                 }
             }
 
@@ -368,7 +361,7 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
         }
     }
 
-    private fun createWaveform(): IntArray? {
+    private fun createWaveform(): IntArray {
         val random = Random(System.currentTimeMillis())
         val length: Int = 50 + random.nextInt(50)
         val values = IntArray(length)
@@ -384,15 +377,15 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
     }
 
     override fun setRemainingTime(remainingTimeInPercentage: Int) {
-        binding.playerRemote.musicMin?.text =
+        binding.playerRemote.musicMin.text =
             TimeUtils.milliSecToDuration((remainingTimeInPercentage * 1000).toLong())
     }
 
-    fun updateWheelProgress(progressInPercentage: Int) {
+    private fun updateWheelProgress(progressInPercentage: Int) {
         binding.header.onCollapse.wheelprogress.setPercentage(progressInPercentage)
     }
 
-    fun initBinding(view: View) {
+    private fun initBinding(view: View) {
         binding = FragmentPlayerPanelBinding.bind(view)
     }
 

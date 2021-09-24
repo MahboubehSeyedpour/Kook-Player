@@ -3,32 +3,17 @@ package com.example.kookplayer.repositories
 import android.content.ContentValues
 import android.content.Context
 import android.provider.MediaStore
+import com.example.kookplayer.db.MyDatabaseUtils
+import com.example.kookplayer.db.MyDatabaseUtils.cashedPlaylistArray
+import com.example.kookplayer.db.MyDatabaseUtils.localDatabase
 import com.example.kookplayer.myInterface.PlaylistRepoInterface
-import com.example.kookplayer.repositories.appdatabase.entities.PlaylistModel
-import com.example.kookplayer.repositories.appdatabase.roomdb.MyDatabaseUtils
-import com.example.kookplayer.repositories.appdatabase.roomdb.MyDatabaseUtils.cashedPlaylistArray
-import com.example.kookplayer.repositories.appdatabase.roomdb.MyDatabaseUtils.localDatabase
+import com.example.kookplayer.db.entities.PlaylistModel
 import com.example.kookplayer.utlis.DatabaseConverterUtils
 import com.example.kookplayer.utlis.FilePathUtlis
 import kotlinx.coroutines.*
 
 class PlaylistRepository(val context: Context?) :
     PlaylistRepoInterface {
-
-    val applicationScope = CoroutineScope(SupervisorJob())
-
-//    val localDatabase = MyDatabase.getDatabase(context!!, applicationScope)
-
-    companion object {
-//        var cashedPlaylistArray = MyDatabaseUtils.cashedPlaylistArray
-    }
-
-    init {
-//        applicationScope.launch {
-//            cashedPlaylistArray =
-//                MyDatabaseUtils.cashedPlaylistArray
-//        }
-    }
 
     //    ----------------------------------------------- Create Playlist ----------------------------------------------------
     override fun createPlaylist(name: String) {
@@ -75,20 +60,10 @@ class PlaylistRepository(val context: Context?) :
             true
 
         } catch (exception: Exception) {
-            //            TODO(handle the exception)
+            //TODO(handle the exception)
             false
         }
     }
-
-//    private fun removePlaylistFromDatabase(playlist_Id: Long) {
-//        applicationScope.launch {
-//            localDatabase.playlistDao().deletePlaylist(playlist_Id)
-//
-//            cashedPlaylistArray =
-//                localDatabase.playlistDao().getPlaylists() as ArrayList<PlaylistModel>
-//        }
-//    }
-
 
     //    ----------------------------------------------- Add song To Playlist ----------------------------------------------------
 //    override fun addSongsToPlaylist(playlist_name: String, songsId: String): Boolean {

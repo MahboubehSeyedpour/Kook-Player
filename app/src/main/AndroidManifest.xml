@@ -23,7 +23,7 @@
     <!--    tools:ignore="ScopedStorage"-->
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher_1"
+        android:icon="@drawable/ic_app_icon"
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_1_round"
@@ -41,7 +41,7 @@
         </provider>
 
         <activity
-            android:name="com.example.kookplayer.views.SplashScreen"
+            android:name="com.example.kookplayer.views.activities.SplashScreen"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.noActionBar">
             <intent-filter>
@@ -51,7 +51,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.kookplayer.views.MainActivity"
+            android:name="com.example.kookplayer.views.activities.MainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.MusicPlayer" />

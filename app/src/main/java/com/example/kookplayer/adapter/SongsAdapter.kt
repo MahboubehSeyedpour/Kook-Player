@@ -14,13 +14,13 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kookplayer.R
-import com.example.kookplayer.manager.Coordinator
-import com.example.kookplayer.repositories.appdatabase.entities.SongModel
-import com.example.kookplayer.repositories.appdatabase.roomdb.MyDatabaseUtils
+import com.example.kookplayer.helper.Coordinator
+import com.example.kookplayer.db.entities.SongModel
+import com.example.kookplayer.db.MyDatabaseUtils
 import com.example.kookplayer.utlis.ImageUtils
 import com.example.kookplayer.utlis.TimeUtils
 import com.example.kookplayer.views.Fragments.LibraryFragment
-import com.example.kookplayer.views.MainActivity
+import com.example.kookplayer.views.activities.MainActivity
 import com.example.kookplayer.views.dialogs.SongDetailsDialog
 import kotlinx.android.synthetic.main.song_rv_item.view.*
 

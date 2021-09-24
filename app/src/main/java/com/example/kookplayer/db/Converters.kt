@@ -1,4 +1,4 @@
-package com.example.kookplayer.repositories.appdatabase.roomdb
+package com.example.kookplayer.db
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson

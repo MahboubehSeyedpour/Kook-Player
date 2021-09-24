@@ -2,7 +2,7 @@ package com.example.kookplayer.utlis
 
 import android.content.Context
 import android.widget.Toast
-import com.example.kookplayer.repositories.appdatabase.entities.SongModel
+import com.example.kookplayer.db.entities.SongModel
 import com.example.kookplayer.views.Fragments.LibraryFragment
 
 object SortUtils {

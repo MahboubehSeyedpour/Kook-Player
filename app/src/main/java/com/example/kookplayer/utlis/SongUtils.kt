@@ -7,11 +7,11 @@ import android.os.Build
 import android.provider.MediaStore
 import androidx.core.app.ActivityCompat
 import com.example.kookplayer.BuildConfig
-import com.example.kookplayer.repositories.appdatabase.entities.SongModel
+import com.example.kookplayer.db.entities.SongModel
 import com.example.kookplayer.utlis.FilePathUtlis
 import com.example.kookplayer.utlis.FileUtils
 import com.example.kookplayer.views.Fragments.LibraryFragment
-import com.example.kookplayer.views.MainActivity
+import com.example.kookplayer.views.activities.MainActivity
 
 
 object SongUtils {

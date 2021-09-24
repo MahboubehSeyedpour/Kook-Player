@@ -1,4 +1,4 @@
-package com.example.kookplayer.repositories.appdatabase.entities
+package com.example.kookplayer.db.entities
 
 import android.graphics.Bitmap
 import android.net.Uri

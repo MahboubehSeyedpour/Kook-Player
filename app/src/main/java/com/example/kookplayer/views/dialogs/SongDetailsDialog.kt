@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.example.kookplayer.R
 import com.example.kookplayer.databinding.SongDetailsDialogBinding
-import com.example.kookplayer.repositories.appdatabase.entities.SongModel
+import com.example.kookplayer.db.entities.SongModel
 import com.example.kookplayer.utlis.ScreenSizeUtils
 import com.example.kookplayer.utlis.TimeUtils
 
@@ -28,8 +28,10 @@ class SongDetailsDialog(val song: SongModel) : DialogFragment() {
         initBinding(view)
 
         binding.detailsFileSizeContent.text =
-            (((song.size)?.toFloat()?.div(1024))?.div(1024))?.toInt()
-                .toString() + " MB"
+            getString(
+                R.string.MB_suffixes,
+                (((song.size)?.toFloat()?.div(1024))?.div(1024))?.toInt()
+            )
         binding.detailsFileNameContent.text = song.title
 
         binding.detailsFileBitrateContent.text =
@@ -46,7 +48,8 @@ class SongDetailsDialog(val song: SongModel) : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        binding.songDetails.layoutParams.width = (ScreenSizeUtils.getScreenWidth()*8.5/10).toInt()
+        binding.songDetails.layoutParams.width =
+            (ScreenSizeUtils.getScreenWidth() * 8.5 / 10).toInt()
         binding.songDetails.requestLayout()
 
     }

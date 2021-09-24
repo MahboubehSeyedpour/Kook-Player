@@ -1,7 +1,7 @@
 package com.example.kookplayer.utlis
 
 import android.graphics.Point
-import com.example.kookplayer.views.MainActivity
+import com.example.kookplayer.views.activities.MainActivity
 
 object ScreenSizeUtils {
     fun getScreenHeight(): Int {

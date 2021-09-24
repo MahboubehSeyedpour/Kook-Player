@@ -16,11 +16,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kookplayer.R
 import com.example.kookplayer.adapter.SongsAdapter
-import com.example.kookplayer.manager.Coordinator
+import com.example.kookplayer.db.MyDatabaseUtils
+import com.example.kookplayer.db.entities.PlaylistModel
+import com.example.kookplayer.db.entities.SongModel
+import com.example.kookplayer.helper.Coordinator
 import com.example.kookplayer.myInterface.PassDataForSelectPlaylists
-import com.example.kookplayer.repositories.appdatabase.entities.PlaylistModel
-import com.example.kookplayer.repositories.appdatabase.entities.SongModel
-import com.example.kookplayer.repositories.appdatabase.roomdb.MyDatabaseUtils
 import com.example.kookplayer.viewModel.SongsViewModel
 import com.example.kookplayer.views.dialogs.AddSongToPlaylistDialog
 import kotlinx.android.synthetic.main.fragment_library.*
@@ -107,7 +107,7 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
                     selectedSong = songModel
 
                     if (MyDatabaseUtils.cashedPlaylistArray != null) {
-                        if (MyDatabaseUtils.cashedPlaylistArray.size!! > 0) {
+                        if (MyDatabaseUtils.cashedPlaylistArray.size > 0) {
                             createDialogToSelectPlaylist()
                         } else {
                             val i = MyDatabaseUtils.cashedPlaylistArray

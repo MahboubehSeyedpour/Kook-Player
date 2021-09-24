@@ -1,10 +1,10 @@
-package com.example.kookplayer.repositories.appdatabase.roomdb
+package com.example.kookplayer.db
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.kookplayer.repositories.appdatabase.entities.PlaylistModel
+import com.example.kookplayer.db.entities.PlaylistModel
 
 @Dao
 interface PlaylistDao {

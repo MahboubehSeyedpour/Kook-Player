@@ -1,13 +1,13 @@
-package com.example.kookplayer.repositories.appdatabase.roomdb
+package com.example.kookplayer.db
 
 import SongUtils
 import androidx.lifecycle.lifecycleScope
-import com.example.kookplayer.repositories.appdatabase.entities.Favorites
-import com.example.kookplayer.repositories.appdatabase.entities.PlaylistModel
-import com.example.kookplayer.repositories.appdatabase.entities.SongModel
+import com.example.kookplayer.db.entities.Favorites
+import com.example.kookplayer.db.entities.PlaylistModel
+import com.example.kookplayer.db.entities.SongModel
 import com.example.kookplayer.utlis.DatabaseConverterUtils
 import com.example.kookplayer.views.Fragments.LibraryFragment
-import com.example.kookplayer.views.MainActivity
+import com.example.kookplayer.views.activities.MainActivity
 import kotlinx.android.synthetic.*
 import kotlinx.coroutines.*
 
@@ -91,14 +91,14 @@ object MyDatabaseUtils {
         return pls
     }
 
-    fun removeSongFromPlaylistObject(playlist: PlaylistModel, songsId: String) {
+    private fun removeSongFromPlaylistObject(playlist: PlaylistModel, songsId: String) {
         val songsInAray = DatabaseConverterUtils.stringToArraylist(playlist.songs)
         songsInAray.remove(songsId)
         val songsInString = DatabaseConverterUtils.arraylistToString(songsInAray)
         playlist.songs = songsInString
     }
 
-    fun decreaseCountInDatabase(playlistId: Long, countOfSongs: Int) {
+    private fun decreaseCountInDatabase(playlistId: Long, countOfSongs: Int) {
 
         GlobalScope.launch {
             localDatabase.playlistDao()
