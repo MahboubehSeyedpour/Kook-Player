@@ -17,7 +17,7 @@ import com.example.kookplayer.helper.Coordinator
 import com.example.kookplayer.views.activities.MainActivity
 
 
-private const val CHANNEL_ID = "player_channel_id"
+//private const val CHANNEL_ID = "player_channel_id"
 
 
 class NotificationPlayerService : Service() {
@@ -91,7 +91,7 @@ class NotificationPlayerService : Service() {
             PendingIntent.getBroadcast(this, 0, intentPrev, PendingIntent.FLAG_UPDATE_CURRENT)
 
 
-        notification = NotificationCompat.Builder(this, CHANNEL_ID)
+        notification = NotificationCompat.Builder(this, getString(R.string.notification_channel_id))
             .setContentTitle(Coordinator.currentPlayingSong?.title)
             .setNotificationSilent()
             .setContentText(Coordinator.currentPlayingSong?.artistName ?: "")
@@ -126,7 +126,7 @@ class NotificationPlayerService : Service() {
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val serviceChannel = NotificationChannel(
-                CHANNEL_ID, "Foreground Service Channel",
+                getString(R.string.notification_channel_id), "Foreground Service Channel",
                 NotificationManager.IMPORTANCE_DEFAULT
             )
             serviceChannel.description =

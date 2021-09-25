@@ -30,7 +30,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!-- Notification-->
-    <string name="notification_channel_id">channel1</string>
+    <string name="notification_channel_id">player_channel_id</string>
     <string name="notification_description">The playing notification provides actions for play/pause etc.</string>
     <string name="notification_action_previous">action_previous</string>
     <string name="notification_action_play">action_play</string>
