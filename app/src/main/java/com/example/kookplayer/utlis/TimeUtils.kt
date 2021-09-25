@@ -1,22 +1,19 @@
 package com.example.kookplayer.utlis
 
 import com.example.kookplayer.views.Fragments.LibraryFragment
+import java.util.*
 
-object TimeUtils
-{
-    fun milliSecToDuration(duration: Long): String {
-        val minutes = duration / 1000 / 60
-        val seconds = duration / 1000 % 60
+object TimeUtils {
+    fun getReadableDuration(durationInMilliSeconds: Long): String {
 
-        if (minutes <10)
-        {
-            if(seconds <10)
-            {
-                return "0$minutes:0$seconds"
-            }
-            return "0$minutes:$seconds"
-        }
-        return "$minutes:$seconds"
+        val minutes = durationInMilliSeconds / 1000 / 60
+        val seconds = durationInMilliSeconds / 1000 % 60
+
+        return if (minutes < 60)
+            String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
+        else
+            String.format(Locale.getDefault(), "%03d:%02d", minutes, seconds)
+
     }
 
     fun getDurationOfCurrentMusic(): String {

@@ -1,6 +1,6 @@
 package com.example.kookplayer.adapter
 
-import SongUtils
+import com.example.kookplayer.utlis.SongUtils
 import android.app.Activity
 import android.net.Uri
 import android.os.Build
@@ -52,7 +52,7 @@ class SongsAdapter(
         this.position = position
         viewHolder = holder as RecyclerViewViewHolder
         viewHolder.title.text = song.title
-        viewHolder.duration.text = song.duration?.let { TimeUtils.milliSecToDuration(it) }
+        viewHolder.duration.text = song.duration?.let { TimeUtils.getReadableDuration(it) }
         viewHolder.artist.text = song.artist
         song.image?.let {
             ImageUtils.loadImageToImageView(
@@ -110,7 +110,7 @@ class SongsAdapter(
 
             }
             R.id.deleteFromDevice_menu_item -> {
-//                SongUtils.context = LibraryFragment.mactivity.baseContext
+//                com.example.kookplayer.utlis.SongUtils.context = LibraryFragment.mactivity.baseContext
 
 
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R)

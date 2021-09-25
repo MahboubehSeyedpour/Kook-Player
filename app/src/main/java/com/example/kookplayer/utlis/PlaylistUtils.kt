@@ -5,9 +5,9 @@ import android.content.Context
 import android.database.Cursor
 import android.provider.MediaStore
 import com.example.kookplayer.R
-import com.example.kookplayer.repositories.SongsRepository
 import com.example.kookplayer.db.entities.PlaylistModel
 import com.example.kookplayer.db.entities.SongModel
+import com.example.kookplayer.repositories.SongsRepository
 
 
 object PlaylistUtils {
@@ -28,7 +28,8 @@ object PlaylistUtils {
 
         val countOfSongs = 0
         val songs = arrayListOf<String>()
-        val playlist = PlaylistModel(name, countOfSongs, DatabaseConverterUtils.arraylistToString(songs))
+        val playlist =
+            PlaylistModel(name, countOfSongs, DatabaseConverterUtils.arraylistToString(songs))
         return playlist
     }
 
@@ -39,9 +40,6 @@ object PlaylistUtils {
             val where = MediaStore.Audio.Playlists._ID + "=?"
             val whereVal = arrayOf(playlistId)
             resolver?.delete(MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI, where, whereVal)
-
-
-
 
 
         } catch (exception: Exception) {
@@ -87,41 +85,41 @@ object PlaylistUtils {
 //            }
 //        }
 
-    }
+}
 
 
-    fun getPlaylistSize(context: Context, playlisId: Long): Int {
-        var count = 0
-        val uri = MediaStore.Audio.Playlists.Members.getContentUri("external", playlisId)
+fun getPlaylistSize(context: Context, playlisId: Long): Int {
+    var count = 0
+    val uri = MediaStore.Audio.Playlists.Members.getContentUri("external", playlisId)
 
-        val projection = arrayOf(MediaStore.Audio.Playlists.Members._ID)
-        val selection = MediaStore.Audio.Media.IS_MUSIC + " != 0"
+    val projection = arrayOf(MediaStore.Audio.Playlists.Members._ID)
+    val selection = MediaStore.Audio.Media.IS_MUSIC + " != 0"
 
-        val cursor: Cursor? = context.contentResolver.query(uri, projection, selection, null, null)
+    val cursor: Cursor? = context.contentResolver.query(uri, projection, selection, null, null)
 
-        if (cursor != null) {
-            cursor.moveToFirst()
+    if (cursor != null) {
+        cursor.moveToFirst()
 
-            while (!cursor.isAfterLast) {
-                count++
-                cursor.moveToNext()
-            }
-
-            cursor.close()
+        while (!cursor.isAfterLast) {
+            count++
+            cursor.moveToNext()
         }
 
-        return count
+        cursor.close()
     }
 
+    return count
+}
 
-    fun getMusicsRelatedToSpecificPlaylist(
-        context: Context,
-        playlistId: Long
-    ): ArrayList<SongModel> {
 
-        val array = ArrayList<SongModel>()
+fun getMusicsRelatedToSpecificPlaylist(
+    context: Context,
+    playlistId: Long
+): ArrayList<SongModel> {
 
-        val uri = MediaStore.Audio.Playlists.Members.getContentUri("external", playlistId)
+    val array = ArrayList<SongModel>()
+
+    val uri = MediaStore.Audio.Playlists.Members.getContentUri("external", playlistId)
 
 //        val projection = arrayOf(
 //            MediaStore.Audio.Media._ID,
@@ -132,12 +130,12 @@ object PlaylistUtils {
 //            MediaStore.Audio.Media.ALBUM_ID
 //        )
 
-        val projection = context.resources.getStringArray(R.array.playlist_projection)
+    val projection = context.resources.getStringArray(R.array.playlist_projection)
 
-        val selection = "${MediaStore.Audio.Media.IS_MUSIC}  != 0"
-        val sortOrder = "${MediaStore.Audio.Playlists.Members.PLAY_ORDER} ASC"
+    val selection = "${MediaStore.Audio.Media.IS_MUSIC}  != 0"
+    val sortOrder = "${MediaStore.Audio.Playlists.Members.PLAY_ORDER} ASC"
 
-        val cursor = context.contentResolver.query(uri, null, null, null, sortOrder)
+    val cursor = context.contentResolver.query(uri, null, null, null, sortOrder)
 //        val cursor =
 //            FileUtils.fetchFiles(
 //                FileUtils.FILE_TYPES.PLAYLIST,
@@ -148,8 +146,8 @@ object PlaylistUtils {
 //                sortOrder
 //            )
 
-        if (cursor != null) {
-            cursor.moveToFirst()
+    if (cursor != null) {
+        cursor.moveToFirst()
 //            while (cursor != null && cursor.count != 0) {
 ////                val id = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media._ID)).toLong()
 ////                val title = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE))
@@ -165,38 +163,43 @@ object PlaylistUtils {
 //                cursor.moveToNext()
 //            }
 
-            if (cursor != null && cursor.count != 0) {
-                do {
-                    cursor.moveToNext()
-                    array.add(SongsRepository(context).createSongFromCursor(cursor))
-                } while (!cursor.isLast)
-            } else {
+        if (cursor != null && cursor.count != 0) {
+            do {
+                cursor.moveToNext()
+                array.add(SongsRepository(context).createSongFromCursor(cursor))
+            } while (!cursor.isLast)
+        } else {
 //                TODO(handle null cursor)
-            }
-
-            cursor.close()
         }
 
-        return array
+        cursor.close()
     }
 
-    fun deleteFromPlaylist(context: Context, playlistId: Long, trackId: Long) {
+    return array
+}
 
-        try {
-            val uri = MediaStore.Audio.Playlists.Members.getContentUri("external", playlistId)
-            val where = MediaStore.Audio.Playlists.Members._ID + "=?"
-            val whereval = arrayOf(trackId.toString())
-            context.contentResolver.delete(uri, where, whereval)
-        } catch (exception: java.lang.Exception) {
-            //            TODO(handle the exception)
-        }
-    }
+fun deleteFromPlaylist(context: Context, playlistId: Long, trackId: Long) {
 
-    fun playlistItemReorder(context: Context, playlistId: Long, oldPos: Int, newPos: Int) {
-        MediaStore.Audio.Playlists.Members.moveItem(
-            context.contentResolver,
-            playlistId,
-            oldPos,
-            newPos
-        )
+    try {
+        val uri = MediaStore.Audio.Playlists.Members.getContentUri("external", playlistId)
+        val where = MediaStore.Audio.Playlists.Members._ID + "=?"
+        val whereval = arrayOf(trackId.toString())
+        context.contentResolver.delete(uri, where, whereval)
+    } catch (exception: java.lang.Exception) {
+        //            TODO(handle the exception)
     }
+}
+
+fun playlistItemReorder(context: Context, playlistId: Long, oldPos: Int, newPos: Int) {
+    MediaStore.Audio.Playlists.Members.moveItem(
+        context.contentResolver,
+        playlistId,
+        oldPos,
+        newPos
+    )
+}
+
+fun getToTalDuration(): Long {
+//    TODO
+    return -1L
+}

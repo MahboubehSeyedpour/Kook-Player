@@ -1,6 +1,6 @@
 package com.example.kookplayer.db
 
-import SongUtils
+import com.example.kookplayer.utlis.SongUtils
 import androidx.lifecycle.lifecycleScope
 import com.example.kookplayer.db.entities.Favorites
 import com.example.kookplayer.db.entities.PlaylistModel

@@ -15,17 +15,6 @@ object ImageUtils {
 
     fun loadImageToImageView(context: Context, imageView: ImageView, image: Bitmap){
         Glide.with(context).load(image).circleCrop().into(imageView)
-
-//        Glide.with(MainActivity.activity.baseContext)
-//            .asBitmap()
-//            .load(image)
-//            .into(object : BitmapImageViewTarget(imageView) {
-//                override fun setResource(resource: Bitmap?) {
-//                    //Play with bitmap
-//                    super.setResource(resource)
-//                }
-//            })
-
     }
 
     fun albumArtUriToBitmap(context: Context, album_id: Long?): Bitmap? {
@@ -40,10 +29,8 @@ object ImageUtils {
             var pfd =
                 context.contentResolver.openFileDescriptor(uri, "r")
             if (pfd != null) {
-                var fd: FileDescriptor? = pfd.fileDescriptor
-                bm = BitmapFactory.decodeFileDescriptor(fd, null, options)
-                pfd = null
-                fd = null
+                var fileDescriptor: FileDescriptor? = pfd.fileDescriptor
+                bm = BitmapFactory.decodeFileDescriptor(fileDescriptor, null, options)
             }
         } catch (exception: java.lang.Exception) {
 //           TODO(handle the exception)

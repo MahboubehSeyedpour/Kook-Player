@@ -38,7 +38,7 @@ class SongDetailsDialog(val song: SongModel) : DialogFragment() {
             if (song.bitrate == "") ""
             else ((song.bitrate)?.toInt()?.div(1000)).toString() + " kb/s"
         binding.detailsFileLengthContent.text =
-            song.duration?.let { TimeUtils.milliSecToDuration(it) }
+            song.duration?.let { TimeUtils.getReadableDuration(it) }
         binding.detailsFilePathContent.text = song.data
 
 

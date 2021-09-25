@@ -164,7 +164,7 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
 
         binding.playerRemote.musicMax.text =
             Coordinator.currentPlayingSong?.duration?.let {
-                TimeUtils.milliSecToDuration(
+                TimeUtils.getReadableDuration(
                     it
                 )
             }
@@ -378,7 +378,7 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
 
     override fun setRemainingTime(remainingTimeInPercentage: Int) {
         binding.playerRemote.musicMin.text =
-            TimeUtils.milliSecToDuration((remainingTimeInPercentage * 1000).toLong())
+            TimeUtils.getReadableDuration((remainingTimeInPercentage * 1000).toLong())
     }
 
     private fun updateWheelProgress(progressInPercentage: Int) {
@@ -397,7 +397,7 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
 
         if (Coordinator.isPlaying()) {
 
-            binding.playerRemote.musicMin?.text = TimeUtils.milliSecToDuration(
+            binding.playerRemote.musicMin?.text = TimeUtils.getReadableDuration(
                 (percent * TimeUtils.getDurationOfCurrentMusic().toLong()).toLong()
             )
         }
