@@ -257,12 +257,10 @@ object RoomRepository : RoomRepositoryInterface{
 
     private fun updateCachedFavArray(song: SongModel)
     {
-        for (favSongs in cachedFavArray)
-        {
-            if(favSongs.id!! == song!!.id)
-            {
-                cachedFavArray.remove(favSongs)
-            }
+        val iter: MutableIterator<SongModel> = cachedFavArray.iterator()
+
+        while (iter.hasNext()) {
+            if (iter.next().id!! == song!!.id) iter.remove()
         }
     }
 
