@@ -16,7 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kookplayer.R
 import com.example.kookplayer.adapter.SongsAdapter
-import com.example.kookplayer.db.MyDatabaseUtils
+import com.example.kookplayer.repositories.RoomRepository
 import com.example.kookplayer.db.entities.PlaylistModel
 import com.example.kookplayer.db.entities.SongModel
 import com.example.kookplayer.helper.Coordinator
@@ -106,11 +106,11 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
 
                     selectedSong = songModel
 
-                    if (MyDatabaseUtils.cashedPlaylistArray != null) {
-                        if (MyDatabaseUtils.cashedPlaylistArray.size > 0) {
+                    if (RoomRepository.cachedPlaylistArray != null) {
+                        if (RoomRepository.cachedPlaylistArray.size > 0) {
                             createDialogToSelectPlaylist()
                         } else {
-                            val i = MyDatabaseUtils.cashedPlaylistArray
+                            val i = RoomRepository.cachedPlaylistArray
                             Toast.makeText(
                                 requireActivity().baseContext,
                                 "Please create a playlist first!",
@@ -130,7 +130,7 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
 
         notifyDataSetChanges()
 
-        MyDatabaseUtils.convertFavSongsToRealSongs()
+        RoomRepository.convertFavSongsToRealSongs()
 
         return view
     }
@@ -143,9 +143,9 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
 
     fun createDialogToSelectPlaylist() {
 
-        MyDatabaseUtils.updateCashedPlaylistArray()
+        RoomRepository.updateCachedPlaylist()
 
-        val addSongToPlaylistDialog = MyDatabaseUtils.cashedPlaylistArray?.let {
+        val addSongToPlaylistDialog = RoomRepository.cachedPlaylistArray?.let {
             AddSongToPlaylistDialog(
                 it
             )
@@ -177,7 +177,7 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
     fun addSongToPlaylist(playlist: PlaylistModel) {
         GlobalScope.launch {
 
-            MyDatabaseUtils.addSongsToPlaylist(
+            RoomRepository.addSongsToPlaylist(
                 playlist.name,
                 selectedSong.id.toString()
             )

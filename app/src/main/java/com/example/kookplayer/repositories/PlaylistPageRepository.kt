@@ -2,7 +2,6 @@ package com.example.kookplayer.repositories
 
 import com.example.kookplayer.myInterface.PlaylistPageRepositoryInterface
 import com.example.kookplayer.db.entities.SongModel
-import com.example.kookplayer.db.MyDatabaseUtils
 import com.example.kookplayer.utlis.DatabaseConverterUtils
 import com.example.kookplayer.views.Fragments.LibraryFragment
 import com.example.kookplayer.views.Fragments.PlaylistFragment
@@ -13,7 +12,7 @@ class PlaylistPageRepository(private val playlistId: Long) : PlaylistPageReposit
     override fun getSongsIdFromDatabase(): String {
         var songsOfPlaylist: String = ""
         runBlocking {
-            songsOfPlaylist = MyDatabaseUtils.localDatabase.playlistDao().getSongsOfPlaylist(playlistId)
+            songsOfPlaylist = RoomRepository.localDatabase.playlistDao().getSongsOfPlaylist(playlistId)
         }
         return songsOfPlaylist
     }

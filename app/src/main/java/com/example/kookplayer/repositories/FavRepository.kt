@@ -2,7 +2,6 @@ package com.example.kookplayer.repositories
 
 import com.example.kookplayer.db.entities.Favorites
 import com.example.kookplayer.db.entities.SongModel
-import com.example.kookplayer.db.MyDatabaseUtils
 import com.example.kookplayer.views.Fragments.LibraryFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
@@ -13,13 +12,13 @@ class FavRepository {
     val applicationScope = CoroutineScope(SupervisorJob())
 
     companion object {
-        var cashedFavArray = MyDatabaseUtils.cashedFavArray
+        var cashedFavArray = RoomRepository.cachedFavArray
     }
 
     init {
         applicationScope.launch {
             cashedFavArray =
-                MyDatabaseUtils.cashedFavArray
+                RoomRepository.cachedFavArray
         }
     }
 
@@ -35,7 +34,7 @@ class FavRepository {
 
     fun getFavSongs(): ArrayList<SongModel> {
 
-        return MyDatabaseUtils.cashedFavArray
+        return RoomRepository.cachedFavArray
 
     }
 

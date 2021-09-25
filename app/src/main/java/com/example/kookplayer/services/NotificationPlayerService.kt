@@ -17,9 +17,6 @@ import com.example.kookplayer.helper.Coordinator
 import com.example.kookplayer.views.activities.MainActivity
 
 
-//private const val CHANNEL_ID = "player_channel_id"
-
-
 class NotificationPlayerService : Service() {
 
 
@@ -47,7 +44,6 @@ class NotificationPlayerService : Service() {
         createNotificationChannel()
 
         try {
-//            unregisterReceiver(broadcastNotificationReceiver)
             registerReceiver(broadcastNotificationReceiver, IntentFilter("Songs"))
         } catch (e: Exception) {
         }
@@ -130,7 +126,7 @@ class NotificationPlayerService : Service() {
                 NotificationManager.IMPORTANCE_DEFAULT
             )
             serviceChannel.description =
-                "The playing notification provides actions for play/pause etc."
+                getString(R.string.notification_description)
             val manager = getSystemService(NotificationManager::class.java)
             manager!!.createNotificationChannel(serviceChannel)
         }
@@ -155,8 +151,7 @@ class NotificationPlayerService : Service() {
     private val broadcastNotificationReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         @RequiresApi(Build.VERSION_CODES.O)
         override fun onReceive(context: Context, intent: Intent) {
-            val action = intent.extras!!.getString("actionname")
-            when (action) {
+            when (intent.extras!!.getString(context.getString(R.string.extra_key))) {
                 getString(R.string.notification_action_next) -> Coordinator.playNextSong()
                 getString(R.string.notification_action_play) -> {
                     Coordinator.resume()

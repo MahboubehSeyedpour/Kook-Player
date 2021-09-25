@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
 import com.example.kookplayer.databinding.ActivityMainBinding
-import com.example.kookplayer.db.MyDatabaseUtils
+import com.example.kookplayer.repositories.RoomRepository
 import com.example.kookplayer.helper.Coordinator
 import com.example.kookplayer.player.Enums
 import com.example.kookplayer.services.NotificationPlayerService
@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
         activity = this
 
-        MyDatabaseUtils.createDatabse()
+        RoomRepository.createDatabase()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

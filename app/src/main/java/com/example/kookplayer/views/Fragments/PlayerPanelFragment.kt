@@ -11,13 +11,13 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.example.kookplayer.R
 import com.example.kookplayer.databinding.FragmentPlayerPanelBinding
-import com.example.kookplayer.db.MyDatabaseUtils
-import com.example.kookplayer.db.MyDatabaseUtils.songIsAlreadyLiked
+import com.example.kookplayer.extensions.isFavorite
 import com.example.kookplayer.helper.Coordinator
 import com.example.kookplayer.myInterface.PlayerPanelInterface
 import com.example.kookplayer.player.Enums.PanelState
 import com.example.kookplayer.player.Enums.PanelState.COLLAPSED
 import com.example.kookplayer.player.Enums.PanelState.EXPANDED
+import com.example.kookplayer.repositories.RoomRepository
 import com.example.kookplayer.utlis.ImageUtils
 import com.example.kookplayer.utlis.ScreenSizeUtils
 import com.example.kookplayer.utlis.TimeUtils
@@ -156,7 +156,7 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
         setSongTitle()
         setSongImage()
 
-        if (songIsAlreadyLiked(Coordinator.currentPlayingSong!!)) {
+        if (Coordinator.currentPlayingSong!!.isFavorite()) {
             binding.header.onExpand.like_iv.setImageResource(R.drawable.ic_favored)
         } else {
             binding.header.onExpand.like_iv.setImageResource(R.drawable.ic_unfavored)
@@ -271,16 +271,16 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
     override fun onClick(v: View?) {
         when (v) {
             binding.onExpand.likeIv -> {
-                if (songIsAlreadyLiked(Coordinator.currentPlayingSong!!)) {
+                if (Coordinator.currentPlayingSong!!.isFavorite()) {
 
                     binding.onExpand.likeIv.setImageResource(R.drawable.ic_unfavored)
-                    MyDatabaseUtils.deleteSongFromFav(Coordinator.currentPlayingSong!!)
+                    RoomRepository.removeSongFromFavorites(Coordinator.currentPlayingSong!!)
 
 
                 } else {
                     binding.onExpand.likeIv.setImageResource(R.drawable.ic_favored)
 
-                    MyDatabaseUtils.addSongAsFav(Coordinator.currentPlayingSong!!.id ?: -1)
+                    RoomRepository.addSongToFavorites(Coordinator.currentPlayingSong!!.id ?: -1)
 
                 }
             }

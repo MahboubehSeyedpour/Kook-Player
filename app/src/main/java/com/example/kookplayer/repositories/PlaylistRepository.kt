@@ -3,9 +3,8 @@ package com.example.kookplayer.repositories
 import android.content.ContentValues
 import android.content.Context
 import android.provider.MediaStore
-import com.example.kookplayer.db.MyDatabaseUtils
-import com.example.kookplayer.db.MyDatabaseUtils.cashedPlaylistArray
-import com.example.kookplayer.db.MyDatabaseUtils.localDatabase
+import com.example.kookplayer.repositories.RoomRepository.cachedPlaylistArray
+import com.example.kookplayer.repositories.RoomRepository.localDatabase
 import com.example.kookplayer.myInterface.PlaylistRepoInterface
 import com.example.kookplayer.db.entities.PlaylistModel
 import com.example.kookplayer.utlis.DatabaseConverterUtils
@@ -18,7 +17,7 @@ class PlaylistRepository(val context: Context?) :
     //    ----------------------------------------------- Create Playlist ----------------------------------------------------
     override fun createPlaylist(name: String) {
         val playlist = PlaylistModel(name, 0, "")
-        MyDatabaseUtils.createPlaylist(playlist)
+        RoomRepository.createPlaylist(playlist)
 //       TODO( createPlaylistInStorage())
     }
 
@@ -45,7 +44,7 @@ class PlaylistRepository(val context: Context?) :
 //        removePlaylistFromDatabase(id)
 //        removePlaylistFromStorage(id)
 
-        MyDatabaseUtils.removePlaylist(id)
+        RoomRepository.removePlaylist(id)
 
         return true
     }
@@ -88,8 +87,8 @@ class PlaylistRepository(val context: Context?) :
 
     fun findPlaylistPositionInCachedArray(playlist: PlaylistModel): Int {
         var position: Int = -1
-        while (++position < cashedPlaylistArray.size) {
-            if (cashedPlaylistArray[position].id == playlist.id) {
+        while (++position < cachedPlaylistArray.size) {
+            if (cachedPlaylistArray[position].id == playlist.id) {
                 return position
             }
         }
@@ -162,7 +161,7 @@ class PlaylistRepository(val context: Context?) :
 //
 //        }
 
-        MyDatabaseUtils.removeSongFromPlaylist(playlistId, songsId)
+        RoomRepository.removeSongFromPlaylist(playlistId, songsId)
     }
 
     fun removeSongFromPlaylistObject(playlist: PlaylistModel, songsId: String) {
@@ -183,7 +182,7 @@ class PlaylistRepository(val context: Context?) :
 
 
     fun updateLocalChashe() {
-        cashedPlaylistArray = MyDatabaseUtils.cashedPlaylistArray
+        cachedPlaylistArray = RoomRepository.cachedPlaylistArray
     }
 
     //    ----------------------------------------------- Synchronize Database and Storage ----------------------------------------------------
@@ -242,7 +241,7 @@ class PlaylistRepository(val context: Context?) :
 
     //    ----------------------------------------------- Utils ----------------------------------------------------
     override fun getPlaylists(): ArrayList<PlaylistModel> {
-        return MyDatabaseUtils.cashedPlaylistArray
+        return RoomRepository.cachedPlaylistArray
     }
 
 //    override fun getPlaylistFromDatabase(): ArrayList<PlaylistModel> =
@@ -270,7 +269,7 @@ class PlaylistRepository(val context: Context?) :
 
     override fun getIdByName(name: String): Long {
 
-        for (playlist in MyDatabaseUtils.cashedPlaylistArray) {
+        for (playlist in RoomRepository.cachedPlaylistArray) {
             if (playlist.name == name) {
                 return playlist.id
             }
@@ -280,7 +279,7 @@ class PlaylistRepository(val context: Context?) :
 
 
     override fun getPlaylistById(id: Long): PlaylistModel? {
-        for (playlist in MyDatabaseUtils.cashedPlaylistArray) {
+        for (playlist in RoomRepository.cachedPlaylistArray) {
             if (playlist.id == id) {
                 return playlist
             }

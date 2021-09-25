@@ -13,9 +13,9 @@ import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kookplayer.R
-import com.example.kookplayer.helper.Coordinator
 import com.example.kookplayer.db.entities.SongModel
-import com.example.kookplayer.db.MyDatabaseUtils
+import com.example.kookplayer.helper.Coordinator
+import com.example.kookplayer.repositories.RoomRepository
 import com.example.kookplayer.utlis.ImageUtils
 import com.example.kookplayer.views.activities.MainActivity
 import kotlinx.android.synthetic.main.fav_rv_item.view.*
@@ -69,7 +69,7 @@ class FavAdapter(
 
         viewHolder.likeButton.setOnClickListener { it ->
             viewHolder.likeButton.setImageResource(R.drawable.ic_unfavored)
-            MyDatabaseUtils.deleteSongFromFav(dataset[position])
+            RoomRepository.removeSongFromFavorites(dataset[position])
         }
     }
 

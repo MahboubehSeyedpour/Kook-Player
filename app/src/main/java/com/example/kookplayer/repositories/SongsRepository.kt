@@ -7,10 +7,10 @@ import android.database.Cursor
 import android.media.MediaMetadataRetriever
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio.AudioColumns
+import com.example.kookplayer.db.entities.SongModel
 import com.example.kookplayer.extensions.getInt
 import com.example.kookplayer.extensions.getLong
 import com.example.kookplayer.extensions.getString
-import com.example.kookplayer.db.entities.SongModel
 import com.example.kookplayer.utlis.FileUtils
 import com.example.kookplayer.utlis.ImageUtils
 
@@ -40,7 +40,7 @@ class SongsRepository(val context: Context) {
         val albumId = cursor.getLong(AudioColumns.ALBUM_ID)
         val size = cursor.getString(AudioColumns.SIZE)
 
-        val image = ImageUtils.albumArtUriToBitmap(context, albumId?.toLong())
+        val image = ImageUtils.albumArtUriToBitmap(context, albumId)
             ?: ImageUtils.getDefaultAlbumArt(context)
 
         var bitrate = ""

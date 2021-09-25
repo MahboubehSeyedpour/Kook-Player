@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kookplayer.R
 import com.example.kookplayer.helper.Coordinator
 import com.example.kookplayer.db.entities.SongModel
-import com.example.kookplayer.db.MyDatabaseUtils
+import com.example.kookplayer.repositories.RoomRepository
 import com.example.kookplayer.utlis.ImageUtils
 import com.example.kookplayer.utlis.TimeUtils
 import com.example.kookplayer.views.Fragments.LibraryFragment
@@ -118,15 +118,15 @@ class SongsAdapter(
                     val songid = dataset[position].id
 
                     for (playlistId in songid?.let {
-                        MyDatabaseUtils.listOfPlaylistsContainSpecificSong(
+                        RoomRepository.listOfPlaylistsContainSpecificSong(
                             it
                         )
                     }!!)
                     {
-                        MyDatabaseUtils.removeSongFromPlaylist(playlistId, songid.toString())
+                        RoomRepository.removeSongFromPlaylist(playlistId, songid.toString())
                     }
 
-                    MyDatabaseUtils.deleteSongFromFav(dataset[position])
+                    RoomRepository.removeSongFromFavorites(dataset[position])
 
                     getSongUri(position)?.let { SongUtils.deleteMusic(LibraryFragment.mactivity.baseContext, LibraryFragment.mactivity, it) }
 
