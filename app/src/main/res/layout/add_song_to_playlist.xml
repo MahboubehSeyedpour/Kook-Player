@@ -69,11 +69,11 @@
             android:backgroundTint="#3C3C3C"
             android:elevation="10dp"
             android:gravity="center"
-            android:shadowColor="@color/new_blue"
+            android:shadowColor="@color/blue"
             android:shadowDy="20"
             android:text="Ok"
             android:textAllCaps="false"
-            android:textColor="@color/confirm_btn_txt" />
+            android:textColor="@color/white" />
 
     </LinearLayout>
 

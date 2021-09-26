@@ -38,7 +38,7 @@
         <activity
             android:name="com.example.kookplayer.views.activities.SplashScreen"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.noActionBar">
+            android:theme="@style/Theme.MusicPlayer">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
