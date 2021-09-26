@@ -24,31 +24,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!--    <androidx.cardview.widget.CardView-->
-    <!--        android:id="@+id/cardView"-->
-    <!--        android:layout_width="242dp"-->
-    <!--        android:layout_height="242dp"-->
-    <!--        android:layout_gravity="center"-->
-    <!--        android:layout_margin="10dp"-->
-    <!--        android:elevation="4dp"-->
-    <!--        android:translationZ="10dp"-->
-    <!--        app:cardCornerRadius="170dp"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintHorizontal_bias="0.496"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent"-->
-    <!--        app:layout_constraintVertical_bias="0.27">-->
-
-    <!--        <ImageView-->
-    <!--            android:id="@+id/music_album_image"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="match_parent"-->
-    <!--            app:srcCompat="@mipmap/ic_music_foreground" />-->
-
-
-    <!--    </androidx.cardview.widget.CardView>-->
-
     <io.github.armcha.coloredshadow.ShadowImageView
         android:id="@+id/music_album_image"
         android:layout_width="wrap_content"

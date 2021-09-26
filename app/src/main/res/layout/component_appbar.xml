@@ -27,18 +27,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-<!--        <ImageView-->
-<!--            android:id="@+id/sort_Iv"-->
-<!--            android:layout_width="@dimen/icon_width"-->
-<!--            android:layout_height="@dimen/icon_height"-->
-<!--            android:layout_margin="@dimen/normal_margin"-->
-<!--            android:scaleType="centerCrop"-->
-<!--            android:src="@mipmap/ic_menu_pic_foreground"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintLeft_toRightOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent" />-->
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -52,8 +40,5 @@
         android:layout_height="0dp">
 
     </com.google.android.material.tabs.TabLayout>
-<!--    app:tabIndicatorColor="@color/blue_light"-->
-<!--    app:tabIndicatorFullWidth="false"-->
-<!--    app:tabSelectedTextColor="@color/dark_grey"-->
 
 </com.google.android.material.appbar.AppBarLayout>

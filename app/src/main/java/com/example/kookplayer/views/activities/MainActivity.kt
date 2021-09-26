@@ -141,32 +141,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         val mgr = getSystemService(TELEPHONY_SERVICE) as TelephonyManager
         mgr?.listen(phoneStateListener, PhoneStateListener.LISTEN_CALL_STATE)
 
-
-//        binding.includeToolbar.sortIv.setOnClickListener {
-//
-//            val bottomSheetDialog = Custom_BottomSheetDialogFragment.newInstance()
-//            bottomSheetDialog?.setStyle(
-//                R.style.AppBottomSheetDialogTheme,
-//                R.style.AppBottomSheetDialogTheme
-//            )
-//            bottomSheetDialog?.show(supportFragmentManager, "btmsheet")
-//        }
-//
-
     }
-
-//    override fun onResume() {
-//        super.onResume()
-//
-//        if (prefs?.getBoolean("firstrun", true)!!) {
-//
-//
-//            binding.slidingLayout.panelHeight = 0
-//
-//
-//            prefs!!.edit().putBoolean("firstrun", false).commit();
-//        }
-//    }
 
     fun updateVisibility() {
         binding.slidingLayout.panelHeight = getScreenHeight() * 1 / 10

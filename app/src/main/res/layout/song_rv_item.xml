@@ -48,7 +48,7 @@
             app:layout_constraintEnd_toStartOf="@+id/song_duration"
             app:layout_constraintStart_toEndOf="@+id/music_iv"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="songer name" />
+            tools:text="song title" />
 
         <TextView
             android:id="@+id/song_artist"
@@ -65,7 +65,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/music_iv"
             app:layout_constraintTop_toBottomOf="@+id/song_title"
-            tools:text="singer" />
+            tools:text="artist" />
 
     </LinearLayout>
 

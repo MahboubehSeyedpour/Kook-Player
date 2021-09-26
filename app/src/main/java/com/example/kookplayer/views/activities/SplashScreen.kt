@@ -6,12 +6,17 @@ import android.os.Handler
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kookplayer.R
+import kotlinx.android.synthetic.main.activity_splash.*
 
 @Suppress("DEPRECATION")
 class SplashScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+
+        versionNumber.text =getString(R.string.app_version, packageManager.getPackageInfo(packageName, 0).versionName)
+
 
         // This is used to hide the status bar and make
         // the splash screen as a full screen activity.

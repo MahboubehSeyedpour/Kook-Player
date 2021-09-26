@@ -8,16 +8,6 @@
     android:minHeight="50dp"
     app:cardCornerRadius="20dp">
 
-
-    <!--        <androidx.recyclerview.widget.RecyclerView-->
-    <!--            -->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:maxHeight="500dp"-->
-    <!--            app:layout_constraintEnd_toEndOf="parent"-->
-    <!--            app:layout_constraintStart_toStartOf="parent"-->
-    <!--            app:layout_constraintTop_toTopOf="parent"-->
-    <!--            tools:listitem="@layout/add_song_to_playlist_dialog_item" />-->
     <LinearLayout
         android:id="@+id/add_song_to_playlist_layout"
         android:layout_width="wrap_content"
@@ -39,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="20dp"
-                android:text="Choose Playlists"
+                android:text="@string/selectPlaylistDialogTitle"
                 android:textColor="#3C3C3C"
                 android:textSize="@dimen/title_size"
                 android:textStyle="bold"
@@ -71,7 +61,7 @@
             android:gravity="center"
             android:shadowColor="@color/blue"
             android:shadowDy="20"
-            android:text="Ok"
+            android:text="@string/ok"
             android:textAllCaps="false"
             android:textColor="@color/white" />
 

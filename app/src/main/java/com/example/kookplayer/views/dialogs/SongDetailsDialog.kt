@@ -29,14 +29,14 @@ class SongDetailsDialog(val song: SongModel) : DialogFragment() {
 
         binding.detailsFileSizeContent.text =
             getString(
-                R.string.MB_suffixes,
+                R.string.file_size,
                 (((song.size)?.toFloat()?.div(1024))?.div(1024))?.toInt()
             )
         binding.detailsFileNameContent.text = song.title
 
         binding.detailsFileBitrateContent.text =
             if (song.bitrate == "") ""
-            else ((song.bitrate)?.toInt()?.div(1000)).toString() + " kb/s"
+            else getString(R.string.file_bitrate, ((song.bitrate)?.toInt()?.div(1000)).toString())
         binding.detailsFileLengthContent.text =
             song.duration?.let { TimeUtils.getReadableDuration(it) }
         binding.detailsFilePathContent.text = song.data

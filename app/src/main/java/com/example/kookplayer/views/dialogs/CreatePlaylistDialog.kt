@@ -9,8 +9,8 @@ import android.view.animation.AnimationUtils
 import androidx.fragment.app.DialogFragment
 import com.example.kookplayer.R
 import com.example.kookplayer.databinding.CreatePlaylistDialogBinding
-import com.example.kookplayer.repositories.RoomRepository
 import com.example.kookplayer.myInterface.PassData
+import com.example.kookplayer.repositories.RoomRepository
 import com.example.kookplayer.utlis.ScreenSizeUtils
 import kotlinx.android.synthetic.main.create_playlist_dialog.*
 import kotlinx.android.synthetic.main.create_playlist_dialog.view.*
@@ -61,12 +61,12 @@ class CreatePlaylistDialog : DialogFragment() {
                 val shake: Animation =
                     AnimationUtils.loadAnimation(this@CreatePlaylistDialog.context, R.anim.shake)
                 binding.addPlaylistLayout.startAnimation(shake)
-                binding.textField.error = "Please enter a name"
+                binding.textField.error = getString(R.string.no_name_error)
             } else if (isUnique(binding.textField.playlist_name.text.toString())) {
                 val shake: Animation =
                     AnimationUtils.loadAnimation(this@CreatePlaylistDialog.context, R.anim.shake)
                 binding.addPlaylistLayout.startAnimation(shake)
-                binding.textField.error = "Duplicate name"
+                binding.textField.error = getString(R.string.duplicate_name_error)
             } else {
                 val targetFragment = targetFragment
                 val passData: PassData = targetFragment as PassData

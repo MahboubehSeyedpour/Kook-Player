@@ -16,11 +16,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kookplayer.R
 import com.example.kookplayer.adapter.SongsAdapter
-import com.example.kookplayer.repositories.RoomRepository
 import com.example.kookplayer.db.entities.PlaylistModel
 import com.example.kookplayer.db.entities.SongModel
 import com.example.kookplayer.helper.Coordinator
 import com.example.kookplayer.myInterface.PassDataForSelectPlaylists
+import com.example.kookplayer.repositories.RoomRepository
 import com.example.kookplayer.viewModel.SongsViewModel
 import com.example.kookplayer.views.dialogs.AddSongToPlaylistDialog
 import kotlinx.android.synthetic.main.fragment_library.*
@@ -113,14 +113,14 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
                             val i = RoomRepository.cachedPlaylistArray
                             Toast.makeText(
                                 requireActivity().baseContext,
-                                "Please create a playlist first!",
+                                getString(R.string.createPlaylist_error),
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
                     } else {
                         Toast.makeText(
                             requireActivity().baseContext,
-                            "Please create a playlist first!",
+                            getString(R.string.createPlaylist_error),
                             Toast.LENGTH_SHORT
                         ).show()
                     }

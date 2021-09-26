@@ -11,9 +11,10 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kookplayer.R
-import com.example.kookplayer.repositories.PlaylistRepository
 import com.example.kookplayer.db.entities.PlaylistModel
+import com.example.kookplayer.repositories.PlaylistRepository
 import com.example.kookplayer.views.Fragments.PlaylistFragment
+import com.example.kookplayer.views.activities.MainActivity
 import kotlinx.android.synthetic.main.playlist_item.view.*
 
 class PlaylistAdapter(
@@ -42,9 +43,8 @@ class PlaylistAdapter(
             holder as PlaylistAdapter.RecyclerViewViewHolder
         viewHolder.name.text = playlist.name
         val playlistRepository = PlaylistRepository(context)
-        val playlistId = playlistRepository.getIdByName(playlist.name)
 
-        viewHolder.countOfSongs.text = playlist.countOfSongs.toString()
+        viewHolder.countOfSongs.text = MainActivity.activity.getString(R.string.countOfSongsInPlaylist, playlist.countOfSongs.toString())
 
         viewHolder.playlistItem.setOnClickListener {
 

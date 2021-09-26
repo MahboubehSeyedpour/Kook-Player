@@ -11,7 +11,7 @@
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create Playlist"
+        android:text="@string/createPlaylistTitle"
         android:textColor="#3C3C3C"
         android:textSize="@dimen/title_size"
         android:textStyle="bold"
@@ -60,7 +60,7 @@
             android:elevation="10dp"
             android:shadowColor="@color/blue"
             android:shadowDy="20"
-            android:text="Cancel"
+            android:text="@string/cancel"
             android:textAllCaps="false" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -74,7 +74,7 @@
             android:shadowDy="20"
             android:elevation="10dp"
             android:shadowColor="@color/blue"
-            android:text="Ok"
+            android:text="@string/ok"
             android:textAllCaps="false"
             android:textColor="@color/white" />
 
