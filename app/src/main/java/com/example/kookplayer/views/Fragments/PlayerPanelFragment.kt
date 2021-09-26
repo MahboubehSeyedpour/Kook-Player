@@ -21,6 +21,7 @@ import com.example.kookplayer.repositories.RoomRepository
 import com.example.kookplayer.utlis.ImageUtils
 import com.example.kookplayer.utlis.ScreenSizeUtils
 import com.example.kookplayer.utlis.TimeUtils
+import com.example.kookplayer.views.activities.MainActivity
 import com.frolo.waveformseekbar.WaveformSeekBar
 import kotlinx.android.synthetic.main.fragment_player_panel.view.*
 import kotlinx.android.synthetic.main.panel_header_on_collapsed.view.*
@@ -230,9 +231,11 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
                     seekTo(mCurrentPosition)
                     setRemainingTime(mCurrentPosition)
 
-
                     if (mCurrentPosition == duration?.toInt()?.minus(3) ?: 0) {
-                        Coordinator.playNextSong()
+                        Coordinator.takeActionBasedOnRepeatMode(
+                            MainActivity.activity.getString(R.string.onSongCompletion),
+                            MainActivity.activity.getString(R.string.play_next)
+                        )
                     }
                 }
                 mHandler.postDelayed(this, 1000)

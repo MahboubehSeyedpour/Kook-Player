@@ -1,9 +1,8 @@
 package com.example.kookplayer.myInterface
 
 import android.content.Context
-import com.example.kookplayer.player.Enums
-import com.example.kookplayer.helper.MediaPlayerAgent
 import com.example.kookplayer.db.entities.SongModel
+import com.example.kookplayer.helper.MediaPlayerAgent
 
 interface CoordinatorInterface {
 
@@ -27,8 +26,6 @@ interface CoordinatorInterface {
 
 //    update
     fun updateNowPlayingQueue()
-    fun changePlayingMode(order : Enums.PlayingOrder) // update State & shuffle , repeat all or repeat one
-
 
 //   get Status
     fun isPlaying(): Boolean

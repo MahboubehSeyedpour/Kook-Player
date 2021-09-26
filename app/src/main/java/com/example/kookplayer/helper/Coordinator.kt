@@ -1,12 +1,10 @@
 package com.example.kookplayer.helper
 
 import android.content.Context
-import android.os.Build
 import android.support.v4.media.session.PlaybackStateCompat
-import androidx.annotation.RequiresApi
-import com.example.kookplayer.myInterface.CoordinatorInterface
-import com.example.kookplayer.player.Enums
+import com.example.kookplayer.R
 import com.example.kookplayer.db.entities.SongModel
+import com.example.kookplayer.myInterface.CoordinatorInterface
 import com.example.kookplayer.views.Fragments.LibraryFragment.Library.songsAdapter
 import com.example.kookplayer.views.activities.MainActivity
 
@@ -43,45 +41,23 @@ object Coordinator : CoordinatorInterface {
         return mediaPlayerAgent.isPlaying()
     }
 
-    fun getShuffleStatus(): Int {
-        return shuffleMode
-    }
-
-    fun getRepeatOneStatus(): Int {
-        return repeatMode
-    }
-
 
     // -------------------------------------- Commands from buttons in UI --------------------------------------
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun playNextSong() {
 
-        if (hasNext() && repeatMode != PlaybackStateCompat.REPEAT_MODE_ONE) {
+        takeActionBasedOnRepeatMode(
+            MainActivity.activity.getString(R.string.onBtnClicked),
+            MainActivity.activity.getString(R.string.play_next)
+        )
 
-            updatePlayerVar(nowPlayingQueue[position + 1])
-            getNextSong().data?.let { play(it) }
-
-        } else {
-
-            takeActionBasedOnRepeateMode()
-
-        }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun playPrevSong() {
 
-        if (hasPrev() && repeatMode != PlaybackStateCompat.REPEAT_MODE_ONE) {
-
-            updatePlayerVar(nowPlayingQueue[position -1])
-            getPrevSong().data?.let { play(it) }
-
-
-        } else {
-
-            takeActionBasedOnRepeateMode()
-
-        }
+        takeActionBasedOnRepeatMode(
+            MainActivity.activity.getString(R.string.onBtnClicked),
+            MainActivity.activity.getString(R.string.play_prev)
+        )
     }
 
 
@@ -91,12 +67,9 @@ object Coordinator : CoordinatorInterface {
     }
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun play(song: String) {
 
         mediaPlayerAgent.playMusic(song)
-
-        position = getCurrentSongPosition()
 
     }
 
@@ -119,8 +92,7 @@ object Coordinator : CoordinatorInterface {
 
     // -------------------------------------- event based functions --------------------------------------
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun takeActionBasedOnRepeateMode() {
+    fun takeActionBasedOnRepeatMode(actionSource: String, requestedAction: String) {
 
         when (repeatMode) {
             PlaybackStateCompat.REPEAT_MODE_ONE -> {
@@ -130,25 +102,67 @@ object Coordinator : CoordinatorInterface {
             }
             PlaybackStateCompat.REPEAT_MODE_ALL -> {
 
-                if (hasNext()) {
-                    getNextSong().data?.let { play(it) }
-                } else {
-                    position = -1
-                    getNextSong().data?.let { play(it) }
+                when (requestedAction) {
+                    MainActivity.activity.getString(R.string.play_next) -> {
+                        if (!hasNext()) {
+                            position = -1
+                        }
+                        getNextSong().data?.let { play(it) }
+                        updatePlayerVar(nowPlayingQueue[position])
+                    }
+                    MainActivity.activity.getString(R.string.play_prev) -> {
+                        if (!hasPrev()) {
+                            position = nowPlayingQueue.size
+                        }
+                        getPrevSong().data?.let { play(it) }
+                        updatePlayerVar(nowPlayingQueue[position])
+                    }
                 }
-                updatePlayerVar(nowPlayingQueue[position])
+
             }
             PlaybackStateCompat.REPEAT_MODE_NONE -> {
 
-                mediaPlayerAgent.pauseMusic()
+                when (actionSource) {
+                    MainActivity.activity.getString(R.string.onSongCompletion) -> {
+                        when(requestedAction)
+                        {
+                            MainActivity.activity.getString(R.string.play_next) ->
+                            {
+                                if (!hasNext()) {
+                                    mediaPlayerAgent.pauseMusic()
+                                }
+                                getNextSong().data?.let { play(it) }
+                                updatePlayerVar(nowPlayingQueue[position])
+                            }
+                        }
+                    }
+                    MainActivity.activity.getString(R.string.onBtnClicked) -> {
+                        when(requestedAction)
+                        {
+                            MainActivity.activity.getString(R.string.play_next) ->
+                            {
+                                if (!hasNext()) {
+//                                    resetPosition
+                                    position = -1
+                                }
+                                getNextSong().data?.let { play(it) }
+                                updatePlayerVar(nowPlayingQueue[position])
+                            }
+                            MainActivity.activity.getString(R.string.play_prev) ->
+                            {
+                                if (!hasPrev()) {
+//                                    resetPosition
+                                    position = nowPlayingQueue.size
+                                }
+                                getPrevSong().data?.let { play(it) }
+                                updatePlayerVar(nowPlayingQueue[position])
+                            }
+                        }
 
+                    }
+                }
             }
         }
-    }
-
-    override fun changePlayingMode(order: Enums.PlayingOrder) {
-
-        updateNowPlayingQueue()
     }
 
 
@@ -168,16 +182,25 @@ object Coordinator : CoordinatorInterface {
         }
 
         when (shuffleMode) {
-            PlaybackStateCompat.SHUFFLE_MODE_NONE -> nowPlayingQueue = currentDataSource
+            PlaybackStateCompat.SHUFFLE_MODE_NONE ->
+            {
+                nowPlayingQueue = currentDataSource
+                updateCurrentPlayingSongPosition()
+            }
             PlaybackStateCompat.SHUFFLE_MODE_ALL -> {
 
-                val lst = currentDataSource.toList()
+                val lst = nowPlayingQueue.toList()
                 val sh_lst = lst.shuffled()
                 val p = sh_lst as ArrayList<SongModel>
 
                 nowPlayingQueue = p
+                updateCurrentPlayingSongPosition()
             }
         }
+    }
+
+    fun updateCurrentPlayingSongPosition() {
+        position = nowPlayingQueue.indexOf(currentPlayingSong)
     }
 
     override fun getCurrentSongPosition(): Int {
@@ -240,11 +263,6 @@ object Coordinator : CoordinatorInterface {
     }
 
     fun getPositionInNowPlayingQueue(): Int {
-        for (song in nowPlayingQueue) {
-            if (song.id == currentPlayingSong?.id) {
-                return nowPlayingQueue.indexOf(song)
-            }
-        }
-        return -1
+        return nowPlayingQueue.indexOf(currentPlayingSong)
     }
 }

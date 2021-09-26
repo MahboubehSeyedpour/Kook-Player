@@ -55,9 +55,14 @@
     <string name="playlists_tab">Playlists</string>
     <string name="favorites_tab">Favorite</string>
 
-    <!-- suffixes-->
+    <!-- Suffixes-->
     <string name="MB_suffixes">%1$d MB</string>
 
+    <!-- Player-->
+    <string name="onBtnClicked">btn</string>
+    <string name="onSongCompletion">com</string>
+    <string name="play_prev">prev</string>
+    <string name="play_next">next</string>
 
 
 </resources>

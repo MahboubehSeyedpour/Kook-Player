@@ -251,11 +251,11 @@ object RoomRepository : RoomRepositoryInterface{
     override fun removeSongFromFavorites(song: SongModel) {
 
         removeSongFromDB(song)
-        updateCachedFavArray(song)
+        removeSongFromCachedFavArray(song)
 
     }
 
-    private fun updateCachedFavArray(song: SongModel)
+    private fun removeSongFromCachedFavArray(song: SongModel)
     {
         val iter: MutableIterator<SongModel> = cachedFavArray.iterator()
 

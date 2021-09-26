@@ -1,7 +1,7 @@
 package com.example.kookplayer.repositories
 
-import com.example.kookplayer.myInterface.PlaylistPageRepositoryInterface
 import com.example.kookplayer.db.entities.SongModel
+import com.example.kookplayer.myInterface.PlaylistPageRepositoryInterface
 import com.example.kookplayer.utlis.DatabaseConverterUtils
 import com.example.kookplayer.views.Fragments.LibraryFragment
 import com.example.kookplayer.views.Fragments.PlaylistFragment
@@ -54,17 +54,6 @@ class PlaylistPageRepository(private val playlistId: Long) : PlaylistPageReposit
 
         PlaylistFragment.viewModel?.playlistRepository?.removeSongFromPlaylist(playlistId, songId)
 
-
-
-
-////          update playlist object
-//            for (playlist in PlaylistFragment.viewModel?.getDataSet()!!) {
-//                if (playlist.id == playlistId) {
-//                    playlist.songs = playlistSongsAfterRemoveItem
-//                    break
-//                }
-//            }
-//        }
     }
 
 }
