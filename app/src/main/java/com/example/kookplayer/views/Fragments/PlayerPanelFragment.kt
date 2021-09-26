@@ -14,15 +14,13 @@ import com.example.kookplayer.databinding.FragmentPlayerPanelBinding
 import com.example.kookplayer.extensions.isFavorite
 import com.example.kookplayer.helper.Coordinator
 import com.example.kookplayer.myInterface.PlayerPanelInterface
-import com.example.kookplayer.player.Enums.PanelState
-import com.example.kookplayer.player.Enums.PanelState.COLLAPSED
-import com.example.kookplayer.player.Enums.PanelState.EXPANDED
 import com.example.kookplayer.repositories.RoomRepository
 import com.example.kookplayer.utlis.ImageUtils
 import com.example.kookplayer.utlis.ScreenSizeUtils
 import com.example.kookplayer.utlis.TimeUtils
 import com.example.kookplayer.views.activities.MainActivity
 import com.frolo.waveformseekbar.WaveformSeekBar
+import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.fragment_player_panel.view.*
 import kotlinx.android.synthetic.main.panel_header_on_collapsed.view.*
 import kotlinx.android.synthetic.main.panel_header_on_expanded.view.*
@@ -46,7 +44,7 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
 
         initBinding(view)
 
-        updatePanelBasedOnState(COLLAPSED)
+        updatePanelBasedOnState(SlidingUpPanelLayout.PanelState.COLLAPSED)
 
         return view
     }
@@ -253,16 +251,16 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
         }
     }
 
-    override fun updatePanelBasedOnState(newState: PanelState) {
+    override fun updatePanelBasedOnState(newState: SlidingUpPanelLayout.PanelState) {
 
         when (newState) {
-            EXPANDED -> {
+            SlidingUpPanelLayout.PanelState.EXPANDED -> {
 
                 binding.header.onExpand.visibility = View.VISIBLE
                 binding.header.onCollapse.visibility = View.GONE
                 switchPlayPauseButton()
             }
-            COLLAPSED -> {
+            SlidingUpPanelLayout.PanelState.COLLAPSED -> {
 
                 binding.header.onCollapse.visibility = View.VISIBLE
                 binding.header.onExpand.visibility = View.GONE

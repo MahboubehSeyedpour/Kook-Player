@@ -11,9 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
 import com.example.kookplayer.databinding.ActivityMainBinding
-import com.example.kookplayer.repositories.RoomRepository
 import com.example.kookplayer.helper.Coordinator
-import com.example.kookplayer.player.Enums
+import com.example.kookplayer.repositories.RoomRepository
 import com.example.kookplayer.services.NotificationPlayerService
 import com.example.kookplayer.utlis.PermissionProvider
 import com.example.kookplayer.utlis.ScreenSizeUtils.getScreenHeight
@@ -110,10 +109,10 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
             ) {
                 when (binding.slidingLayout.panelState) {
                     SlidingUpPanelLayout.PanelState.EXPANDED -> {
-                        playerPanelFragment.updatePanelBasedOnState(Enums.PanelState.EXPANDED)
+                        playerPanelFragment.updatePanelBasedOnState(SlidingUpPanelLayout.PanelState.EXPANDED)
                     }
                     SlidingUpPanelLayout.PanelState.COLLAPSED -> {
-                        playerPanelFragment.updatePanelBasedOnState(Enums.PanelState.COLLAPSED)
+                        playerPanelFragment.updatePanelBasedOnState(SlidingUpPanelLayout.PanelState.COLLAPSED)
 
                     }
                 }

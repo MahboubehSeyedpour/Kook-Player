@@ -1,6 +1,6 @@
 package com.example.kookplayer.myInterface
 
-import com.example.kookplayer.player.Enums
+import com.sothree.slidinguppanel.SlidingUpPanelLayout
 
 interface PlayerPanelInterface {
     fun setDefaultVisibilities()
@@ -21,7 +21,7 @@ interface PlayerPanelInterface {
 
     fun switchPlayPauseButton()  //change play btn to pause and vice versa
 
-    fun updatePanelBasedOnState(newState: Enums.PanelState)
+    fun updatePanelBasedOnState(newState: SlidingUpPanelLayout.PanelState)
 
 
 }
