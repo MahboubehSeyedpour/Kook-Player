@@ -1,6 +1,5 @@
 package com.example.kookplayer.adapter
 
-import com.example.kookplayer.utlis.SongUtils
 import android.app.Activity
 import android.net.Uri
 import android.os.Build
@@ -14,14 +13,16 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kookplayer.R
-import com.example.kookplayer.helper.Coordinator
 import com.example.kookplayer.db.entities.SongModel
+import com.example.kookplayer.helper.Coordinator
 import com.example.kookplayer.repositories.RoomRepository
 import com.example.kookplayer.utlis.ImageUtils
+import com.example.kookplayer.utlis.SongUtils
 import com.example.kookplayer.utlis.TimeUtils
 import com.example.kookplayer.views.Fragments.LibraryFragment
 import com.example.kookplayer.views.activities.MainActivity
 import com.example.kookplayer.views.dialogs.SongDetailsDialog
+import com.wang.avi.AVLoadingIndicatorView
 import kotlinx.android.synthetic.main.song_rv_item.view.*
 
 
@@ -193,6 +194,7 @@ class SongsAdapter(
         val menuBtn: ImageView = itemView.music_menu_btn
         val imageView: ImageView = itemView.music_iv
         val recyclerItem: ConstraintLayout = itemView.song_container
+        val isPlaying: AVLoadingIndicatorView = itemView.song_AVLoading
     }
 
     interface OnDataSend {

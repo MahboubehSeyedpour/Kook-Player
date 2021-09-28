@@ -112,4 +112,7 @@ dependencies {
     //Media controller
     implementation "androidx.media:media:1.4.1"
 
+//    AVLoadingIndicatorView
+    compile 'com.wang.avi:library:2.1.3'
+
 }

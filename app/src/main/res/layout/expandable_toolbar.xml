@@ -7,7 +7,7 @@
         <github.com.st235.lib_expandablebottombar.ExpandableBottomBar
             android:id="@+id/expandable_toolbar_component"
             android:layout_width="0dp"
-            android:layout_height="55dp"
+            android:layout_height="1dp"
             android:layout_margin="10dp"
             android:padding="5dp"
             app:exb_backgroundCornerRadius="15dp"
