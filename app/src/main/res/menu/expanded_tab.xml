@@ -4,19 +4,16 @@
     <item
         android:id="@+id/songs"
         android:title="Songs"
-        android:icon="@drawable/ic_songs_tab"
-        app:exb_color="#FF8888" />
+        android:icon="@drawable/ic_songs_tab" />
 
     <item
         android:id="@+id/playlist"
         android:title="Playlists"
-        android:icon="@drawable/ic_playlist_tab"
-        app:exb_color="#4599FF" />
+        android:icon="@drawable/ic_playlist_tab" />
 
     <item
         android:id="@+id/favorites"
         android:title="Favorite"
-        android:icon="@drawable/ic_unfavored"
-        app:exb_color="#757575" />
+        android:icon="@drawable/ic_unfavored" />
 <!--    #959595-->
 </menu>

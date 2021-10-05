@@ -30,10 +30,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--    <include-->
-<!--        android:id="@+id/expandableToolbar"-->
-<!--        layout="@layout/expandable_toolbar"/>-->
-
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout_home"
         android:layout_width="match_parent"
