@@ -15,7 +15,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kookplayer.R
-import com.example.kookplayer.adapter.RecentlyAddedSongsAdapter
 import com.example.kookplayer.adapter.SongsAdapter
 import com.example.kookplayer.db.entities.PlaylistModel
 import com.example.kookplayer.db.entities.SongModel
@@ -24,7 +23,7 @@ import com.example.kookplayer.myInterface.PassDataForSelectPlaylists
 import com.example.kookplayer.repositories.RoomRepository
 import com.example.kookplayer.viewModel.SongsViewModel
 import com.example.kookplayer.views.dialogs.AddSongToPlaylistDialog
-import kotlinx.android.synthetic.main.fragment_library_v2.*
+import kotlinx.android.synthetic.main.fragment_library.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -33,7 +32,6 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
     companion object Library {
 
         var songsAdapter: SongsAdapter? = null
-        var recentlyAdapter: RecentlyAddedSongsAdapter? = null
 
         lateinit var viewModel: SongsViewModel
 
@@ -64,12 +62,12 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
     override fun onResume() {
         super.onResume()
 
-        val layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        pullToRefresh.setOnRefreshListener {
+            notifyDataSetChanges()
+            pullToRefresh.isRefreshing = false
+        }
 
         songs_rv.layoutManager = LinearLayoutManager(context)
-        recyclerView.layoutManager = layoutManager
-
 
         viewModel.updateDataset()
 
@@ -83,7 +81,7 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
         savedInstanceState: Bundle?
     ): View? {
 
-        val view = inflater.inflate(R.layout.fragment_library_v2, container, false)
+        val view = inflater.inflate(R.layout.fragment_library, container, false)
 
 //        TODO(check if the manifest permissions had been granted)
 //        TODO(take musics in Internal & External storage)
@@ -102,43 +100,8 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
             )
         }
 
-        recentlyAdapter = activity?.let {
-            RecentlyAddedSongsAdapter(
-                it,
-                viewModel.dataset.value as ArrayList<SongModel>
-            )
-        }
-
         songsAdapter?.OnDataSend(
             object : SongsAdapter.OnDataSend {
-                override fun onSend(context: Activity, songModel: SongModel) {
-
-                    selectedSong = songModel
-
-                    if (RoomRepository.cachedPlaylistArray != null) {
-                        if (RoomRepository.cachedPlaylistArray.size > 0) {
-                            createDialogToSelectPlaylist()
-                        } else {
-                            val i = RoomRepository.cachedPlaylistArray
-                            Toast.makeText(
-                                requireActivity().baseContext,
-                                getString(R.string.createPlaylist_error),
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    } else {
-                        Toast.makeText(
-                            requireActivity().baseContext,
-                            getString(R.string.createPlaylist_error),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-            }
-        )
-
-        recentlyAdapter?.OnDataSend(
-            object : RecentlyAddedSongsAdapter.OnDataSend {
                 override fun onSend(context: Activity, songModel: SongModel) {
 
                     selectedSong = songModel
@@ -175,9 +138,7 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
 
     private val songListUpdateObserver = Observer<ArrayList<Any>> { dataset ->
         songsAdapter?.dataset = dataset as ArrayList<SongModel>
-        recentlyAdapter?.dataset = dataset as ArrayList<SongModel>
         songs_rv.adapter = songsAdapter
-        recyclerView.adapter = recentlyAdapter
     }
 
     fun createDialogToSelectPlaylist() {

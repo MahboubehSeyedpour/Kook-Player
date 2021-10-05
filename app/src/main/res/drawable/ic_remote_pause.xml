@@ -3,10 +3,19 @@
     android:height="24dp"
     android:viewportWidth="512"
     android:viewportHeight="512">
-  <path
-      android:fillColor="@color/white"
-      android:pathData="M181.333,0H74.667c-17.643,0 -32,14.357 -32,32v448c0,17.643 14.357,32 32,32h106.667c17.643,0 32,-14.357 32,-32V32C213.333,14.357 198.976,0 181.333,0z"/>
-  <path
-      android:fillColor="@color/white"
-      android:pathData="M437.333,0H330.667c-17.643,0 -32,14.357 -32,32v448c0,17.643 14.357,32 32,32h106.667c17.643,0 32,-14.357 32,-32V32C469.333,14.357 454.976,0 437.333,0z"/>
+    <group
+        android:name="rotation"
+        android:pivotX="300.0"
+        android:pivotY="300.0">
+        <path
+            android:name="v"
+            android:fillColor="@color/white"
+            android:pathData="M437.333,0H330.667c-17.643,0 -32,14.357 -32,32v448c0,17.643 14.357,32 32,32h106.667c17.643,0 32,-14.357 32,-32V32C469.333,14.357 454.976,0 437.333,0z" />
+    </group>
+    <path
+        android:fillColor="@color/white"
+        android:pathData="M181.333,0H74.667c-17.643,0 -32,14.357 -32,32v448c0,17.643 14.357,32 32,32h106.667c17.643,0 32,-14.357 32,-32V32C213.333,14.357 198.976,0 181.333,0z" />
+    <path
+        android:fillColor="@color/white"
+        android:pathData="M437.333,0H330.667c-17.643,0 -32,14.357 -32,32v448c0,17.643 14.357,32 32,32h106.667c17.643,0 32,-14.357 32,-32V32C469.333,14.357 454.976,0 437.333,0z" />
 </vector>
