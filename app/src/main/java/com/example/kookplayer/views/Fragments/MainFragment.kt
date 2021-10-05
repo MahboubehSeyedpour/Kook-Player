@@ -9,7 +9,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.kookplayer.R
 import com.example.kookplayer.adapter.ViewPagerFragmentAdapter
 import com.example.kookplayer.databinding.FragmentMainBinding
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 
@@ -55,59 +54,59 @@ class MainFragment : Fragment() {
         }.attach()
 
 
-        binding.toolbar.expandableToolbar.expandableToolbarComponent.onItemSelectedListener =
-            { view, menuItem, b ->
-                when (menuItem.text) {
-                    getString(R.string.songs_tab) -> {
+//        binding.toolbar.expandableToolbar.expandableToolbarComponent.onItemSelectedListener =
+//            { view, menuItem, b ->
+//                when (menuItem.text) {
+//                    getString(R.string.songs_tab) -> {
+//
+//                        binding.viewpager.setCurrentItem(0, true)
+//                    }
+//
+//                    getString(R.string.playlists_tab) -> {
+//
+//                        binding.viewpager.setCurrentItem(1, true)
+//                    }
+//                    getString(R.string.favorites_tab) -> {
+//
+//                        binding.viewpager.setCurrentItem(2, true)
+//                    }
+//                }
+//            }
 
-                        binding.viewpager.setCurrentItem(0, true)
-                    }
-
-                    getString(R.string.playlists_tab) -> {
-
-                        binding.viewpager.setCurrentItem(1, true)
-                    }
-                    getString(R.string.favorites_tab) -> {
-
-                        binding.viewpager.setCurrentItem(2, true)
-                    }
-                }
-            }
-
-        binding.toolbar.tabLayoutHome.addOnTabSelectedListener(object :
-            TabLayout.OnTabSelectedListener {
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-
-                when (tab?.text) {
-                    "Library" -> binding.toolbar.expandableToolbar.expandableToolbarComponent.menu.select(
-                        R.id.songs
-                    )
-                    "Playlists" -> binding.toolbar.expandableToolbar.expandableToolbarComponent.menu.select(
-                        R.id.playlist
-                    )
-                    "Favorite" -> binding.toolbar.expandableToolbar.expandableToolbarComponent.menu.select(
-                        R.id.favorites
-                    )
-                }
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-            }
-
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                when (tab?.text) {
-                    "Library" -> binding.toolbar.expandableToolbar.expandableToolbarComponent.menu.select(
-                        R.id.songs
-                    )
-                    "Playlists" -> binding.toolbar.expandableToolbar.expandableToolbarComponent.menu.select(
-                        R.id.playlist
-                    )
-                    "Favorite" -> binding.toolbar.expandableToolbar.expandableToolbarComponent.menu.select(
-                        R.id.favorites
-                    )
-                }
-
-            }
-        })
+//        binding.toolbar.tabLayoutHome.addOnTabSelectedListener(object :
+//            TabLayout.OnTabSelectedListener {
+//            override fun onTabReselected(tab: TabLayout.Tab?) {
+//
+//                when (tab?.text) {
+//                    "Library" -> binding.toolbar.expandableToolbar.expandableToolbarComponent.menu.select(
+//                        R.id.songs
+//                    )
+//                    "Playlists" -> binding.toolbar.expandableToolbar.expandableToolbarComponent.menu.select(
+//                        R.id.playlist
+//                    )
+//                    "Favorite" -> binding.toolbar.expandableToolbar.expandableToolbarComponent.menu.select(
+//                        R.id.favorites
+//                    )
+//                }
+//            }
+//
+//            override fun onTabUnselected(tab: TabLayout.Tab?) {
+//            }
+//
+//            override fun onTabSelected(tab: TabLayout.Tab?) {
+//                when (tab?.text) {
+//                    "Library" -> binding.toolbar.expandableToolbar.expandableToolbarComponent.menu.select(
+//                        R.id.songs
+//                    )
+//                    "Playlists" -> binding.toolbar.expandableToolbar.expandableToolbarComponent.menu.select(
+//                        R.id.playlist
+//                    )
+//                    "Favorite" -> binding.toolbar.expandableToolbar.expandableToolbarComponent.menu.select(
+//                        R.id.favorites
+//                    )
+//                }
+//
+//            }
+//        })
     }
 }
