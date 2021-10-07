@@ -2,7 +2,7 @@ package com.example.kookplayer.myInterface
 
 import com.example.kookplayer.db.entities.PlaylistModel
 
-interface PlaylistRepoInterface {
+interface IPlaylistRepo {
 
 //    val localDatabase: MyDatabase
 

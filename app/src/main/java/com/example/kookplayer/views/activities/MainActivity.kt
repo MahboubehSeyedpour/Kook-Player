@@ -11,13 +11,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
 import com.example.kookplayer.databinding.ActivityMainBinding
-import com.example.kookplayer.helper.Coordinator
-import com.example.kookplayer.repositories.RoomRepository
+import com.example.kookplayer.helper.ICoordinator
+import com.example.kookplayer.repositories.IRoomRepository
 import com.example.kookplayer.services.NotificationPlayerService
 import com.example.kookplayer.utlis.PermissionProvider
 import com.example.kookplayer.utlis.ScreenSizeUtils.getScreenHeight
 import com.example.kookplayer.views.Fragments.MainFragment
-import com.example.kookplayer.views.Fragments.PlayerPanelFragment
+import com.example.kookplayer.views.Fragments.IPlayerPanelFragment
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 
 
@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
     companion object {
         var permissionsGranted: Boolean = false
-        lateinit var playerPanelFragment: PlayerPanelFragment
+        lateinit var playerPanelFragment: IPlayerPanelFragment
         lateinit var activity: MainActivity
 
     }
@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
         NotificationPlayerService.stopNotification(baseContext)
 
-        Coordinator.mediaPlayerAgent.stop()
+        ICoordinator.mediaPlayerAgent.stop()
     }
 
     override fun onBackPressed() {
@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
         activity = this
 
-        RoomRepository.createDatabase()
+        IRoomRepository.createDatabase()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -123,17 +123,17 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
             override fun onCallStateChanged(state: Int, incomingNumber: String) {
                 if (state == TelephonyManager.CALL_STATE_RINGING) {
                     //Incoming call: Pause music
-                    if (Coordinator.isPlaying())
-                        Coordinator.pause()
+                    if (ICoordinator.isPlaying())
+                        ICoordinator.pause()
                 } else if (state == TelephonyManager.CALL_STATE_IDLE) {
                     //Not in call: Play music
-                    if (Coordinator.currentPlayingSong != null) {
+                    if (ICoordinator.currentPlayingSong != null) {
 
                     }
                 } else if (state == TelephonyManager.CALL_STATE_OFFHOOK) {
                     //A call is dialing, active or on hold
-                    if (Coordinator.isPlaying())
-                        Coordinator.pause()
+                    if (ICoordinator.isPlaying())
+                        ICoordinator.pause()
                 }
                 super.onCallStateChanged(state, incomingNumber)
             }
@@ -161,7 +161,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
     private fun initBottomSheet() {
 
-        playerPanelFragment = PlayerPanelFragment()
+        playerPanelFragment = IPlayerPanelFragment()
         val fragmentManager: FragmentManager = supportFragmentManager
         val transaction = fragmentManager.beginTransaction()
 //        transaction.addToBackStack("playerPanel")

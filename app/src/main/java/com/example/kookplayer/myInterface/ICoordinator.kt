@@ -4,7 +4,7 @@ import android.content.Context
 import com.example.kookplayer.db.entities.SongModel
 import com.example.kookplayer.helper.MediaPlayerAgent
 
-interface CoordinatorInterface {
+interface ICoordinator {
 
 //    var playingOrder: Enums.PlayingOrder
     var nowPlayingQueue: ArrayList<SongModel>

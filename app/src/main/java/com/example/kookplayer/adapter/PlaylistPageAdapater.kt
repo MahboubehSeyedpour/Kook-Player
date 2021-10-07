@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kookplayer.R
-import com.example.kookplayer.helper.Coordinator
+import com.example.kookplayer.helper.ICoordinator
 import com.example.kookplayer.db.entities.SongModel
 import com.example.kookplayer.utlis.ImageUtils
 import com.example.kookplayer.views.Fragments.PlaylistPageFragment
@@ -47,12 +47,12 @@ class PlaylistPageAdapater(var dataset: ArrayList<SongModel>, val context: Activ
 
         viewHolder.recyclerItem.setOnClickListener {
             updatePosition(newIndex = viewHolder.adapterPosition)
-            Coordinator.SourceOfSelectedSong = playlist_name
-            Coordinator.currentDataSource = dataset
+            ICoordinator.SourceOfSelectedSong = playlist_name
+            ICoordinator.currentDataSource = dataset
 
             MainActivity.activity.updateVisibility()
 
-            Coordinator.playSelectedSong(dataset[position])
+            ICoordinator.playSelectedSong(dataset[position])
 
         }
 

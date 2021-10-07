@@ -10,7 +10,7 @@ import com.example.kookplayer.R
 import com.example.kookplayer.adapter.AddSongToPlaylistAdapter
 import com.example.kookplayer.databinding.AddSongToPlaylistBinding
 import com.example.kookplayer.db.entities.PlaylistModel
-import com.example.kookplayer.myInterface.PassDataForSelectPlaylists
+import com.example.kookplayer.myInterface.IPassDataForSelectPlaylists
 import com.example.kookplayer.utlis.ScreenSizeUtils
 import kotlinx.android.synthetic.main.add_song_to_playlist.view.*
 
@@ -73,8 +73,8 @@ class AddSongToPlaylistDialog(val array: ArrayList<PlaylistModel>) : DialogFragm
         binding.acceptSelectedPlaylistBtn.setOnClickListener {
 
             val targetFragment = targetFragment
-            val passData: PassDataForSelectPlaylists = targetFragment as PassDataForSelectPlaylists
-            passData.passDataToInvokingFragment(AddSongToPlaylistAdapter.choices)
+            val IPassData: IPassDataForSelectPlaylists = targetFragment as IPassDataForSelectPlaylists
+            IPassData.passDataToInvokingFragment(AddSongToPlaylistAdapter.choices)
 
             this.dismiss()
         }

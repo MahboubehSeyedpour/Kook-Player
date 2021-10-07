@@ -4,11 +4,11 @@ import android.content.Context
 import android.support.v4.media.session.PlaybackStateCompat
 import com.example.kookplayer.R
 import com.example.kookplayer.db.entities.SongModel
-import com.example.kookplayer.myInterface.CoordinatorInterface
+import com.example.kookplayer.myInterface.ICoordinator
 import com.example.kookplayer.views.Fragments.LibraryFragment.Library.songsAdapter
 import com.example.kookplayer.views.activities.MainActivity
 
-object Coordinator : CoordinatorInterface {
+object ICoordinator : ICoordinator {
     override lateinit var nowPlayingQueue: ArrayList<SongModel>
 
     override lateinit var mediaPlayerAgent: MediaPlayerAgent

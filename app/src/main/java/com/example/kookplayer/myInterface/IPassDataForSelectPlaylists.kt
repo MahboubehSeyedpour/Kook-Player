@@ -2,6 +2,6 @@ package com.example.kookplayer.myInterface
 
 import com.example.kookplayer.db.entities.PlaylistModel
 
-interface PassDataForSelectPlaylists {
+interface IPassDataForSelectPlaylists {
     fun passDataToInvokingFragment(playlists : ArrayList<PlaylistModel>)
 }

@@ -2,12 +2,12 @@ package com.example.kookplayer.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import com.example.kookplayer.db.entities.SongModel
-import com.example.kookplayer.repositories.PlaylistPageRepository
+import com.example.kookplayer.repositories.IPlaylistPageRepository
 
 class PlaylistPageViewModel() : BaseViewModel() {
 
     override var dataset: MutableLiveData<ArrayList<Any>> = MutableLiveData()
-    lateinit var playlistPageRepository: PlaylistPageRepository
+    lateinit var playlistPageRepository: IPlaylistPageRepository
     private var playlistId: Long = -1L
 
 
@@ -18,7 +18,7 @@ class PlaylistPageViewModel() : BaseViewModel() {
     fun setPlayllistId(pId: Long)
     {
         playlistId = pId
-        playlistPageRepository = PlaylistPageRepository(playlistId)
+        playlistPageRepository = IPlaylistPageRepository(playlistId)
         fillRecyclerView()
     }
 

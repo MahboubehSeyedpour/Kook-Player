@@ -1,6 +1,6 @@
 package com.example.kookplayer.myInterface
 
-interface PassData
+interface IPassData
 {
 
     fun passDataToInvokingFragment(str : String?)

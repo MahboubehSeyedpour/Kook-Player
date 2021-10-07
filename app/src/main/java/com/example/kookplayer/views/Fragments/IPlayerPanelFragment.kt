@@ -12,9 +12,9 @@ import androidx.fragment.app.Fragment
 import com.example.kookplayer.R
 import com.example.kookplayer.databinding.FragmentPlayerPanelBinding
 import com.example.kookplayer.extensions.isFavorite
-import com.example.kookplayer.helper.Coordinator
-import com.example.kookplayer.myInterface.PlayerPanelInterface
-import com.example.kookplayer.repositories.RoomRepository
+import com.example.kookplayer.helper.ICoordinator
+import com.example.kookplayer.myInterface.IPlayerPanel
+import com.example.kookplayer.repositories.IRoomRepository
 import com.example.kookplayer.utlis.ImageUtils
 import com.example.kookplayer.utlis.ScreenSizeUtils
 import com.example.kookplayer.utlis.TimeUtils
@@ -29,7 +29,7 @@ import kotlinx.android.synthetic.main.player_remote.view.*
 import kotlin.random.Random
 
 
-class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListener,
+class IPlayerPanelFragment : Fragment(), IPlayerPanel, View.OnClickListener,
     WaveformSeekBar.OnSeekBarChangeListener {
 
     lateinit var binding: FragmentPlayerPanelBinding
@@ -53,7 +53,7 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         activity?.baseContext?.let {
-            Coordinator.setup(
+            ICoordinator.setup(
                 it
             )
         }
@@ -146,7 +146,7 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
             ImageUtils.loadImageToImageView(
                 it,
                 binding.musicAlbumImage,
-                Coordinator.currentPlayingSong?.image!!
+                ICoordinator.currentPlayingSong?.image!!
             )
         }
     }
@@ -155,14 +155,14 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
         setSongTitle()
         setSongImage()
 
-        if (Coordinator.currentPlayingSong!!.isFavorite()) {
+        if (ICoordinator.currentPlayingSong!!.isFavorite()) {
             binding.header.onExpand.like_iv.setImageResource(R.drawable.ic_favored)
         } else {
             binding.header.onExpand.like_iv.setImageResource(R.drawable.ic_unfavored)
         }
 
         binding.playerRemote.musicMax.text =
-            Coordinator.currentPlayingSong?.duration?.let {
+            ICoordinator.currentPlayingSong?.duration?.let {
                 TimeUtils.getReadableDuration(
                     it
                 )
@@ -170,7 +170,7 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
     }
 
     override fun setSongTitle() {
-        binding.musicTitleTv.text = Coordinator.currentPlayingSong?.title
+        binding.musicTitleTv.text = ICoordinator.currentPlayingSong?.title
     }
 
     override fun getPanelState() {
@@ -188,7 +188,7 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
     override fun seekTo(mCurrentPosition: Int) {
 
         binding.playerRemote.waveformSeekBar.setProgressInPercentage(
-            mCurrentPosition / (Coordinator.currentPlayingSong?.duration?.div(
+            mCurrentPosition / (ICoordinator.currentPlayingSong?.duration?.div(
                 1000F
             )!!)
         )
@@ -197,19 +197,19 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
         if (binding.header.onCollapse.visibility == View.VISIBLE) {
 
             updateWheelProgress(
-                (mCurrentPosition * 360) / ((Coordinator.currentPlayingSong?.duration?.div(
+                (mCurrentPosition * 360) / ((ICoordinator.currentPlayingSong?.duration?.div(
                     1000
                 ))?.toInt() ?: 0)
             )
 
             binding.header.onCollapse.song_title_on_header.text =
-                if (Coordinator.isPlaying()) Coordinator.currentPlayingSong?.title else ""
+                if (ICoordinator.isPlaying()) ICoordinator.currentPlayingSong?.title else ""
 
             context?.let {
                 ImageUtils.loadImageToImageView(
                     it,
                     binding.header.onCollapse.song_image_on_header,
-                    Coordinator.currentPlayingSong?.image!!
+                    ICoordinator.currentPlayingSong?.image!!
                 )
             }
         }
@@ -221,16 +221,16 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
         activity?.runOnUiThread(object : Runnable {
             @RequiresApi(Build.VERSION_CODES.O)
             override fun run() {
-                if (Coordinator.isPlaying()) {
+                if (ICoordinator.isPlaying()) {
 
-                    val mCurrentPosition = Coordinator.getPositionInPlayer() / 1000
-                    val duration = Coordinator.currentPlayingSong?.duration?.div(1000)
+                    val mCurrentPosition = ICoordinator.getPositionInPlayer() / 1000
+                    val duration = ICoordinator.currentPlayingSong?.duration?.div(1000)
 
                     seekTo(mCurrentPosition)
                     setRemainingTime(mCurrentPosition)
 
                     if (mCurrentPosition == duration?.toInt()?.minus(3) ?: 0) {
-                        Coordinator.takeActionBasedOnRepeatMode(
+                        ICoordinator.takeActionBasedOnRepeatMode(
                             MainActivity.activity.getString(R.string.onSongCompletion),
                             MainActivity.activity.getString(R.string.play_next)
                         )
@@ -242,7 +242,7 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
     }
 
     override fun switchPlayPauseButton() {
-        if (Coordinator.isPlaying()) {
+        if (ICoordinator.isPlaying()) {
             binding.playerRemote.pauseBtn.visibility = View.VISIBLE
             binding.playerRemote.playBtn.visibility = View.GONE
         } else {
@@ -272,90 +272,90 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
     override fun onClick(v: View?) {
         when (v) {
             binding.onExpand.likeIv -> {
-                if (Coordinator.currentPlayingSong!!.isFavorite()) {
+                if (ICoordinator.currentPlayingSong!!.isFavorite()) {
 
                     binding.onExpand.likeIv.setImageResource(R.drawable.ic_unfavored)
-                    RoomRepository.removeSongFromFavorites(Coordinator.currentPlayingSong!!)
+                    IRoomRepository.removeSongFromFavorites(ICoordinator.currentPlayingSong!!)
 
 
                 } else {
                     binding.onExpand.likeIv.setImageResource(R.drawable.ic_favored)
 
-                    RoomRepository.addSongToFavorites(Coordinator.currentPlayingSong!!.id ?: -1)
+                    IRoomRepository.addSongToFavorites(ICoordinator.currentPlayingSong!!.id ?: -1)
 
                 }
             }
 
-            binding.playerRemote.nextBtn -> Coordinator.playNextSong()
+            binding.playerRemote.nextBtn -> ICoordinator.playNextSong()
 
-            binding.playerRemote.prevBtn -> Coordinator.playPrevSong()
+            binding.playerRemote.prevBtn -> ICoordinator.playPrevSong()
 
             binding.playerRemote.playOrPauseLayout -> {
 
-                if (Coordinator.isPlaying()) {
-                    Coordinator.pause()
+                if (ICoordinator.isPlaying()) {
+                    ICoordinator.pause()
                 } else {
-                    Coordinator.resume()
+                    ICoordinator.resume()
                 }
                 switchPlayPauseButton()
             }
 
             binding.playerPanel.shuffle_container -> {
-                if (Coordinator.shuffleMode == PlaybackStateCompat.SHUFFLE_MODE_NONE) {
+                if (ICoordinator.shuffleMode == PlaybackStateCompat.SHUFFLE_MODE_NONE) {
 
-                    Coordinator.shuffleMode = PlaybackStateCompat.SHUFFLE_MODE_ALL
+                    ICoordinator.shuffleMode = PlaybackStateCompat.SHUFFLE_MODE_ALL
 
                     binding.playerPanel.shuffle_container.displayedChild = 1
 
-                    Coordinator.updateNowPlayingQueue()
+                    ICoordinator.updateNowPlayingQueue()
 
                 } else {
 
-                    Coordinator.shuffleMode = PlaybackStateCompat.SHUFFLE_MODE_NONE
+                    ICoordinator.shuffleMode = PlaybackStateCompat.SHUFFLE_MODE_NONE
 
                     binding.playerPanel.shuffle_container.displayedChild = 2
 
-                    Coordinator.updateNowPlayingQueue()
+                    ICoordinator.updateNowPlayingQueue()
                 }
             }
 
             binding.playerRemote.repeatContainer -> {
-                when (Coordinator.repeatMode) {
+                when (ICoordinator.repeatMode) {
                     PlaybackStateCompat.REPEAT_MODE_NONE -> {
-                        Coordinator.repeatMode = PlaybackStateCompat.REPEAT_MODE_ALL
+                        ICoordinator.repeatMode = PlaybackStateCompat.REPEAT_MODE_ALL
 
                         binding.playerPanel.repeatContainer.displayedChild = 1
 
-                        Coordinator.updateNowPlayingQueue()
+                        ICoordinator.updateNowPlayingQueue()
                     }
 
                     PlaybackStateCompat.REPEAT_MODE_ALL -> {
-                        Coordinator.repeatMode = PlaybackStateCompat.REPEAT_MODE_ONE
+                        ICoordinator.repeatMode = PlaybackStateCompat.REPEAT_MODE_ONE
 
                         binding.playerPanel.repeatContainer.displayedChild = 2
 
-                        Coordinator.updateNowPlayingQueue()
+                        ICoordinator.updateNowPlayingQueue()
                     }
 
                     PlaybackStateCompat.REPEAT_MODE_ONE -> {
-                        Coordinator.repeatMode = PlaybackStateCompat.REPEAT_MODE_NONE
+                        ICoordinator.repeatMode = PlaybackStateCompat.REPEAT_MODE_NONE
 
                         binding.playerPanel.repeatContainer.displayedChild = 3
 
-                        Coordinator.updateNowPlayingQueue()
+                        ICoordinator.updateNowPlayingQueue()
                     }
                 }
             }
 
             binding.header.onCollapse.play_btn_on_header -> {
 
-                Coordinator.resume()
+                ICoordinator.resume()
                 binding.header.onCollapse.play_btn_on_header.visibility = View.GONE
                 binding.header.onCollapse.pause_btn_on_header.visibility = View.VISIBLE
             }
 
             binding.header.onCollapse.pause_btn_on_header -> {
-                Coordinator.pause()
+                ICoordinator.pause()
                 binding.header.onCollapse.play_btn_on_header.visibility = View.VISIBLE
                 binding.header.onCollapse.pause_btn_on_header.visibility = View.GONE
             }
@@ -396,7 +396,7 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
         fromUser: Boolean
     ) {
 
-        if (Coordinator.isPlaying()) {
+        if (ICoordinator.isPlaying()) {
 
             binding.playerRemote.musicMin?.text = TimeUtils.getReadableDuration(
                 (percent * TimeUtils.getDurationOfCurrentMusic().toLong()).toLong()
@@ -408,7 +408,7 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
     }
 
     override fun onStopTrackingTouch(seekBar: WaveformSeekBar?) {
-        Coordinator.seekTo((waveform_seek_bar.progressPercent * Coordinator.currentPlayingSong?.duration!!).toInt())
+        ICoordinator.seekTo((waveform_seek_bar.progressPercent * ICoordinator.currentPlayingSong?.duration!!).toInt())
     }
 
 }

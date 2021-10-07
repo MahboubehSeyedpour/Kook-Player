@@ -2,7 +2,7 @@ package com.example.kookplayer.myInterface
 
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 
-interface PlayerPanelInterface {
+interface IPlayerPanel {
     fun setDefaultVisibilities()
     fun setSongImage()
     fun setSongTitle()

@@ -15,8 +15,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kookplayer.R
 import com.example.kookplayer.db.entities.SongModel
-import com.example.kookplayer.helper.Coordinator
-import com.example.kookplayer.repositories.RoomRepository
+import com.example.kookplayer.helper.ICoordinator
+import com.example.kookplayer.repositories.IRoomRepository
 import com.example.kookplayer.utlis.ImageUtils
 import com.example.kookplayer.utlis.SongUtils
 import com.example.kookplayer.views.Fragments.LibraryFragment
@@ -67,12 +67,12 @@ class RecentlyAddedSongsAdapter (
 
             viewHolder.recyclerItem.setOnClickListener {
                 updatePosition(newIndex = viewHolder.adapterPosition)
-                Coordinator.SourceOfSelectedSong = "library"
-                Coordinator.currentDataSource = dataset
+                ICoordinator.SourceOfSelectedSong = "library"
+                ICoordinator.currentDataSource = dataset
 
 
                 MainActivity.activity.updateVisibility()
-                Coordinator.playSelectedSong(dataset[position])
+                ICoordinator.playSelectedSong(dataset[position])
 
             }
 
@@ -106,15 +106,15 @@ class RecentlyAddedSongsAdapter (
                         val songid = dataset[position].id
 
                         for (playlistId in songid?.let {
-                            RoomRepository.listOfPlaylistsContainSpecificSong(
+                            IRoomRepository.listOfPlaylistsContainSpecificSong(
                                 it
                             )
                         }!!)
                         {
-                            RoomRepository.removeSongFromPlaylist(playlistId, songid.toString())
+                            IRoomRepository.removeSongFromPlaylist(playlistId, songid.toString())
                         }
 
-                        RoomRepository.removeSongFromFavorites(dataset[position])
+                        IRoomRepository.removeSongFromFavorites(dataset[position])
 
                         getSongUri(position)?.let { SongUtils.deleteMusic(LibraryFragment.mactivity.baseContext, LibraryFragment.mactivity, it) }
 

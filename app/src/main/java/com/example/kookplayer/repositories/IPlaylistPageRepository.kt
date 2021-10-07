@@ -1,18 +1,18 @@
 package com.example.kookplayer.repositories
 
 import com.example.kookplayer.db.entities.SongModel
-import com.example.kookplayer.myInterface.PlaylistPageRepositoryInterface
+import com.example.kookplayer.myInterface.IPlaylistPageRepository
 import com.example.kookplayer.utlis.DatabaseConverterUtils
 import com.example.kookplayer.views.Fragments.LibraryFragment
 import com.example.kookplayer.views.Fragments.PlaylistFragment
 import kotlinx.coroutines.runBlocking
 
-class PlaylistPageRepository(private val playlistId: Long) : PlaylistPageRepositoryInterface {
+class IPlaylistPageRepository(private val playlistId: Long) : IPlaylistPageRepository {
 
     override fun getSongsIdFromDatabase(): String {
         var songsOfPlaylist: String = ""
         runBlocking {
-            songsOfPlaylist = RoomRepository.localDatabase.playlistDao().getSongsOfPlaylist(playlistId)
+            songsOfPlaylist = IRoomRepository.localDatabase.playlistDao().getSongsOfPlaylist(playlistId)
         }
         return songsOfPlaylist
     }

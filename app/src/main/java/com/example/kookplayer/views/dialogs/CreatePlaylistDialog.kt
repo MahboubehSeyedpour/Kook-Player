@@ -9,8 +9,8 @@ import android.view.animation.AnimationUtils
 import androidx.fragment.app.DialogFragment
 import com.example.kookplayer.R
 import com.example.kookplayer.databinding.CreatePlaylistDialogBinding
-import com.example.kookplayer.myInterface.PassData
-import com.example.kookplayer.repositories.RoomRepository
+import com.example.kookplayer.myInterface.IPassData
+import com.example.kookplayer.repositories.IRoomRepository
 import com.example.kookplayer.utlis.ScreenSizeUtils
 import kotlinx.android.synthetic.main.create_playlist_dialog.*
 import kotlinx.android.synthetic.main.create_playlist_dialog.view.*
@@ -69,7 +69,7 @@ class CreatePlaylistDialog : DialogFragment() {
                 binding.textField.error = getString(R.string.duplicate_name_error)
             } else {
                 val targetFragment = targetFragment
-                val passData: PassData = targetFragment as PassData
+                val IPassData: IPassData = targetFragment as IPassData
                 targetFragment.passDataToInvokingFragment(binding.textField.playlist_name.text.toString())
 
                 this.dismiss()
@@ -82,7 +82,7 @@ class CreatePlaylistDialog : DialogFragment() {
     }
 
     private fun isUnique(name: String): Boolean {
-        for (playlist in RoomRepository.cachedPlaylistArray!!) {
+        for (playlist in IRoomRepository.cachedPlaylistArray!!) {
             if (playlist.name == name)
                 return true
         }

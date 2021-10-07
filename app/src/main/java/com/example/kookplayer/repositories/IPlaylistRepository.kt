@@ -4,19 +4,19 @@ import android.content.ContentValues
 import android.content.Context
 import android.provider.MediaStore
 import com.example.kookplayer.db.entities.PlaylistModel
-import com.example.kookplayer.myInterface.PlaylistRepoInterface
-import com.example.kookplayer.repositories.RoomRepository.localDatabase
+import com.example.kookplayer.myInterface.IPlaylistRepo
+import com.example.kookplayer.repositories.IRoomRepository.localDatabase
 import com.example.kookplayer.utlis.DatabaseConverterUtils
 import com.example.kookplayer.utlis.FilePathUtlis
 import kotlinx.coroutines.*
 
-class PlaylistRepository(val context: Context?) :
-    PlaylistRepoInterface {
+class IPlaylistRepository(val context: Context?) :
+    IPlaylistRepo {
 
     //    ----------------------------------------------- Create Playlist ----------------------------------------------------
     override fun createPlaylist(name: String) {
         val playlist = PlaylistModel(name, 0, "")
-        RoomRepository.createPlaylist(playlist)
+        IRoomRepository.createPlaylist(playlist)
 //       TODO( createPlaylistInStorage())
     }
 
@@ -43,7 +43,7 @@ class PlaylistRepository(val context: Context?) :
 //        removePlaylistFromDatabase(id)
 //        removePlaylistFromStorage(id)
 
-        RoomRepository.removePlaylist(id)
+        IRoomRepository.removePlaylist(id)
 
         return true
     }
@@ -68,13 +68,13 @@ class PlaylistRepository(val context: Context?) :
 
     fun removeSongFromPlaylist(playlistId: Long, songsId: String) {
 
-        RoomRepository.removeSongFromPlaylist(playlistId, songsId)
+        IRoomRepository.removeSongFromPlaylist(playlistId, songsId)
     }
 
 
     //    ----------------------------------------------- Utils ----------------------------------------------------
     override fun getPlaylists(): ArrayList<PlaylistModel> {
-        return RoomRepository.cachedPlaylistArray
+        return IRoomRepository.cachedPlaylistArray
     }
 
     override fun getIdOfSongsStoredInPlaylist(plylist_id: Long) =
@@ -91,7 +91,7 @@ class PlaylistRepository(val context: Context?) :
 
     override fun getIdByName(name: String): Long {
 
-        for (playlist in RoomRepository.cachedPlaylistArray) {
+        for (playlist in IRoomRepository.cachedPlaylistArray) {
             if (playlist.name == name) {
                 return playlist.id
             }
@@ -101,7 +101,7 @@ class PlaylistRepository(val context: Context?) :
 
 
     override fun getPlaylistById(id: Long): PlaylistModel? {
-        for (playlist in RoomRepository.cachedPlaylistArray) {
+        for (playlist in IRoomRepository.cachedPlaylistArray) {
             if (playlist.id == id) {
                 return playlist
             }

@@ -16,14 +16,14 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.kookplayer.R
 import com.example.kookplayer.adapter.PlaylistAdapter
 import com.example.kookplayer.db.entities.PlaylistModel
-import com.example.kookplayer.myInterface.PassData
+import com.example.kookplayer.myInterface.IPassData
 import com.example.kookplayer.viewModel.PlaylistViewModel
 import com.example.kookplayer.views.activities.MainActivity
 import com.example.kookplayer.views.dialogs.CreatePlaylistDialog
 import kotlinx.android.synthetic.main.fragment_playlist.*
 
 
-class PlaylistFragment : Fragment(), PassData {
+class PlaylistFragment : Fragment(), IPassData {
 
     var playlistAdapter: PlaylistAdapter? = null
 

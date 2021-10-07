@@ -18,16 +18,16 @@ import com.example.kookplayer.R
 import com.example.kookplayer.adapter.SongsAdapter
 import com.example.kookplayer.db.entities.PlaylistModel
 import com.example.kookplayer.db.entities.SongModel
-import com.example.kookplayer.helper.Coordinator
-import com.example.kookplayer.myInterface.PassDataForSelectPlaylists
-import com.example.kookplayer.repositories.RoomRepository
+import com.example.kookplayer.helper.ICoordinator
+import com.example.kookplayer.myInterface.IPassDataForSelectPlaylists
+import com.example.kookplayer.repositories.IRoomRepository
 import com.example.kookplayer.viewModel.SongsViewModel
 import com.example.kookplayer.views.dialogs.AddSongToPlaylistDialog
 import kotlinx.android.synthetic.main.fragment_library.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
+class LibraryFragment : Fragment(), IPassDataForSelectPlaylists {
 
     companion object Library {
 
@@ -106,11 +106,11 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
 
                     selectedSong = songModel
 
-                    if (RoomRepository.cachedPlaylistArray != null) {
-                        if (RoomRepository.cachedPlaylistArray.size > 0) {
+                    if (IRoomRepository.cachedPlaylistArray != null) {
+                        if (IRoomRepository.cachedPlaylistArray.size > 0) {
                             createDialogToSelectPlaylist()
                         } else {
-                            val i = RoomRepository.cachedPlaylistArray
+                            val i = IRoomRepository.cachedPlaylistArray
                             Toast.makeText(
                                 requireActivity().baseContext,
                                 getString(R.string.createPlaylist_error),
@@ -130,7 +130,7 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
 
         notifyDataSetChanges()
 
-        RoomRepository.convertFavSongsToRealSongs()
+        IRoomRepository.convertFavSongsToRealSongs()
 
         return view
     }
@@ -143,9 +143,9 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
 
     fun createDialogToSelectPlaylist() {
 
-        RoomRepository.updateCachedPlaylist()
+        IRoomRepository.updateCachedPlaylist()
 
-        val addSongToPlaylistDialog = RoomRepository.cachedPlaylistArray?.let {
+        val addSongToPlaylistDialog = IRoomRepository.cachedPlaylistArray?.let {
             AddSongToPlaylistDialog(
                 it
             )
@@ -177,7 +177,7 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
     fun addSongToPlaylist(playlist: PlaylistModel) {
         GlobalScope.launch {
 
-            RoomRepository.addSongsToPlaylist(
+            IRoomRepository.addSongsToPlaylist(
                 playlist.name,
                 selectedSong.id.toString()
             )
@@ -185,7 +185,7 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        Coordinator.updateNowPlayingQueue()
+        ICoordinator.updateNowPlayingQueue()
 
     }
 }

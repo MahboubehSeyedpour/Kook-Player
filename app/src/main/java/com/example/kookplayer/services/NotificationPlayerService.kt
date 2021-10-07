@@ -13,7 +13,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.example.kookplayer.R
-import com.example.kookplayer.helper.Coordinator
+import com.example.kookplayer.helper.ICoordinator
 import com.example.kookplayer.views.activities.MainActivity
 
 
@@ -88,9 +88,9 @@ class NotificationPlayerService : Service() {
 
 
         notification = NotificationCompat.Builder(this, getString(R.string.notification_channel_id))
-            .setContentTitle(Coordinator.currentPlayingSong?.title)
+            .setContentTitle(ICoordinator.currentPlayingSong?.title)
             .setNotificationSilent()
-            .setContentText(Coordinator.currentPlayingSong?.artistName ?: "")
+            .setContentText(ICoordinator.currentPlayingSong?.artistName ?: "")
             .setStyle(style)
             .setAutoCancel(true)
             .setColor(Color.BLUE)
@@ -105,7 +105,7 @@ class NotificationPlayerService : Service() {
             )
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setSmallIcon(R.drawable.ic_play__2_)
-            .setLargeIcon(Coordinator.currentPlayingSong?.image)
+            .setLargeIcon(ICoordinator.currentPlayingSong?.image)
             .addAction(R.drawable.ic_notification_previous, "previous", prevPendingIntent)
             .addAction(R.drawable.ic_notification_play, "play", playPendingIntent)
             .addAction(R.drawable.ic_notification_pause, "pause", pausePendingIntent)
@@ -152,14 +152,14 @@ class NotificationPlayerService : Service() {
         @RequiresApi(Build.VERSION_CODES.O)
         override fun onReceive(context: Context, intent: Intent) {
             when (intent.extras!!.getString(context.getString(R.string.extra_key))) {
-                getString(R.string.notification_action_next) -> Coordinator.playNextSong()
+                getString(R.string.notification_action_next) -> ICoordinator.playNextSong()
                 getString(R.string.notification_action_play) -> {
-                    Coordinator.resume()
+                    ICoordinator.resume()
                 }
                 getString(R.string.notification_action_pause) -> {
-                    Coordinator.pause()
+                    ICoordinator.pause()
                 }
-                getString(R.string.notification_action_previous) -> Coordinator.playPrevSong()
+                getString(R.string.notification_action_previous) -> ICoordinator.playPrevSong()
             }
 
         }

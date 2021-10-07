@@ -5,7 +5,7 @@ import com.example.kookplayer.db.MyDatabase
 import com.example.kookplayer.db.entities.Favorites
 import com.example.kookplayer.db.entities.PlaylistModel
 import com.example.kookplayer.db.entities.SongModel
-import com.example.kookplayer.myInterface.RoomRepositoryInterface
+import com.example.kookplayer.myInterface.IRoomRepository
 import com.example.kookplayer.utlis.DatabaseConverterUtils
 import com.example.kookplayer.utlis.SongUtils
 import com.example.kookplayer.views.Fragments.LibraryFragment
@@ -13,7 +13,7 @@ import com.example.kookplayer.views.activities.MainActivity
 import kotlinx.android.synthetic.*
 import kotlinx.coroutines.*
 
-object RoomRepository : RoomRepositoryInterface{
+object IRoomRepository : IRoomRepository{
 
     private val applicationScope = CoroutineScope(SupervisorJob())
     lateinit var localDatabase: MyDatabase

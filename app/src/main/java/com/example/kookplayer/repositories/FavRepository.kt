@@ -10,19 +10,19 @@ class FavRepository {
     val applicationScope = CoroutineScope(SupervisorJob())
 
     companion object {
-        var cashedFavArray = RoomRepository.cachedFavArray
+        var cashedFavArray = IRoomRepository.cachedFavArray
     }
 
     init {
         applicationScope.launch {
             cashedFavArray =
-                RoomRepository.cachedFavArray
+                IRoomRepository.cachedFavArray
         }
     }
 
     fun getFavSongs(): ArrayList<SongModel> {
 
-        return RoomRepository.cachedFavArray
+        return IRoomRepository.cachedFavArray
 
     }
 

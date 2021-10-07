@@ -4,7 +4,7 @@ import com.example.kookplayer.db.entities.Favorites
 import com.example.kookplayer.db.entities.PlaylistModel
 import com.example.kookplayer.db.entities.SongModel
 
-interface RoomRepositoryInterface {
+interface IRoomRepository {
 
     // ----------------------- init Database ------------------------
     fun createDatabase()
