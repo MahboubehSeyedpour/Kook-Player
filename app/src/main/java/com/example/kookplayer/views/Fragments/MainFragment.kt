@@ -54,6 +54,29 @@ class MainFragment : Fragment() {
         }.attach()
 
 
+        binding.bottomNavigation.setOnNavigationItemSelectedListener {item ->
+            when(item.itemId) {
+                R.id.songs -> {
+
+                    binding.viewpager.setCurrentItem(0, true)
+                    true
+                }
+                R.id.playlist -> {
+                    binding.viewpager.setCurrentItem(1, true)
+                    true
+                }
+                R.id.favorites -> {
+
+                    binding.viewpager.setCurrentItem(2, true)
+                    true
+                }
+                else -> false
+            }
+        }
+
+
+
+
 //        binding.toolbar.expandableToolbar.expandableToolbarComponent.onItemSelectedListener =
 //            { view, menuItem, b ->
 //                when (menuItem.text) {

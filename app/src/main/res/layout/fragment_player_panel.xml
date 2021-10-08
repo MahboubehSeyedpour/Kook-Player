@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".views.Fragments.PlayerPanelFragment">
+    tools:context=".views.Fragments.IPlayerPanelFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/header"
