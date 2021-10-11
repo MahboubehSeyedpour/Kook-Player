@@ -18,7 +18,7 @@ import com.example.kookplayer.R
 import com.example.kookplayer.adapter.SongsAdapter
 import com.example.kookplayer.db.entities.PlaylistModel
 import com.example.kookplayer.db.entities.SongModel
-import com.example.kookplayer.helper.ICoordinator
+import com.example.kookplayer.helper.Coordinator
 import com.example.kookplayer.myInterface.IPassDataForSelectPlaylists
 import com.example.kookplayer.repositories.IRoomRepository
 import com.example.kookplayer.viewModel.SongsViewModel
@@ -185,7 +185,6 @@ class LibraryFragment : Fragment(), IPassDataForSelectPlaylists {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        ICoordinator.updateNowPlayingQueue()
-
+        Coordinator.updateNowPlayingQueue()
     }
 }

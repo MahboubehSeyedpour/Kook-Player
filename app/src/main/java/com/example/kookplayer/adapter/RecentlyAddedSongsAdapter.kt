@@ -15,7 +15,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kookplayer.R
 import com.example.kookplayer.db.entities.SongModel
-import com.example.kookplayer.helper.ICoordinator
+import com.example.kookplayer.helper.Coordinator
 import com.example.kookplayer.repositories.IRoomRepository
 import com.example.kookplayer.utlis.ImageUtils
 import com.example.kookplayer.utlis.SongUtils
@@ -67,12 +67,12 @@ class RecentlyAddedSongsAdapter (
 
             viewHolder.recyclerItem.setOnClickListener {
                 updatePosition(newIndex = viewHolder.adapterPosition)
-                ICoordinator.SourceOfSelectedSong = "library"
-                ICoordinator.currentDataSource = dataset
+                Coordinator.SourceOfSelectedSong = "library"
+                Coordinator.currentDataSource = dataset
 
 
                 MainActivity.activity.updateVisibility()
-                ICoordinator.playSelectedSong(dataset[position])
+                Coordinator.playSelectedSong(dataset[position])
 
             }
 

@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
 import com.example.kookplayer.databinding.ActivityMainBinding
-import com.example.kookplayer.helper.ICoordinator
+import com.example.kookplayer.helper.Coordinator
 import com.example.kookplayer.repositories.IRoomRepository
 import com.example.kookplayer.services.NotificationPlayerService
 import com.example.kookplayer.utlis.PermissionProvider
@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
         NotificationPlayerService.stopNotification(baseContext)
 
-        ICoordinator.mediaPlayerAgent.stop()
+        Coordinator.mediaPlayerAgent.stop()
     }
 
     override fun onBackPressed() {
@@ -123,17 +123,17 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
             override fun onCallStateChanged(state: Int, incomingNumber: String) {
                 if (state == TelephonyManager.CALL_STATE_RINGING) {
                     //Incoming call: Pause music
-                    if (ICoordinator.isPlaying())
-                        ICoordinator.pause()
+                    if (Coordinator.isPlaying())
+                        Coordinator.pause()
                 } else if (state == TelephonyManager.CALL_STATE_IDLE) {
                     //Not in call: Play music
-                    if (ICoordinator.currentPlayingSong != null) {
+                    if (Coordinator.currentPlayingSong != null) {
 
                     }
                 } else if (state == TelephonyManager.CALL_STATE_OFFHOOK) {
                     //A call is dialing, active or on hold
-                    if (ICoordinator.isPlaying())
-                        ICoordinator.pause()
+                    if (Coordinator.isPlaying())
+                        Coordinator.pause()
                 }
                 super.onCallStateChanged(state, incomingNumber)
             }

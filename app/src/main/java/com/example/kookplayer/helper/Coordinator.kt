@@ -8,7 +8,7 @@ import com.example.kookplayer.myInterface.ICoordinator
 import com.example.kookplayer.views.Fragments.LibraryFragment.Library.songsAdapter
 import com.example.kookplayer.views.activities.MainActivity
 
-object ICoordinator : ICoordinator {
+object Coordinator : ICoordinator {
     override lateinit var nowPlayingQueue: ArrayList<SongModel>
 
     override lateinit var mediaPlayerAgent: MediaPlayerAgent
@@ -68,9 +68,7 @@ object ICoordinator : ICoordinator {
 
 
     override fun play(song: String) {
-
         mediaPlayerAgent.playMusic(song)
-
     }
 
     override fun resume() {

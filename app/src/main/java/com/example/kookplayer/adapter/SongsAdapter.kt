@@ -14,7 +14,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kookplayer.R
 import com.example.kookplayer.db.entities.SongModel
-import com.example.kookplayer.helper.ICoordinator
+import com.example.kookplayer.helper.Coordinator
 import com.example.kookplayer.repositories.IRoomRepository
 import com.example.kookplayer.utlis.ImageUtils
 import com.example.kookplayer.utlis.SongUtils
@@ -61,18 +61,6 @@ class SongsAdapter(
                 imageView = viewHolder.imageView,
                 image = it
             )
-        }
-
-
-        viewHolder.recyclerItem.setOnClickListener {
-            updatePosition(newIndex = viewHolder.adapterPosition)
-            ICoordinator.SourceOfSelectedSong = "library"
-            ICoordinator.currentDataSource = dataset
-
-
-            MainActivity.activity.updateVisibility()
-            ICoordinator.playSelectedSong(dataset[position])
-
         }
 
 
@@ -187,7 +175,8 @@ class SongsAdapter(
     }
 
     open inner class RecyclerViewViewHolder(itemView: View) :
-        RecyclerView.ViewHolder(itemView) {
+        RecyclerView.ViewHolder(itemView), View.OnClickListener {
+
         val title: TextView = itemView.song_title
         val artist: TextView = itemView.song_artist
         val duration: TextView = itemView.song_duration
@@ -195,6 +184,20 @@ class SongsAdapter(
         val imageView: ImageView = itemView.music_iv
         val recyclerItem: ConstraintLayout = itemView.song_container
         val isPlaying: AVLoadingIndicatorView = itemView.song_AVLoading
+
+        val s = itemView.setOnClickListener(this)
+
+        override fun onClick(v: View?) {
+
+            updatePosition(newIndex = viewHolder.adapterPosition)
+            Coordinator.SourceOfSelectedSong = "library"
+            Coordinator.currentDataSource = dataset
+
+
+            MainActivity.activity.updateVisibility()
+            Coordinator.playSelectedSong(dataset[position])
+
+        }
     }
 
     interface OnDataSend {
@@ -203,9 +206,5 @@ class SongsAdapter(
 
     fun OnDataSend(dataSend: OnDataSend) {
         this.dataSend = dataSend
-    }
-
-    fun getView(): View{
-        return viewHolder.imageView
     }
 }
