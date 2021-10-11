@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kookplayer.R
 import com.example.kookplayer.db.entities.PlaylistModel
 import com.google.android.material.checkbox.MaterialCheckBox
-import kotlinx.android.synthetic.main.add_song_to_playlist_dialog_item.view.*
+import kotlinx.android.synthetic.main.layout_add_song_to_playlist_dialog_item.view.*
 
 class AddSongToPlaylistAdapter(
     var context: Activity,
@@ -29,7 +29,7 @@ class AddSongToPlaylistAdapter(
     ): RecyclerView.ViewHolder {
         val rootView: View =
             LayoutInflater.from(context)
-                .inflate(R.layout.add_song_to_playlist_dialog_item, parent, false)
+                .inflate(R.layout.layout_add_song_to_playlist_dialog_item, parent, false)
         return RecyclerViewViewHolder(rootView)
     }
 

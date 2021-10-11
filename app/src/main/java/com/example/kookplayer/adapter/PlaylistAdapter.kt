@@ -15,7 +15,7 @@ import com.example.kookplayer.db.entities.PlaylistModel
 import com.example.kookplayer.repositories.IPlaylistRepository
 import com.example.kookplayer.views.Fragments.PlaylistFragment
 import com.example.kookplayer.views.activities.MainActivity
-import kotlinx.android.synthetic.main.playlist_item.view.*
+import kotlinx.android.synthetic.main.layout_playlist_item.view.*
 
 class PlaylistAdapter(
     var context: Activity,
@@ -31,7 +31,7 @@ class PlaylistAdapter(
         viewType: Int
     ): RecyclerView.ViewHolder {
         val rootView: View =
-            LayoutInflater.from(context).inflate(R.layout.playlist_item, parent, false)
+            LayoutInflater.from(context).inflate(R.layout.layout_playlist_item, parent, false)
         return RecyclerViewViewHolder(rootView)
     }
 

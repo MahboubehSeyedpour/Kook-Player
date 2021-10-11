@@ -15,7 +15,7 @@ import com.example.kookplayer.helper.Coordinator
 import com.example.kookplayer.utlis.ImageUtils
 import com.example.kookplayer.views.Fragments.PlaylistPageFragment
 import com.example.kookplayer.views.activities.MainActivity
-import kotlinx.android.synthetic.main.playlist_song_rv_item.view.*
+import kotlinx.android.synthetic.main.layout_playlist_song_rv_item.view.*
 
 class PlaylistPageAdapater(var dataset: ArrayList<SongModel>, val context: Activity): RVBaseAdapter() {
 
@@ -25,7 +25,7 @@ class PlaylistPageAdapater(var dataset: ArrayList<SongModel>, val context: Activ
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val rootView: View =
-            LayoutInflater.from(context).inflate(R.layout.playlist_song_rv_item, parent, false)
+            LayoutInflater.from(context).inflate(R.layout.layout_playlist_song_rv_item, parent, false)
         return RecyclerViewViewHolder(rootView)
     }
 

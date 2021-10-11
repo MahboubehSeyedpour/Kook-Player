@@ -23,10 +23,7 @@ import com.example.kookplayer.views.Fragments.LibraryFragment
 import com.example.kookplayer.views.activities.MainActivity
 import com.example.kookplayer.views.dialogs.SongDetailsDialog
 import com.google.android.material.card.MaterialCardView
-import kotlinx.android.synthetic.main.recently_added_rv_item.view.*
-import kotlinx.android.synthetic.main.song_rv_item.view.music_iv
-import kotlinx.android.synthetic.main.song_rv_item.view.song_artist
-import kotlinx.android.synthetic.main.song_rv_item.view.song_title
+import kotlinx.android.synthetic.main.layout_recently_added_rv_item.view.*
 
 class RecentlyAddedSongsAdapter (
         val context: Activity,
@@ -44,7 +41,7 @@ class RecentlyAddedSongsAdapter (
             viewType: Int
         ): RecyclerView.ViewHolder {
             val rootView: View =
-                LayoutInflater.from(context).inflate(R.layout.recently_added_rv_item, parent, false)
+                LayoutInflater.from(context).inflate(R.layout.layout_recently_added_rv_item, parent, false)
             return RecyclerViewViewHolder(rootView)
         }
 

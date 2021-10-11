@@ -8,17 +8,17 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.fragment.app.DialogFragment
 import com.example.kookplayer.R
-import com.example.kookplayer.databinding.CreatePlaylistDialogBinding
+import com.example.kookplayer.databinding.DialogCreatePlaylistBinding
 import com.example.kookplayer.myInterface.IPassData
 import com.example.kookplayer.repositories.IRoomRepository
 import com.example.kookplayer.utlis.ScreenSizeUtils
-import kotlinx.android.synthetic.main.create_playlist_dialog.*
-import kotlinx.android.synthetic.main.create_playlist_dialog.view.*
+import kotlinx.android.synthetic.main.dialog_create_playlist.*
+import kotlinx.android.synthetic.main.dialog_create_playlist.view.*
 
 
 class CreatePlaylistDialog : DialogFragment() {
 
-    lateinit var binding: CreatePlaylistDialogBinding
+    lateinit var binding: DialogCreatePlaylistBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,8 +26,8 @@ class CreatePlaylistDialog : DialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         dialog!!.window?.setBackgroundDrawableResource(R.drawable.round_corner_bg);
-        val view = inflater.inflate(R.layout.create_playlist_dialog, container, false)
-        binding = CreatePlaylistDialogBinding.bind(view)
+        val view = inflater.inflate(R.layout.dialog_create_playlist, container, false)
+        binding = DialogCreatePlaylistBinding.bind(view)
         return view
 
     }

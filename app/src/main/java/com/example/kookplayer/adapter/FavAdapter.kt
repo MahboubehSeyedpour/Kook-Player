@@ -18,7 +18,7 @@ import com.example.kookplayer.helper.Coordinator
 import com.example.kookplayer.repositories.IRoomRepository
 import com.example.kookplayer.utlis.ImageUtils
 import com.example.kookplayer.views.activities.MainActivity
-import kotlinx.android.synthetic.main.fav_rv_item.view.*
+import kotlinx.android.synthetic.main.layout_fav_rv_item.view.*
 
 class FavAdapter(
     val context: Activity,
@@ -35,7 +35,7 @@ class FavAdapter(
         viewType: Int
     ): RecyclerView.ViewHolder {
         val rootView: View =
-            LayoutInflater.from(context).inflate(R.layout.fav_rv_item, parent, false)
+            LayoutInflater.from(context).inflate(R.layout.layout_fav_rv_item, parent, false)
         return RecyclerViewViewHolder(rootView)
     }
 

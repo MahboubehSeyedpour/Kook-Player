@@ -8,15 +8,15 @@ import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kookplayer.R
 import com.example.kookplayer.adapter.AddSongToPlaylistAdapter
-import com.example.kookplayer.databinding.AddSongToPlaylistBinding
+import com.example.kookplayer.databinding.DialogAddSongToPlaylistBinding
 import com.example.kookplayer.db.entities.PlaylistModel
 import com.example.kookplayer.myInterface.IPassDataForSelectPlaylists
 import com.example.kookplayer.utlis.ScreenSizeUtils
-import kotlinx.android.synthetic.main.add_song_to_playlist.view.*
+import kotlinx.android.synthetic.main.dialog_add_song_to_playlist.view.*
 
 class AddSongToPlaylistDialog(val array: ArrayList<PlaylistModel>) : DialogFragment() {
 
-    lateinit var binding: AddSongToPlaylistBinding
+    lateinit var binding: DialogAddSongToPlaylistBinding
     var playlistAdapter: AddSongToPlaylistAdapter? = null
 
 
@@ -28,7 +28,7 @@ class AddSongToPlaylistDialog(val array: ArrayList<PlaylistModel>) : DialogFragm
 
         dialog!!.window?.setBackgroundDrawableResource(R.drawable.round_corner_bg);
 
-        val view = inflater.inflate(R.layout.add_song_to_playlist, container, false)
+        val view = inflater.inflate(R.layout.dialog_add_song_to_playlist, container, false)
         initBinding(view)
 
         playlistAdapter = activity?.let {
@@ -81,7 +81,7 @@ class AddSongToPlaylistDialog(val array: ArrayList<PlaylistModel>) : DialogFragm
     }
 
     private fun initBinding(view: View) {
-        binding = AddSongToPlaylistBinding.bind(view)
+        binding = DialogAddSongToPlaylistBinding.bind(view)
     }
 
 }

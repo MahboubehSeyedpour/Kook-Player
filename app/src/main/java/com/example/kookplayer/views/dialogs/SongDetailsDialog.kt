@@ -6,14 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.example.kookplayer.R
-import com.example.kookplayer.databinding.SongDetailsDialogBinding
+import com.example.kookplayer.databinding.DialogSongDetailsBinding
+
 import com.example.kookplayer.db.entities.SongModel
 import com.example.kookplayer.utlis.ScreenSizeUtils
 import com.example.kookplayer.utlis.TimeUtils
 
 class SongDetailsDialog(val song: SongModel) : DialogFragment() {
 
-    lateinit var binding: SongDetailsDialogBinding
+    lateinit var binding: DialogSongDetailsBinding
 
 
     override fun onCreateView(
@@ -24,7 +25,7 @@ class SongDetailsDialog(val song: SongModel) : DialogFragment() {
 
         dialog!!.window?.setBackgroundDrawableResource(R.drawable.round_corner_bg);
 
-        val view = inflater.inflate(R.layout.song_details_dialog, container, false)
+        val view = inflater.inflate(R.layout.dialog_song_details, container, false)
         initBinding(view)
 
         binding.detailsFileSizeContent.text =
@@ -65,7 +66,7 @@ class SongDetailsDialog(val song: SongModel) : DialogFragment() {
     }
 
     fun initBinding(view: View) {
-        binding = SongDetailsDialogBinding.bind(view)
+        binding = DialogSongDetailsBinding.bind(view)
     }
 }
 

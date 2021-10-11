@@ -16,11 +16,11 @@
 
         <include
             android:id="@+id/onExpand"
-            layout="@layout/panel_header_on_expanded" />
+            layout="@layout/layout_panel_header_on_expanded" />
 
         <include
             android:id="@+id/onCollapse"
-            layout="@layout/panel_header_on_collapsed" />
+            layout="@layout/layout_panel_header_on_collapsed" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -61,6 +61,6 @@
 
     <include
         android:id="@+id/player_remote"
-        layout="@layout/player_remote" />
+        layout="@layout/layout_player_remote" />
 
 </LinearLayout>

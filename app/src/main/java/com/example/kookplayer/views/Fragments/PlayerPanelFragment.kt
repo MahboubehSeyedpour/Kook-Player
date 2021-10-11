@@ -22,10 +22,10 @@ import com.example.kookplayer.views.activities.MainActivity
 import com.frolo.waveformseekbar.WaveformSeekBar
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.fragment_player_panel.view.*
-import kotlinx.android.synthetic.main.panel_header_on_collapsed.view.*
-import kotlinx.android.synthetic.main.panel_header_on_expanded.view.*
-import kotlinx.android.synthetic.main.player_remote.*
-import kotlinx.android.synthetic.main.player_remote.view.*
+import kotlinx.android.synthetic.main.layout_panel_header_on_collapsed.view.*
+import kotlinx.android.synthetic.main.layout_panel_header_on_expanded.view.*
+import kotlinx.android.synthetic.main.layout_player_remote.*
+import kotlinx.android.synthetic.main.layout_player_remote.view.*
 import kotlin.random.Random
 
 

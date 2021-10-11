@@ -23,7 +23,7 @@ import com.example.kookplayer.views.Fragments.LibraryFragment
 import com.example.kookplayer.views.activities.MainActivity
 import com.example.kookplayer.views.dialogs.SongDetailsDialog
 import com.wang.avi.AVLoadingIndicatorView
-import kotlinx.android.synthetic.main.song_rv_item.view.*
+import kotlinx.android.synthetic.main.layout_song_rv_item.view.*
 
 
 class SongsAdapter(
@@ -42,7 +42,7 @@ class SongsAdapter(
         viewType: Int
     ): RecyclerView.ViewHolder {
         val rootView: View =
-            LayoutInflater.from(context).inflate(R.layout.song_rv_item, parent, false)
+            LayoutInflater.from(context).inflate(R.layout.layout_song_rv_item, parent, false)
         return RecyclerViewViewHolder(rootView)
     }
 
