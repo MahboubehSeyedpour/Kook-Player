@@ -29,7 +29,7 @@ import kotlinx.android.synthetic.main.player_remote.view.*
 import kotlin.random.Random
 
 
-class IPlayerPanelFragment : Fragment(), IPlayerPanel, View.OnClickListener,
+class PlayerPanelFragment : Fragment(), IPlayerPanel, View.OnClickListener,
     WaveformSeekBar.OnSeekBarChangeListener {
 
     lateinit var binding: FragmentPlayerPanelBinding

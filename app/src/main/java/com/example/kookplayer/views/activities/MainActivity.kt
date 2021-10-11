@@ -17,7 +17,7 @@ import com.example.kookplayer.services.NotificationPlayerService
 import com.example.kookplayer.utlis.PermissionProvider
 import com.example.kookplayer.utlis.ScreenSizeUtils.getScreenHeight
 import com.example.kookplayer.views.Fragments.MainFragment
-import com.example.kookplayer.views.Fragments.IPlayerPanelFragment
+import com.example.kookplayer.views.Fragments.PlayerPanelFragment
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 
 
@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
     companion object {
         var permissionsGranted: Boolean = false
-        lateinit var playerPanelFragment: IPlayerPanelFragment
+        lateinit var playerPanelFragment: PlayerPanelFragment
         lateinit var activity: MainActivity
 
     }
@@ -161,7 +161,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
     private fun initBottomSheet() {
 
-        playerPanelFragment = IPlayerPanelFragment()
+        playerPanelFragment = PlayerPanelFragment()
         val fragmentManager: FragmentManager = supportFragmentManager
         val transaction = fragmentManager.beginTransaction()
 //        transaction.addToBackStack("playerPanel")
