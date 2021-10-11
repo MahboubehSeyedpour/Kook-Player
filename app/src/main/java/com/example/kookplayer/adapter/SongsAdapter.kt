@@ -41,6 +41,9 @@ class SongsAdapter(
         parent: ViewGroup,
         viewType: Int
     ): RecyclerView.ViewHolder {
+
+
+
         val rootView: View =
             LayoutInflater.from(context).inflate(R.layout.layout_song_rv_item, parent, false)
         return RecyclerViewViewHolder(rootView)

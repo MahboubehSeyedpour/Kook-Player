@@ -3,70 +3,82 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/song_container_"
-    android:layout_width="140dp"
-    android:layout_height="150dp"
+    android:layout_width="200dp"
+    android:layout_height="80dp"
     android:layout_gravity="center"
-    android:elevation="4dp"
-    android:layout_marginTop="10dp"
     android:layout_marginLeft="10dp"
+    android:layout_marginTop="10dp"
     android:layout_marginRight="10dp"
-    android:layout_marginBottom="0dp">
+    android:layout_marginBottom="0dp"
+    android:elevation="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <ImageView
-            android:id="@+id/music_iv"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:id="@+id/recent_music_iv"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="center_vertical"
             android:scaleType="fitCenter"
-            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
             tools:srcCompat="@mipmap/ic_launcher_2_foreground" />
 
-
-        <TextView
-            android:id="@+id/song_artist"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:fontFamily="sans-serif"
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:gravity="center"
+            android:orientation="vertical"
             android:padding="10dp"
-            android:singleLine="true"
-            android:text="artist"
-            android:textSize="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/song_title"
-            app:layout_constraintVertical_bias="0.0"
-            tools:layout_editor_absoluteX="0dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/recent_music_iv"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/song_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:fontFamily="sans-serif"
-            android:gravity="center"
-            android:padding="10dp"
-            android:singleLine="true"
-            android:text="song title"
-            android:textColor="@color/dark_grey"
-            android:textSize="15dp"
-            android:textStyle="normal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/song_duration"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/music_iv"
-            app:layout_constraintTop_toBottomOf="@+id/music_iv"
-            app:layout_constraintVertical_bias="0.0" />
 
+            <TextView
+                android:id="@+id/recent_song_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="song title"
+                android:textColor="@color/dark_grey"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/music_iv"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5" />
+
+
+            <TextView
+                android:id="@+id/recent_song_artist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textSize="12dp"
+                android:textStyle="normal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/music_iv"
+                app:layout_constraintTop_toBottomOf="@+id/song_title"
+                app:layout_constraintVertical_bias="0.0"
+                tools:text="artist" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
