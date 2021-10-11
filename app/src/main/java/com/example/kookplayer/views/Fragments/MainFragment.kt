@@ -9,6 +9,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.kookplayer.R
 import com.example.kookplayer.adapter.ViewPagerFragmentAdapter
 import com.example.kookplayer.databinding.FragmentMainBinding
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 
@@ -72,6 +73,45 @@ class MainFragment : Fragment() {
                 else -> false
             }
         }
+
+
+        binding.toolbar.tabLayoutHome.addOnTabSelectedListener(object :
+            TabLayout.OnTabSelectedListener {
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+
+                when (tab?.text) {
+                    "Library" -> binding.bottomNavigation.menu.setGroupEnabled(
+                        R.id.songs, true
+                    )
+                    "Playlists" -> binding.bottomNavigation.menu.setGroupEnabled(
+                        R.id.playlist, true
+                    )
+                    "Favorite" -> binding.bottomNavigation.menu.setGroupEnabled(
+                        R.id.favorites, true
+                    )
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                when (tab?.text) {
+                    "Library" -> {
+                        binding.bottomNavigation.selectedItemId = R.id.songs
+                    }
+                    "Playlists" ->
+                    {
+                        binding.bottomNavigation.selectedItemId = R.id.playlist
+                    }
+                    "Favorite" ->
+                    {
+                        binding.bottomNavigation.selectedItemId = R.id.favorites
+                    }
+                }
+
+            }
+        })
 
 
 
