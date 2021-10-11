@@ -27,6 +27,7 @@
     <color name="light_blue_A400">#FF00B0FF</color>
     <color name="black_overlay">#66000000</color>
 
+    <color name="bottom_nav_colors">@color/bottom_nav_selector</color>
 
 </resources>
 

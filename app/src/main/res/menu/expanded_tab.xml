@@ -3,17 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/songs"
-        android:title="Songs"
-        android:icon="@drawable/ic_songs_tab" />
+        android:title="@string/songs_tab"
+        android:enabled="true"
+        android:icon="@drawable/ic_home" />
 
     <item
         android:id="@+id/playlist"
-        android:title="Playlists"
-        android:icon="@drawable/ic_playlist_tab" />
+        android:title="@string/playlists_tab"
+        android:enabled="true"
+        android:icon="@drawable/ic_playlist_1" />
 
     <item
         android:id="@+id/favorites"
-        android:title="Favorite"
-        android:icon="@drawable/ic_unfavored" />
+        android:title="@string/favorites_tab"
+        android:enabled="true"
+        android:icon="@drawable/ic_heart_1" />
 <!--    #959595-->
 </menu>
