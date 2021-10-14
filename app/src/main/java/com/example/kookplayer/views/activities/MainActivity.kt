@@ -8,6 +8,7 @@ import android.telephony.PhoneStateListener
 import android.telephony.TelephonyManager
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
 import com.example.kookplayer.databinding.ActivityMainBinding
@@ -76,6 +77,8 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         activity = this
 

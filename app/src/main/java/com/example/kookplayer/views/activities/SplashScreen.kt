@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.kookplayer.R
 import kotlinx.android.synthetic.main.activity_splash.*
 
@@ -13,6 +14,10 @@ class SplashScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+
         setContentView(R.layout.activity_splash)
 
         versionNumber.text =getString(R.string.app_version, packageManager.getPackageInfo(packageName, 0).versionName)
