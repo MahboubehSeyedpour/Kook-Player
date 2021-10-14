@@ -124,32 +124,29 @@ object Coordinator : CoordinatorInterface {
 
                 when (actionSource) {
                     MainActivity.activity.getString(R.string.onSongCompletion) -> {
-                        when(requestedAction)
-                        {
-                            MainActivity.activity.getString(R.string.play_next) ->
-                            {
+                        when (requestedAction) {
+                            MainActivity.activity.getString(R.string.play_next) -> {
                                 if (!hasNext()) {
                                     mediaPlayerAgent.pauseMusic()
+                                } else {
+                                    getNextSong().data?.let { play(it) }
+                                    updatePlayerVar(nowPlayingQueue[position])
                                 }
-                                getNextSong().data?.let { play(it) }
-                                updatePlayerVar(nowPlayingQueue[position])
                             }
                         }
                     }
                     MainActivity.activity.getString(R.string.onBtnClicked) -> {
-                        when(requestedAction)
-                        {
-                            MainActivity.activity.getString(R.string.play_next) ->
-                            {
+                        when (requestedAction) {
+                            MainActivity.activity.getString(R.string.play_next) -> {
                                 if (!hasNext()) {
 //                                    resetPosition
                                     position = -1
                                 }
                                 getNextSong().data?.let { play(it) }
                                 updatePlayerVar(nowPlayingQueue[position])
+
                             }
-                            MainActivity.activity.getString(R.string.play_prev) ->
-                            {
+                            MainActivity.activity.getString(R.string.play_prev) -> {
                                 if (!hasPrev()) {
 //                                    resetPosition
                                     position = nowPlayingQueue.size
@@ -182,8 +179,7 @@ object Coordinator : CoordinatorInterface {
         }
 
         when (shuffleMode) {
-            PlaybackStateCompat.SHUFFLE_MODE_NONE ->
-            {
+            PlaybackStateCompat.SHUFFLE_MODE_NONE -> {
                 nowPlayingQueue = currentDataSource
                 updateCurrentPlayingSongPosition()
             }
