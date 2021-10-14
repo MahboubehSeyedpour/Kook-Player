@@ -124,8 +124,7 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
     }
 
     override fun setDefaultVisibilities() {
-
-        binding.header.onCollapse.pause_btn_on_header.visibility = View.GONE
+        binding.header.onCollapse.play_btn_on_header.visibility = View.GONE
     }
 
     fun setOnEventListeners() {
@@ -264,6 +263,23 @@ class PlayerPanelFragment : Fragment(), PlayerPanelInterface, View.OnClickListen
 
                 binding.header.onCollapse.visibility = View.VISIBLE
                 binding.header.onExpand.visibility = View.GONE
+
+                try {
+                    if(Coordinator.isPlaying())
+                    {
+                        binding.header.onCollapse.play_btn_on_header.visibility = View.GONE
+                        binding.header.onCollapse.pause_btn_on_header.visibility = View.VISIBLE
+                    }
+                    else
+                    {
+                        binding.header.onCollapse.play_btn_on_header.visibility = View.VISIBLE
+                        binding.header.onCollapse.pause_btn_on_header.visibility = View.GONE
+                    }
+                }
+                catch (e :Exception)
+                {
+
+                }
             }
         }
     }
