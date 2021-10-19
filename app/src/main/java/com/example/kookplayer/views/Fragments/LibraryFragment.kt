@@ -15,7 +15,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kookplayer.R
-import com.example.kookplayer.adapter.RecentlyAddedAdapter
 import com.example.kookplayer.adapter.SongsAdapter
 import com.example.kookplayer.db.entities.PlaylistModel
 import com.example.kookplayer.db.entities.SongModel
@@ -33,7 +32,7 @@ class LibraryFragment : Fragment(), IPassDataForSelectPlaylists {
     companion object Library {
 
         var songsAdapter: SongsAdapter? = null
-        var recentsongsAdapter: RecentlyAddedAdapter? = null
+//        var recentsongsAdapter: RecentlyAddedAdapter? = null
 
         lateinit var viewModel: SongsViewModel
 
@@ -70,7 +69,7 @@ class LibraryFragment : Fragment(), IPassDataForSelectPlaylists {
         }
 
         songs_rv.layoutManager = LinearLayoutManager(context)
-        recent_songs_rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+//        recent_songs_rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
         viewModel.updateDataset()
 
@@ -103,12 +102,12 @@ class LibraryFragment : Fragment(), IPassDataForSelectPlaylists {
             )
         }
 
-        recentsongsAdapter = activity?.let {
-            RecentlyAddedAdapter(
-                it,
-                viewModel.dataset.value as ArrayList<SongModel>
-            )
-        }
+//        recentsongsAdapter = activity?.let {
+//            RecentlyAddedAdapter(
+//                it,
+//                viewModel.dataset.value as ArrayList<SongModel>
+//            )
+//        }
 
         songsAdapter?.OnDataSend(
             object : SongsAdapter.OnDataSend {
@@ -150,8 +149,8 @@ class LibraryFragment : Fragment(), IPassDataForSelectPlaylists {
         songsAdapter?.dataset = dataset as ArrayList<SongModel>
         songs_rv.adapter = songsAdapter
 
-        recentsongsAdapter?.dataset = dataset as ArrayList<SongModel>
-        recent_songs_rv.adapter = recentsongsAdapter
+//        recentsongsAdapter?.dataset = dataset as ArrayList<SongModel>
+//        recent_songs_rv.adapter = recentsongsAdapter
     }
 
     fun createDialogToSelectPlaylist() {
