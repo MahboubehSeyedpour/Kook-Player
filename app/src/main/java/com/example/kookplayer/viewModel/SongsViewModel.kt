@@ -31,7 +31,7 @@ class SongsViewModel : BaseViewModel() {
         mainHandler.post(object : Runnable {
             override fun run() {
                 updateDataset()
-                mainHandler.postDelayed(this, 10000)
+                mainHandler.postDelayed(this, 300000)
             }
         })
     }
