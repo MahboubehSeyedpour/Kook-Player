@@ -2,13 +2,11 @@ package com.example.kookplayer.views.activities
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.telephony.PhoneStateListener
 import android.telephony.TelephonyManager
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
 import com.example.kookplayer.databinding.ActivityMainBinding
@@ -17,10 +15,10 @@ import com.example.kookplayer.repositories.RoomRepository
 import com.example.kookplayer.services.NotificationPlayerService
 import com.example.kookplayer.utlis.PermissionProvider
 import com.example.kookplayer.utlis.ScreenSizeUtils.getScreenHeight
+import com.example.kookplayer.utlis.ThemeUtils
 import com.example.kookplayer.views.Fragments.MainFragment
 import com.example.kookplayer.views.Fragments.PlayerPanelFragment
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
-
 
 
 //TODO( "implement hideStatusBar() function");
@@ -33,44 +31,11 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         var permissionsGranted: Boolean = false
         lateinit var playerPanelFragment: PlayerPanelFragment
         lateinit var activity: MainActivity
-
     }
-
-
-
-    var prefs: SharedPreferences? = null
-
-
-    private val permissions = arrayOf(
-        Manifest.permission.READ_EXTERNAL_STORAGE
-    )
 
 
     lateinit var binding: ActivityMainBinding
     lateinit var phoneStateListener: PhoneStateListener
-
-
-    override fun onStop() {
-        super.onStop()
-
-        val mgr = getSystemService(TELEPHONY_SERVICE) as TelephonyManager
-        mgr?.listen(phoneStateListener, PhoneStateListener.LISTEN_NONE)
-
-    }
-
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        NotificationPlayerService.stopNotification(baseContext)
-
-        Coordinator.mediaPlayerAgent.stop()
-    }
-
-    override fun onBackPressed() {
-        onStop()
-        moveTaskToBack(true)
-    }
 
 
     @SuppressLint("ResourceAsColor")
@@ -78,7 +43,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
         super.onCreate(savedInstanceState)
 
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        ThemeUtils.forceActivityToUseLightMode()
 
         activity = this
 
@@ -86,8 +51,6 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        prefs = getSharedPreferences("AppName", MODE_PRIVATE)
 
         checkForPermissions()
 
@@ -146,6 +109,29 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
     }
 
+
+    override fun onStop() {
+        super.onStop()
+
+        val mgr = getSystemService(TELEPHONY_SERVICE) as TelephonyManager
+        mgr?.listen(phoneStateListener, PhoneStateListener.LISTEN_NONE)
+
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        NotificationPlayerService.stopNotification(baseContext)
+
+        Coordinator.mediaPlayerAgent.stop()
+    }
+
+    override fun onBackPressed() {
+        onStop()
+        moveTaskToBack(true)
+    }
+
     fun updateVisibility() {
         binding.slidingLayout.panelHeight = getScreenHeight() * 1 / 10
     }
@@ -153,12 +139,14 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
     private fun checkForPermissions() {
         val permissionProvider = PermissionProvider()
-        permissionProvider.askForPermission(this, permissions)
+        permissionProvider.askForPermission(
+            this,
+            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+        )
 
         if (permissionProvider.permissionIsGranted) {
 
         }
-
     }
 
 
