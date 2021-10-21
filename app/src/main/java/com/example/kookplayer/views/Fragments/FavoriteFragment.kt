@@ -33,8 +33,10 @@ class FavoriteFragment : Fragment() {
         binding = FragmentFavoriteBinding.inflate(inflater, container, false)
 
 
-        viewModel = ViewModelProvider(this).get(FavViewModel::class.java)
-        viewModel!!.dataset.observe(viewLifecycleOwner, favSongsObserver)
+        viewModel = ViewModelProvider(this).get(FavViewModel::class.java).apply {
+            dataset.observe(viewLifecycleOwner, favSongsObserver)
+        }
+
 
         favSongsAdapter = context?.let {
             FavAdapter(

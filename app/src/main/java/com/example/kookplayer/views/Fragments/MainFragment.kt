@@ -38,11 +38,15 @@ class MainFragment : Fragment() {
 
         val tabNames = resources.getStringArray(R.array.tabNames)
 
-        val adapter = ViewPagerFragmentAdapter(requireActivity().supportFragmentManager, lifecycle)
-        adapter.addFragment(LibraryFragment())
-//        adapter.addFragment(RecentlyAdded())
-        adapter.addFragment(PlaylistFragment())
-        adapter.addFragment(FavoriteFragment())
+
+        val adapter = ViewPagerFragmentAdapter(requireActivity().supportFragmentManager, lifecycle).apply {
+            addFragment(LibraryFragment())
+            addFragment(PlaylistFragment())
+            addFragment(FavoriteFragment())
+        }
+        //adapter.addFragment(RecentlyAdded())
+
+
         binding.viewpager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         binding.viewpager.adapter = adapter
 

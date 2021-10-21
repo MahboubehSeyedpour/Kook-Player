@@ -85,13 +85,15 @@ class LibraryFragment : Fragment(), PassDataForSelectPlaylists {
 
 //        TODO(check if the manifest permissions had been granted)
 //        TODO(take musics in Internal & External storage)
-
+//
 
         viewModel = ViewModelProvider(this).get(SongsViewModel::class.java)
+            .apply {
+                context?.let { setFragmentContext(it) }
+            }.apply {
+                dataset.observe(viewLifecycleOwner, songListUpdateObserver)
+            }
 
-
-        context?.let { viewModel.setFragmentContext(it) }
-        viewModel.dataset.observe(viewLifecycleOwner, songListUpdateObserver)
 
         songsAdapter = activity?.let {
             SongsAdapter(
