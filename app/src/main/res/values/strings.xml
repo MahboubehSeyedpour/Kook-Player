@@ -6,8 +6,8 @@
     <string name="preference_file_key">GLOBAL_STATE</string>
 
     <string name="action_play_next">play next</string>
-    <string name="action_add_to_playing_queue">Add to playlist</string>
-    <string name="action_share">Share</string>
+    <string name="action_add_to_playing_queue">Add to playlist...</string>
+    <string name="action_share">Share...</string>
     <string name="action_details">Details</string>
     <string name="action_set_as_ringtone">Set as ringtone</string>
     <string name="action_delete_from_device">Delete from device</string>
